@@ -1,0 +1,71 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>registrerAccount</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content >
+  <div class='registrer-account' style="background-color:aliceblue;display:flex;justify-content: center;align-items: center;
+  flex-direction: column;width: 100vw;height:100vh">
+      <div  class='registrer-account__title'>Ingrese sus datos personales</div>
+      <div  class='registrer-account__choose-user'>
+
+              <div style='display: flex;width: 87px;display:flex;justify-content:space-between;align-items: center'>
+                  <div  (tap)="clickUser(0)"  class='registrer-account__choose-user___button-radio'>
+                    <div [ngClass]="checkButton === 0? 'registrer-account__choose-user___button-radio__background':'' "></div>
+                  </div>
+                  <div style='width: 59px'>Persona Natural</div>
+              </div>
+
+
+              <div style='display: flex;width: 87px;display:flex;justify-content:space-between;align-items: center'>
+                  <div (tap)="clickUser(1)" class='registrer-account__choose-user___button-radio'>
+                    <div   [ngClass]="checkButton === 1? 'registrer-account__choose-user___button-radio__background':'' "></div>
+                  </div>
+                  <div style='width: 59px'>Persona Jurídica</div>
+              </div>
+
+      </div>
+      <div  class='registrer-account__form-user'>
+          <form>
+              <div class="registrer-account__form">
+                <input type="text" class="form-control-registrer"  placeholder="Nombre">
+              </div>
+              <div class="registrer-account__form">
+                <input type="text" class="form-control-registrer"   placeholder="Apellido">
+              </div>
+              <div class="registrer-account__form">
+                  <input type="text" class="form-control-registrer"   placeholder="2019-01-01">
+              </div>
+              <div class="registrer-account__form">
+                  <input type="text" class="form-control-registrer"    placeholder="Dni / Carnet de extranjeria">
+              </div>
+              <div class="registrer-account__form">
+                  <input type="text" class="form-control-registrer"    placeholder="Correo Electrónico">
+              </div>
+              <div class="registrer-account__form">
+                  <input type="text" class="form-control-registrer"    placeholder="Celular">
+              </div>
+              <div class="registrer-account__form">
+                  <input type="text" class="form-control-registrer"    placeholder="Contraseña">
+              </div>
+
+            </form>
+
+      </div>
+      <div  class='registrer-account__add-bank'>Agregar cuenta bancaria</div>
+      <div style='display: flex;width: 235px;display:flex;justify-content:space-between;align-items: center;margin-top: 40px'>
+          <div (tap)="clickTerminos()" class='registrer-account__choose-user___button-radio'>
+            <div   [ngClass]="checkTerminos === true? 'registrer-account__choose-user___button-radio__background':'' "></div>
+          </div>
+          <div >Acepto los <span style='text-decoration: underline'>términos y condiciones</span></div>
+      </div>
+      <button  class='registrer-account__submit' style='margin-top: 40px'>Registrar</button>
+
+  </div>
+
+</ion-content>

@@ -1,0 +1,67 @@
+page-registrer-account {
+    .registrer-account__title{
+        margin-bottom: 30px
+    }
+    .registrer-account__form{
+        margin-bottom: 9px;
+        width: 262px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        justify-content: flex-start
+    }
+    .form-control-registrer{
+        border:none;
+        width: 257px;
+        border-radius: 6px;
+        height: 24px;
+        margin-bottom: 11px;
+        padding-left: 13px;
+        font-size: 12px;
+    }
+    .registrer-account__add-bank{
+        width: 257px;
+        text-decoration: underline;
+        margin-top: 10px
+    }
+    .registrer-account__submit{
+        border:none;
+        background-color: orange;
+        height: 20px;
+        width: 150px;
+        border-radius: 6px;
+        color:white;
+        display: flex;
+        justify-content: center;
+        align-items: center
+    }
+    .registrer-account__choose-user{
+        width: 257px;
+        height: 30px;
+        display: flex;
+        justify-content:space-around;
+        align-items: center;
+        margin-bottom: 50px;
+
+       
+    }
+    .registrer-account__choose-user___button-radio{
+        width: 14px;
+        height: 14px;
+        border:0.5px solid orange;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+       
+    }
+    .registrer-account__choose-user___button-radio__background{
+        width: 6px;
+        height:6px;
+        background-color: orange;
+        border-radius:50%;
+    }
+   
+
+}

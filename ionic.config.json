@@ -1,0 +1,7 @@
+{
+  "name": "Fotc",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
