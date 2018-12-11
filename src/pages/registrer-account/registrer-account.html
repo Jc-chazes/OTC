@@ -9,7 +9,7 @@
 
 
 <ion-content >
-  <div class='registrer-account' style="background-color:aliceblue;display:flex;justify-content: center;align-items: center;
+  <div class='registrer-account' style="background-color:#636363;display:flex;justify-content: center;align-items: center;
   flex-direction: column;width: 100vw;height:100vh">
       <div  class='registrer-account__title'>Ingrese sus datos personales</div>
       <div  class='registrer-account__choose-user'>
@@ -18,7 +18,7 @@
                   <div  (tap)="clickUser(0)"  class='registrer-account__choose-user___button-radio'>
                     <div [ngClass]="checkButton === 0? 'registrer-account__choose-user___button-radio__background':'' "></div>
                   </div>
-                  <div style='width: 59px'>Persona Natural</div>
+                  <div style='width: 59px; color:#ffffff'>Persona Natural</div>
               </div>
 
 
@@ -26,45 +26,70 @@
                   <div (tap)="clickUser(1)" class='registrer-account__choose-user___button-radio'>
                     <div   [ngClass]="checkButton === 1? 'registrer-account__choose-user___button-radio__background':'' "></div>
                   </div>
-                  <div style='width: 59px'>Persona Jurídica</div>
+                  <div style='width: 59px ; color:#ffffff'>Persona Jurídica</div>
               </div>
 
       </div>
       <div  class='registrer-account__form-user'>
-          <form>
-              <div class="registrer-account__form">
-                <input type="text" class="form-control-registrer"  placeholder="Nombre">
+          <form [formGroup]="formu" novalidate='novalidate' (ngSubmit)='submit()' *ngIf='!checkButton; else bank'>
+              <div  class="registrer-account__form">
+                <input type="text" class="form-control-registrer"  placeholder="Nombre" formControlName="firstName">
+              </div>
+              <div  class="registrer-account__form">
+                <input type="text" class="form-control-registrer"   placeholder="Apellido" formControlName="lastName">
+              </div>
+              <div  class="registrer-account__form">
+                  <input type="text" class="form-control-registrer"   placeholder="2019-01-01" formControlName="birthdate" >
+              </div>
+              <div  class="registrer-account__form">
+                  <input type="text" class="form-control-registrer"    placeholder="Dni / Carnet de extranjeria" formControlName="documentNumber">
               </div>
               <div class="registrer-account__form">
-                <input type="text" class="form-control-registrer"   placeholder="Apellido">
+                  <input type="text" class="form-control-registrer"    placeholder="Correo Electrónico" formControlName="email">
               </div>
               <div class="registrer-account__form">
-                  <input type="text" class="form-control-registrer"   placeholder="2019-01-01">
+                  <input type="text" class="form-control-registrer"    placeholder="Celular" formControlName="cellphone">
               </div>
               <div class="registrer-account__form">
-                  <input type="text" class="form-control-registrer"    placeholder="Dni / Carnet de extranjeria">
-              </div>
-              <div class="registrer-account__form">
-                  <input type="text" class="form-control-registrer"    placeholder="Correo Electrónico">
-              </div>
-              <div class="registrer-account__form">
-                  <input type="text" class="form-control-registrer"    placeholder="Celular">
-              </div>
-              <div class="registrer-account__form">
-                  <input type="text" class="form-control-registrer"    placeholder="Contraseña">
+                  <input type="text" class="form-control-registrer"    placeholder="Contraseña" formControlName="password">
               </div>
 
             </form>
+            <ng-template #bank>
+                    <form [formGroup]="formuLegal" novalidate='novalidate' (ngSubmit)='submitLegal()'>
+                           
+                            <div  class="registrer-account__form">
+                                  <input type="text" class="form-control-registrer"  placeholder="Razon Social" formControlName="businessName" >
+                            </div>
+                            <div   class="registrer-account__form">
+                              <input type="text" class="form-control-registrer"  placeholder="Ruc" formControlName="ruc">
+                            </div>
+                            <div class="registrer-account__form">
+                                <input type="text" class="form-control-registrer"    placeholder="Correo Electrónico" formControlName="email">
+                            </div>
+                            <div class="registrer-account__form">
+                                <input type="text" class="form-control-registrer"    placeholder="Celular" formControlName="cellphone">
+                            </div>
+                            <div class="registrer-account__form">
+                                <input type="text" class="form-control-registrer"    placeholder="Contraseña" formControlName="password">
+                            </div>
+              
+                    </form>
+            </ng-template>
+           
 
       </div>
-      <div  class='registrer-account__add-bank'>Agregar cuenta bancaria</div>
+
+      <div  class='registrer-account__add-bank' (tap)='addBank()'>Agregar cuenta bancaria</div>
       <div style='display: flex;width: 235px;display:flex;justify-content:space-between;align-items: center;margin-top: 40px'>
           <div (tap)="clickTerminos()" class='registrer-account__choose-user___button-radio'>
             <div   [ngClass]="checkTerminos === true? 'registrer-account__choose-user___button-radio__background':'' "></div>
           </div>
-          <div >Acepto los <span style='text-decoration: underline'>términos y condiciones</span></div>
+          <div style='color:orange'>Acepto los <span style='text-decoration: underline; color:orange'>términos y condiciones</span></div>
       </div>
-      <button  class='registrer-account__submit' style='margin-top: 40px'>Registrar</button>
+      <button *ngIf='checkButton === 0' class='registrer-account__submit' (tap)='submit()' style='margin-top: 40px'>Registrar</button>
+      <button *ngIf='checkButton === 1' class='registrer-account__submit' (tap)='submitBank()' style='margin-top: 40px'>Registrar</button>
+
 
   </div>
 

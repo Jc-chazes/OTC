@@ -1,0 +1,44 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>addBank</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <div style="background-color:#636363;display:flex;justify-content: center;align-items: center;
+  flex-direction: column;width: 100vw;height:100vh">
+    <div class='addBank'>
+        <div class='add_bank__title'> Ingrese su nueva cuenta  bancaria </div>
+        <div class="addBank-wapper">
+          <form [formGroup]='addBankForm'>
+            <div class="addBank__form">
+                <label>Titular de la cuenta</label>
+                <input type="text" class="form-control-addBank"  placeholder="Titular de la cuenta" formControlName = 'holderName'>
+            </div>
+            <div class="addBank__form">
+                <label>Numero de cuenta</label>
+                <input type="text" class="form-control-addBank"  placeholder="Numero de cuenta" formControlName= 'accountNumber'>
+            </div>
+            <div class="addBank__form" >
+                <label>Tipo de cuenta</label>
+                <div>
+                  <button class='button-left'  [ngClass]="{'button-select': currency === 2}" (tap)='selectCurrency(2)'>Dolares</button>
+                  <button class='button-right' [ngClass]="{'button-select': currency === 1}" (tap)='selectCurrency(1)'>Soles</button>
+                </div>     
+            </div>
+            <div class="addBank__form" style='margin-top: 10px'>
+                <label>Apelativo de cuenta</label>
+                <input type="text" class="form-control-addBank"  placeholder="Apelativo de la cuenta" formControlName= 'apellative'>
+            </div>
+           </form> 
+        </div>    
+      </div>
+      <div class='addBank__button-save' (tap)='saveBank()'>Guardar</div>    
+    </div>
+   
+</ion-content>

@@ -13,6 +13,10 @@ import { AuthProvider } from '../providers/auth.service';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http'
 import { HTTP } from '@ionic-native/http';
+import { AddBankPage } from '../pages/registrer-account/add-bank/add-bank';
+import {FormsModule,ReactiveFormsModule} from '@angular/forms';
+import { AppStateService } from '../providers/app-state.service';
+import { QuotePage } from '../pages/quote/quote';
 
 
 @NgModule({
@@ -21,13 +25,16 @@ import { HTTP } from '@ionic-native/http';
     HomePage,
     chooseLogin,
     Login,
-    RegistrerAccountPage
+    RegistrerAccountPage,
+    AddBankPage,
+    QuotePage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpClientModule
-
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -35,13 +42,16 @@ import { HTTP } from '@ionic-native/http';
     HomePage,
     chooseLogin,
     Login,
-    RegistrerAccountPage
+    RegistrerAccountPage,
+    AddBankPage,
+    QuotePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthProvider
+    AuthProvider,
+    AppStateService
   ]
 })
 export class AppModule {}
