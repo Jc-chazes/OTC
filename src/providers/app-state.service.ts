@@ -5,6 +5,9 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export class AppStateService{
 
   initialState: any = {
+    login: {
+      selectedUserType: 0
+    },
     price: {
       currency: "",
       cant: ""

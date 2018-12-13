@@ -1,0 +1,79 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>register-exchange-agent</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form class="registerExchangeAgent" [formGroup]="exchangeAgentFG" (submit)="createAccount()">
+    <h1 class="text-center">Crear cuenta</h1>
+    <h5 class="text-center">Ingrese sus datos personales</h5>
+    <ion-grid radio-group formControlName="type">
+      <ion-row justify-content-around>
+        <ion-col col-auto>
+          <ion-row align-items-center>
+            <ion-col col-auto>
+              <ion-radio color="secondary" [value]="'0'"></ion-radio>
+            </ion-col>
+            <ion-col col-auto>
+              Casa de <br> cambio
+            </ion-col>
+          </ion-row>        
+        </ion-col>
+        <ion-col col-auto>
+          <ion-row align-items-center>
+            <ion-col col-auto>
+              <ion-radio color="secondary" [value]="'1'"></ion-radio>
+            </ion-col>
+            <ion-col col-auto>
+              Cambista
+            </ion-col>
+          </ion-row>        
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <div>
+      <div class="p-5"><input type="text" class="fill-width" placeholder="Nombre / Razón social" formControlName="name"></div>
+      <div class="p-5"><input type="text" class="fill-width" placeholder="Dni / Ruc" formControlName="documentNumber"></div>
+      <ng-container *ngIf="exchangeAgentFG.value.type == '1'">
+        <div class="p-5 pos-relative">
+          <input type="text" class="fill-width" placeholder="Fecha de nacimiento" formControlName="formatBirthdate" readonly>
+          <ion-datetime class="opacity-0" displayFormat="DD/MM/YYYY" formControlName="birthdate"
+          pickerFormat="DD MM YYYY"></ion-datetime>
+        </div>
+      </ng-container>           
+      <div class="p-5"><input type="text" class="fill-width" placeholder="Dirección" formControlName="address"></div>
+      <div class="p-5"><input type="text" class="fill-width" placeholder="Teléfono / celular" formControlName="phone"></div>
+      <div class="p-5"><input type="text" class="fill-width" placeholder="Número de registro de la SBS" formControlName="sbsRegisterNumber"></div>
+      <ng-container formGroupName="user">
+          <div class="p-5"><input type="text" class="fill-width" placeholder="Correo electrónico" formControlName="email"></div>
+          <div class="p-5"><input type="password" class="fill-width" placeholder="Contraseña" formControlName="password"></div>
+      </ng-container>
+    </div>
+    <div class="p-5">
+      <a href="" (tap)="$event.stopPropagation;onAddBankAccount()">Agregar cuenta bancaria</a>
+    </div>
+    <div>
+      <ion-row justify-content-around radio-group formControlName="acceptTermsAndConditions">
+        <ion-col col-auto>
+          <ion-row align-items-center>
+            <ion-col col-auto>
+              <ion-radio color="secondary" [value]="true" [checked]="exchangeAgentFG.value.acceptTermsAndConditions"></ion-radio>
+            </ion-col>
+            <ion-col col-auto>
+              <a href="" class="text-accent">Aceptar los términos y condiciones</a>
+            </ion-col>
+          </ion-row>        
+        </ion-col>
+      </ion-row>
+    </div>
+    <ion-row justify-content-center>
+      <button ion-button color="secondary">
+        Crear cuenta
+      </button>
+    </ion-row>
+  </form>
+</ion-content>

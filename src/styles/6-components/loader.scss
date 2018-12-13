@@ -1,0 +1,15 @@
+@for $loader-size from 1 to 10 {
+    .#{$namespace}-loader-#{$loader-size} {
+        border: #{$loader-size}px solid transparent; /* Light grey */
+        border-top: #{$loader-size}px solid $primary-color; /* Blue */
+        border-radius: 50%;
+        width: #{$loader-size*5}px;
+        height: #{$loader-size*5}px;
+        animation: spin 2s linear infinite;
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

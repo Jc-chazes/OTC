@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {NavController} from 'ionic-angular';
 import { Login } from '../login/login';
+import { AppStateService } from '../../providers/app-state.service';
+import { RegisterExchangeAgentPage } from '../register-exchange-agent/register-exchange-agent';
 
 
 
@@ -9,21 +11,27 @@ import { Login } from '../login/login';
   templateUrl: './chooseLogin.html',
 })
 export class chooseLogin implements OnInit {
-  profileType:any
+  userType: number = 0;
 
-  constructor(public nav : NavController) { }
+  constructor(public nav : NavController, private appState: AppStateService) { }
 
   ngOnInit() {
-    this.profileType ='';
+    
   }
 
   registerClient(){
-    this.profileType=0
+    this.userType=0;
   }
+
   registerHouseChangue(){
-    this.profileType=1
+    this.userType=1
   }
-  checklogin(){
-    this.nav.push(Login)
+
+  ready(){
+    if( this.userType == 0){
+      this.nav.push(Login);
+    }else{
+      this.nav.push(RegisterExchangeAgentPage);
+    }
   }
 }

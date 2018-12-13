@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AppStateService } from '../../providers/app-state.service';
-import { ExchangeAgentsPage } from '../exchange-agents/exchange-agents';
 
 
 @Component({
@@ -34,6 +33,5 @@ export class QuotePage {
         cant : this.cant
       }
     })
-    this.navCtrl.push(ExchangeAgentsPage)
   }
 }

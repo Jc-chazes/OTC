@@ -17,7 +17,11 @@ import { AddBankPage } from '../pages/registrer-account/add-bank/add-bank';
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { AppStateService } from '../providers/app-state.service';
 import { QuotePage } from '../pages/quote/quote';
-import { ExchangeAgentsPage } from '../pages/exchange-agents/exchange-agents';
+import { RegisterExchangeAgentPage } from '../pages/register-exchange-agent/register-exchange-agent';
+import { ApiUtil } from '../providers/utils/api.util';
+import { StorageUtil } from '../providers/utils/storage.util';
+import { JwtUtil } from '../providers/utils/jwt.util';
+import { RegisterBankAccountPage } from '../pages/register-bank-account/register-bank-account';
 
 
 @NgModule({
@@ -29,14 +33,15 @@ import { ExchangeAgentsPage } from '../pages/exchange-agents/exchange-agents';
     RegistrerAccountPage,
     AddBankPage,
     QuotePage,
-    ExchangeAgentsPage
+    RegisterExchangeAgentPage,
+    RegisterBankAccountPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -47,14 +52,18 @@ import { ExchangeAgentsPage } from '../pages/exchange-agents/exchange-agents';
     RegistrerAccountPage,
     AddBankPage,
     QuotePage,
-    ExchangeAgentsPage
+    RegisterExchangeAgentPage,
+    RegisterBankAccountPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
-    AppStateService
+    AppStateService,
+    StorageUtil,
+    JwtUtil,
+    ApiUtil
   ]
 })
 export class AppModule {}

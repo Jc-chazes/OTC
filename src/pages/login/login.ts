@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RegistrerAccountPage } from '../registrer-account/registrer-account';
 import { NavController } from 'ionic-angular';
+import { chooseLogin } from '../chooseLogin/chooseLogin';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class Login implements OnInit {
 
   }
   registrerUser(){
-    this.nvCtrl.push(RegistrerAccountPage)
+    this.nvCtrl.push(chooseLogin)
   }
 
 }

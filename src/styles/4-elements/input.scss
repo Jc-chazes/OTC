@@ -1,0 +1,5 @@
+input{
+    padding: 8px;
+    border: 1px solid rgba(#000,.25);
+    @include borderRadius(4px);
+}
