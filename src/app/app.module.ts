@@ -17,6 +17,7 @@ import { AddBankPage } from '../pages/registrer-account/add-bank/add-bank';
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { AppStateService } from '../providers/app-state.service';
 import { QuotePage } from '../pages/quote/quote';
+import { ExchangeAgentsPage } from '../pages/exchange-agents/exchange-agents';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { QuotePage } from '../pages/quote/quote';
     Login,
     RegistrerAccountPage,
     AddBankPage,
-    QuotePage
+    QuotePage,
+    ExchangeAgentsPage
   ],
   imports: [
     BrowserModule,
@@ -44,7 +46,8 @@ import { QuotePage } from '../pages/quote/quote';
     Login,
     RegistrerAccountPage,
     AddBankPage,
-    QuotePage
+    QuotePage,
+    ExchangeAgentsPage
   ],
   providers: [
     StatusBar,
