@@ -34,7 +34,6 @@ export class AuthProvider {
         ...omit(exchangeAgent,['user','score'])
       }
     }).map( resp => {
-      debugger;
       this.jwt.setToken(resp.jwt);
       return true;
     }).catch( err => {
