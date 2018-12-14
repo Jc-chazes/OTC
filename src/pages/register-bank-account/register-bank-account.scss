@@ -1,3 +1,38 @@
 page-register-bank-account {
-
+    .bank{
+        position: absolute;
+        height: 80%;
+        width: 100%;
+        left: 0;
+        top: 10%;
+        &__image{
+            height: 100%;
+            display: block;
+            margin: 0 auto;
+        }
+    }
+    .prev__bank, .next__bank{
+        height: 80%;
+        position: absolute;
+        top: 10%;
+        img{
+            height: 100%;
+        }
+    }
+    .prev__bank{
+        left: 0;
+    }
+    .next__bank{
+        right: 0;
+    }
+    .currencySelect{
+        padding: 0;
+        &__item{
+            padding: 8px;
+            &.active{
+                background-color: #5b5a5f;
+                color: #FFF;
+            }
+        }
+    }
 }

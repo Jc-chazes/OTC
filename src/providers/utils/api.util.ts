@@ -26,9 +26,8 @@ export class ApiUtil {
         headers = headers || new HttpHeaders();
         let token = this.jwt.getToken();
         if( token && token != ''){
-            headers = headers.append('Authorization', `${this.jwt.getToken()}`);
+            headers = headers.append('Authorization', `Bearer ${this.jwt.getToken()}`);
             headers = headers.append('Content-Type', 'application/json');
-            headers = headers.append('admin', this.codeAdmin);
         }
         return headers;
     }

@@ -16,9 +16,11 @@
         <ion-col col-auto>
           <ion-row align-items-center>
             <ion-col col-auto>
-              <ion-radio color="secondary" [value]="'0'"></ion-radio>
+              <div #casaCambioRadio>
+                <ion-radio color="secondary" [value]="'0'"></ion-radio>
+              </div>
             </ion-col>
-            <ion-col col-auto>
+            <ion-col col-auto (tap)="exchangeAgentFG.patchValue({ type: '0' })">
               Casa de <br> cambio
             </ion-col>
           </ion-row>        
@@ -26,9 +28,11 @@
         <ion-col col-auto>
           <ion-row align-items-center>
             <ion-col col-auto>
-              <ion-radio color="secondary" [value]="'1'"></ion-radio>
+              <div #cambistaRadio>
+                <ion-radio color="secondary" [value]="'1'"></ion-radio>
+              </div>
             </ion-col>
-            <ion-col col-auto>
+            <ion-col col-auto (tap)="exchangeAgentFG.patchValue({ type: '1' })">
               Cambista
             </ion-col>
           </ion-row>        
@@ -71,7 +75,7 @@
       </ion-row>
     </div>
     <ion-row justify-content-center>
-      <button ion-button color="secondary">
+      <button fluid ion-button color="secondary">
         Crear cuenta
       </button>
     </ion-row>

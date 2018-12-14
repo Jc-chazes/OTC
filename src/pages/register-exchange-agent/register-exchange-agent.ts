@@ -5,6 +5,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { isString, omit } from 'lodash';
 import { AuthProvider } from '../../providers/auth.service';
 import { RegisterBankAccountPage } from '../register-bank-account/register-bank-account';
+import { AppStateService } from '../../providers/app-state.service';
+import { UsersBankAccountsService } from '../../providers/users-bank-accounts.service';
+import { UserBankAccount } from '../../models/user-bank-account.model';
 
 /**
  * Generated class for the RegisterExchangeAgentPage page.
@@ -22,7 +25,8 @@ export class RegisterExchangeAgentPage {
   exchangeAgentFG: FormGroup;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-  private fb: FormBuilder, private auth: AuthProvider) {
+  private fb: FormBuilder, private auth: AuthProvider, private appState: AppStateService,
+  private UsersBankAccounts: UsersBankAccountsService) {
     this.exchangeAgentFG = this.fb.group({
       name: [undefined,Validators.required],
       documentNumber: [undefined,Validators.required],
@@ -62,16 +66,20 @@ export class RegisterExchangeAgentPage {
       console.warn('Formulario inválido');
       return;
     }
-    debugger;
     this.auth.registerExchangeAgent( new ExchangeAgent({
       ...omit(this.exchangeAgentFG.value,['acceptTermsAndConditions','formatBirthdate'])
     }) ).subscribe( results => {
+      let savedUserBankAccount = this.appState.currentState.register.savedUserBankAccount;
+      if( savedUserBankAccount ){
+        this.UsersBankAccounts.add( savedUserBankAccount as UserBankAccount )
+        .subscribe( results => {
 
+        });
+      }
     });
   }
 
   onAddBankAccount(){
     this.navCtrl.push( RegisterBankAccountPage )
   }
-
 }

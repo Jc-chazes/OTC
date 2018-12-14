@@ -22,6 +22,12 @@ import { ApiUtil } from '../providers/utils/api.util';
 import { StorageUtil } from '../providers/utils/storage.util';
 import { JwtUtil } from '../providers/utils/jwt.util';
 import { RegisterBankAccountPage } from '../pages/register-bank-account/register-bank-account';
+import { BaseService } from '../providers/base/base.service';
+import { BanksService } from '../providers/banks.service';
+import { CurrenciesService } from '../providers/currencies.service';
+import { UsersBankAccountsService } from '../providers/users-bank-accounts.service';
+
+import 'rxjs/observable/of';
 
 
 @NgModule({
@@ -63,7 +69,11 @@ import { RegisterBankAccountPage } from '../pages/register-bank-account/register
     AppStateService,
     StorageUtil,
     JwtUtil,
-    ApiUtil
+    ApiUtil,
+    BaseService,
+    BanksService,
+    CurrenciesService,
+    UsersBankAccountsService
   ]
 })
 export class AppModule {}

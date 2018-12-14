@@ -8,6 +8,9 @@ export class AppStateService{
     login: {
       selectedUserType: 0
     },
+    register: {
+      savedUserBankAccount: null
+    },
     price: {
       currency: "",
       cant: ""
