@@ -28,6 +28,10 @@ import { CurrenciesService } from '../providers/currencies.service';
 import { UsersBankAccountsService } from '../providers/users-bank-accounts.service';
 
 import 'rxjs/observable/of';
+import { ChooseAccessPage } from '../pages/choose-access/choose-access';
+import { RegisterChooseProfilePage } from '../pages/register-choose-profile/register-choose-profile';
+import { PersonTabsPage } from '../pages/person-tabs/person-tabs';
+import { ExchangeAgentTabsPage } from '../pages/exchange-agent-tabs/exchange-agent-tabs';
 
 
 @NgModule({
@@ -40,7 +44,11 @@ import 'rxjs/observable/of';
     AddBankPage,
     QuotePage,
     RegisterExchangeAgentPage,
-    RegisterBankAccountPage
+    RegisterBankAccountPage,
+    ChooseAccessPage,
+    RegisterChooseProfilePage,
+    PersonTabsPage,
+    ExchangeAgentTabsPage
   ],
   imports: [
     BrowserModule,
@@ -59,7 +67,11 @@ import 'rxjs/observable/of';
     AddBankPage,
     QuotePage,
     RegisterExchangeAgentPage,
-    RegisterBankAccountPage
+    RegisterBankAccountPage,
+    ChooseAccessPage,
+    RegisterChooseProfilePage,
+    PersonTabsPage,
+    ExchangeAgentTabsPage
   ],
   providers: [
     StatusBar,
