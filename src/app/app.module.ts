@@ -26,16 +26,13 @@ import { BaseService } from '../providers/base/base.service';
 import { BanksService } from '../providers/banks.service';
 import { CurrenciesService } from '../providers/currencies.service';
 import { UsersBankAccountsService } from '../providers/users-bank-accounts.service';
-
 import 'rxjs/observable/of';
-<<<<<<< HEAD
-import { ExchangeAgentsPage } from '../pages/exchange-agents/exchange-agents';
-=======
 import { ChooseAccessPage } from '../pages/choose-access/choose-access';
 import { RegisterChooseProfilePage } from '../pages/register-choose-profile/register-choose-profile';
 import { PersonTabsPage } from '../pages/person-tabs/person-tabs';
 import { ExchangeAgentTabsPage } from '../pages/exchange-agent-tabs/exchange-agent-tabs';
->>>>>>> 8c04db1763bc0b7b639397839ca60f22b47debc1
+import { ExchangeAgentsPage } from '../pages/exchange-agents/exchange-agents';
+import { ExchangueAgentService } from '../providers/exchange-agent.service';
 
 
 @NgModule({
@@ -49,14 +46,11 @@ import { ExchangeAgentTabsPage } from '../pages/exchange-agent-tabs/exchange-age
     QuotePage,
     RegisterExchangeAgentPage,
     RegisterBankAccountPage,
-<<<<<<< HEAD
-    ExchangeAgentsPage
-=======
     ChooseAccessPage,
     RegisterChooseProfilePage,
     PersonTabsPage,
-    ExchangeAgentTabsPage
->>>>>>> 8c04db1763bc0b7b639397839ca60f22b47debc1
+    ExchangeAgentTabsPage,
+    ExchangeAgentsPage
   ],
   imports: [
     BrowserModule,
@@ -76,14 +70,11 @@ import { ExchangeAgentTabsPage } from '../pages/exchange-agent-tabs/exchange-age
     QuotePage,
     RegisterExchangeAgentPage,
     RegisterBankAccountPage,
-<<<<<<< HEAD
-    ExchangeAgentsPage
-=======
     ChooseAccessPage,
     RegisterChooseProfilePage,
     PersonTabsPage,
-    ExchangeAgentTabsPage
->>>>>>> 8c04db1763bc0b7b639397839ca60f22b47debc1
+    ExchangeAgentTabsPage,
+    ExchangeAgentsPage
   ],
   providers: [
     StatusBar,
@@ -97,7 +88,8 @@ import { ExchangeAgentTabsPage } from '../pages/exchange-agent-tabs/exchange-age
     BaseService,
     BanksService,
     CurrenciesService,
-    UsersBankAccountsService
+    UsersBankAccountsService,
+    ExchangueAgentService
   ]
 })
 export class AppModule {}

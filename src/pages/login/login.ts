@@ -5,6 +5,7 @@ import { chooseLogin } from '../chooseLogin/chooseLogin';
 import { AuthProvider } from '../../providers/auth.service';
 import { User } from '../../models/user.model';
 import { PersonTabsPage } from '../person-tabs/person-tabs';
+import { ExchangeAgentsPage } from '../exchange-agents/exchange-agents';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class Login implements OnInit {
   }
 
   login(){
+    this.nvCtrl.push(ExchangeAgentsPage)
     if( this.user.password && this.user.email ){
       this.auth.login(this.user).subscribe( results => {
         if(results){
