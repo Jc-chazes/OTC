@@ -5,6 +5,9 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export class AppStateService{
 
   initialState: any = {
+    global: {
+      userType: '0'
+    },
     login: {
       selectedUserType: 0
     },

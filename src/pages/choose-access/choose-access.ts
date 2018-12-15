@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { RegisterChooseProfilePage } from '../register-choose-profile/register-choose-profile';
 import { Login } from '../login/login';
+import { AppStateService } from '../../providers/app-state.service';
+import { RegisterExchangeAgentPage } from '../register-exchange-agent/register-exchange-agent';
 
 /**
  * Generated class for the ChooseAccessPage page.
@@ -16,7 +17,7 @@ import { Login } from '../login/login';
 })
 export class ChooseAccessPage {
 
-  constructor(public nvCtrl : NavController) { }
+  constructor(public nvCtrl : NavController, private appState: AppStateService) { }
 
   ngOnInit() {
   }
@@ -26,7 +27,11 @@ export class ChooseAccessPage {
   }
 
   registerUser(){
-    this.nvCtrl.push(RegisterChooseProfilePage)
+    if( this.appState.currentState.global.userType == '0' ){
+
+    }else{
+      this.nvCtrl.push(RegisterExchangeAgentPage)
+    }
   }
 
 }
