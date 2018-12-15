@@ -9,12 +9,23 @@ import { ApiUtil } from './utils/api.util';
 import { pick, omit } from 'lodash';
 import { JwtUtil } from './utils/jwt.util';
 import { User } from '../models/user.model';
+import { AppStateService } from './app-state.service';
 
 @Injectable()
 export class AuthProvider {
 
   constructor( public http : HttpClient, private api: ApiUtil,
-  private jwt: JwtUtil) {
+  private jwt: JwtUtil, private appState: AppStateService) {
+  }
+
+  setAppUserType(userType: string){
+    let currentGlobal = this.appState.currentState.global;
+    this.appState.setState({
+      global: {
+        ...currentGlobal,
+        userType
+      }
+    })
   }
 
   registrerUser(data) {

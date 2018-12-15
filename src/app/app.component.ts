@@ -5,12 +5,13 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { chooseLogin } from '../pages/chooseLogin/chooseLogin';
 import { Login } from '../pages/login/login';
 import { ChooseAccessPage } from '../pages/choose-access/choose-access';
+import { ChooseProfilePage } from '../pages/choose-profile/choose-profile';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = ChooseAccessPage;
+  rootPage:any = ChooseProfilePage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
