@@ -8,13 +8,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { AppStateService } from '../../providers/app-state.service';
 
-/**
- * Generated class for the RegisterBankAccountPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @Component({
   selector: 'page-register-bank-account',
   templateUrl: 'register-bank-account.html',

@@ -1,0 +1,32 @@
+page-exchange-agents {
+  .search-agents{
+    display: flex;
+    width: 300px;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #FFFFFF;
+    border: 0.5px solid #FFFFFF;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    height: 23px;
+  }
+  .search-agents__input{
+    height: 20px !important;
+    border: 6px;
+    min-height: 21px !important;
+  }
+  .search-agents__select{
+    height: 21px;
+    width: 19px;
+    border:none
+  }
+  .search-agents__select___option{
+    border: solid 0.5px gray;
+    height: 15px;
+    width: 100px;
+    font-size: 12px;
+    margin-top: 6px;
+    display: flex;
+  }
+}

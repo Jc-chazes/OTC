@@ -28,6 +28,7 @@ import { CurrenciesService } from '../providers/currencies.service';
 import { UsersBankAccountsService } from '../providers/users-bank-accounts.service';
 
 import 'rxjs/observable/of';
+import { ExchangeAgentsPage } from '../pages/exchange-agents/exchange-agents';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import 'rxjs/observable/of';
     AddBankPage,
     QuotePage,
     RegisterExchangeAgentPage,
-    RegisterBankAccountPage
+    RegisterBankAccountPage,
+    ExchangeAgentsPage
   ],
   imports: [
     BrowserModule,
@@ -59,7 +61,8 @@ import 'rxjs/observable/of';
     AddBankPage,
     QuotePage,
     RegisterExchangeAgentPage,
-    RegisterBankAccountPage
+    RegisterBankAccountPage,
+    ExchangeAgentsPage
   ],
   providers: [
     StatusBar,
