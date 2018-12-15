@@ -10,12 +10,13 @@ import { pick, omit } from 'lodash';
 import { JwtUtil } from './utils/jwt.util';
 import { User } from '../models/user.model';
 import { AppStateService } from './app-state.service';
+import { UsersService } from './users.service';
 
 @Injectable()
 export class AuthProvider {
 
   constructor( public http : HttpClient, private api: ApiUtil,
-  private jwt: JwtUtil, private appState: AppStateService) {
+  private jwt: JwtUtil, private appState: AppStateService, private users: UsersService) {
   }
 
   setAppUserType(userType: string){
@@ -57,9 +58,30 @@ export class AuthProvider {
     return this.api.post('/auth/local',{
       identifier: user.email,
       password: user.password
-    },{},false).map( resp => {
+    },{},false)
+    .flatMap( resp => {
       this.jwt.setToken(resp.jwt);
-      return true;
+      return this.populate(user.userType);
+    }).catch( err => {
+      return Observable.of(false);
+    });
+  }
+
+  populate(userTypeToVerify?: string): Observable<boolean>{
+    return this.api.get('/users/me')
+    .map( resp => {
+      if( !!userTypeToVerify && resp.userType != userTypeToVerify ){
+        console.warn('Autenticación fallida para el perfil seleccionado');
+        return false;
+      }
+      let user = new User({
+        ...pick(resp,['id','username','email','userType']),
+        exchangeAgent: {
+          ...omit(resp.profile,['user'])
+        }
+      });
+      this.users.currentUser = user;
+      return true;      
     }).catch( err => {
       return Observable.of(false);
     });

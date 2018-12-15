@@ -3,7 +3,40 @@
         <h4 class="text-center">
             Iniciar sesión
         </h4>
-        <div class="spacer-30"></div>
+        <div class="spacer-50"></div>
+        <ng-container *ngIf="user.userType == '1'">
+            <div>
+                <p class="text-center">Ingrese los datos de tu cuenta</p>
+                <ion-grid radio-group [(ngModel)]="exchangeAgent.type">
+                    <ion-row justify-content-around>
+                        <ion-col col-auto>
+                        <ion-row align-items-center>
+                            <ion-col col-auto>
+                            <div #casaCambioRadio>
+                                <ion-radio color="secondary" [value]="'0'"></ion-radio>
+                            </div>
+                            </ion-col>
+                            <ion-col col-auto (tap)="exchangeAgent.type = '0'">
+                            Casa de <br> cambio
+                            </ion-col>
+                        </ion-row>        
+                        </ion-col>
+                        <ion-col col-auto>
+                        <ion-row align-items-center>
+                            <ion-col col-auto>
+                            <div #cambistaRadio>
+                                <ion-radio color="secondary" [value]="'1'"></ion-radio>
+                            </div>
+                            </ion-col>
+                            <ion-col col-auto (tap)="exchangeAgent.type = '1'">
+                            Cambista
+                            </ion-col>
+                        </ion-row>        
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
+        </ng-container>
         <div>
             <input type="email" class="fill-width" [(ngModel)]="user.email">
         </div>

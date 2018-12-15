@@ -32,6 +32,9 @@ import { ChooseAccessPage } from '../pages/choose-access/choose-access';
 import { PersonTabsPage } from '../pages/person-tabs/person-tabs';
 import { ExchangeAgentTabsPage } from '../pages/exchange-agent-tabs/exchange-agent-tabs';
 import { ChooseProfilePage } from '../pages/choose-profile/choose-profile';
+import { UsersService } from '../providers/users.service';
+import { ExchangeAgentTabsHomePage } from '../pages/exchange-agent-tabs-home/exchange-agent-tabs-home';
+import { ExchangeAgentOfferingsService } from '../providers/exchange-agent-offerings.service';
 
 
 @NgModule({
@@ -48,7 +51,8 @@ import { ChooseProfilePage } from '../pages/choose-profile/choose-profile';
     ChooseAccessPage,
     PersonTabsPage,
     ExchangeAgentTabsPage,
-    ChooseProfilePage
+    ChooseProfilePage,
+    ExchangeAgentTabsHomePage
   ],
   imports: [
     BrowserModule,
@@ -71,7 +75,8 @@ import { ChooseProfilePage } from '../pages/choose-profile/choose-profile';
     ChooseAccessPage,
     PersonTabsPage,
     ExchangeAgentTabsPage,
-    ChooseProfilePage
+    ChooseProfilePage,
+    ExchangeAgentTabsHomePage
   ],
   providers: [
     StatusBar,
@@ -85,7 +90,9 @@ import { ChooseProfilePage } from '../pages/choose-profile/choose-profile';
     BaseService,
     BanksService,
     CurrenciesService,
-    UsersBankAccountsService
+    UsersBankAccountsService,
+    UsersService,
+    ExchangeAgentOfferingsService
   ]
 })
 export class AppModule {}

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { HomePage } from '../home/home';
+import { ExchangeAgentTabsHomePage } from '../exchange-agent-tabs-home/exchange-agent-tabs-home';
 
 /**
  * Generated class for the ExchangeAgentTabsPage page.
@@ -16,7 +17,7 @@ import { HomePage } from '../home/home';
 export class ExchangeAgentTabsPage {
 
 
-  tabHome = HomePage;
+  tabHome = ExchangeAgentTabsHomePage;
   tabNotifications = HomePage;
   tabHistorial = HomePage;
   tabProfile = HomePage;
