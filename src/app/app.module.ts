@@ -28,7 +28,14 @@ import { CurrenciesService } from '../providers/currencies.service';
 import { UsersBankAccountsService } from '../providers/users-bank-accounts.service';
 
 import 'rxjs/observable/of';
+<<<<<<< HEAD
 import { ExchangeAgentsPage } from '../pages/exchange-agents/exchange-agents';
+=======
+import { ChooseAccessPage } from '../pages/choose-access/choose-access';
+import { RegisterChooseProfilePage } from '../pages/register-choose-profile/register-choose-profile';
+import { PersonTabsPage } from '../pages/person-tabs/person-tabs';
+import { ExchangeAgentTabsPage } from '../pages/exchange-agent-tabs/exchange-agent-tabs';
+>>>>>>> 8c04db1763bc0b7b639397839ca60f22b47debc1
 
 
 @NgModule({
@@ -42,7 +49,14 @@ import { ExchangeAgentsPage } from '../pages/exchange-agents/exchange-agents';
     QuotePage,
     RegisterExchangeAgentPage,
     RegisterBankAccountPage,
+<<<<<<< HEAD
     ExchangeAgentsPage
+=======
+    ChooseAccessPage,
+    RegisterChooseProfilePage,
+    PersonTabsPage,
+    ExchangeAgentTabsPage
+>>>>>>> 8c04db1763bc0b7b639397839ca60f22b47debc1
   ],
   imports: [
     BrowserModule,
@@ -62,7 +76,14 @@ import { ExchangeAgentsPage } from '../pages/exchange-agents/exchange-agents';
     QuotePage,
     RegisterExchangeAgentPage,
     RegisterBankAccountPage,
+<<<<<<< HEAD
     ExchangeAgentsPage
+=======
+    ChooseAccessPage,
+    RegisterChooseProfilePage,
+    PersonTabsPage,
+    ExchangeAgentTabsPage
+>>>>>>> 8c04db1763bc0b7b639397839ca60f22b47debc1
   ],
   providers: [
     StatusBar,

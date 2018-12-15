@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { RegistrerAccountPage } from '../registrer-account/registrer-account';
 import { NavController } from 'ionic-angular';
 import { chooseLogin } from '../chooseLogin/chooseLogin';
+import { AuthProvider } from '../../providers/auth.service';
+import { User } from '../../models/user.model';
+import { PersonTabsPage } from '../person-tabs/person-tabs';
 
 
 @Component({
@@ -11,15 +14,22 @@ import { chooseLogin } from '../chooseLogin/chooseLogin';
 })
 export class Login implements OnInit {
 
-  constructor(public nvCtrl : NavController) { }
+  showPassword = false;
+  user = new User();
+
+  constructor(public nvCtrl : NavController, private auth: AuthProvider) { }
 
   ngOnInit() {
   }
-  singUp(){
 
-  }
-  registrerUser(){
-    this.nvCtrl.push(chooseLogin)
+  login(){
+    if( this.user.password && this.user.email ){
+      this.auth.login(this.user).subscribe( results => {
+        if(results){
+          this.nvCtrl.push(PersonTabsPage)
+        }
+      })
+    }
   }
 
 }

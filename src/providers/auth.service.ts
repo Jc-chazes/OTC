@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Rx';
 import { ApiUtil } from './utils/api.util';
 import { pick, omit } from 'lodash';
 import { JwtUtil } from './utils/jwt.util';
+import { User } from '../models/user.model';
 
 @Injectable()
 export class AuthProvider {
@@ -34,7 +35,18 @@ export class AuthProvider {
         ...omit(exchangeAgent,['user','score'])
       }
     }).map( resp => {
-      debugger;
+      this.jwt.setToken(resp.jwt);
+      return true;
+    }).catch( err => {
+      return Observable.of(false);
+    });
+  }
+
+  login(user: User): Observable<boolean>{
+    return this.api.post('/auth/local',{
+      identifier: user.email,
+      password: user.password
+    },{},false).map( resp => {
       this.jwt.setToken(resp.jwt);
       return true;
     }).catch( err => {

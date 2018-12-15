@@ -1,0 +1,35 @@
+page-choose-access {
+    .login {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 300px;
+        height: 300px;
+        flex-direction: column;
+        margin: 50% auto
+    }
+    .login__singUp {
+        width: 260px;
+        height: 23px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        margin-bottom: 12px;
+        background-color: #3065AC;
+        outline: none;
+        color:white
+    }    
+    .login__registrerUser {
+        width: 260px;
+        height: 23px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        margin-bottom: 12px;
+        background-color:  #3065AC;
+        outline: none;
+        color:white
+    }
+}

@@ -4,12 +4,13 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { chooseLogin } from '../pages/chooseLogin/chooseLogin';
 import { Login } from '../pages/login/login';
+import { ChooseAccessPage } from '../pages/choose-access/choose-access';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = Login;
+  rootPage:any = ChooseAccessPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
