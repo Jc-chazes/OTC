@@ -1,0 +1,114 @@
+<!--
+  Generated template for the DetailExchangeAgentPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title></ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class='contain'>
+  <ion-grid>
+    <div style='text-align: center;color:#ffffff'>Detalles de la casa de cambio</div>
+    <ion-row>
+      <ion-col col-6 >
+        <div class="detailExchangeAgent__icon-user">
+            <img src="assets/imgs/user.png" style="width:70px;height: 70px"/>  
+        </div>  
+      </ion-col>
+      <ion-col col-6>
+       <div style='color:#ffffff'>{{detail_exchangue.name}}</div>
+       <div style='color:#ffffff'>{{detail_exchangue.address}}</div>
+       <div style='color:#ffffff'>RUC : {{detail_exchangue.documentNumber}}</div>
+       <div  class="detailExchangeAgent__style__stars">
+          <div *ngFor='let in of counter(detail_exchangue.score)'>
+              <img src='assets/imgs/star.png' class="detailExchangeAgent__icon-star"/>
+          </div>
+          <div *ngFor='let in of counter(5-detail_exchangue.score)' >
+              <img src='assets/imgs/star-white.png' class="detailExchangeAgent__icon-star"  />
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-grid class='wapper-contain-text'>
+     
+        <div class='wapper'>
+     
+            <div class='title'>Servicio :</div>
+     
+              <div class='text'>Venta</div>
+        </div> 
+  
+      
+        <div class='wapper'>
+     
+              <div class='title'>Tipo de moneda :</div>
+     
+              <div class='text'>Dolar</div>
+
+        </div>  
+      
+     
+          <div class='wapper'>
+         
+                  <div class='title'>Monto solicitado :</div>
+
+
+     
+              <div class='text'>$300</div>
+
+
+            </div>
+          
+              <div class='wapper'>
+           
+                    <div class='title'>Valor tipo de cambio :</div>
+    
+            
+                  <div class='text'> S/ 3.22</div>
+
+    
+               </div> 
+ 
+                <div class='wapper'>
+             
+                    <div class='title'>Cobro por transaccion</div>
+      
+             
+                      <div class='text'>$ 1</div>
+        
+                  </div>
+            
+              <div class='title_small'>Incluye comision por transaccion mas IGV</div> 
+
+        
+                <div class='wapper'>
+             
+                    <div class='title'>Monto a depositar en OTC :</div>
+      
+             
+                      <div class='text'>$ 301</div>
+        
+                   </div> 
+           
+              
+          
+                <div class='wapper'>
+             
+                    <div class='title'>Monto a recibir de OTC :</div>
+      
+             
+                      <div class='text'>S/ 966.00</div>
+        
+                  </div>
+                  <div class='next' (tap)='nextPage()'>Siguiente</div>
+    </ion-grid>  
+ 
+  </ion-grid>
+</ion-content>

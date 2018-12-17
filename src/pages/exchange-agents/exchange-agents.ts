@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormControl } from '@angular/forms';
 import 'rxjs/add/operator/debounceTime';
 import { DataService } from '../../providers/data.service';
+import { DetailExchangeAgentPage } from '../detail-exchange-agent/detail-exchange-agent';
+import { AppStateService } from '../../providers/app-state.service';
 
 
 @Component({
@@ -14,9 +16,7 @@ export class ExchangeAgentsPage {
   searchControl: FormControl;
   exchange_agents: any;
   searching: any = false;
-
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, public dataService: DataService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public dataService: DataService,public appService : AppStateService) {
     this.searchControl = new FormControl();
   }
   public counter(i: number) {
@@ -37,4 +37,8 @@ export class ExchangeAgentsPage {
     this.exchange_agents = this.dataService.filterItems(this.searchTerm);
   }
 
+  public detailExchangeAgent(item :any){
+    this.appService.setState({detail_exchangue:item})
+    this.navCtrl.push(DetailExchangeAgentPage)
+  }
 }

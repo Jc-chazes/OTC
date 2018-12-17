@@ -35,8 +35,8 @@
           <div *ngFor='let in of counter(item.score)'>
               <img src='assets/imgs/star.png' class="exchange-agents__icon-star"/>
           </div>
-          <div *ngFor='let in of counter(5-item.score)'>
-              <img src='assets/imgs/star-white.png' class="exchange-agents__icon-star"/>
+          <div *ngFor='let in of counter(5-item.score)' >
+              <img src='assets/imgs/star-white.png' class="exchange-agents__icon-star"  />
           </div>
         </div>
       </ion-col>
@@ -45,7 +45,7 @@
           <div class="exchangue-agents__style">{{item.exchangeagentofferings[0].requestedCurrencyAmount}}</div>
       </ion-col> 
       <ion-col col-3 >
-          <div>
+          <div (tap)='detailExchangeAgent(item)'>
               <img src='assets/imgs/circle-three.png' class="exchange-agents__circle-three"/>
           </div>
       </ion-col>      

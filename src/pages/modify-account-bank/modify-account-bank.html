@@ -1,0 +1,177 @@
+<!--
+  Generated template for the RegisterBankAccountPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>register-bank-account</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <form [formGroup]="userBankAccountFG" (submit)="submit()">
+        <h4 class="text-center">Ingrese su número de cuenta bancaria</h4>
+        <div class="spacer-50"></div>
+        <ion-grid>
+          <ion-row align-items-center>
+            <ion-col col-4>
+              <div class="text-center">
+                <b>Entidad bancaria</b>
+              </div>
+            </ion-col>
+            <ion-col>
+              <div class="input pos-relative">
+                <ng-container *ngFor="let bank of bankList; let i = index;">
+                  <div class="bank" *ngIf="i == currentBankIndex">
+                    <img [src]="bank.image.fileUrl" alt="" class="bank__image">
+                  </div>
+                </ng-container>
+                <div class="prev__bank" (tap)="onPreviousBank()">
+                  <img src="/assets/imgs/icons/arrow_left.svg" alt="">
+                </div>
+                <div class="next__bank" (tap)="onNextBank()">
+                  <img src="/assets/imgs/icons/arrow_right.svg" alt="">
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row align-items-center>
+            <ion-col col-4>
+              <div class="text-center">
+                <b>Titular de la cuenta</b>
+              </div>
+            </ion-col>
+            <ion-col>
+              <input type="text" class="fill-width" formControlName="holderName">
+            </ion-col>
+          </ion-row>
+          <ion-row align-items-center>
+            <ion-col col-4>
+              <div class="text-center">
+                <b>Número de la cuenta</b>
+              </div>
+            </ion-col>
+            <ion-col>
+              <input type="text" class="fill-width" formControlName="accountNumber">
+            </ion-col>
+          </ion-row>
+          <ion-row align-items-center>
+            <ion-col col-4>
+              <div class="text-center">
+                <b>Tipo de cuenta</b>
+              </div>
+            </ion-col>
+            <ion-col>
+              <ion-row class="input currencySelect">
+                <ion-col>
+                  <span>Soles</span>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+          <ion-row align-items-center>
+            <ion-col col-4>
+              <div class="text-center">
+                <b>Apelativo de la cuenta</b>
+              </div>
+            </ion-col>
+            <ion-col>
+              <input type="text" class="fill-width" formControlName="apellative">
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <div class="spacer-50"></div>
+        <div class="text-center">
+          <button fluid ion-button color="secondary">
+            Guardar
+          </button>
+        </div>
+      </form>
+  <form [formGroup]="userBankAccountFG" (submit)="submit()">
+    <h4 class="text-center">Ingrese su número de cuenta bancaria</h4>
+    <div class="spacer-50"></div>
+    <ion-grid>
+      <ion-row align-items-center>
+        <ion-col col-4>
+          <div class="text-center">
+            <b>Entidad bancaria</b>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="input pos-relative">
+            <ng-container *ngFor="let bank of bankList; let i = index;">
+              <div class="bank" *ngIf="i == currentBankIndex">
+                <img [src]="bank.image.fileUrl" alt="" class="bank__image">
+              </div>
+            </ng-container>
+            <div class="prev__bank" (tap)="onPreviousBank()">
+              <img src="/assets/imgs/icons/arrow_left.svg" alt="">
+            </div>
+            <div class="next__bank" (tap)="onNextBank()">
+              <img src="/assets/imgs/icons/arrow_right.svg" alt="">
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row align-items-center>
+        <ion-col col-4>
+          <div class="text-center">
+            <b>Titular de la cuenta</b>
+          </div>
+        </ion-col>
+        <ion-col>
+          <input type="text" class="fill-width" formControlName="holderName">
+        </ion-col>
+      </ion-row>
+      <ion-row align-items-center>
+        <ion-col col-4>
+          <div class="text-center">
+            <b>Número de la cuenta</b>
+          </div>
+        </ion-col>
+        <ion-col>
+          <input type="text" class="fill-width" formControlName="accountNumber">
+        </ion-col>
+      </ion-row>
+      <ion-row align-items-center>
+        <ion-col col-4>
+          <div class="text-center">
+            <b>Tipo de cuenta</b>
+          </div>
+        </ion-col>
+        <ion-col>
+          <ion-row class="input currencySelect">
+            <ion-col class="currencySelect__item text-center" *ngFor="let currency of currencyList"
+            [ngClass]="{ active: userBankAccountFG.value.currency == currency }"
+            (tap)=" userBankAccountFG.patchValue({ currency: currency }) ">
+              <span>{{ currency.name }}</span>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row align-items-center>
+        <ion-col col-4>
+          <div class="text-center">
+            <b>Apelativo de la cuenta</b>
+          </div>
+        </ion-col>
+        <ion-col>
+          <input type="text" class="fill-width" formControlName="apellative">
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <div class="spacer-50"></div>
+    <div class="text-center">
+      <button fluid ion-button color="secondary">
+        Guardar
+      </button>
+    </div>
+  </form>
+
+ 
+</ion-content>

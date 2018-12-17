@@ -34,6 +34,11 @@ import { ChooseProfilePage } from '../pages/choose-profile/choose-profile';
 import { ExchangeAgentsPage } from '../pages/exchange-agents/exchange-agents';
 import { ExchangueAgentService } from '../providers/exchange-agent.service';
 import { DataService } from '../providers/data.service';
+import { UsersService } from '../providers/users.service';
+import { ExchangeAgentTabsHomePage } from '../pages/exchange-agent-tabs-home/exchange-agent-tabs-home';
+import { ExchangeAgentOfferingsService } from '../providers/exchange-agent-offerings.service';
+import { DetailExchangeAgentPage } from '../pages/detail-exchange-agent/detail-exchange-agent';
+import { ModifyAccountBankPage } from '../pages/modify-account-bank/modify-account-bank';
 
 
 @NgModule({
@@ -52,6 +57,9 @@ import { DataService } from '../providers/data.service';
     ExchangeAgentTabsPage,
     ChooseProfilePage,
     ExchangeAgentsPage,
+    ExchangeAgentTabsHomePage,
+    DetailExchangeAgentPage,
+    ModifyAccountBankPage
   ],
   imports: [
     BrowserModule,
@@ -76,7 +84,10 @@ import { DataService } from '../providers/data.service';
     ExchangeAgentTabsPage,
     ChooseProfilePage,
     ExchangeAgentsPage,
-    ChooseProfilePage
+    ChooseProfilePage,
+    ExchangeAgentTabsHomePage,
+    DetailExchangeAgentPage,
+    ModifyAccountBankPage
   ],
   providers: [
     StatusBar,
@@ -92,8 +103,9 @@ import { DataService } from '../providers/data.service';
     CurrenciesService,
     UsersBankAccountsService,
     ExchangueAgentService,
-    DataService
-    
+    DataService,  
+    UsersService,
+    ExchangeAgentOfferingsService
   ]
 })
 export class AppModule {}

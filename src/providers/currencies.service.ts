@@ -8,14 +8,24 @@ import { Injectable } from "@angular/core";
 @Injectable()
 export class CurrenciesService extends BaseService implements CrudService<Currency>{
 
+    currencyList: Currency[];
+
+    get currencyPEN(): Currency{
+        return this.currencyList.find(  c => c.code == 'PEN' );
+    }
+
     find(specification?: BaseSpecification): Observable<Currency[]> {
-        return this.api.get('/currencies')
-        .map( resp => {
-            return resp.map( be => new Currency({ ...be }) );
-        }).catch( err => {
-            console.error(err);
-            return Observable.of([]);
-        });        
+        if( !this.currencyList ){
+            return this.api.get('/currencies')
+            .map( resp => {
+                this.currencyList = resp.map( be => new Currency({ ...be }) );
+                return this.currencyList;
+            }).catch( err => {
+                console.error(err);
+                return Observable.of([]);
+            });
+        }
+        return Observable.of(this.currencyList);
     }    
     findOne(specification?: BaseSpecification): Observable<Currency> {
         throw new Error("Method not implemented.");
