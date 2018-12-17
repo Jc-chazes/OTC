@@ -1,9 +1,15 @@
+@import '../styles/main.scss';
+
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/theming/
 
 // Font path is used to include ionicons,
 // roboto, and noto sans fonts
 $font-path: "../assets/fonts";
+  
+$font-family-ios-base: $font-primary;
+$font-family-md-base: $font-primary;
+$font-family-wp-base: $font-primary;
 
 
 // The app direction is used to include
@@ -13,8 +19,6 @@ $app-direction: ltr;
 
 
 @import "ionic.globals";
-@import '../styles/main.scss';
-
 
 // Shared Variables
 // --------------------------------------------------
@@ -39,6 +43,8 @@ $colors: (
   light:      #f4f4f4,
   dark:       #222
 );
+
+$text-color: #FFF;
 
 
 // App iOS Variables
@@ -85,3 +91,4 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+

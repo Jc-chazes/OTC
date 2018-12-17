@@ -2,9 +2,14 @@ import { BaseService } from "./base/base.service";
 import { Injectable } from "@angular/core";
 import { User } from "../models/user.model";
 import { Observable, BehaviorSubject } from "rxjs";
+import { ApiUtil } from "./utils/api.util";
 
 @Injectable()
 export class UsersService extends BaseService{
+
+    constructor(api: ApiUtil){
+        super(api);
+    }
 
     private _currentUser: BehaviorSubject<User> = new BehaviorSubject<User>(null);
 

@@ -8,11 +8,14 @@ import { ApiUtil } from "./utils/api.util";
 import { UsersService } from "./users.service";
 import { MyExchangeAgentOfferings } from "./specifications/exchange-agent-offering.specification";
 import { pick } from 'lodash';
+import { CurrenciesService } from "./currencies.service";
+import { Currency } from "../models/currency.model";
+import { ExchangeAgentOfferingGroup } from "../models/exchang-agent-offering-group.model";
 
 @Injectable()
 export class ExchangeAgentOfferingsService extends BaseService implements CrudService<ExchangeAgentOffering>{
 
-    constructor(api: ApiUtil, private users: UsersService){
+    constructor(api: ApiUtil, private users: UsersService, private currencies: CurrenciesService){
         super(api);
     }
 
@@ -49,6 +52,43 @@ export class ExchangeAgentOfferingsService extends BaseService implements CrudSe
     }
     remove(entity: ExchangeAgentOffering): Observable<ExchangeAgentOffering> {
         throw new Error("Method not implemented.");
+    }
+
+    getGroupedExchangeAgentOfferings(): Observable<ExchangeAgentOfferingGroup[]>{
+        return Observable.forkJoin(
+            this.currencies.find(),
+            this.find( new MyExchangeAgentOfferings() )
+        ).map( results => {
+            let groupedExchangeAgentOfferingList: ExchangeAgentOfferingGroup[] = [];
+            let currencyList = results[0];
+            let exchangeAgentOfferingList = results[1];
+            currencyList
+            .filter( c => c.code != 'PEN' )
+            .forEach( currency => {
+              //Compra
+              let buyExchange = exchangeAgentOfferingList.find( e => e.requestedCurrency == currency.code ) || new ExchangeAgentOffering({
+                receivedCurrency: 'PEN',
+                receivedCurrencyAmount: 0,
+                requestedCurrency: currency.code,
+                requestedCurrencyAmount: 1,
+                type: 'C',
+                active: true
+              });
+              buyExchange.createBackup();
+              //Venta
+              let sellExchange = exchangeAgentOfferingList.find( e => e.receivedCurrency == currency.code ) || new ExchangeAgentOffering({
+                requestedCurrency: 'PEN',
+                requestedCurrencyAmount: 0,
+                receivedCurrency: currency.code,
+                receivedCurrencyAmount: 1,
+                type: 'V',
+                active: true
+              });
+              sellExchange.createBackup();
+              groupedExchangeAgentOfferingList.push( new ExchangeAgentOfferingGroup({ currency, exchanges: [buyExchange, sellExchange] }) );
+            });
+            return groupedExchangeAgentOfferingList;
+        });
     }
 
     

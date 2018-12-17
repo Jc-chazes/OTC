@@ -1,0 +1,80 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>exchange-agent-my-requests</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="page">
+  <div padding>
+    <update-exchange-reminder></update-exchange-reminder>
+    <stepper mode="exchange-agent" [currentStep]="1"></stepper>
+    <div class="pl-20 pr-20">
+      <table class="fill-width myRequests__exchanges">
+        <thead>
+          <td></td>
+          <td class="text-center pb-5">Precio de <br> compra</td>
+          <td class="text-center pb-5">Precio de <br> venta</td>
+        </thead>
+        <tbody>
+          <tr *ngFor="let group of groupedExchangeList">
+            <td>
+              <b>{{ group.currency.name }}</b>
+            </td>
+            <td align="center">
+              <input type="text" class="fill-width text-center" readonly 
+              [value]="group.fromCurrency.symbol + ' ' + group.buyExchange.receivedCurrencyAmount">
+            </td>
+            <td align="center">
+              <input type="text" class="fill-width text-center" readonly 
+              [value]="group.fromCurrency.symbol + ' ' + group.sellExchange.requestedCurrencyAmount">
+            </td>
+          </tr>
+        </tbody>
+      </table>  
+    </div>
+  </div>
+  <div class="myRequests__requests">
+    <div class="myRequests__requests__title flex-row-layout ai-center">
+      <span>
+        Sus solicitudes
+      </span>
+      <span class="flex"></span>
+      <ion-icon name="refresh"></ion-icon>
+    </div>
+    <div>
+      <div class="myRequests__requests__item" *ngFor="let transaction of pendingTransactionList">
+        <div class="spacer-15"></div>
+        <ion-row>
+          <ion-col col-2 class="myRequests__requests__item__avatar">
+            <div class="fill-height flex-col-layout jc-center">
+              <div class="square"></div>
+            </div>
+          </ion-col>
+          <ion-col col-4>
+            <p>
+              {{ transaction.person.fullName }}
+            </p>
+            <p>
+              <span class="text-thin">Servicio:&nbsp;</span>
+              <span>{{ transaction.exchangeAgentOffering.type == 'V' ? 'Venta' : 'Compra' }}</span>
+            </p>
+          </ion-col>
+          <ion-col col-4>
+            <p class="text-thin">Monto solicitado</p>
+            <p class="text-thin myRequests__requests__item__amount">
+              {{ transaction.targetCurrency.symbol }} {{ transaction.amount.toFixed(2) }}
+            </p>
+          </ion-col>
+          <ion-col col-2 class="no-padding pt-5">
+            <!-- <p class="text-thin">Continuar</p> -->
+            <p> <countdown [date]="transaction.created_at"></countdown> </p>
+            <ion-icon ios="ios-more" md="ios-more"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
+  </div>
+</ion-content>

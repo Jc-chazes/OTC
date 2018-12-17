@@ -33,8 +33,13 @@ import { PersonTabsPage } from '../pages/person-tabs/person-tabs';
 import { ExchangeAgentTabsPage } from '../pages/exchange-agent-tabs/exchange-agent-tabs';
 import { ChooseProfilePage } from '../pages/choose-profile/choose-profile';
 import { UsersService } from '../providers/users.service';
-import { ExchangeAgentTabsHomePage } from '../pages/exchange-agent-tabs-home/exchange-agent-tabs-home';
 import { ExchangeAgentOfferingsService } from '../providers/exchange-agent-offerings.service';
+import { ExchangeAgentMyOfferingsPage } from '../pages/exchange-agent-my-offerings/exchange-agent-my-offerings';
+import { LoadingUtil } from '../providers/utils/loading.util';
+import { AlertUtil } from '../providers/utils/alert.util';
+import { ComponentsModule } from '../components/components.module';
+import { ExchangeAgentMyRequestsPage } from '../pages/exchange-agent-my-requests/exchange-agent-my-requests';
+import { TransactionsService } from '../providers/transaction.service';
 
 
 @NgModule({
@@ -52,7 +57,8 @@ import { ExchangeAgentOfferingsService } from '../providers/exchange-agent-offer
     PersonTabsPage,
     ExchangeAgentTabsPage,
     ChooseProfilePage,
-    ExchangeAgentTabsHomePage
+    ExchangeAgentMyOfferingsPage,
+    ExchangeAgentMyRequestsPage
   ],
   imports: [
     BrowserModule,
@@ -60,6 +66,7 @@ import { ExchangeAgentOfferingsService } from '../providers/exchange-agent-offer
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    ComponentsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -76,7 +83,8 @@ import { ExchangeAgentOfferingsService } from '../providers/exchange-agent-offer
     PersonTabsPage,
     ExchangeAgentTabsPage,
     ChooseProfilePage,
-    ExchangeAgentTabsHomePage
+    ExchangeAgentMyOfferingsPage,
+    ExchangeAgentMyRequestsPage
   ],
   providers: [
     StatusBar,
@@ -87,12 +95,15 @@ import { ExchangeAgentOfferingsService } from '../providers/exchange-agent-offer
     StorageUtil,
     JwtUtil,
     ApiUtil,
+    AlertUtil,
+    LoadingUtil,
     BaseService,
     BanksService,
     CurrenciesService,
     UsersBankAccountsService,
+    ExchangeAgentOfferingsService,
     UsersService,
-    ExchangeAgentOfferingsService
+    TransactionsService
   ]
 })
 export class AppModule {}

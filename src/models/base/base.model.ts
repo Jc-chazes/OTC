@@ -3,6 +3,8 @@ import { isEqual, pick } from 'lodash';
 export class BaseModel<T>{
 
     id: number;
+    created_at: Date;
+    updated_at: Date;
 
     protected _backup: T;
 

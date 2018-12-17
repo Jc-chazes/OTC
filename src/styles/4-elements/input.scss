@@ -1,6 +1,7 @@
 input, .input{
     padding: 8px;
-    min-height: 35px;
+    // min-height: 35px;
+    color: #000 !important;
     border: 1px solid rgba(#000,.25);
     @include borderRadius(4px);
 }
