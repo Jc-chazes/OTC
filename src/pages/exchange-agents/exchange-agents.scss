@@ -33,4 +33,19 @@ page-exchange-agents {
     width: 43px;
     height: 46px;
   }
+  .exchangue-agents__style{
+    display:flex;
+    align-items: center;
+    justify-content: center
+  }
+  .exchange-agents__icon-star{
+    width: 10px;
+    height: 10px;
+  }
+  .exchangue-agents__style__stars{
+    display:flex;
+    align-items: center;
+    justify-content: space-evenly
+  }
+  
 }

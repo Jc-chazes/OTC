@@ -31,6 +31,9 @@ import { ChooseAccessPage } from '../pages/choose-access/choose-access';
 import { PersonTabsPage } from '../pages/person-tabs/person-tabs';
 import { ExchangeAgentTabsPage } from '../pages/exchange-agent-tabs/exchange-agent-tabs';
 import { ChooseProfilePage } from '../pages/choose-profile/choose-profile';
+import { ExchangeAgentsPage } from '../pages/exchange-agents/exchange-agents';
+import { ExchangueAgentService } from '../providers/exchange-agent.service';
+import { DataService } from '../providers/data.service';
 
 
 @NgModule({
@@ -47,7 +50,8 @@ import { ChooseProfilePage } from '../pages/choose-profile/choose-profile';
     ChooseAccessPage,
     PersonTabsPage,
     ExchangeAgentTabsPage,
-    ChooseProfilePage
+    ChooseProfilePage,
+    ExchangeAgentsPage,
   ],
   imports: [
     BrowserModule,
@@ -70,6 +74,8 @@ import { ChooseProfilePage } from '../pages/choose-profile/choose-profile';
     ChooseAccessPage,
     PersonTabsPage,
     ExchangeAgentTabsPage,
+    ChooseProfilePage,
+    ExchangeAgentsPage,
     ChooseProfilePage
   ],
   providers: [
@@ -85,7 +91,9 @@ import { ChooseProfilePage } from '../pages/choose-profile/choose-profile';
     BanksService,
     CurrenciesService,
     UsersBankAccountsService,
-    ExchangueAgentService
+    ExchangueAgentService,
+    DataService
+    
   ]
 })
 export class AppModule {}
