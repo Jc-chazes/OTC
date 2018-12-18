@@ -1,0 +1,38 @@
+.modal-wrapper{
+}
+
+ion-modal ion-backdrop{
+    visibility: visible !important;
+}
+
+%modal{
+    font-size: 16px;
+    background-color: #FFF;
+    background-image: url('/assets/imgs/backgrounds/modals_bk.png');
+    background-size: 100% 100%;
+    background-position: center;
+    height: 290px !important;
+    width: 230px !important;
+    position: absolute;
+    // left: 50% !important;
+    // top: 50% !important;
+    left: calc( 50% - 115px ) !important;
+    top: calc( 50% - 145px ) !important;
+    // @include transform(translate(-50%,-50%));
+    @include borderRadius(12px);
+    .modal-content{
+        font-size: 18px;
+    }
+}
+
+.rejectWarningModal{
+    .modal-wrapper{
+        @extend %modal;
+    }
+}
+
+.rejectReasonSelectModal{
+    .modal-wrapper{
+        @extend %modal;
+    }
+}

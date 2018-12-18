@@ -7,6 +7,8 @@ import { ExchangeAgentOfferingGroup } from '../../models/exchang-agent-offering-
 import { TransactionsService } from '../../providers/transaction.service';
 import { Transaction } from '../../models/transaction.model';
 import { MyPendingTransactions } from '../../providers/specifications/transaction.specification';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ExchangeAgentRequestDetailsPage } from '../exchange-agent-request-details/exchange-agent-request-details';
 
 /**
  * Generated class for the ExchangeAgentMyRequestsPage page.
@@ -24,7 +26,7 @@ export class ExchangeAgentMyRequestsPage {
   groupedExchangeList: ExchangeAgentOfferingGroup[];
   pendingTransactionList: Transaction[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, public navParams: NavParams, public sanitizer: DomSanitizer,
     private exchangeAgentOfferings: ExchangeAgentOfferingsService, private transactions: TransactionsService) {
     this.exchangeAgentOfferings.getGroupedExchangeAgentOfferings()
     .subscribe( results => {
@@ -38,6 +40,19 @@ export class ExchangeAgentMyRequestsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ExchangeAgentMyRequestsPage');
+  }
+
+  getAvatarUrl(transaction: Transaction){
+    if( transaction.person.user.photo ){
+      return this.sanitizer.bypassSecurityTrustStyle(`url('${transaction.person.user.photo.fileUrl}')`);
+    }
+    return this.sanitizer.bypassSecurityTrustStyle(`url('/assets/imgs/avatar_placeholder.png')`);
+  }
+
+  goToRequestDetails(transaction: Transaction){
+    this.navCtrl.push( ExchangeAgentRequestDetailsPage, { 
+      transaction
+    });
   }
 
 }

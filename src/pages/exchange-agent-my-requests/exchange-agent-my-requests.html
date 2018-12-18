@@ -50,7 +50,7 @@
         <ion-row>
           <ion-col col-2 class="myRequests__requests__item__avatar">
             <div class="fill-height flex-col-layout jc-center">
-              <div class="square"></div>
+              <div class="square" [style.backgroundImage]="getAvatarUrl(transaction)"></div>
             </div>
           </ion-col>
           <ion-col col-4>
@@ -68,7 +68,7 @@
               {{ transaction.targetCurrency.symbol }} {{ transaction.amount.toFixed(2) }}
             </p>
           </ion-col>
-          <ion-col col-2 class="no-padding pt-5">
+          <ion-col col-2 class="no-padding pt-5" (tap)="goToRequestDetails(transaction)">
             <!-- <p class="text-thin">Continuar</p> -->
             <p> <countdown [date]="transaction.created_at"></countdown> </p>
             <ion-icon ios="ios-more" md="ios-more"></ion-icon>

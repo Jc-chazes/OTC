@@ -18,6 +18,23 @@ export class Transaction extends BaseModel<Transaction>{
     exchangeAgentOffering: ExchangeAgentOffering;
     type: 'SAFE' | 'FAST';
 
+    fromCurrency: Currency;
     targetCurrency: Currency;
+
+    currencyToDeposit: Currency;
+    currencyToReceive: Currency;
+
+    get amountToDeposit(){
+        return this.amount * this.exchangeAgentOffering.receivedCurrencyAmount;
+    }
+
+    get amountToReceive(){
+        switch( this.exchangeAgentOffering.type ){
+            case 'V':
+                return this.amount * this.exchangeAgentOffering.requestedCurrencyAmount;
+            case 'C':
+                return this.amount;
+        }
+    }
 
 }

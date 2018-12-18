@@ -16,8 +16,7 @@ page-exchange-agent-my-requests {
                 line-height: 0.8;           
                 &__avatar{
                    .square{
-                        background-image: url('/assets/imgs/avatar_placeholder.png');
-                        background-position: center;
+                        background-position: top;
                         background-repeat: no-repeat;
                         background-size: cover;
                    }

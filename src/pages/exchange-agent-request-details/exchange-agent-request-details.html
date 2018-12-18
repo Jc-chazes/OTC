@@ -1,0 +1,101 @@
+<!--
+  Generated template for the ExchangeAgentRequestDetailsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>exchange-agent-request-details</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="page">
+  <div class="spacer-20"></div>
+  <stepper mode="exchange-agent" [currentStep]="2"></stepper>
+  <ion-row align-items-center>
+    <ion-col col-2></ion-col>
+    <ion-col col-4>
+      <div class="square w-background-image-top" [style.backgroundImage]="avatarUrl"></div>
+    </ion-col>
+    <ion-col col-6>
+      <p>{{ transaction.person.fullName }}</p>
+      <p>{{ transaction.person.user.email }}</p>
+      <p>{{ transaction.person.birthdate | age }} años</p>
+    </ion-col>
+  </ion-row>
+  <div class="spacer-15"></div>
+  <div class="details__wrapper">
+    <div class="pb-10">
+      <div class="input flex-row-layout text-bold">        
+        <span>Solicitud del servicio:</span>
+        <span class="flex"></span>
+        <span>{{ transaction.exchangeAgentOffering.type == 'V' ? 'Venta' : 'Compra' }}</span>
+      </div>
+    </div>
+    <div class="pb-10">
+      <div class="input flex-row-layout text-bold">
+        <span>Tipo de moneda:</span>
+        <span class="flex"></span>
+        <span>{{ transaction.targetCurrency.name }}</span>
+      </div>
+    </div>
+    <div class="pb-10">
+      <div class="input flex-row-layout text-bold">
+        <span>Valor de tipo de cambio:</span>
+        <span class="flex"></span>
+        <span>{{ transaction.fromCurrency.symbol }}</span>&nbsp;
+        <span>{{ transaction.exchangeAgentOffering.type == 'V' ? 
+          transaction.exchangeAgentOffering.requestedCurrencyAmount : 
+          transaction.exchangeAgentOffering.receivedCurrencyAmount
+        }}</span>
+      </div>
+    </div>
+    <div class="pb-10">
+      <div class="input flex-row-layout text-bold">
+        <span>Monto parcial solicitado:</span>
+        <span class="flex"></span>
+        <span>{{ transaction.targetCurrency.symbol }}</span>&nbsp;
+        <span>{{ transaction.amount }}</span>
+      </div>
+    </div>
+    <div class="pb-10">
+      <div class="input flex-row-layout text-bold">
+        <span>Cobro por transacción:</span>
+        <span class="flex"></span>
+        <span>{{ transaction.currencyToDeposit.symbol }}</span>&nbsp;
+        <span>{{ otcComission.content }}</span>
+      </div>
+      <span><small>Incluye comisión OTC más IGV</small></span>
+    </div>
+    <div class="pb-10">
+      <div class="input flex-row-layout text-bold">
+        <span>Monto a depositar a OTC:</span>
+        <span class="flex"></span>
+        <span>{{ transaction.currencyToDeposit.symbol }}</span>&nbsp;
+        <span>{{ otcComission.content + transaction.amountToDeposit }}</span>
+      </div>
+    </div>
+    <div class="pb-10">
+      <div class="input flex-row-layout text-bold">
+        <span>Monto a recibir de OTC:</span>
+        <span class="flex"></span>
+        <span>{{ transaction.currencyToReceive.symbol }}</span>&nbsp;
+        <span>{{ transaction.amountToReceive }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="spacer-20"></div>
+  <div class="flex-col-layout ai-center">
+    <button fluid ion-button color="secondary" (tap)="reject()">
+      Rechazar
+    </button>
+    <div class="spacer-10"></div>
+    <button fluid ion-button color="secondary" (tap)="continue()">
+      Siguiente
+    </button>
+  </div>
+</ion-content>

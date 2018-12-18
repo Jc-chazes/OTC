@@ -41,11 +41,10 @@ $colors: (
   secondary:  $accent-color,
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #222
+  dark:       $tertiary-color
 );
 
 $text-color: #FFF;
-
 
 // App iOS Variables
 // --------------------------------------------------

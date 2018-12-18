@@ -1,0 +1,20 @@
+<div class="rejectWarning flex-col-layout jc-center fill-height">
+  <div class="modal-content">
+    <p class="text-center">
+      <b>¡Cuidado!</b>
+    </p>
+    <p class="text-center">
+      Rechazar varias solicitudes <br>
+      puede originar una baja <br> 
+      calificación de estrellas
+    </p>
+  </div>
+  <div class="flex-col-layout ai-center">
+    <button fluid ion-button color="dark" (tap)="viewCtrl.dismiss(true)">
+      Volver a rechazar
+    </button>
+    <button fluid ion-button color="dark" (tap)="viewCtrl.dismiss(false)">
+      Aceptar solicitud
+    </button>
+  </div>
+</div>
