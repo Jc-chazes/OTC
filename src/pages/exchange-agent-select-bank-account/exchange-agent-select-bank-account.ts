@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { UsersBankAccountsService } from '../../providers/users-bank-accounts.service';
+import { LoadingUtil } from '../../providers/utils/loading.util';
+import { MyBankAccountsSpecification } from '../../providers/specifications/user-bank-account.specification';
+import { UserBankAccount } from '../../models/user-bank-account.model';
+import { BanksService } from '../../providers/banks.service';
+import { Bank } from '../../models/bank.model';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 /**
  * Generated class for the ExchangeAgentSelectBankAccountPage page.
@@ -14,11 +21,67 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class ExchangeAgentSelectBankAccountPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  mode = 'NEW';
+  userBankAccountList: UserBankAccount[];
+  selectedUserBankAccountList: UserBankAccount;
+  bankList: Bank[];
+  currentBankIndex = 0;
+  userBankAccountFG: FormGroup;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    private userBankAccounts: UsersBankAccountsService, private loading: LoadingUtil,
+    private banks: BanksService, private fb: FormBuilder) {
+    this.banks.find().subscribe( results => {
+      this.bankList = results;
+    });
+    this.userBankAccountFG = this.fb.group({
+      holderName: ['',[Validators.required]],
+      accountNumber: ['',[Validators.required]],
+      apellative: ['',[Validators.required]],
+      currency: [null,[Validators.required]],
+      bank: [null,[Validators.required]]
+    });
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ExchangeAgentSelectBankAccountPage');
+  }
+
+  ionViewWillEnter(){
+    this.loading.show();
+    this.userBankAccounts.find( new MyBankAccountsSpecification() )
+    .subscribe( results => {
+      this.userBankAccountList = results;
+      if( this.userBankAccountList.length <= 0 ){
+        this.mode = 'NEW';
+      }else{
+        this.mode = 'SELECT'
+        this.selectedUserBankAccountList = this.userBankAccountList[0];
+      }
+      this.loading.hide();
+    })    
+  }
+
+  onPreviousBank(){
+    if( this.currentBankIndex == 0 ){
+      this.currentBankIndex = this.bankList.length - 1;
+    }else {
+      this.currentBankIndex--;
+    }
+    this.userBankAccountFG.patchValue({
+      bank: this.bankList[this.currentBankIndex]
+    });
+  }
+
+  onNextBank(){
+    if( this.currentBankIndex == this.bankList.length - 1 ){
+      this.currentBankIndex = 0;
+    }else {
+      this.currentBankIndex++;
+    }
+    this.userBankAccountFG.patchValue({
+      bank: this.bankList[this.currentBankIndex]
+    });
   }
 
 }

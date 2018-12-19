@@ -56,6 +56,18 @@ export class TransactionsService extends BaseService implements CrudService<Tran
     remove(entity: Transaction): Observable<Transaction> {
         throw new Error("Method not implemented.");
     }
+    
+    rejectTransaction(transaction: Transaction): Observable<boolean>{
+        return this.api.put(`/transactions/${transaction.id}`,{
+            status: '0',
+            rejectionReason: transaction.rejectionReason
+        }).map( resp => {
+            return true; 
+        }).catch( err => {
+            console.error(err);
+            return Observable.of(false);
+        });
+    }
 
 
 }

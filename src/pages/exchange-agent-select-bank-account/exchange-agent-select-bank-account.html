@@ -13,6 +13,88 @@
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content padding class="page">
+  <stepper mode="exchange-agent" [currentStep]="3"></stepper>
+  <div class="spacer-20"></div>
+  <div>
+    <p class="text-center">
+      Registre los datos de su cuenta bancaria para recibir el depósito correspondiente
+    </p>
+  </div>
+  <div class="spacer-20"></div>
+  <div class="exchangeAgentSelectBankAccount__form">
+    <div radio-group [(ngModel)]="mode">
+      <ion-row justify-content-around>
+        <ion-col col-auto>
+          <ion-row align-items-center>
+              <ion-col col-auto>
+              <div #casaCambioRadio>
+                  <ion-radio color="secondary" [value]="'SELECT'"></ion-radio>
+              </div>
+              </ion-col>
+              <ion-col col-auto (tap)="mode = 'SELECT'">
+              Seleccionar <br> cuenta existente
+              </ion-col>
+          </ion-row>        
+        </ion-col>
+        <ion-col col-auto>
+          <ion-row align-items-center>
+              <ion-col col-auto>
+              <div #cambistaRadio>
+                  <ion-radio color="secondary" [value]="'NEW'"></ion-radio>
+              </div>
+              </ion-col>
+              <ion-col col-auto (tap)="mode = 'NEW'">
+              Agregar una <br> nueva cuenta
+              </ion-col>
+          </ion-row>        
+        </ion-col>
+      </ion-row>
+    </div>
+    <div *ngIf=" mode == 'SELECT' && selectedUserBankAccountList ">
+      <ion-row align-items-center>
+        <ion-col col-5>Entidad bancaria</ion-col>
+        <ion-col col-7>
+          <div class="input pos-relative">
+            <ng-container *ngFor="let bank of bankList; let i = index;">
+              <div class="bank" *ngIf="bank.id == selectedUserBankAccountList.bank.id">
+                <img [src]="bank.image.fileUrl" alt="" class="bank__image">
+              </div>
+            </ng-container>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row align-items-center>
+        <ion-col col-5>Apelativo de cuenta</ion-col>
+        <ion-col col-7>
+          <ion-select [(ngModel)]="selectedUserBankAccountList" class="input fill-width">
+            <ion-option [value]="bankAccount" *ngFor="let bankAccount of userBankAccountList">
+              {{ bankAccount.apellative }}
+            </ion-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+      <ion-row align-items-center>
+        <ion-col col-5>Titular de la cuenta</ion-col>
+        <ion-col col-7>
+          <input type="text" class="fill-width" readonly [value]="selectedUserBankAccountList.holderName">
+        </ion-col>
+      </ion-row>
+      <ion-row align-items-center>
+        <ion-col col-5>Número de cuenta</ion-col>
+        <ion-col col-7>
+          <input type="text" class="fill-width" readonly [value]="selectedUserBankAccountList.accountNumber">
+        </ion-col>
+      </ion-row>
+      <ion-row align-items-center>
+        <ion-col col-5>Tipo de cuenta</ion-col>
+        <ion-col col-7>
+          <input type="text" class="fill-width" readonly [value]="selectedUserBankAccountList.currency.name">
+        </ion-col>
+      </ion-row>
+    </div>
+    <div *ngIf=" mode == 'NEW'">
+      <create-user-bank-account-form [userBankAccountFG]="userBankAccountFG"></create-user-bank-account-form>
+    </div>
+  </div>
 </ion-content>

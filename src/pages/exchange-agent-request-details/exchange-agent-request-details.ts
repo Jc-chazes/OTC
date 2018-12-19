@@ -9,6 +9,8 @@ import { AlertUtil } from '../../providers/utils/alert.util';
 import { RejectWarningComponent } from '../../components/reject-warning/reject-warning';
 import { ExchangeAgentSelectBankAccountPage } from '../exchange-agent-select-bank-account/exchange-agent-select-bank-account';
 import { RejectReasonSelectComponent } from '../../components/reject-reason-select/reject-reason-select';
+import { LoadingUtil } from '../../providers/utils/loading.util';
+import { TransactionsService } from '../../providers/transaction.service';
 
 /**
  * Generated class for the ExchangeAgentRequestDetailsPage page.
@@ -27,7 +29,8 @@ export class ExchangeAgentRequestDetailsPage {
   otcComission: Constant = new Constant({ content: 0 });
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private sanitizer: DomSanitizer,
-  private constants: ConstantsService, private alerts: AlertUtil, private modalCtrl: ModalController) {
+  private constants: ConstantsService, private alerts: AlertUtil, private modalCtrl: ModalController,
+  private loading: LoadingUtil, private transactions: TransactionsService) {
     this.transaction = this.navParams.get('transaction');
     this.constants.findOne( new ConstantByCodeSpecification(`OTC_COMISSION_${this.transaction.exchangeAgentOffering.receivedCurrency}`) )
     .subscribe( result => {
@@ -45,7 +48,9 @@ export class ExchangeAgentRequestDetailsPage {
   }
 
   continue(){
-
+    this.navCtrl.push( ExchangeAgentSelectBankAccountPage,{
+      transaction: this.transaction
+    });
   }
 
   reject(){
@@ -53,19 +58,30 @@ export class ExchangeAgentRequestDetailsPage {
     rejectModal.present();
     rejectModal.onDidDismiss( rejected => {
       if( rejected === true ){
-        this.selectRejectReason();    
+        this.selectRejectReason( this.transaction );    
       }else if( rejected === false ){
-        this.navCtrl.push( ExchangeAgentSelectBankAccountPage );
+        this.continue();
       }else{
 
       }
     });
   }
 
-  selectRejectReason(){
+  selectRejectReason(transaction){
     let rejectReasonSelectModal = this.modalCtrl.create(RejectReasonSelectComponent,{},{ showBackdrop: true, enableBackdropDismiss: true, cssClass: 'rejectReasonSelectModal' });
     rejectReasonSelectModal.present();
     rejectReasonSelectModal.onDidDismiss( reason => {
+      if( reason ){
+        transaction.rejectionReason = reason;
+        this.loading.show();
+        this.transactions.rejectTransaction( transaction )
+        .subscribe( couldReject => {
+          this.loading.hide();
+          if( couldReject ){
+            this.navCtrl.pop();
+          }
+        })
+      }
     });  
   }
 

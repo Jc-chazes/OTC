@@ -42,18 +42,18 @@
         Sus solicitudes
       </span>
       <span class="flex"></span>
-      <ion-icon name="refresh"></ion-icon>
+      <ion-icon name="refresh" (tap)="refresh()"></ion-icon>
     </div>
     <div>
       <div class="myRequests__requests__item" *ngFor="let transaction of pendingTransactionList">
         <div class="spacer-15"></div>
         <ion-row>
-          <ion-col col-2 class="myRequests__requests__item__avatar">
+          <ion-col col-2 class="myRequests__requests__item__avatar" (tap)="goToRequestDetails(transaction)">
             <div class="fill-height flex-col-layout jc-center">
               <div class="square" [style.backgroundImage]="getAvatarUrl(transaction)"></div>
             </div>
           </ion-col>
-          <ion-col col-4>
+          <ion-col col-4 (tap)="goToRequestDetails(transaction)">
             <p>
               {{ transaction.person.fullName }}
             </p>
@@ -62,13 +62,13 @@
               <span>{{ transaction.exchangeAgentOffering.type == 'V' ? 'Venta' : 'Compra' }}</span>
             </p>
           </ion-col>
-          <ion-col col-4>
+          <ion-col col-4 (tap)="goToRequestDetails(transaction)">
             <p class="text-thin">Monto solicitado</p>
             <p class="text-thin myRequests__requests__item__amount">
               {{ transaction.targetCurrency.symbol }} {{ transaction.amount.toFixed(2) }}
             </p>
           </ion-col>
-          <ion-col col-2 class="no-padding pt-5" (tap)="goToRequestDetails(transaction)">
+          <ion-col col-2 class="no-padding pt-5" (tap)="openRequestOperations(transaction,$event)">
             <!-- <p class="text-thin">Continuar</p> -->
             <p> <countdown [date]="transaction.created_at"></countdown> </p>
             <ion-icon ios="ios-more" md="ios-more"></ion-icon>

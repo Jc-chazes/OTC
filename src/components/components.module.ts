@@ -6,21 +6,28 @@ import { CountdownComponent } from './countdown/countdown';
 import { RejectWarningComponent } from './reject-warning/reject-warning';
 import { IonicModule } from 'ionic-angular';
 import { RejectReasonSelectComponent } from './reject-reason-select/reject-reason-select';
+import { RejectAcceptRequestPopoverComponent } from './reject-accept-request-popover/reject-accept-request-popover';
+import { CreateUserBankAccountFormComponent } from './create-user-bank-account-form/create-user-bank-account-form';
 @NgModule({
 	declarations: [UpdateExchangeReminderComponent,
     StepperComponent,
     CountdownComponent,
     RejectWarningComponent,
-    RejectReasonSelectComponent],
+    RejectReasonSelectComponent,
+    RejectAcceptRequestPopoverComponent,
+    CreateUserBankAccountFormComponent],
 	imports: [ CommonModule, IonicModule ],
 	exports: [UpdateExchangeReminderComponent,
     StepperComponent,
     CountdownComponent,
     RejectWarningComponent,
-    RejectReasonSelectComponent],
+    RejectReasonSelectComponent,
+    RejectAcceptRequestPopoverComponent,
+    CreateUserBankAccountFormComponent],
     entryComponents: [
         RejectWarningComponent,
-        RejectReasonSelectComponent
+        RejectReasonSelectComponent,
+        RejectAcceptRequestPopoverComponent
     ]
 })
 export class ComponentsModule {}

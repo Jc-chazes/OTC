@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, PopoverController, ModalController } from 'ionic-angular';
 import { ExchangeAgentOfferingsService } from '../../providers/exchange-agent-offerings.service';
 import { ExchangeAgentOffering } from '../../models/exchange-agent-offering.model';
 import { Currency } from '../../models/currency.model';
@@ -9,6 +9,10 @@ import { Transaction } from '../../models/transaction.model';
 import { MyPendingTransactions } from '../../providers/specifications/transaction.specification';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ExchangeAgentRequestDetailsPage } from '../exchange-agent-request-details/exchange-agent-request-details';
+import { RejectAcceptRequestPopoverComponent } from '../../components/reject-accept-request-popover/reject-accept-request-popover';
+import { RejectWarningComponent } from '../../components/reject-warning/reject-warning';
+import { RejectReasonSelectComponent } from '../../components/reject-reason-select/reject-reason-select';
+import { LoadingUtil } from '../../providers/utils/loading.util';
 
 /**
  * Generated class for the ExchangeAgentMyRequestsPage page.
@@ -27,19 +31,29 @@ export class ExchangeAgentMyRequestsPage {
   pendingTransactionList: Transaction[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public sanitizer: DomSanitizer,
-    private exchangeAgentOfferings: ExchangeAgentOfferingsService, private transactions: TransactionsService) {
+    private exchangeAgentOfferings: ExchangeAgentOfferingsService, private transactions: TransactionsService,
+    private popoverCtrl: PopoverController, private modalCtrl: ModalController, private loading: LoadingUtil) {
     this.exchangeAgentOfferings.getGroupedExchangeAgentOfferings()
     .subscribe( results => {
       this.groupedExchangeList = results;
     });
+  }
+
+  refresh(){
+    this.loading.show();
     this.transactions.find( new MyPendingTransactions() )
     .subscribe( results => {
+      this.loading.hide();
       this.pendingTransactionList = results;
     });
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ExchangeAgentMyRequestsPage');
+  }
+
+  ionViewWillEnter(){
+    this.refresh();
   }
 
   getAvatarUrl(transaction: Transaction){
@@ -53,6 +67,57 @@ export class ExchangeAgentMyRequestsPage {
     this.navCtrl.push( ExchangeAgentRequestDetailsPage, { 
       transaction
     });
+  }
+
+  openRequestOperations(transaction: Transaction, event){
+    let rejectAcceptPopover = this.popoverCtrl.create(RejectAcceptRequestPopoverComponent);
+    rejectAcceptPopover.present({
+      ev: event
+    });
+    rejectAcceptPopover.onDidDismiss( operation => {
+      if( !operation ) return;
+      if( operation == 'REJECT' ){
+        this.onReject(transaction);
+      }else if( operation == 'VIEW' ){
+        this.navCtrl.push( ExchangeAgentRequestDetailsPage, { 
+          transaction
+        });
+      }
+    })
+  }
+
+  onReject(transaction: Transaction){
+    let rejectModal = this.modalCtrl.create(RejectWarningComponent,{},{ cssClass: 'rejectWarningModal' });
+    rejectModal.present();
+    rejectModal.onDidDismiss( rejected => {
+      if( rejected === true ){
+        this.selectRejectReason(transaction);    
+      }else if( rejected === false ){
+        this.navCtrl.push( ExchangeAgentRequestDetailsPage, { 
+          transaction
+        });
+      }else{
+
+      }
+    });
+  }
+
+  selectRejectReason(transaction: Transaction){
+    let rejectReasonSelectModal = this.modalCtrl.create(RejectReasonSelectComponent,{},{ showBackdrop: true, enableBackdropDismiss: true, cssClass: 'rejectReasonSelectModal' });
+    rejectReasonSelectModal.present();
+    rejectReasonSelectModal.onDidDismiss( reason => {
+      if( reason ){
+        transaction.rejectionReason = reason;
+        this.loading.show();
+        this.transactions.rejectTransaction( transaction )
+        .subscribe( couldReject => {
+          this.loading.hide();
+          if( couldReject ){
+            this.refresh();
+          }
+        })
+      }
+    });  
   }
 
 }
