@@ -17,7 +17,7 @@
           <ion-row align-items-center>
             <ion-col col-auto>
               <div #casaCambioRadio>
-                <ion-radio color="secondary" [value]="'0'"></ion-radio>
+                <ion-radio mode="md" color="secondary" [value]="'0'"></ion-radio>
               </div>
             </ion-col>
             <ion-col col-auto (tap)="exchangeAgentFG.patchValue({ type: '0' })">
@@ -29,7 +29,7 @@
           <ion-row align-items-center>
             <ion-col col-auto>
               <div #cambistaRadio>
-                <ion-radio color="secondary" [value]="'1'"></ion-radio>
+                <ion-radio mode="md" color="secondary" [value]="'1'"></ion-radio>
               </div>
             </ion-col>
             <ion-col col-auto (tap)="exchangeAgentFG.patchValue({ type: '1' })">
@@ -65,7 +65,7 @@
         <ion-col col-auto>
           <ion-row align-items-center>
             <ion-col col-auto>
-              <ion-radio color="secondary" [value]="true" [checked]="exchangeAgentFG.value.acceptTermsAndConditions"></ion-radio>
+              <ion-radio mode="md" color="secondary" [value]="true" [checked]="exchangeAgentFG.value.acceptTermsAndConditions"></ion-radio>
             </ion-col>
             <ion-col col-auto>
               <a href="" class="text-accent">Aceptar los términos y condiciones</a>

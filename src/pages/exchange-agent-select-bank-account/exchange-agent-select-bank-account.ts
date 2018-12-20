@@ -7,6 +7,7 @@ import { UserBankAccount } from '../../models/user-bank-account.model';
 import { BanksService } from '../../providers/banks.service';
 import { Bank } from '../../models/bank.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Transaction } from '../../models/transaction.model';
 
 /**
  * Generated class for the ExchangeAgentSelectBankAccountPage page.
@@ -21,16 +22,19 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class ExchangeAgentSelectBankAccountPage {
 
-  mode = 'NEW';
-  userBankAccountList: UserBankAccount[];
+  mode: 'NEW' | 'SELECT' = 'NEW';
+  userBankAccountList: UserBankAccount[] = [];
   selectedUserBankAccountList: UserBankAccount;
   bankList: Bank[];
   currentBankIndex = 0;
   userBankAccountFG: FormGroup;
+  transaction: Transaction;
+  acceptTermsAndConditions = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private userBankAccounts: UsersBankAccountsService, private loading: LoadingUtil,
     private banks: BanksService, private fb: FormBuilder) {
+    this.transaction = this.navParams.get('transaction');
     this.banks.find().subscribe( results => {
       this.bankList = results;
     });
@@ -82,6 +86,25 @@ export class ExchangeAgentSelectBankAccountPage {
     this.userBankAccountFG.patchValue({
       bank: this.bankList[this.currentBankIndex]
     });
+  }
+
+  save(){
+    if( this.mode == 'NEW' ){
+      if( this.userBankAccountFG.valid ){
+        this.userBankAccounts.add( this.userBankAccountFG.value )
+        .subscribe( results => {
+          if( results ){
+            this.goToOTCBankAccounts();
+          }
+        })
+      }
+    }else{
+      this.goToOTCBankAccounts();
+    }
+  }
+
+  goToOTCBankAccounts(){
+
   }
 
 }

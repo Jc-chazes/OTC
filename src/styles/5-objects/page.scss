@@ -3,4 +3,8 @@
     background-image: url(/assets/imgs/backgrounds/black_bk.png);
     background-position: center;
     background-size: cover;
+    .page-content-container{
+        max-width: 300px;
+        margin: 0 auto;
+    }
 }

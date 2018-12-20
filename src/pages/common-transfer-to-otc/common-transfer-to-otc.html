@@ -1,0 +1,100 @@
+<!--
+  Generated template for the CommonTransferToOtcPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>common-transfer-to-otc</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="page">
+  <div padding>
+    <div class="spacer-30"></div>
+    <stepper mode="exchange-agent" [currentStep]="4"></stepper>
+    <p class="text-center">
+      Por favor realice la transferencia o depósito del monto <br>
+      correspondiente a cualquiera de las siguientes cuentas
+    </p>
+    <ion-row justify-content-center align-items-center>
+      <ion-col col-auto>
+        <p>Monto a <br> depositar</p>
+      </ion-col>
+      <ion-col col-3>
+        <input class="text-center fill-width" type="text" readonly 
+        [value]=" transaction.currencyToDeposit.symbol + ' ' + ( otcComission.content + transaction.amountToDeposit ) ">
+      </ion-col>
+      <ion-col col-auto>
+        <p>Solicitud + <br> comisión</p>
+      </ion-col>
+    </ion-row>
+    <div class="commonTransferToOTC__container">
+      <ion-row align-items-center>
+        <ion-col col-6>
+          <p class="text-right"><b>Nombre de la cuenta:&nbsp;&nbsp;&nbsp;</b></p>
+        </ion-col>
+        <ion-col col-6>
+          <input type="text" class="fill-width" readonly [value]="otcBusinessName.content">
+        </ion-col>
+      </ion-row>
+      <ion-row align-items-center>
+        <ion-col col-6>
+          <p class="text-right"><b>RUC:&nbsp;&nbsp;&nbsp;</b></p>
+        </ion-col>
+        <ion-col col-6>
+          <input type="text" class="fill-width" readonly [value]="otcRuc.content">
+        </ion-col>
+      </ion-row>
+      <p>Nuestras cuentas:</p>
+    </div>    
+  </div>
+  <div class="commonTransferToOTC__banks">
+    <div class="flex-row-layout ai-center">
+      <div class="commonTransferToOTC__banks__item flex text-center" *ngFor="let bankAccount of otcBankAccountList"
+      (tap)="selectedOtcBankAccount = bankAccount">
+        <img [src]="bankAccount.bank.image.fileUrl" alt="">
+      </div>
+    </div>
+  </div>
+  <div class="commonTransferToOTC__container" *ngIf="!!selectedOtcBankAccount">
+    <div class="spacer-15"></div>
+    <ion-row align-items-center>
+      <ion-col col-6>
+        <ion-row align-items-center>
+          <ion-col col-11>
+            <div class="p-10 bk-white">
+              <img [src]="selectedOtcBankAccount.bank.image.fileUrl" alt="" class="full-width">
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col col-6>
+        <div>
+          <span>Número de cuenta</span><br>
+          <input type="text" class="fill-width" readonly [value]="selectedOtcBankAccount.accountNumber">
+        </div>
+        <div class="spacer-5"></div>
+        <div>
+          <span>Tipo de cuenta</span><br>
+          <input type="text" class="fill-width" readonly [value]="selectedOtcBankAccount.formattedAccountType()">
+        </div>
+        <div class="spacer-5"></div>
+        <div>
+          <span>Moneda</span><br>
+          <input type="text" class="fill-width" readonly [value]="selectedOtcBankAccount.currency.name">
+        </div>
+      </ion-col>
+    </ion-row>
+  </div>
+  <div class="spacer-30"></div>
+  <div class="flex-row-layout jc-center">
+    <button fluid ion-button color="secondary" (tap)="continue()">
+      Siguiente
+    </button>
+  </div>
+</ion-content>

@@ -1,4 +1,4 @@
-<ion-content padding>
+<ion-content padding class="page">
     <div class="login">
         <h4 class="text-center">
             Iniciar sesión
@@ -13,7 +13,7 @@
                         <ion-row align-items-center>
                             <ion-col col-auto>
                             <div #casaCambioRadio>
-                                <ion-radio color="secondary" [value]="'0'"></ion-radio>
+                                <ion-radio mode="md" color="secondary" [value]="'0'"></ion-radio>
                             </div>
                             </ion-col>
                             <ion-col col-auto (tap)="exchangeAgent.type = '0'">
@@ -25,7 +25,7 @@
                         <ion-row align-items-center>
                             <ion-col col-auto>
                             <div #cambistaRadio>
-                                <ion-radio color="secondary" [value]="'1'"></ion-radio>
+                                <ion-radio mode="md" color="secondary" [value]="'1'"></ion-radio>
                             </div>
                             </ion-col>
                             <ion-col col-auto (tap)="exchangeAgent.type = '1'">

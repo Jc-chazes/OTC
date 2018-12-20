@@ -7,10 +7,10 @@ import { Constant } from '../../models/constant.model';
 import { ConstantByCodeSpecification } from '../../providers/specifications/constant.specification';
 import { AlertUtil } from '../../providers/utils/alert.util';
 import { RejectWarningComponent } from '../../components/reject-warning/reject-warning';
-import { ExchangeAgentSelectBankAccountPage } from '../exchange-agent-select-bank-account/exchange-agent-select-bank-account';
 import { RejectReasonSelectComponent } from '../../components/reject-reason-select/reject-reason-select';
 import { LoadingUtil } from '../../providers/utils/loading.util';
 import { TransactionsService } from '../../providers/transaction.service';
+import { CommonSelectBankAccountPage } from '../common-select-bank-account/common-select-bank-account';
 
 /**
  * Generated class for the ExchangeAgentRequestDetailsPage page.
@@ -32,7 +32,7 @@ export class ExchangeAgentRequestDetailsPage {
   private constants: ConstantsService, private alerts: AlertUtil, private modalCtrl: ModalController,
   private loading: LoadingUtil, private transactions: TransactionsService) {
     this.transaction = this.navParams.get('transaction');
-    this.constants.findOne( new ConstantByCodeSpecification(`OTC_COMISSION_${this.transaction.exchangeAgentOffering.receivedCurrency}`) )
+    this.constants.findOne( new ConstantByCodeSpecification(`OTC_COMISSION_${this.transaction.exchangeAgentOffering.requestedCurrency}`) )
     .subscribe( result => {
       this.otcComission = result;
       this.otcComission.content = Number(this.otcComission.content);
@@ -48,7 +48,7 @@ export class ExchangeAgentRequestDetailsPage {
   }
 
   continue(){
-    this.navCtrl.push( ExchangeAgentSelectBankAccountPage,{
+    this.navCtrl.push( CommonSelectBankAccountPage,{
       transaction: this.transaction
     });
   }

@@ -14,6 +14,7 @@
 
 
 <ion-content padding class="page">
+  <div class="spacer-30"></div>
   <stepper mode="exchange-agent" [currentStep]="3"></stepper>
   <div class="spacer-20"></div>
   <div>
@@ -29,7 +30,7 @@
           <ion-row align-items-center>
               <ion-col col-auto>
               <div #casaCambioRadio>
-                  <ion-radio color="secondary" [value]="'SELECT'"></ion-radio>
+                  <ion-radio mode="md" color="secondary" [value]="'SELECT'" [disabled]="userBankAccountList.length == 0"></ion-radio>
               </div>
               </ion-col>
               <ion-col col-auto (tap)="mode = 'SELECT'">
@@ -41,7 +42,7 @@
           <ion-row align-items-center>
               <ion-col col-auto>
               <div #cambistaRadio>
-                  <ion-radio color="secondary" [value]="'NEW'"></ion-radio>
+                  <ion-radio mode="md" color="secondary" [value]="'NEW'"></ion-radio>
               </div>
               </ion-col>
               <ion-col col-auto (tap)="mode = 'NEW'">
@@ -51,6 +52,7 @@
         </ion-col>
       </ion-row>
     </div>
+    <div class="spacer-30"></div>
     <div *ngIf=" mode == 'SELECT' && selectedUserBankAccountList ">
       <ion-row align-items-center>
         <ion-col col-5>Entidad bancaria</ion-col>
@@ -95,6 +97,23 @@
     </div>
     <div *ngIf=" mode == 'NEW'">
       <create-user-bank-account-form [userBankAccountFG]="userBankAccountFG"></create-user-bank-account-form>
+    </div>
+    <div class="spacer-20"></div>
+    <ion-row justify-content-center radio-group [(ngModel)]="acceptTermsAndConditions">
+      <ion-col col-auto>
+        <div>
+          <ion-radio mode="md" color="secondary" [value]="true"></ion-radio>
+        </div>
+      </ion-col>
+      <ion-col col-auto (tap)="acceptTermsAndConditions = true">
+        <a href="#" class="text-accent">Aceptar los términos y condiciones</a>
+      </ion-col>
+    </ion-row>
+    <div class="spacer-25"></div>
+    <div class="flex-row-layout jc-center">
+      <button fluid ion-button color="secondary" (tap)="save()">
+        Guardar
+      </button>
     </div>
   </div>
 </ion-content>

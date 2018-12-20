@@ -11,4 +11,12 @@ export class User extends BaseModel<User>{
     exchangeAgent: ExchangeAgent;
     person: Person;
     photo: Image;
+
+    isPerson(){
+        return this.userType == '0';
+    }
+
+    isExchangeAgent(){
+        return this.userType == '1';
+    }
 }

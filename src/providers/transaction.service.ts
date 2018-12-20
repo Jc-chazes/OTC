@@ -13,6 +13,7 @@ import { Person } from "../models/person.model";
 import { ExchangeAgentOffering } from "../models/exchange-agent-offering.model";
 import { CurrenciesService } from "./currencies.service";
 import { TransactionMapper } from "./mappers/transaction.mapper";
+import { UserBankAccount } from "../models/user-bank-account.model";
 
 @Injectable()
 export class TransactionsService extends BaseService implements CrudService<Transaction>{
@@ -21,7 +22,7 @@ export class TransactionsService extends BaseService implements CrudService<Tran
 
     constructor(api: ApiUtil, private users: UsersService, private currencies: CurrenciesService){
         super(api);
-        this.mapper = new TransactionMapper(currencies);
+        this.mapper = new TransactionMapper(currencies,users);
     }
 
     find(specification?: BaseSpecification): Observable<Transaction[]> {
@@ -63,6 +64,18 @@ export class TransactionsService extends BaseService implements CrudService<Tran
             rejectionReason: transaction.rejectionReason
         }).map( resp => {
             return true; 
+        }).catch( err => {
+            console.error(err);
+            return Observable.of(false);
+        });
+    }
+
+    setTransactionBankAccount( userBankAccount: UserBankAccount, transaction: Transaction ): Observable<boolean>{
+        let bankAccountToSet = this.users.currentUser.userType == '0' ? 'personbankaccount' : 'exchangeagentbankaccount';
+        return this.api.put(`/transactions/${transaction.id}`,{
+            [bankAccountToSet]: userBankAccount.id
+        }).map( resp => {
+            return true;
         }).catch( err => {
             console.error(err);
             return Observable.of(false);

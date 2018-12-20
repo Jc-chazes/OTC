@@ -69,8 +69,10 @@
             </p>
           </ion-col>
           <ion-col col-2 class="no-padding pt-5" (tap)="openRequestOperations(transaction,$event)">
-            <!-- <p class="text-thin">Continuar</p> -->
-            <p> <countdown [date]="transaction.created_at"></countdown> </p>
+            <p class="text-thin" *ngIf="canContinue(transaction); else countdown">Continuar</p>
+            <ng-template #countdown>
+              <p> <countdown [date]="transaction.created_at"></countdown> </p>
+            </ng-template>            
             <ion-icon ios="ios-more" md="ios-more"></ion-icon>
           </ion-col>
         </ion-row>

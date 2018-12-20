@@ -4,6 +4,7 @@ import { Person } from "./person.model";
 import { ExchangeAgent } from "./exchange-agent.model";
 import { ExchangeAgentOffering } from "./exchange-agent-offering.model";
 import { Currency } from "./currency.model";
+import { UserBankAccount } from "./user-bank-account.model";
 
 export class Transaction extends BaseModel<Transaction>{
 
@@ -17,6 +18,8 @@ export class Transaction extends BaseModel<Transaction>{
     exchangeAgent: ExchangeAgent;
     exchangeAgentOffering: ExchangeAgentOffering;
     type: 'SAFE' | 'FAST';
+    personBankAccount: UserBankAccount;
+    exchangeAgentBankAccount: UserBankAccount;
 
     fromCurrency: Currency;
     targetCurrency: Currency;
@@ -24,9 +27,7 @@ export class Transaction extends BaseModel<Transaction>{
     currencyToDeposit: Currency;
     currencyToReceive: Currency;
 
-    get amountToDeposit(){
-        return this.amount * this.exchangeAgentOffering.receivedCurrencyAmount;
-    }
+    amountToDeposit: number;
 
     get amountToReceive(){
         switch( this.exchangeAgentOffering.type ){

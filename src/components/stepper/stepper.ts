@@ -31,8 +31,8 @@ export class StepperComponent implements OnInit {
         { step: 1, stepLabel: 'Tus solicitudes' },
         { step: 2, stepLabel: 'Detalles de solicitud' },
         { step: 3, stepLabel: 'Registre su cuenta' },
-        { step: 4, stepLabel: 'a52' },
-        { step: 5, stepLabel: 'a52' }
+        { step: 4, stepLabel: 'Transferir' },
+        { step: 5, stepLabel: 'Enviar constancia' }
       ]
     }
   }

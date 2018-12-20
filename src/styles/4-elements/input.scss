@@ -6,4 +6,7 @@ input, .input{
     border: none;
     background-color: #FFF;
     @include borderRadius(4px);
+    @include placeholder(){
+        color: #000 !important;
+    }
 }

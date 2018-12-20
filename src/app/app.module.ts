@@ -44,6 +44,9 @@ import { ExchangeAgentRequestDetailsPage } from '../pages/exchange-agent-request
 import { PipesModule } from '../pipes/pipes.module';
 import { ConstantsService } from '../providers/constants.service';
 import { ExchangeAgentSelectBankAccountPage } from '../pages/exchange-agent-select-bank-account/exchange-agent-select-bank-account';
+import { CommonSelectBankAccountPage } from '../pages/common-select-bank-account/common-select-bank-account';
+import { CommonTransferToOtcPage } from '../pages/common-transfer-to-otc/common-transfer-to-otc';
+import { CommonSendVoucherPage } from '../pages/common-send-voucher/common-send-voucher';
 
 
 @NgModule({
@@ -64,7 +67,10 @@ import { ExchangeAgentSelectBankAccountPage } from '../pages/exchange-agent-sele
     ExchangeAgentMyOfferingsPage,
     ExchangeAgentMyRequestsPage,
     ExchangeAgentRequestDetailsPage,
-    ExchangeAgentSelectBankAccountPage
+    ExchangeAgentSelectBankAccountPage,
+    CommonSelectBankAccountPage,
+    CommonTransferToOtcPage,
+    CommonSendVoucherPage
   ],
   imports: [
     BrowserModule,
@@ -93,7 +99,10 @@ import { ExchangeAgentSelectBankAccountPage } from '../pages/exchange-agent-sele
     ExchangeAgentMyOfferingsPage,
     ExchangeAgentMyRequestsPage,
     ExchangeAgentRequestDetailsPage,
-    ExchangeAgentSelectBankAccountPage
+    ExchangeAgentSelectBankAccountPage,
+    CommonSelectBankAccountPage,
+    CommonTransferToOtcPage,
+    CommonSendVoucherPage
   ],
   providers: [
     StatusBar,

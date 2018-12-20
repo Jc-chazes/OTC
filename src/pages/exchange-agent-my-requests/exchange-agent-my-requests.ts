@@ -13,6 +13,8 @@ import { RejectAcceptRequestPopoverComponent } from '../../components/reject-acc
 import { RejectWarningComponent } from '../../components/reject-warning/reject-warning';
 import { RejectReasonSelectComponent } from '../../components/reject-reason-select/reject-reason-select';
 import { LoadingUtil } from '../../providers/utils/loading.util';
+import { UsersService } from '../../providers/users.service';
+import { CommonTransferToOtcPage } from '../common-transfer-to-otc/common-transfer-to-otc';
 
 /**
  * Generated class for the ExchangeAgentMyRequestsPage page.
@@ -32,7 +34,8 @@ export class ExchangeAgentMyRequestsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public sanitizer: DomSanitizer,
     private exchangeAgentOfferings: ExchangeAgentOfferingsService, private transactions: TransactionsService,
-    private popoverCtrl: PopoverController, private modalCtrl: ModalController, private loading: LoadingUtil) {
+    private popoverCtrl: PopoverController, private modalCtrl: ModalController, private loading: LoadingUtil,
+    private users: UsersService) {
     this.exchangeAgentOfferings.getGroupedExchangeAgentOfferings()
     .subscribe( results => {
       this.groupedExchangeList = results;
@@ -64,12 +67,24 @@ export class ExchangeAgentMyRequestsPage {
   }
 
   goToRequestDetails(transaction: Transaction){
+    if( this.canContinue( transaction ) ){
+      this.navCtrl.push(CommonTransferToOtcPage,{
+        transaction
+      })
+      return;
+    }
     this.navCtrl.push( ExchangeAgentRequestDetailsPage, { 
       transaction
     });
   }
 
   openRequestOperations(transaction: Transaction, event){
+    if( this.canContinue( transaction ) ){
+      this.navCtrl.push(CommonTransferToOtcPage,{
+        transaction
+      })
+      return;
+    }
     let rejectAcceptPopover = this.popoverCtrl.create(RejectAcceptRequestPopoverComponent);
     rejectAcceptPopover.present({
       ev: event
@@ -118,6 +133,11 @@ export class ExchangeAgentMyRequestsPage {
         })
       }
     });  
+  }
+
+  canContinue(transaction: Transaction){
+    return ( this.users.currentUser.userType == '0' && !!transaction.personBankAccount ) || 
+      ( this.users.currentUser.userType == '1' && !!transaction.exchangeAgentBankAccount );
   }
 
 }
