@@ -3,6 +3,7 @@ import {NavController} from 'ionic-angular';
 import { Login } from '../login/login';
 import { AppStateService } from '../../providers/app-state.service';
 import { RegisterExchangeAgentPage } from '../register-exchange-agent/register-exchange-agent';
+import { RegistrerAccountPage } from '../registrer-account/registrer-account';
 
 
 
@@ -29,7 +30,7 @@ export class chooseLogin implements OnInit {
 
   ready(){
     if( this.userType == 0){
-      this.nav.push(Login);
+      this.nav.push(RegistrerAccountPage);
     }else{
       this.nav.push(RegisterExchangeAgentPage);
     }

@@ -17,7 +17,8 @@ export class AppStateService{
     price: {
       currency: "",
       cant: ""
-    }
+    },
+    detail_exchangue :{}
   };
 
   private onStateChangeSubject = new BehaviorSubject<any>(this.initialState);

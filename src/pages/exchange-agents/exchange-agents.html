@@ -1,0 +1,54 @@
+<!--
+  Generated template for the ExchangeAgentsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>exchange-agents</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content style="background-color: #5b5a5f">
+  <ion-grid >
+    <div class="search-agents">
+      <ion-icon ios="ios-search" md="md-search"></ion-icon>
+      <input placeholder="hola" class="search-agents__input" [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="onSearchInput()">
+      <select class="search-agents__select">
+        <option class="search-agents__select___option">Por calificacion</option>
+        <option class="search-agents__select___option">Por mejor precio</option>
+      </select>
+    </div>
+  </ion-grid>
+  <ion-grid *ngFor='let item of exchange_agents'>
+    <ion-row align-items-center>
+      <ion-col col-3 class="exchangue-agents__style">
+        <img src="assets/imgs/logo.png" class="exchangue-agents__icon"/>
+      </ion-col>
+      <ion-col col-3 >
+        <div class="exchangue-agents__style">{{item.name}}</div>
+        <div  class="exchangue-agents__style__stars">
+          <div *ngFor='let in of counter(item.score)'>
+              <img src='assets/imgs/star.png' class="exchange-agents__icon-star"/>
+          </div>
+          <div *ngFor='let in of counter(5-item.score)' >
+              <img src='assets/imgs/star-white.png' class="exchange-agents__icon-star"  />
+          </div>
+        </div>
+      </ion-col>
+      <ion-col col-3 >
+          <div class="exchangue-agents__style">Valor</div>
+          <div class="exchangue-agents__style">{{item.exchangeagentofferings[0].requestedCurrencyAmount}}</div>
+      </ion-col> 
+      <ion-col col-3 >
+          <div (tap)='detailExchangeAgent(item)'>
+              <img src='assets/imgs/circle-three.png' class="exchange-agents__circle-three"/>
+          </div>
+      </ion-col>      
+    </ion-row>
+  </ion-grid>
+</ion-content>

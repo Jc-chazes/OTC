@@ -18,22 +18,22 @@
   flex-direction: column;width: 100vw;height:100vh">
     <div style='color:#ffffff'>La forma mas segura de comprar y vender su dinero</div>
     <div style='color:#ffffff'>¿Que desea hacer?</div>
-    <div class="quote__select-buy">
-        <div style='display: flex;width: 87px;display:flex;justify-content:space-between;align-items: center'>
-            <div  (tap)="clickUser(0)"  class='quote__choose-user___button-radio'>
-              <div [ngClass]="checkButton === 0? 'quote__choose-user___button-radio__background':'' "></div>
-            </div>
-            <div style='width: 59px; color:#ffffff'>Comprar</div>
-        </div>
+      <div class="quote__select-buy">
+          <div style='display: flex;width: 87px;display:flex;justify-content:space-between;align-items: center'>
+              <div  (tap)="clickUser(0)"  class='quote__choose-user___button-radio'>
+                <div [ngClass]="checkButton === 0? 'quote__choose-user___button-radio__background':'' "></div>
+              </div>
+              <div style='width: 59px; color:#ffffff'>Comprar</div>
+          </div>
 
 
-        <div style='display: flex;width: 87px;display:flex;justify-content:space-between;align-items: center'>
-            <div (tap)="clickUser(1)" class='quote__choose-user___button-radio'>
-              <div   [ngClass]="checkButton === 1? 'quote__choose-user___button-radio__background':'' "></div>
-            </div>
-            <div style='width: 59px ; color:#ffffff'>Vender</div>
-        </div>
-    </div>
+          <div style='display: flex;width: 87px;display:flex;justify-content:space-between;align-items: center'>
+              <div (tap)="clickUser(1)" class='quote__choose-user___button-radio'>
+                <div   [ngClass]="checkButton === 1? 'quote__choose-user___button-radio__background':'' "></div>
+              </div>
+              <div style='width: 59px ; color:#ffffff'>Vender</div>
+          </div>
+      </div>
     <div style='color:#ffffff'>¿Que cantidad?</div>
     <div class='quote__select'>
           <select class='quote__option-currency' [(ngModel)]="selectCurrency" (change)="onHandle($event.target.value)">

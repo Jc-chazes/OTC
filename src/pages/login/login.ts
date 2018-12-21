@@ -5,6 +5,7 @@ import { chooseLogin } from '../chooseLogin/chooseLogin';
 import { AuthProvider } from '../../providers/auth.service';
 import { User } from '../../models/user.model';
 import { PersonTabsPage } from '../person-tabs/person-tabs';
+import { ExchangeAgentsPage } from '../exchange-agents/exchange-agents';
 import { AppStateService } from '../../providers/app-state.service';
 import { ExchangeAgent } from '../../models/exchange-agent.model';
 import { ExchangeAgentTabsPage } from '../exchange-agent-tabs/exchange-agent-tabs';
@@ -31,6 +32,7 @@ export class Login implements OnInit {
   }
 
   login(){
+    this.nvCtrl.push(ExchangeAgentsPage)
     if( this.user.password && this.user.email ){
       let loading = this.loadingCtrl.create();
       loading.present();

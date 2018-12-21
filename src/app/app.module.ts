@@ -26,14 +26,18 @@ import { BaseService } from '../providers/base/base.service';
 import { BanksService } from '../providers/banks.service';
 import { CurrenciesService } from '../providers/currencies.service';
 import { UsersBankAccountsService } from '../providers/users-bank-accounts.service';
-
 import 'rxjs/observable/of';
 import { ChooseAccessPage } from '../pages/choose-access/choose-access';
 import { PersonTabsPage } from '../pages/person-tabs/person-tabs';
 import { ExchangeAgentTabsPage } from '../pages/exchange-agent-tabs/exchange-agent-tabs';
 import { ChooseProfilePage } from '../pages/choose-profile/choose-profile';
+import { ExchangeAgentsPage } from '../pages/exchange-agents/exchange-agents';
+import { ExchangueAgentService } from '../providers/exchange-agent.service';
+import { DataService } from '../providers/data.service';
 import { UsersService } from '../providers/users.service';
 import { ExchangeAgentOfferingsService } from '../providers/exchange-agent-offerings.service';
+import { DetailExchangeAgentPage } from '../pages/detail-exchange-agent/detail-exchange-agent';
+import { ModifyAccountBankPage } from '../pages/modify-account-bank/modify-account-bank';
 import { ExchangeAgentMyOfferingsPage } from '../pages/exchange-agent-my-offerings/exchange-agent-my-offerings';
 import { LoadingUtil } from '../providers/utils/loading.util';
 import { AlertUtil } from '../providers/utils/alert.util';
@@ -71,6 +75,9 @@ import { PersonNearExchangeAgentsPage } from '../pages/person-near-exchange-agen
     PersonTabsPage,
     ExchangeAgentTabsPage,
     ChooseProfilePage,
+    ExchangeAgentsPage,
+    DetailExchangeAgentPage,
+    ModifyAccountBankPage,
     ExchangeAgentMyOfferingsPage,
     ExchangeAgentMyRequestsPage,
     ExchangeAgentRequestDetailsPage,
@@ -110,6 +117,10 @@ import { PersonNearExchangeAgentsPage } from '../pages/person-near-exchange-agen
     PersonTabsPage,
     ExchangeAgentTabsPage,
     ChooseProfilePage,
+    ExchangeAgentsPage,
+    ChooseProfilePage,
+    DetailExchangeAgentPage,
+    ModifyAccountBankPage,
     ExchangeAgentMyOfferingsPage,
     ExchangeAgentMyRequestsPage,
     ExchangeAgentRequestDetailsPage,
@@ -140,6 +151,8 @@ import { PersonNearExchangeAgentsPage } from '../pages/person-near-exchange-agen
     BanksService,
     CurrenciesService,
     UsersBankAccountsService,
+    ExchangueAgentService,
+    DataService,  
     ExchangeAgentOfferingsService,
     UsersService,
     TransactionsService,

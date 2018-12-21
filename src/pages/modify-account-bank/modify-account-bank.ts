@@ -9,16 +9,16 @@ import { Observable } from 'rxjs/Observable';
 import { AppStateService } from '../../providers/app-state.service';
 
 @Component({
-  selector: 'page-register-bank-account',
-  templateUrl: 'register-bank-account.html',
+  selector: 'page-modify-account-bank',
+  templateUrl: 'modify-account-bank.html',
 })
-export class RegisterBankAccountPage {
+export class ModifyAccountBankPage {
 
   bankList: Bank[];
   currencyList: Currency[];
   currentBankIndex = 0;
   userBankAccountFG: FormGroup;
-
+  checkButton : number = 0;
   constructor(public navCtrl: NavController, public navParams: NavParams, private fb: FormBuilder,
     private banks: BanksService, private currencies: CurrenciesService, private appState: AppStateService) {
     this.userBankAccountFG = this.fb.group({
