@@ -1,0 +1,16 @@
+<div class="rejectWarning flex-col-layout jc-center fill-height">
+  <div class="modal-content">
+    <p class="text-center">
+      <b>¿Ha realizado <br> la transferencia?</b>
+    </p>
+    <div class="spacer-35"></div>
+  </div>
+  <div class="flex-col-layout ai-center">
+    <button fluid ion-button color="dark" (tap)="viewCtrl.dismiss(true)">
+      Sí
+    </button>
+    <button fluid ion-button color="dark" (tap)="viewCtrl.dismiss(false)">
+      Aún no
+    </button>
+  </div>
+</div>

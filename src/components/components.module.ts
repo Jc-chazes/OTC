@@ -8,6 +8,14 @@ import { IonicModule } from 'ionic-angular';
 import { RejectReasonSelectComponent } from './reject-reason-select/reject-reason-select';
 import { RejectAcceptRequestPopoverComponent } from './reject-accept-request-popover/reject-accept-request-popover';
 import { CreateUserBankAccountFormComponent } from './create-user-bank-account-form/create-user-bank-account-form';
+import { TransferIsRealizedModalComponent } from './transfer-is-realized-modal/transfer-is-realized-modal';
+import { SuccessfulTransactionModalComponent } from './successful-transaction-modal/successful-transaction-modal';
+import { OpportunityToParticipateModalComponent } from './opportunity-to-participate-modal/opportunity-to-participate-modal';
+import { CouldNotParticipateModalComponent } from './could-not-participate-modal/could-not-participate-modal';
+import { CouldParticipateModalComponent } from './could-participate-modal/could-participate-modal';
+import { YouHasBeenSelectedModalComponent } from './you-has-been-selected-modal/you-has-been-selected-modal';
+import { TermsAndConditionsModalComponent } from './terms-and-conditions-modal/terms-and-conditions-modal';
+
 @NgModule({
 	declarations: [UpdateExchangeReminderComponent,
     StepperComponent,
@@ -15,7 +23,14 @@ import { CreateUserBankAccountFormComponent } from './create-user-bank-account-f
     RejectWarningComponent,
     RejectReasonSelectComponent,
     RejectAcceptRequestPopoverComponent,
-    CreateUserBankAccountFormComponent],
+    CreateUserBankAccountFormComponent,
+    TransferIsRealizedModalComponent,
+    SuccessfulTransactionModalComponent,
+    OpportunityToParticipateModalComponent,
+    CouldNotParticipateModalComponent,
+    CouldParticipateModalComponent,
+    YouHasBeenSelectedModalComponent,
+    TermsAndConditionsModalComponent],
 	imports: [ CommonModule, IonicModule ],
 	exports: [UpdateExchangeReminderComponent,
     StepperComponent,
@@ -23,11 +38,25 @@ import { CreateUserBankAccountFormComponent } from './create-user-bank-account-f
     RejectWarningComponent,
     RejectReasonSelectComponent,
     RejectAcceptRequestPopoverComponent,
-    CreateUserBankAccountFormComponent],
+    CreateUserBankAccountFormComponent,
+    TransferIsRealizedModalComponent,
+    SuccessfulTransactionModalComponent,
+    OpportunityToParticipateModalComponent,
+    CouldNotParticipateModalComponent,
+    CouldParticipateModalComponent,
+    YouHasBeenSelectedModalComponent,
+    TermsAndConditionsModalComponent],
     entryComponents: [
         RejectWarningComponent,
         RejectReasonSelectComponent,
-        RejectAcceptRequestPopoverComponent
+        RejectAcceptRequestPopoverComponent,
+        TransferIsRealizedModalComponent,
+        SuccessfulTransactionModalComponent,
+        OpportunityToParticipateModalComponent,
+        CouldNotParticipateModalComponent,
+        CouldParticipateModalComponent,
+        YouHasBeenSelectedModalComponent,
+        TermsAndConditionsModalComponent
     ]
 })
 export class ComponentsModule {}

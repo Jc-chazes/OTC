@@ -18,6 +18,7 @@ export class TransactionMapper extends BaseMapper<Transaction>{
     }
 
     mapFromBe(be) :Transaction{
+        delete be.code;
         let target = new Transaction({
             ...be,
             created_at: new Date(be.created_at),
@@ -35,10 +36,12 @@ export class TransactionMapper extends BaseMapper<Transaction>{
             target.currencyToDeposit = this.currencies.getCurrencyByCode(target.exchangeAgentOffering.receivedCurrency);
             target.currencyToReceive = this.currencies.getCurrencyByCode(target.exchangeAgentOffering.requestedCurrency);
             target.amountToDeposit = target.amount * target.exchangeAgentOffering.receivedCurrencyAmount;
+            target.amountToReceive = target.amount * target.exchangeAgentOffering.requestedCurrencyAmount;
         }else{
             target.currencyToDeposit = this.currencies.getCurrencyByCode(target.exchangeAgentOffering.requestedCurrency);
             target.currencyToReceive = this.currencies.getCurrencyByCode(target.exchangeAgentOffering.receivedCurrency);
             target.amountToDeposit = target.amount * target.exchangeAgentOffering.requestedCurrencyAmount;
+            target.amountToReceive = target.amount * target.exchangeAgentOffering.receivedCurrencyAmount;
         }
         if( target.exchangeAgentOffering.type == 'V' ){
             target.targetCurrency = this.currencies.getCurrencyByCode(target.exchangeAgentOffering.receivedCurrency);

@@ -47,6 +47,13 @@ import { ExchangeAgentSelectBankAccountPage } from '../pages/exchange-agent-sele
 import { CommonSelectBankAccountPage } from '../pages/common-select-bank-account/common-select-bank-account';
 import { CommonTransferToOtcPage } from '../pages/common-transfer-to-otc/common-transfer-to-otc';
 import { CommonSendVoucherPage } from '../pages/common-send-voucher/common-send-voucher';
+import { CommonMyNotificationsPage } from '../pages/common-my-notifications/common-my-notifications';
+import { CommonMyTransactionsPage } from '../pages/common-my-transactions/common-my-transactions';
+import { CommonMyProfilePage } from '../pages/common-my-profile/common-my-profile';
+import { CommonViewProfilePage } from '../pages/common-view-profile/common-view-profile';
+import { CommonMyBankAccountsPage } from '../pages/common-my-bank-accounts/common-my-bank-accounts';
+import { CommonMyBankAccountsAddPage } from '../pages/common-my-bank-accounts-add/common-my-bank-accounts-add';
+import { PersonNearExchangeAgentsPage } from '../pages/person-near-exchange-agents/person-near-exchange-agents';
 
 
 @NgModule({
@@ -70,7 +77,14 @@ import { CommonSendVoucherPage } from '../pages/common-send-voucher/common-send-
     ExchangeAgentSelectBankAccountPage,
     CommonSelectBankAccountPage,
     CommonTransferToOtcPage,
-    CommonSendVoucherPage
+    CommonSendVoucherPage,
+    CommonMyNotificationsPage,
+    CommonMyTransactionsPage,
+    CommonMyProfilePage,
+    CommonViewProfilePage,
+    CommonMyBankAccountsPage,
+    CommonMyBankAccountsAddPage,
+    PersonNearExchangeAgentsPage
   ],
   imports: [
     BrowserModule,
@@ -102,7 +116,14 @@ import { CommonSendVoucherPage } from '../pages/common-send-voucher/common-send-
     ExchangeAgentSelectBankAccountPage,
     CommonSelectBankAccountPage,
     CommonTransferToOtcPage,
-    CommonSendVoucherPage
+    CommonSendVoucherPage,
+    CommonMyNotificationsPage,
+    CommonMyTransactionsPage,
+    CommonMyProfilePage,
+    CommonViewProfilePage,
+    CommonMyBankAccountsPage,
+    CommonMyBankAccountsAddPage,
+    PersonNearExchangeAgentsPage
   ],
   providers: [
     StatusBar,

@@ -48,9 +48,12 @@ export class ExchangeAgentRequestDetailsPage {
   }
 
   continue(){
-    this.navCtrl.push( CommonSelectBankAccountPage,{
-      transaction: this.transaction
-    });
+    this.transactions.acceptTransaction( this.transaction )
+    .subscribe( coudlBeAccepted => {
+      this.navCtrl.push( CommonSelectBankAccountPage,{
+        transaction: this.transaction
+      });
+    })
   }
 
   reject(){

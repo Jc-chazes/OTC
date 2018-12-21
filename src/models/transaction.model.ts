@@ -5,11 +5,11 @@ import { ExchangeAgent } from "./exchange-agent.model";
 import { ExchangeAgentOffering } from "./exchange-agent-offering.model";
 import { Currency } from "./currency.model";
 import { UserBankAccount } from "./user-bank-account.model";
+import { padStart } from 'lodash';
 
 export class Transaction extends BaseModel<Transaction>{
 
     status: '0' | '1' | '2';
-    code: string;
     amount: number;
     userTransactionImage: Image;
     exchangeAgentTransactionImage: Image;
@@ -28,14 +28,10 @@ export class Transaction extends BaseModel<Transaction>{
     currencyToReceive: Currency;
 
     amountToDeposit: number;
+    amountToReceive: number;
 
-    get amountToReceive(){
-        switch( this.exchangeAgentOffering.type ){
-            case 'V':
-                return this.amount * this.exchangeAgentOffering.requestedCurrencyAmount;
-            case 'C':
-                return this.amount;
-        }
+    get code(): string{
+        return `OTC-${this.exchangeAgentOffering.type == 'V' ? 'V' : 'C'}${padStart(this.id.toString(),6,'0')}`;   
     }
 
 }
