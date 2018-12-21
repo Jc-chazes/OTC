@@ -13,7 +13,23 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class='wapper-contain'>
+    <div class="quote__select-buy">
+        <div style='display: flex;width: 87px;display:flex;justify-content:space-between;align-items: center'>
+            <div  (tap)="clickUser(0)"  class='quote__choose-user___button-radio'>
+              <div [ngClass]="checkButton === 0? 'quote__choose-user___button-radio__background':'' "></div>
+            </div>
+            <div style='width: 59px; color:#ffffff'>Comprar</div>
+        </div>
+
+
+        <div style='display: flex;width: 87px;display:flex;justify-content:space-between;align-items: center'>
+            <div (tap)="clickUser(1)" class='quote__choose-user___button-radio'>
+              <div   [ngClass]="checkButton === 1? 'quote__choose-user___button-radio__background':'' "></div>
+            </div>
+            <div style='width: 59px ; color:#ffffff'>Vender</div>
+        </div>
+    </div>
     <form [formGroup]="userBankAccountFG" (submit)="submit()">
         <h4 class="text-center">Ingrese su número de cuenta bancaria</h4>
         <div class="spacer-50"></div>
@@ -25,7 +41,7 @@
               </div>
             </ion-col>
             <ion-col>
-              <div class="input pos-relative">
+              <div class="input pos-relative" >
                 <ng-container *ngFor="let bank of bankList; let i = index;">
                   <div class="bank" *ngIf="i == currentBankIndex">
                     <img [src]="bank.image.fileUrl" alt="" class="bank__image">

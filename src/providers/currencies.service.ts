@@ -9,6 +9,17 @@ import { Injectable } from "@angular/core";
 export class CurrenciesService extends BaseService implements CrudService<Currency>{
 
     currencyList: Currency[];
+    currencyListDictionary: { [code: string]: Currency } = {};
+
+    private generateDictionary(){
+        this.currencyList.forEach( c => {
+            this.currencyListDictionary[c.code] = c;
+        });
+    }
+
+    getCurrencyByCode(code: string){
+        return this.currencyListDictionary[code];
+    }
 
     get currencyPEN(): Currency{
         return this.currencyList.find(  c => c.code == 'PEN' );
@@ -19,6 +30,7 @@ export class CurrenciesService extends BaseService implements CrudService<Curren
             return this.api.get('/currencies')
             .map( resp => {
                 this.currencyList = resp.map( be => new Currency({ ...be }) );
+                this.generateDictionary();
                 return this.currencyList;
             }).catch( err => {
                 console.error(err);

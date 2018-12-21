@@ -35,10 +35,15 @@ import { ExchangeAgentsPage } from '../pages/exchange-agents/exchange-agents';
 import { ExchangueAgentService } from '../providers/exchange-agent.service';
 import { DataService } from '../providers/data.service';
 import { UsersService } from '../providers/users.service';
-import { ExchangeAgentTabsHomePage } from '../pages/exchange-agent-tabs-home/exchange-agent-tabs-home';
 import { ExchangeAgentOfferingsService } from '../providers/exchange-agent-offerings.service';
 import { DetailExchangeAgentPage } from '../pages/detail-exchange-agent/detail-exchange-agent';
 import { ModifyAccountBankPage } from '../pages/modify-account-bank/modify-account-bank';
+import { ExchangeAgentMyOfferingsPage } from '../pages/exchange-agent-my-offerings/exchange-agent-my-offerings';
+import { LoadingUtil } from '../providers/utils/loading.util';
+import { AlertUtil } from '../providers/utils/alert.util';
+import { ComponentsModule } from '../components/components.module';
+import { ExchangeAgentMyRequestsPage } from '../pages/exchange-agent-my-requests/exchange-agent-my-requests';
+import { TransactionsService } from '../providers/transaction.service';
 
 
 @NgModule({
@@ -57,9 +62,9 @@ import { ModifyAccountBankPage } from '../pages/modify-account-bank/modify-accou
     ExchangeAgentTabsPage,
     ChooseProfilePage,
     ExchangeAgentsPage,
-    ExchangeAgentTabsHomePage,
     DetailExchangeAgentPage,
-    ModifyAccountBankPage
+    ModifyAccountBankPage,
+    ExchangeAgentMyRequestsPage
   ],
   imports: [
     BrowserModule,
@@ -67,6 +72,7 @@ import { ModifyAccountBankPage } from '../pages/modify-account-bank/modify-accou
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    ComponentsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -85,9 +91,9 @@ import { ModifyAccountBankPage } from '../pages/modify-account-bank/modify-accou
     ChooseProfilePage,
     ExchangeAgentsPage,
     ChooseProfilePage,
-    ExchangeAgentTabsHomePage,
     DetailExchangeAgentPage,
-    ModifyAccountBankPage
+    ModifyAccountBankPage,
+    ExchangeAgentMyRequestsPage
   ],
   providers: [
     StatusBar,
@@ -98,14 +104,17 @@ import { ModifyAccountBankPage } from '../pages/modify-account-bank/modify-accou
     StorageUtil,
     JwtUtil,
     ApiUtil,
+    AlertUtil,
+    LoadingUtil,
     BaseService,
     BanksService,
     CurrenciesService,
     UsersBankAccountsService,
     ExchangueAgentService,
     DataService,  
+    ExchangeAgentOfferingsService,
     UsersService,
-    ExchangeAgentOfferingsService
+    TransactionsService
   ]
 })
 export class AppModule {}

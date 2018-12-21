@@ -1,0 +1,46 @@
+@import "../../styles/1-settings/index";
+@import "../../styles/2-tools/index";
+
+stepper {
+    .stepper{
+        max-width: 290px;
+        margin: 0 auto;
+    }
+    .step{
+        width: 50px;
+        .square{
+            border: 1px solid $accent-color;
+            color: rgba(#FFF,.4);
+            @include borderRadius(5px);
+            .content{
+                font-size: 2em;
+            }
+        }
+        &__label{
+            font-size: 0.8em;
+            font-weight: bold;
+            @include opacity(0);
+        }
+        &:not(:last-child){
+            position: relative;
+            &::before{
+                content: '';
+                position: absolute;
+                left: 88%;
+                width: 21px;
+                top: 30%;
+                height: 4px;
+                background-color: $accent-color;
+            }
+        }
+        &.active{
+            .square{
+                background: $accent-color;
+                color: #FFF;
+            }
+            .step__label{
+                @include opacity(1);
+            }
+        }
+    }
+}

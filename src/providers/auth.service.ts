@@ -11,11 +11,15 @@ import { JwtUtil } from './utils/jwt.util';
 import { User } from '../models/user.model';
 import { AppStateService } from './app-state.service';
 import { UsersService } from './users.service';
+import { NavController } from 'ionic-angular';
+import { PersonTabsPage } from '../pages/person-tabs/person-tabs';
+import { ExchangeAgentTabsPage } from '../pages/exchange-agent-tabs/exchange-agent-tabs';
+import { StorageUtil } from './utils/storage.util';
 
 @Injectable()
 export class AuthProvider {
 
-  constructor( public http : HttpClient, private api: ApiUtil,
+  constructor( public http : HttpClient, private api: ApiUtil, private storage: StorageUtil,
   private jwt: JwtUtil, private appState: AppStateService, private users: UsersService) {
   }
 
@@ -83,7 +87,21 @@ export class AuthProvider {
       this.users.currentUser = user;
       return true;      
     }).catch( err => {
+      this.purge();
       return Observable.of(false);
     });
   }
+
+  purge(){
+    this.storage.clear();
+  }
+
+  getTabsByUserType(){
+    if( this.users.currentUser.userType == '0' ){
+      return PersonTabsPage;
+    }else {
+      return ExchangeAgentTabsPage;
+    }
+  }
+  
 }

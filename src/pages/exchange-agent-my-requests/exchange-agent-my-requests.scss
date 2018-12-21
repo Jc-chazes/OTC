@@ -1,0 +1,56 @@
+page-exchange-agent-my-requests {
+    .myRequests{
+        &__exchanges{
+            input{
+                max-width: 80px;;
+            }
+        }
+        &__requests{
+            &__title{
+                padding: 3px 10px;
+                background-color: #FFF;
+                color: #000;
+                font-size: 13px;
+            }
+            &__item{
+                line-height: 0.8;           
+                &__avatar{
+                   .square{
+                        background-image: url('/assets/imgs/avatar_placeholder.png');
+                        background-position: center;
+                        background-repeat: no-repeat;
+                        background-size: cover;
+                   }
+                }
+                &__amount{
+                    font-size: 12px;
+                }
+                ion-row{
+                    padding: 5px;
+                    padding-left: 8px;
+                    border-top: 1px solid #000;
+                    border-bottom: 1px solid #000;
+                    border-left: 6px solid #000;
+                }
+                ion-icon{
+                    font-size: 18px;
+                }
+                &:nth-child(3n+1){
+                    ion-row{
+                        border-left-color: $accent-color;
+                    }
+                }
+                &:nth-child(3n+2){
+                    ion-row{
+                        border-left-color: $primary-color;
+                    }
+                }
+                &:nth-child(3n){
+                    ion-row{
+                        border-left-color: $secondary-color;
+                    }
+                }
+            }
+        }
+    }
+}

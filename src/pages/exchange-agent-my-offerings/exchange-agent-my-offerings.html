@@ -1,0 +1,44 @@
+<ion-content padding>
+  <div class="fill-height flex-col-layout">
+    <div>
+      <update-exchange-reminder></update-exchange-reminder>
+    </div>
+    <div class="flex pb-50 overflow">
+      <!-- <ion-scroll scrollY="true"> -->
+        <ion-scroll scrollY="true" class="fill-height">
+          <div *ngFor="let group of groupedExchangeAgentOfferingList">
+            <ion-row>
+              <ion-col>
+                <p>Tipo de moneda</p>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-4>
+                <input type="text" class="fill-widht" readonly [value]="group.currency.name">
+              </ion-col>
+            </ion-row>
+            <div class="spacer-30"></div>
+            <ion-row>
+              <ion-col col-6 *ngFor="let exchange of group.exchanges">
+                <ion-row>
+                  <ion-col col-6>
+                    <span>Precio de <br> {{ exchange.type == 'V' ? 'venta' : 'compra' }}</span>
+                  </ion-col>
+                  <ion-col col-6>
+                    <input *ngIf="exchange.type == 'V'" type="number" class="fill-width" [(ngModel)]="exchange.requestedCurrencyAmount">
+                    <input *ngIf="exchange.type == 'C'" type="number" class="fill-width" [(ngModel)]="exchange.receivedCurrencyAmount">
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </div>
+        </ion-scroll>
+      <!-- </ion-scroll> -->
+    </div>
+  </div>
+  <div class="saveButton text-center pb-10">
+    <button fluid ion-button color="secondary" (tap)="submit()">
+      Guardar
+    </button>
+  </div>
+</ion-content>

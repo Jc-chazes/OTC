@@ -1,0 +1,18 @@
+<!-- Generated template for the StepperComponent component -->
+<div class="stepper" *ngIf="mode == 'exchange-agent'">
+  <div class="flex-row-layout jc-space-between">
+    <div class="step" *ngFor="let step of steps" (tap)="onTapStep(step)"
+    [ngClass]="{ 'active': step.step == currentStep }">
+      <div class="p-5">
+        <div class="square">
+          <div class="content flex-row-layout ai-center jc-center">
+            {{ step.step }}
+          </div>
+        </div>
+        <p class="step__label text-center">
+          {{ step.stepLabel }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

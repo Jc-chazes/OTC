@@ -18,7 +18,7 @@ export class ModifyAccountBankPage {
   currencyList: Currency[];
   currentBankIndex = 0;
   userBankAccountFG: FormGroup;
-
+  checkButton : number = 0;
   constructor(public navCtrl: NavController, public navParams: NavParams, private fb: FormBuilder,
     private banks: BanksService, private currencies: CurrenciesService, private appState: AppStateService) {
     this.userBankAccountFG = this.fb.group({
