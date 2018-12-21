@@ -1,0 +1,46 @@
+<!--
+  Generated template for the CommonSendVoucherPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>common-send-voucher</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="page">
+  <div class="sendVoucher">
+    <div class="spacer-30"></div>
+    <stepper mode="exchange-agent" [currentStep]="5"></stepper>
+  </div>
+  <div class="page-content-container">
+    <p class="text-center">
+      Elija o tome una foto del voucher para la constancia <br>
+      del pago o depósito realizado
+    </p>
+    <div class="spacer-30"></div>    
+    <div class="flex-col-layout ai-center">
+      <button fluid ion-button color="secondary" (tap)="voucherFile.click()">
+        <ion-icon ios="ios-add-circle-outline" md="ios-add-circle-outline" class="text-white"></ion-icon>&nbsp;&nbsp;&nbsp;Añadir foto
+      </button>
+      <div class="spacer-10"></div>
+      <button fluid ion-button color="secondary">
+        <ion-icon ios="ios-camera-outline" md="ios-camera-outline" class="text-white"></ion-icon>&nbsp;&nbsp;&nbsp;Tomar foto
+      </button>
+    </div>
+    <div class="spacer-30"></div>
+    <ion-row justify-content-center>
+      <ion-col col-10>
+        <div class="square sendVoucher__preview w-background-image"
+        [style.backgroundImage]="sanitizer.bypassSecurityTrustStyle('url('+voucher.fileUrl+')')"
+        *ngIf="!!voucher.fileUrl"></div>
+      </ion-col>
+    </ion-row>
+  </div>
+  <input type="file" class="hide" #voucherFile (change)="voucherFileChange($event)">
+</ion-content>

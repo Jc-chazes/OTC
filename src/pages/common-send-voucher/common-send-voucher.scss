@@ -1,0 +1,10 @@
+page-common-send-voucher {
+    ion-icon{
+        font-size: 25px;
+    }
+    .sendVoucher{
+        &__preview{
+            border: 3px solid #FFF;
+        }
+    }
+}

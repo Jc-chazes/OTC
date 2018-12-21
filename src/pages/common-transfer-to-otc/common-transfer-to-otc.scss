@@ -1,0 +1,17 @@
+page-common-transfer-to-otc {
+    .commonTransferToOTC{
+        &__container{
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        &__banks{
+            &__item{
+                background-color: #FFF;
+                padding: 5px;
+                img{
+                    height: 30px;
+                }
+            }
+        }
+    }
+}

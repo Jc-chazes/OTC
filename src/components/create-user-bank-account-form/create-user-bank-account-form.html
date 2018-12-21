@@ -1,0 +1,70 @@
+<div [formGroup]="userBankAccountFG">
+  <ion-row align-items-center>
+    <ion-col col-5>
+      <div>
+        Entidad bancaria
+      </div>
+    </ion-col>
+    <ion-col>
+      <div class="input pos-relative">
+        <ng-container *ngFor="let bank of bankList; let i = index;">
+          <div class="bank" *ngIf="i == currentBankIndex">
+            <img [src]="bank.image.fileUrl" alt="" class="bank__image">
+          </div>
+        </ng-container>
+        <div class="prev__bank" (tap)="onPreviousBank()">
+          <img src="/assets/imgs/icons/arrow_left.svg" alt="">
+        </div>
+        <div class="next__bank" (tap)="onNextBank()">
+          <img src="/assets/imgs/icons/arrow_right.svg" alt="">
+        </div>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-row align-items-center>
+    <ion-col col-5>
+      <div>
+        Titular de la cuenta
+      </div>
+    </ion-col>
+    <ion-col>
+      <input type="text" class="fill-width" formControlName="holderName">
+    </ion-col>
+  </ion-row>
+  <ion-row align-items-center>
+    <ion-col col-5>
+      <div>
+        Número de la cuenta
+      </div>
+    </ion-col>
+    <ion-col>
+      <input type="text" class="fill-width" formControlName="accountNumber">
+    </ion-col>
+  </ion-row>
+  <ion-row align-items-center>
+    <ion-col col-5>
+      <div>
+        Tipo de cuenta
+      </div>
+    </ion-col>
+    <ion-col>
+      <ion-row class="input currencySelect">
+        <ion-col class="currencySelect__item text-center" *ngFor="let currency of currencyList"
+        [ngClass]="{ active: userBankAccountFG.value.currency == currency }"
+        (tap)=" userBankAccountFG.patchValue({ currency: currency }) ">
+          <span>{{ currency.name }}</span>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row align-items-center>
+    <ion-col col-5>
+      <div>
+        Apelativo de la cuenta
+      </div>
+    </ion-col>
+    <ion-col>
+      <input type="text" class="fill-width" formControlName="apellative">
+    </ion-col>
+  </ion-row>
+</div>

@@ -1,0 +1,39 @@
+page-exchange-agent-select-bank-account {
+    .exchangeAgentSelectBankAccount{
+        &__form{
+            max-width: 300px;
+            margin: 0 auto;
+        }
+    }
+    ion-select{
+        height: 31px;
+        padding: 8px !important;
+        max-width: unset;
+    }
+    .bank{
+        position: absolute;
+        height: 80%;
+        width: 100%;
+        left: 0;
+        top: 10%;
+        &__image{
+            height: 100%;
+            display: block;
+            margin: 0 auto;
+        }
+    }
+    .prev__bank, .next__bank{
+        height: 80%;
+        position: absolute;
+        top: 10%;
+        img{
+            height: 100%;
+        }
+    }
+    .prev__bank{
+        left: 0;
+    }
+    .next__bank{
+        right: 0;
+    }
+}

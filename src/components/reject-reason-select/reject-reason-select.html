@@ -1,0 +1,22 @@
+<div class="rejectWarning flex-col-layout jc-center fill-height">
+  <div class="modal-content">
+    <p class="text-center">
+      <b>Motivos</b>
+    </p>
+  </div>
+  <div radio-group [(ngModel)]="reason" padding>
+    <div class="flex-row-layout ai-center flex-gap">
+      <ion-radio mode="md" color="secondary" [value]="'NO_FONDO'"></ion-radio>
+      <p (tap)="reason = 'NO_FONDO'">No cuenta con fondo suficiente</p>
+    </div>
+    <div class="flex-row-layout ai-center flex-gap">
+      <ion-radio mode="md" color="secondary" [value]="'NO_DISPONIBLE'"></ion-radio>
+      <p (tap)="reason = 'NO_DISPONIBLE'">No está disponible</p>
+    </div>
+  </div>
+  <div class="flex-col-layout ai-center">
+    <button fluid ion-button color="dark" (tap)="viewCtrl.dismiss(reason)">
+      Listo
+    </button>
+  </div>
+</div>

@@ -44,6 +44,13 @@ import { AlertUtil } from '../providers/utils/alert.util';
 import { ComponentsModule } from '../components/components.module';
 import { ExchangeAgentMyRequestsPage } from '../pages/exchange-agent-my-requests/exchange-agent-my-requests';
 import { TransactionsService } from '../providers/transaction.service';
+import { ExchangeAgentRequestDetailsPage } from '../pages/exchange-agent-request-details/exchange-agent-request-details';
+import { PipesModule } from '../pipes/pipes.module';
+import { ConstantsService } from '../providers/constants.service';
+import { ExchangeAgentSelectBankAccountPage } from '../pages/exchange-agent-select-bank-account/exchange-agent-select-bank-account';
+import { CommonSelectBankAccountPage } from '../pages/common-select-bank-account/common-select-bank-account';
+import { CommonTransferToOtcPage } from '../pages/common-transfer-to-otc/common-transfer-to-otc';
+import { CommonSendVoucherPage } from '../pages/common-send-voucher/common-send-voucher';
 
 
 @NgModule({
@@ -61,10 +68,20 @@ import { TransactionsService } from '../providers/transaction.service';
     PersonTabsPage,
     ExchangeAgentTabsPage,
     ChooseProfilePage,
+<<<<<<< HEAD
     ExchangeAgentsPage,
     DetailExchangeAgentPage,
     ModifyAccountBankPage,
     ExchangeAgentMyRequestsPage
+=======
+    ExchangeAgentMyOfferingsPage,
+    ExchangeAgentMyRequestsPage,
+    ExchangeAgentRequestDetailsPage,
+    ExchangeAgentSelectBankAccountPage,
+    CommonSelectBankAccountPage,
+    CommonTransferToOtcPage,
+    CommonSendVoucherPage
+>>>>>>> 53ec82a0997bfb90d8a1b9066126257a609caadf
   ],
   imports: [
     BrowserModule,
@@ -72,7 +89,8 @@ import { TransactionsService } from '../providers/transaction.service';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    ComponentsModule
+    ComponentsModule,
+    PipesModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -89,11 +107,21 @@ import { TransactionsService } from '../providers/transaction.service';
     PersonTabsPage,
     ExchangeAgentTabsPage,
     ChooseProfilePage,
+<<<<<<< HEAD
     ExchangeAgentsPage,
     ChooseProfilePage,
     DetailExchangeAgentPage,
     ModifyAccountBankPage,
     ExchangeAgentMyRequestsPage
+=======
+    ExchangeAgentMyOfferingsPage,
+    ExchangeAgentMyRequestsPage,
+    ExchangeAgentRequestDetailsPage,
+    ExchangeAgentSelectBankAccountPage,
+    CommonSelectBankAccountPage,
+    CommonTransferToOtcPage,
+    CommonSendVoucherPage
+>>>>>>> 53ec82a0997bfb90d8a1b9066126257a609caadf
   ],
   providers: [
     StatusBar,
@@ -114,7 +142,8 @@ import { TransactionsService } from '../providers/transaction.service';
     DataService,  
     ExchangeAgentOfferingsService,
     UsersService,
-    TransactionsService
+    TransactionsService,
+    ConstantsService
   ]
 })
 export class AppModule {}
