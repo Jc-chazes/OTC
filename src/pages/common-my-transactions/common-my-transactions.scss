@@ -11,7 +11,7 @@ page-common-my-transactions {
             &__content{
                 &__notification{
                     padding: 0px 15px;
-                    border-left: 6px solid #FFF;
+                    border-left: 4px solid #FFF;
                     border-bottom: 1px solid rgba(#000,0.2);
                     &:nth-child(3n+1){
                         border-left-color: $secondary-color;

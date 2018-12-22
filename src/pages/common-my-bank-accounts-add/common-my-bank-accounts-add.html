@@ -4,15 +4,28 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header profile-background-color>
 
-  <ion-navbar>
-    <ion-title>common-my-bank-accounts-add</ion-title>
+  <ion-navbar hideBackButton >
+    <div class="flex-row-layout ai-center">
+      <ion-title>Número cuenta bancaria</ion-title>
+    </div>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content padding class="page">
+  <div class="page-content-container fill-height flex-col-layout jc-center">
+    <div class="flex flex-col-layout jc-center">
+      <p class="text-center page-title">Ingrese su nueva cuenta bancaria</p>
+      <div class="spacer-35"></div>
+      <create-user-bank-account-form [userBankAccountFG]="userBankAccountFG"></create-user-bank-account-form>
+    </div>
+    <div class="flex-row-layout jc-center">
+      <button fluid ion-button color="secondary" (tap)="submit()">
+        Guardar
+      </button>
+    </div>
+  </div>
 </ion-content>

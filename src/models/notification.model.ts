@@ -12,4 +12,8 @@ export class Notification extends BaseModel<Notification>{
     transaction: Transaction;
 
     timeLabel: { date: string, time: string };
+
+    get icon(): string{
+        return `/assets/imgs/icons/notification_${this.type.toLowerCase()}.png`;
+    }
 }

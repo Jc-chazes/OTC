@@ -1,3 +1,19 @@
 page-common-my-bank-accounts {
-
+    .myBankAccounts{
+        &__bankAccount{
+            padding: 4px 15px;
+            border-left: 4px solid #FFF;
+            border-bottom: 1px solid rgba(#000,0.2);
+            line-height: 1.5;
+            &:nth-child(3n+1){
+                border-left-color: $primary-color;
+            }
+            &:nth-child(3n+2){
+                border-left-color: $accent-color;                        
+            }
+            &:nth-child(3n){
+                border-left-color: $secondary-color;                        
+            }
+        }
+    }
 }

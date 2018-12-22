@@ -2,7 +2,7 @@
     padding: 0 !important;
 }
 
-@for $i from 1 through 20{
+@for $i from 0 through 20{
     .pt-#{$i*5}{
         padding-top: #{$i*5}px !important;
     }

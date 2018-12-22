@@ -6,6 +6,7 @@ import { Image } from '../../models/shared/image.model';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LoadingUtil } from '../../providers/utils/loading.util';
 import { AlertUtil } from '../../providers/utils/alert.util';
+import { CommonMyBankAccountsPage } from '../common-my-bank-accounts/common-my-bank-accounts';
 
 /**
  * Generated class for the CommonViewProfilePage page.
@@ -77,6 +78,10 @@ export class CommonViewProfilePage {
         }
       })
     }
+  }
+
+  goToMyBankAccounts(){
+    this.navCtrl.push(CommonMyBankAccountsPage);
   }
 
 }

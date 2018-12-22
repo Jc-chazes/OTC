@@ -55,7 +55,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
             return prev;
         },{});
         Object.keys(groups).forEach( transactionId => {
-            groups[transactionId].notifications = sortBy(groups[transactionId].notifications,'created_at');
+            groups[transactionId].notifications = sortBy(groups[transactionId].notifications,'created_at').reverse();
         });
         let toReturn = Object.keys(groups).reduce( (prev,curr) => {
             let transaction = groups[curr].notifications[0].transaction;

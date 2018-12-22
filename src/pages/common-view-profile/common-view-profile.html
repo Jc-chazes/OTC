@@ -7,9 +7,7 @@
 <ion-header profile-background-color>
   <ion-navbar hideBackButton >
     <div class="flex-row-layout ai-center">
-      <h6>Perfil</h6>
-      <span class="flex"></span>
-      <h6>OTC</h6>
+      <ion-title>Perfil</ion-title>
     </div>
   </ion-navbar>
 </ion-header>
@@ -85,6 +83,15 @@
           </ion-col>
         </ion-row>
       </div>
+      <div class="flex-row-layout" (tap)="goToMyBankAccounts()">
+        <span>Mis cuentas bancarias</span>
+        <span class="flex"></span>
+        <div class="flex-row-layout ai-center">
+          <span>Ver más&nbsp;&nbsp;</span>
+          <ion-icon name="add-circle" md="ios-add-circle-outline" ios="ios-add-circle-outline"></ion-icon>
+        </div>
+      </div>
+      <div class="spacer-50"></div>
   </div>
 
 </ion-content>

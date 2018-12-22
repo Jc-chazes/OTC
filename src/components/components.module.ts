@@ -17,6 +17,7 @@ import { YouHasBeenSelectedModalComponent } from './you-has-been-selected-modal/
 import { TermsAndConditionsModalComponent } from './terms-and-conditions-modal/terms-and-conditions-modal';
 import { HeaderComponent } from './header/header';
 import { DirectivesModule } from '../directives/directives.module';
+import { BackButtonComponent } from './back-button/back-button';
 
 @NgModule({
 	declarations: [UpdateExchangeReminderComponent,
@@ -33,7 +34,8 @@ import { DirectivesModule } from '../directives/directives.module';
     CouldParticipateModalComponent,
     YouHasBeenSelectedModalComponent,
     TermsAndConditionsModalComponent,
-    HeaderComponent],
+    HeaderComponent,
+    BackButtonComponent],
 	imports: [ CommonModule, IonicModule, DirectivesModule ],
 	exports: [UpdateExchangeReminderComponent,
     StepperComponent,
@@ -49,7 +51,8 @@ import { DirectivesModule } from '../directives/directives.module';
     CouldParticipateModalComponent,
     YouHasBeenSelectedModalComponent,
     TermsAndConditionsModalComponent,
-    HeaderComponent],
+    HeaderComponent,
+    BackButtonComponent],
     entryComponents: [
         RejectWarningComponent,
         RejectReasonSelectComponent,
