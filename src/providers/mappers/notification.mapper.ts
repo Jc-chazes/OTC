@@ -11,7 +11,7 @@ export class NotificationMapper extends BaseMapper<Notification>{
         let mCreatedAt = moment(target.created_at);
         target.timeLabel = {
             date: mCreatedAt.isSame(moment(),'day') ? 'Hoy' : mCreatedAt.format('DD/MM'),
-            time: mCreatedAt.format('h:mm:ss a')
+            time: mCreatedAt.format('h:mm a')
         };
         return target;
     }

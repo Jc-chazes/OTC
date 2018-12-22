@@ -32,14 +32,19 @@ export class Login implements OnInit {
   }
 
   login(){
-    this.nvCtrl.push(ExchangeAgentsPage)
     if( this.user.password && this.user.email ){
       let loading = this.loadingCtrl.create();
       loading.present();
       this.auth.login(this.user).subscribe( results => {
         loading.dismiss();
         if(results){
-          this.app.getRootNav().setRoot(this.auth.getTabsByUserType());
+          let tabs = null;
+          if( this.users.currentUser.userType == '0' ){
+            tabs = PersonTabsPage;
+          }else {
+            tabs = ExchangeAgentTabsPage;
+          }
+          this.app.getRootNav().setRoot(tabs);
         }
       })
     }

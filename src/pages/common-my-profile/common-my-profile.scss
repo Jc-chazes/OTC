@@ -1,3 +1,32 @@
 page-common-my-profile {
-
+    .myProfile{
+        &__option{
+            &__icon{
+                width: 50%;
+            }
+            padding: 12px 15px;
+            border-left: 4px solid #FFF;
+            border-bottom: 1px solid rgba(#000,0.2);
+            &:nth-child(3n+1){
+                border-left-color: $accent-color;     
+            }
+            &:nth-child(3n+2){
+                border-left-color: $primary-color;                        
+            }
+            &:nth-child(3n){
+                border-left-color: $secondary-color;           
+            }
+        }
+    }
+    .item{
+        padding: 0px;
+        background: transparent;
+        .item-inner{
+            padding-right: 0px !important;
+            border: none !important;
+            .label{
+                margin: 0;
+            }
+        }
+    }
 }

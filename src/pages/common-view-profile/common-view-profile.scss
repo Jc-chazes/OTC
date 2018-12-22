@@ -1,3 +1,26 @@
-page-common-view-profile {
+@import "../../styles/1-settings/index";
+@import "../../styles/2-tools/index";
 
+page-common-view-profile {
+    .viewProfile{
+        &__avatar{
+            margin: 0 auto;
+            width: 125px;
+            height: 125px;
+            border: 2px solid $accent-color;
+            position: relative;
+            @include borderRadius(50%);
+            &.empty{
+                background-size: 65%;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+            &__add{
+                width: 22px;
+                position: absolute;
+                top: 0px;
+                right: 10px;
+            }
+        }
+    }
 }

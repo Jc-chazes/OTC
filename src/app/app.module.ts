@@ -64,7 +64,6 @@ import moment from 'moment';
 import { DirectivesModule } from '../directives/directives.module';
 moment.locale('es');
 
-
 @NgModule({
   declarations: [
     MyApp,
@@ -146,7 +145,6 @@ moment.locale('es');
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthProvider,
     AppStateService,
     StorageUtil,
     JwtUtil,
@@ -163,7 +161,8 @@ moment.locale('es');
     UsersService,
     TransactionsService,
     ConstantsService,
-    NotificationsService
+    NotificationsService,
+    AuthProvider
   ]
 })
 export class AppModule {}
