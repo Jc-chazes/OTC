@@ -15,6 +15,8 @@ import { CurrenciesService } from "./currencies.service";
 import { TransactionMapper } from "./mappers/transaction.mapper";
 import { UserBankAccount } from "../models/user-bank-account.model";
 import { Image } from "../models/shared/image.model";
+import moment from 'moment';
+import { groupBy } from 'lodash';
 
 @Injectable()
 export class TransactionsService extends BaseService implements CrudService<Transaction>{
@@ -45,8 +47,23 @@ export class TransactionsService extends BaseService implements CrudService<Tran
                 console.error(err);
                 return Observable.of([]);
             });
+        }else{
+            let params = new HttpParams();
+            params = params.append('_sort','id:DESC');
+            if( this.users.currentUser.userType == '0' ){
+                params = params.append('person',this.users.currentUser.person.id.toString());
+            }else{
+                params = params.append('exchangeagent',this.users.currentUser.exchangeAgent.id.toString());
+            }
+            return this.api.get('/transactions',{
+                params
+            }).map( resp => {
+                return resp.map( be => this.mapper.mapFromBe(be) );
+            }).catch( err => {
+                console.error(err);
+                return Observable.of([]);
+            });
         }
-        throw new Error("Method not implemented.");
     }    
     findOne(specification?: BaseSpecification): Observable<Transaction> {
         throw new Error("Method not implemented.");
@@ -115,6 +132,14 @@ export class TransactionsService extends BaseService implements CrudService<Tran
             return Observable.of(false);
         })
     }
-
+    
+    groupByMonth(transactions: Transaction[]): { period: { year: number, month: number }, transactions: Transaction[] }[]{
+        let groups = groupBy( transactions, (tx) => moment(tx.created_at).format('YYYY-MM') );
+        return Object.keys( groups )
+        .map( periodString => ({
+            period: { year: Number(periodString.split('-')[0]), month: Number(periodString.split('-')[1]) },
+            transactions: groups[periodString]
+        }) );
+    }
 
 }

@@ -13,6 +13,29 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content class="page">
+  <div class="myNotifications">
+    <div class="myNotifications__notificationGroup" *ngFor="let tx of transactionList">
+      <div class="myNotifications__notificationGroup__header">
+        Transacción #{{ tx.code }}
+      </div>
+      <div class="myNotifications__notificationGroup__content">
+        <div class="myNotifications__notificationGroup__content__notification" *ngFor="let notif of tx.notifications">
+          <ion-row align-items-center>
+            <ion-col col-2>
 
+            </ion-col>
+            <ion-col col-8>
+              {{ notif.content }}
+            </ion-col>
+            <ion-col col-2>
+              <p class="text-center">
+                <b> <small> {{ notif.timeLabel.date }} <br> {{ notif.timeLabel.time }} </small> </b>
+              </p>
+            </ion-col>
+          </ion-row>
+        </div>
+      </div>
+    </div>
+  </div>
 </ion-content>

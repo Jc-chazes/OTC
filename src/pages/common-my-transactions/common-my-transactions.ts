@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { TransactionsService } from '../../providers/transaction.service';
+import { Transaction } from '../../models/transaction.model';
+import moment from 'moment';
+import { DomSanitizer } from '@angular/platform-browser';
 
 /**
  * Generated class for the CommonMyTransactionsPage page.
@@ -14,11 +18,31 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class CommonMyTransactionsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  transactionsPerMonth: { month: string, transactions: Transaction[] }[];
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private transactions: TransactionsService,
+    private sanitizer: DomSanitizer) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CommonMyTransactionsPage');
+  }
+
+  ionViewWillEnter(){
+    this.transactions.find()
+    .subscribe( results => {
+      this.transactionsPerMonth = this.transactions.groupByMonth(results).map( group => ({
+        month: `${moment.months()[group.period.month-1]} - ${group.period.year}`,
+        transactions: group.transactions
+      }))
+    })
+  }
+
+  getAvatarUrl(transaction: Transaction){
+    if( transaction.person.user.photo ){
+      return this.sanitizer.bypassSecurityTrustStyle(`url('${transaction.person.user.photo.fileUrl}')`);
+    }
+    return this.sanitizer.bypassSecurityTrustStyle(`url('/assets/imgs/avatar_placeholder.png')`);
   }
 
 }

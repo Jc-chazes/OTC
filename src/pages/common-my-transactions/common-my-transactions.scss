@@ -1,3 +1,29 @@
-page-common-my-transactions {
+@import "../../styles/1-settings/index";
 
+page-common-my-transactions {
+    .myTransactions{
+        &__notificationGroup{
+            &__header{
+                background-color: #6f6f6f;
+                padding: 8px 15px 8px 35px;
+                text-transform: capitalize;
+            }
+            &__content{
+                &__notification{
+                    padding: 0px 15px;
+                    border-left: 6px solid #FFF;
+                    border-bottom: 1px solid rgba(#000,0.2);
+                    &:nth-child(3n+1){
+                        border-left-color: $secondary-color;
+                    }
+                    &:nth-child(3n+2){
+                        border-left-color: $primary-color;                        
+                    }
+                    &:nth-child(3n){
+                        border-left-color: $accent-color;                        
+                    }
+                }
+            }
+        }
+    }
 }

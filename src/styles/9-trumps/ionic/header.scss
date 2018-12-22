@@ -1,0 +1,17 @@
+ion-header{
+    &.otcHeader{
+        &--exchangeAgent{
+            .toolbar{
+                height: 30px;
+                min-height: unset;
+            }
+            .toolbar-background{
+                background-color: #1463a5;
+            }
+            .toolbar-title{
+                color: #FFF;
+                font-size: 1.5rem;
+            }
+        }
+    }
+}

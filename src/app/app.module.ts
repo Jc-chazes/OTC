@@ -58,6 +58,11 @@ import { CommonViewProfilePage } from '../pages/common-view-profile/common-view-
 import { CommonMyBankAccountsPage } from '../pages/common-my-bank-accounts/common-my-bank-accounts';
 import { CommonMyBankAccountsAddPage } from '../pages/common-my-bank-accounts-add/common-my-bank-accounts-add';
 import { PersonNearExchangeAgentsPage } from '../pages/person-near-exchange-agents/person-near-exchange-agents';
+import { NotificationsService } from '../providers/notifications.service';
+
+import moment from 'moment';
+import { DirectivesModule } from '../directives/directives.module';
+moment.locale('es');
 
 
 @NgModule({
@@ -100,7 +105,8 @@ import { PersonNearExchangeAgentsPage } from '../pages/person-near-exchange-agen
     FormsModule,
     ReactiveFormsModule,
     ComponentsModule,
-    PipesModule
+    PipesModule,
+    DirectivesModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -156,7 +162,8 @@ import { PersonNearExchangeAgentsPage } from '../pages/person-near-exchange-agen
     ExchangeAgentOfferingsService,
     UsersService,
     TransactionsService,
-    ConstantsService
+    ConstantsService,
+    NotificationsService
   ]
 })
 export class AppModule {}

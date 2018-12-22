@@ -15,6 +15,8 @@ import { CouldNotParticipateModalComponent } from './could-not-participate-modal
 import { CouldParticipateModalComponent } from './could-participate-modal/could-participate-modal';
 import { YouHasBeenSelectedModalComponent } from './you-has-been-selected-modal/you-has-been-selected-modal';
 import { TermsAndConditionsModalComponent } from './terms-and-conditions-modal/terms-and-conditions-modal';
+import { HeaderComponent } from './header/header';
+import { DirectivesModule } from '../directives/directives.module';
 
 @NgModule({
 	declarations: [UpdateExchangeReminderComponent,
@@ -30,8 +32,9 @@ import { TermsAndConditionsModalComponent } from './terms-and-conditions-modal/t
     CouldNotParticipateModalComponent,
     CouldParticipateModalComponent,
     YouHasBeenSelectedModalComponent,
-    TermsAndConditionsModalComponent],
-	imports: [ CommonModule, IonicModule ],
+    TermsAndConditionsModalComponent,
+    HeaderComponent],
+	imports: [ CommonModule, IonicModule, DirectivesModule ],
 	exports: [UpdateExchangeReminderComponent,
     StepperComponent,
     CountdownComponent,
@@ -45,7 +48,8 @@ import { TermsAndConditionsModalComponent } from './terms-and-conditions-modal/t
     CouldNotParticipateModalComponent,
     CouldParticipateModalComponent,
     YouHasBeenSelectedModalComponent,
-    TermsAndConditionsModalComponent],
+    TermsAndConditionsModalComponent,
+    HeaderComponent],
     entryComponents: [
         RejectWarningComponent,
         RejectReasonSelectComponent,

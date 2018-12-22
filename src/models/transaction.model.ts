@@ -6,6 +6,7 @@ import { ExchangeAgentOffering } from "./exchange-agent-offering.model";
 import { Currency } from "./currency.model";
 import { UserBankAccount } from "./user-bank-account.model";
 import { padStart } from 'lodash';
+import { Notification } from "./notification.model";
 
 export class Transaction extends BaseModel<Transaction>{
 
@@ -30,8 +31,8 @@ export class Transaction extends BaseModel<Transaction>{
     amountToDeposit: number;
     amountToReceive: number;
 
-    get code(): string{
-        return `OTC-${this.exchangeAgentOffering.type == 'V' ? 'V' : 'C'}${padStart(this.id.toString(),6,'0')}`;   
-    }
+    code: string;
+
+    notifications: Notification[];
 
 }
