@@ -62,6 +62,8 @@ import { NotificationsService } from '../providers/notifications.service';
 
 import moment from 'moment';
 import { DirectivesModule } from '../directives/directives.module';
+import { ContentsService } from '../providers/contents.service';
+import { ModalUtil } from '../providers/utils/modal.util';
 moment.locale('es');
 
 @NgModule({
@@ -162,7 +164,9 @@ moment.locale('es');
     TransactionsService,
     ConstantsService,
     NotificationsService,
-    AuthProvider
+    AuthProvider,
+    ContentsService,
+    ModalUtil
   ]
 })
 export class AppModule {}

@@ -66,7 +66,23 @@ export class UsersBankAccountsService extends BaseService implements CrudService
         throw new Error("Method not implemented.");
     }
     remove(entity: UserBankAccount): Observable<UserBankAccount> {
-        throw new Error("Method not implemented.");
+        return this.api.delete(`/userbankaccounts/${entity.id}`).map( resp => {
+            return entity;
+        }).catch( err => {
+            console.error(err);
+            return Observable.of(null);
+        })
+    }
+
+    activateBankAccount(bankAccount: UserBankAccount): Observable<boolean>{
+        return this.api.put(`/userbankaccounts/${bankAccount.id}`,{
+            selected: true
+        }).map( resp => {
+            return true;
+        }).catch( err => {
+            console.error(err);
+            return Observable.of(false);
+        })
     }
 
 

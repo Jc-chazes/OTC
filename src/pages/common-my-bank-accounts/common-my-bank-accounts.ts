@@ -4,6 +4,7 @@ import { UsersBankAccountsService } from '../../providers/users-bank-accounts.se
 import { UserBankAccount } from '../../models/user-bank-account.model';
 import { MyBankAccountsSpecification } from '../../providers/specifications/user-bank-account.specification';
 import { CommonMyBankAccountsAddPage } from '../common-my-bank-accounts-add/common-my-bank-accounts-add';
+import { LoadingUtil } from '../../providers/utils/loading.util';
 
 /**
  * Generated class for the CommonMyBankAccountsPage page.
@@ -20,7 +21,8 @@ export class CommonMyBankAccountsPage {
 
   bankAccountList: UserBankAccount[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private userBankAccounts: UsersBankAccountsService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+    private userBankAccounts: UsersBankAccountsService, private loading: LoadingUtil) {
   }
 
   ionViewDidLoad() {
@@ -40,6 +42,24 @@ export class CommonMyBankAccountsPage {
 
   goToAddBankAccount(){
     this.navCtrl.push(CommonMyBankAccountsAddPage);
+  }
+
+  activeBankAccount( bankAccount: UserBankAccount ){
+    this.loading.show();
+    this.userBankAccounts.activateBankAccount( bankAccount )
+    .subscribe( resp => {
+      this.refresh();
+      this.loading.hide();
+    })
+  }
+
+  deleteBankAccount(bankAccount: UserBankAccount){
+    this.loading.show();
+    this.userBankAccounts.remove( bankAccount )
+    .subscribe( resp => {
+      this.refresh();
+      this.loading.hide();
+    })
   }
 
 }

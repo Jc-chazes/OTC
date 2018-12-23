@@ -22,7 +22,7 @@ ion-app{
             }
         }
     }
-    &.platform-android{
+    &.md{
         ion-title:not(.brand){
 
         }
@@ -30,7 +30,7 @@ ion-app{
             text-align: right;
         }
     }
-    &.platform-ios{
+    &.ios{
         ion-title.brand{
             display: none;
         }

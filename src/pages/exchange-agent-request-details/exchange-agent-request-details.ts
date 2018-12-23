@@ -48,8 +48,10 @@ export class ExchangeAgentRequestDetailsPage {
   }
 
   continue(){
+    this.loading.show();
     this.transactions.acceptTransaction( this.transaction )
     .subscribe( coudlBeAccepted => {
+      this.loading.hide();
       this.navCtrl.push( CommonSelectBankAccountPage,{
         transaction: this.transaction
       });

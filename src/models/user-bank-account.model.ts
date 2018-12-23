@@ -13,6 +13,7 @@ export class UserBankAccount extends BaseModel<UserBankAccount>{
     bank: Bank;
     user: User;
     accountType: string;
+    selected: boolean;
 
     formattedAccountType(): string{
         return BankAccountTypes.find( t => t.code == this.accountType ).text;

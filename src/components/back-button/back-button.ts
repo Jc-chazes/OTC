@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { NavController } from 'ionic-angular';
 
 /**
  * Generated class for the BackButtonComponent component.
@@ -12,11 +13,10 @@ import { Component } from '@angular/core';
 })
 export class BackButtonComponent {
 
-  text: string;
+  @Input()navCtrl: NavController;
 
   constructor() {
-    console.log('Hello BackButtonComponent Component');
-    this.text = 'Hello World';
+    
   }
 
 }

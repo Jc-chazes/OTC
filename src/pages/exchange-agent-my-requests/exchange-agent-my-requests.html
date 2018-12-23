@@ -12,7 +12,9 @@
 
 
 <ion-content class="page">
+  <back-button [navCtrl]="navCtrl"></back-button>
   <div padding>
+    <div class="spacer-20"></div>
     <update-exchange-reminder></update-exchange-reminder>
     <div class="spacer-20"></div>
     <stepper mode="exchange-agent" [currentStep]="1"></stepper>

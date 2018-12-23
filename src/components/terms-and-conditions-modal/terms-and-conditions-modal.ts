@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import { ViewController } from 'ionic-angular';
+import { ContentsService } from '../../providers/contents.service';
+import { Content } from '../../models/content.model';
+import { LoadingUtil } from '../../providers/utils/loading.util';
+import { ContentByCodeSpecification } from '../../providers/specifications/content.specification';
 
 /**
  * Generated class for the TermsAndConditionsModalComponent component.
@@ -12,11 +17,16 @@ import { Component } from '@angular/core';
 })
 export class TermsAndConditionsModalComponent {
 
-  text: string;
+  termsAndConditions: Content;
 
-  constructor() {
-    console.log('Hello TermsAndConditionsModalComponent Component');
-    this.text = 'Hello World';
+  constructor(public viewCtrl: ViewController, private contents: ContentsService,
+    private loading: LoadingUtil) {
+    this.loading.show();
+    this.contents.findOne( new ContentByCodeSpecification('TERMS_AND_CONDITIONS') )
+    .subscribe( result => {
+      this.loading.hide();
+      this.termsAndConditions = result;
+    })
   }
 
 }
