@@ -3,7 +3,7 @@ import { CrudService } from "./contracts/crud.service";
 import { Transaction } from "../models/transaction.model";
 import { BaseSpecification } from './specifications/base.specification';
 import { Observable } from 'rxjs';
-import { Injectable } from "@angular/core";
+import { Injectable, NgZone } from "@angular/core";
 import { MyPendingTransactions } from "./specifications/transaction.specification";
 import { ApiUtil } from "./utils/api.util";
 import { UsersService } from "./users.service";
@@ -17,6 +17,11 @@ import { UserBankAccount } from "../models/user-bank-account.model";
 import { Image } from "../models/shared/image.model";
 import moment from 'moment';
 import { groupBy } from 'lodash';
+import { Firebase } from "@ionic-native/firebase";
+import { Platform, ModalController } from "ionic-angular";
+import { LocalNotifications } from '@ionic-native/local-notifications';
+import { ModalUtil, AvailableModals } from "./utils/modal.util";
+import { Currency } from "../models/currency.model";
 
 @Injectable()
 export class TransactionsService extends BaseService implements CrudService<Transaction>{
@@ -24,7 +29,9 @@ export class TransactionsService extends BaseService implements CrudService<Tran
     mapper: TransactionMapper;
 
     constructor(api: ApiUtil, private users: UsersService, private currencies: CurrenciesService,
-        private http: HttpClient){
+        private http: HttpClient, private firebaseNative: Firebase, private ngZone: NgZone,
+        private platform: Platform, private localNotifications: LocalNotifications,
+        private modals: ModalUtil){
         super(api);
         this.mapper = new TransactionMapper(currencies,users);
     }
@@ -140,6 +147,50 @@ export class TransactionsService extends BaseService implements CrudService<Tran
             period: { year: Number(periodString.split('-')[0]), month: Number(periodString.split('-')[1]) },
             transactions: groups[periodString]
         }) );
+    }
+
+    listenToContests(modalCtrl: ModalController){
+        try{
+            this.firebaseNative.onNotificationOpen().subscribe( (notification) => {
+    
+                if(notification.tap){
+                    return ;
+                }
+        
+                let messageText: string;
+                let messageTitle: string;
+                
+                if (this.platform.is('android')) {
+                    messageText = notification.body;
+                    messageTitle = notification.title;
+                }
+                
+                if (this.platform.is('ios')) {
+                    messageText = notification.aps.alert;
+                }
+        
+                this.localNotifications.schedule({
+                    title: messageTitle,
+                    text: messageText,
+                    color: '#23c7b1',
+                    smallIcon: 'res://notification_icon.png',
+                    icon:'file://assets/images/icon.png'
+                });
+                    
+                this.modals.openModal(modalCtrl,AvailableModals.OpportunityToParticipate,{
+                    ...notification
+                }).then( couldParticipate => {
+                    if( couldParticipate ){
+                        this.modals.openModal(modalCtrl,AvailableModals.CouldParticipateModal);
+                    }else{
+                        this.modals.openModal(modalCtrl,AvailableModals.CouldNotParticipateModal);
+                    }
+                });
+                
+            });
+        }catch(err){
+            console.error(err);
+        }
     }
 
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import 'rxjs/Rx'
 import { ExchangeAgent } from '../models/exchange-agent.model';
 import { Observable } from 'rxjs/Rx';
@@ -12,12 +12,14 @@ import { UsersService } from './users.service';
 import { StorageUtil } from './utils/storage.util';
 import { Image } from '../models/shared/image.model';
 import { getImageUrl } from '../helpers/images.helper';
+import { DeviceUtil } from './utils/device.util';
 
 @Injectable()
 export class AuthProvider {
 
   constructor( public http : HttpClient, private api: ApiUtil, private storage: StorageUtil,
-  private jwt: JwtUtil, private appState: AppStateService, private users: UsersService) {
+  private jwt: JwtUtil, private appState: AppStateService, private users: UsersService,
+  private devices: DeviceUtil) {
   }
 
   setAppUserType(userType: string){
@@ -69,26 +71,33 @@ export class AuthProvider {
   }
 
   populate(userTypeToVerify?: string): Observable<boolean>{
-    return this.api.get('/users/me')
-    .map( resp => {
-      if( !!userTypeToVerify && resp.userType != userTypeToVerify ){
-        console.warn('Autenticación fallida para el perfil seleccionado');
-        return false;
+    return this.devices.getToken()
+    .flatMap( token => {
+      let query = new HttpParams();
+      if(token){
+        query = query.append('deviceId',token);
       }
-      let user = new User({
-        ...pick(resp,['id','username','email','userType']),
-        photo: new Image({
-          fileUrl: resp.photo ? getImageUrl( resp.photo.url ) : ''
-        }),
-        exchangeAgent: {
-          ...omit(resp.profile,['user'])
+      return this.api.get('/users/me',{params: query})
+      .map( resp => {
+        if( !!userTypeToVerify && resp.userType != userTypeToVerify ){
+          console.warn('Autenticación fallida para el perfil seleccionado');
+          return false;
         }
+        let user = new User({
+          ...pick(resp,['id','username','email','userType']),
+          photo: new Image({
+            fileUrl: resp.photo ? getImageUrl( resp.photo.url ) : ''
+          }),
+          exchangeAgent: {
+            ...omit(resp.profile,['user'])
+          }
+        });
+        this.users.currentUser = user;
+        return true;      
+      }).catch( err => {
+        this.purge();
+        return Observable.of(false);
       });
-      this.users.currentUser = user;
-      return true;      
-    }).catch( err => {
-      this.purge();
-      return Observable.of(false);
     });
   }
 

@@ -1,4 +1,22 @@
-<!-- Generated template for the CouldParticipateModalComponent component -->
-<div>
-  {{text}}
+<div class="couldNotParticipate flex-col-layout jc-center fill-height">
+  <div class="modal-content">
+  <div class="spacer-45"></div>
+  <p class="text-center">
+    <b>¡Excelente!</b>
+  </p>
+  <p class="text-center no-margin">
+    ¡Haz logrado participar!
+  </p>
+  <p class="text-center no-margin">
+    Estás entre los 5 primeros
+  </p>
+  <p class="text-center">
+    ¡Buena suerte!
+  </p>
+  <div class="flex-col-layout ai-center" padding>
+    <button fluid ion-button color="dark" (tap)="viewCtrl.dismiss()">
+      Ok
+    </button>
+  </div>
+</div>
 </div>

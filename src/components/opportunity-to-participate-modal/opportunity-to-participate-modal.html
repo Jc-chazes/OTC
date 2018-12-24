@@ -1,4 +1,25 @@
-<!-- Generated template for the OpportunityToParticipateModalComponent component -->
-<div>
-  {{text}}
+<div class="opportunityToParticipate flex-col-layout jc-center fill-height">
+  <div class="modal-content" *ngIf="!participate">
+    <div class="spacer-45"></div>
+    <div class="text-center">
+      <img class="opportunityToParticipate__warn" src="/assets/imgs/icons/warn.png" alt="" width="55">
+    </div>
+    <p class="text-center no-margin">
+      {{ params.get('body') }}
+    </p>
+    <p class="text-center no-margin">
+      Cambia ahora, o pierde <br> la oportunidad
+    </p>
+    <div class="flex-col-layout ai-center" padding>
+      <button fluid ion-button color="dark" (tap)="onParticipate()">
+        Acepto participar
+      </button>
+      <button fluid ion-button color="dark" (tap)="viewCtrl.dismiss(false)">
+        No, gracias
+      </button>
+    </div>
+  </div>
+  <div class="modal-content" *ngIf="participate">
+    <p class="text-center">Espere un momento <br> por favor...</p>
+  </div>
 </div>

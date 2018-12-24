@@ -1,3 +1,3 @@
 export class Configuration{
-    static backendUrl = 'http://localhost:1337'
+    static backendUrl = 'http://192.168.0.6:1337'
 };
