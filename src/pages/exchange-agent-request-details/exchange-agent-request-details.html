@@ -1,20 +1,19 @@
-<!--
-  Generated template for the ExchangeAgentRequestDetailsPage page.
+<ion-header profile-background-color>
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>exchange-agent-request-details</ion-title>
+  <ion-navbar hideBackButton>
+      <div class="flex-row-layout ai-center">
+        <ion-title>Inicio</ion-title>
+        <span class="flex"></span>
+        <ion-title class="brand">OTC</ion-title>
+      </div>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding class="page">
-  <div class="spacer-20"></div>
+  <back-button [navCtrl]="navCtrl"></back-button>
+  <div class="spacer-30"></div>
   <stepper mode="exchange-agent" [currentStep]="2"></stepper>
   <ion-row align-items-center>
     <ion-col col-2></ion-col>

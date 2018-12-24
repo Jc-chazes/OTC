@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { Transaction } from '../../models/transaction.model';
 import { Constant } from '../../models/constant.model';
 import { ConstantsService } from '../../providers/constants.service';
@@ -10,6 +10,7 @@ import { UsersBankAccountsService } from '../../providers/users-bank-accounts.se
 import { UserBankAccount } from '../../models/user-bank-account.model';
 import { OtcBankAccountsSpecification } from '../../providers/specifications/user-bank-account.specification';
 import { CommonSendVoucherPage } from '../common-send-voucher/common-send-voucher';
+import { TransferIsRealizedModalComponent } from '../../components/transfer-is-realized-modal/transfer-is-realized-modal';
 
 /**
  * Generated class for the CommonTransferToOtcPage page.
@@ -32,7 +33,8 @@ export class CommonTransferToOtcPage {
   selectedOtcBankAccount: UserBankAccount;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private users: UsersService,
-    private constants: ConstantsService, private userBankAccounts : UsersBankAccountsService ) {
+    private constants: ConstantsService, private userBankAccounts : UsersBankAccountsService,
+    private modalCtrl: ModalController ) {
     this.transaction = this.navParams.get('transaction');
     Observable.forkJoin(
       this.constants.findOne( new ConstantByCodeSpecification(
@@ -61,9 +63,17 @@ export class CommonTransferToOtcPage {
   }
 
   continue(){
-    this.navCtrl.push( CommonSendVoucherPage, {
-      transaction: this.transaction
+    let transferIsRealizedModal = this.modalCtrl.create(TransferIsRealizedModalComponent,{},{
+      cssClass: 'alertModal'
     });
+    transferIsRealizedModal.present();
+    transferIsRealizedModal.onDidDismiss( isRealized => {
+      if( isRealized ){
+        this.navCtrl.push( CommonSendVoucherPage, {
+          transaction: this.transaction
+        });
+      }
+    })
   }
 
 }

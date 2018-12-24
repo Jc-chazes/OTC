@@ -1,0 +1,15 @@
+@import "../../styles/1-settings/index";
+
+back-button {
+    .backButton{
+        $buttonSize: 8px;
+        width: 0px;
+        height: 0px;
+        border-top: $buttonSize solid transparent;
+        border-bottom: $buttonSize solid transparent;
+        border-right: $buttonSize solid $accent-color;
+        position: absolute;
+        left: 15px;
+        top: 15px;
+    }
+}

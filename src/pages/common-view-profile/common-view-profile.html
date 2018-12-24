@@ -1,0 +1,97 @@
+<!--
+  Generated template for the CommonViewProfilePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header profile-background-color>
+  <ion-navbar hideBackButton >
+    <div class="flex-row-layout ai-center">
+      <ion-title>Perfil</ion-title>
+    </div>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding class="page">
+
+  <div class="viewProfile page-content-container">
+      <div class="spacer-40"></div>
+      <div class="viewProfile__avatar w-background-image-top" [style.backgroundImage]="avatarUrl"
+      [ngClass]="{ 'empty': !photo.fileUrl }" (tap)="photoUpload.click()">
+        <img src="/assets/imgs/icons/profile_photo_add.png" alt="" class="viewProfile__avatar__add">
+        <input type="file" class="hide" #photoUpload (change)="onChangePhoto($event)">
+      </div>
+      <div class="spacer-40"></div>
+      <div class="mb-15">
+        <ion-row class="input">
+          <ion-col col-6>
+            Nombre / Razón social: 
+          </ion-col>
+          <ion-col col-6>
+            {{ name }}
+          </ion-col>
+        </ion-row>
+      </div>
+      <div class="mb-15">
+        <ion-row class="input">
+          <ion-col col-6>
+            Dni / Ruc:
+          </ion-col>
+          <ion-col col-6>
+            {{ document }}
+          </ion-col>
+        </ion-row>
+      </div>
+      <div class="mb-15">
+        <ion-row class="input">
+          <ion-col col-6>
+            Dirección:
+          </ion-col>
+          <ion-col col-6>
+            {{ address }}
+          </ion-col>
+        </ion-row>
+      </div>
+      <div class="mb-15">
+        <ion-row class="input">
+          <ion-col col-6>
+            Celular:
+          </ion-col>
+          <ion-col col-6>
+            {{ phone }}
+          </ion-col>
+        </ion-row>
+      </div>
+      <div class="mb-15">
+        <ion-row class="input">
+          <ion-col col-6>
+            N° de registros de la SBS:
+          </ion-col>
+          <ion-col col-6>
+            {{ sbs }}
+          </ion-col>
+        </ion-row>
+      </div>
+      <div class="mb-15">
+        <ion-row class="input">
+          <ion-col col-6>
+            Correo:
+          </ion-col>
+          <ion-col col-6>
+            {{ email }}
+          </ion-col>
+        </ion-row>
+      </div>
+      <div class="flex-row-layout" (tap)="goToMyBankAccounts()">
+        <span>Mis cuentas bancarias</span>
+        <span class="flex"></span>
+        <div class="flex-row-layout ai-center">
+          <span>Ver más&nbsp;&nbsp;</span>
+          <ion-icon name="add-circle" md="ios-add-circle-outline" ios="ios-add-circle-outline"></ion-icon>
+        </div>
+      </div>
+      <div class="spacer-50"></div>
+  </div>
+
+</ion-content>

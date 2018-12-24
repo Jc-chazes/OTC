@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { User } from "../models/user.model";
 import { Observable, BehaviorSubject } from "rxjs";
 import { ApiUtil } from "./utils/api.util";
+import { Image } from "../models/shared/image.model";
 
 @Injectable()
 export class UsersService extends BaseService{
@@ -23,5 +24,22 @@ export class UsersService extends BaseService{
 
     currentUserChanges(): Observable<User>{
         return this._currentUser.asObservable();
+    }
+
+    uploadPhoto(user: User, photo: Image): Observable<boolean>{
+        let formData = new FormData();
+        formData.append('files', photo.file, photo.name );
+        formData.append('path','images');
+        formData.append('refId',user.id.toString());
+        formData.append('ref','user');
+        formData.append('source','users-permissions');
+        formData.append('field','photo');
+        return this.api.post('/upload',formData)
+        .map( resp => {
+            return true;            
+        }).catch( err => {
+            console.error(err);
+            return Observable.of(false);
+        });
     }
 }

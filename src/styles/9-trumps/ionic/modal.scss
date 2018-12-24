@@ -22,6 +22,7 @@ ion-modal ion-backdrop{
     @include borderRadius(12px);
     .modal-content{
         font-size: 18px;
+        color: $primary-color;
     }
 }
 
@@ -34,5 +35,27 @@ ion-modal ion-backdrop{
 .rejectReasonSelectModal{
     .modal-wrapper{
         @extend %modal;
+    }
+}
+
+.alertModal{
+    .modal-wrapper{
+        @extend %modal;
+    }
+}
+
+.successfulTransactionModal{
+    .modal-wrapper{
+        height: 380px !important;
+        width: 270px !important;
+        top: calc( 50% - 190px ) !important;
+        left: calc( 50% - 135px ) !important;
+    }
+}
+
+.termsAndConditionsModal{
+    .modal-wrapper{
+        height: 380px !important;
+        top: calc( 50% - 190px ) !important;
     }
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { UserBankAccount } from '../../models/user-bank-account.model';
 import { Bank } from '../../models/bank.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -12,6 +12,7 @@ import { CommonTransferToOtcPage } from '../common-transfer-to-otc/common-transf
 import { TransactionsService } from '../../providers/transaction.service';
 import { AlertUtil } from '../../providers/utils/alert.util';
 import { UsersService } from '../../providers/users.service';
+import { ModalUtil, AvailableModals } from '../../providers/utils/modal.util';
 
 /**
  * Generated class for the CommonSelectBankAccountPage page.
@@ -37,7 +38,8 @@ export class CommonSelectBankAccountPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alerts: AlertUtil,
     private userBankAccounts: UsersBankAccountsService, private loading: LoadingUtil, private users: UsersService,
-    private banks: BanksService, private fb: FormBuilder, private transactions: TransactionsService) {
+    private banks: BanksService, private fb: FormBuilder, private transactions: TransactionsService,
+    private modalCtrl: ModalController, private modals: ModalUtil) {
     this.transaction = this.navParams.get('transaction');
     this.banks.find().subscribe( results => {
       this.bankList = results;
@@ -135,5 +137,12 @@ export class CommonSelectBankAccountPage {
       }
     })
   }
-
+  
+  openTermsAndConditions(event){
+    event.preventDefault();
+    this.modals.openModal(this.modalCtrl,AvailableModals.TermsAndConditions)
+    .then( () => {
+      this.acceptTermsAndConditions = true;
+    });
+  }
 }

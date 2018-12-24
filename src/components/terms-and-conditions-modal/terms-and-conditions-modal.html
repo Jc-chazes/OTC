@@ -1,0 +1,17 @@
+<div class="termsAndConditionsModal flex-col-layout jc-center fill-height">
+  <div class="modal-content fill-height flex-col-layout">
+    <p class="text-center">
+      <b>Términos y condiciones</b>
+    </p>
+    <div class="flex p-10">
+      <ion-scroll scrollY="true" class="fill-height">
+        <div [innerHTML]="termsAndConditions?.content"></div>
+      </ion-scroll>
+    </div>
+    <div class="flex-col-layout ai-center" padding>
+      <button fluid ion-button color="dark" (tap)="viewCtrl.dismiss()">
+        Entendido
+      </button>
+    </div>
+  </div>
+</div>

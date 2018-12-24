@@ -1,0 +1,31 @@
+<div class="successfulTransactionModal flex-col-layout jc-center fill-height">
+  <div class="modal-content">
+    <p class="text-center">
+      <b>Envío existoso</b>
+    </p>
+    <ion-row align-items-center>
+      <ion-col col-6 class="text-right"> <span><b>Tu número de <br> transacción es: </b></span> </ion-col>
+      <ion-col col-6>
+        <ion-badge color="dark" class="successfulTransactionModal__transationCode pt-10 pb-10">
+          {{ transaction.code }}
+        </ion-badge>
+      </ion-col>
+    </ion-row>
+    <p class="text-center">
+      Validaremos el proceso, y a la brevedad <br>
+      realizaremos la transferencia que <br>
+      corresponde a tu cuenta bancaria.
+    </p>
+    <div class="text-center">
+      <ion-badge color="dark" class="pt-10 pb-10 pl-25 pr-25">
+        {{ transaction.currencyToReceive.symbol }} {{ transaction.amountToReceive.toFixed(2) }}
+      </ion-badge>
+    </div>
+  </div>
+  <div class="spacer-25"></div>
+  <div class="flex-col-layout ai-center">
+    <button fluid ion-button color="dark" (tap)="viewCtrl.dismiss(true)">
+      Sí
+    </button>
+  </div>
+</div>

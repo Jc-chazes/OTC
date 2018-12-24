@@ -1,0 +1,45 @@
+<!--
+  Generated template for the CommonMyNotificationsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header profile-background-color>
+
+  <ion-navbar>
+    <div class="flex-row-layout ai-center">
+        <ion-title>Notificaciones</ion-title>
+        <span class="flex"></span>
+        <ion-title class="brand">OTC</ion-title>
+    </div>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="page">
+  <div class="myNotifications">
+    <div class="myNotifications__notificationGroup" *ngFor="let tx of transactionList">
+      <div class="myNotifications__notificationGroup__header">
+        Transacción #{{ tx.code }}
+      </div>
+      <div class="myNotifications__notificationGroup__content">
+        <div class="myNotifications__notificationGroup__content__notification" *ngFor="let notif of tx.notifications">
+          <ion-row align-items-center>
+            <ion-col col-2 class="text-center">
+              <img [src]="notif.icon" alt="" class="myNotifications__notificationGroup__content__notification__icon">
+            </ion-col>
+            <ion-col col-8>
+              {{ notif.content }}
+            </ion-col>
+            <ion-col col-2>
+              <p class="text-center">
+                <b> <small> {{ notif.timeLabel.date }} <br> {{ notif.timeLabel.time }} </small> </b>
+              </p>
+            </ion-col>
+          </ion-row>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

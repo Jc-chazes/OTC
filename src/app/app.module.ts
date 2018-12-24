@@ -51,8 +51,20 @@ import { ExchangeAgentSelectBankAccountPage } from '../pages/exchange-agent-sele
 import { CommonSelectBankAccountPage } from '../pages/common-select-bank-account/common-select-bank-account';
 import { CommonTransferToOtcPage } from '../pages/common-transfer-to-otc/common-transfer-to-otc';
 import { CommonSendVoucherPage } from '../pages/common-send-voucher/common-send-voucher';
-import { MoneyTransactionPage } from '../pages/money-transaction/money-transaction';
+import { CommonMyNotificationsPage } from '../pages/common-my-notifications/common-my-notifications';
+import { CommonMyTransactionsPage } from '../pages/common-my-transactions/common-my-transactions';
+import { CommonMyProfilePage } from '../pages/common-my-profile/common-my-profile';
+import { CommonViewProfilePage } from '../pages/common-view-profile/common-view-profile';
+import { CommonMyBankAccountsPage } from '../pages/common-my-bank-accounts/common-my-bank-accounts';
+import { CommonMyBankAccountsAddPage } from '../pages/common-my-bank-accounts-add/common-my-bank-accounts-add';
+import { PersonNearExchangeAgentsPage } from '../pages/person-near-exchange-agents/person-near-exchange-agents';
+import { NotificationsService } from '../providers/notifications.service';
 
+import moment from 'moment';
+import { DirectivesModule } from '../directives/directives.module';
+import { ContentsService } from '../providers/contents.service';
+import { ModalUtil } from '../providers/utils/modal.util';
+moment.locale('es');
 
 @NgModule({
   declarations: [
@@ -72,7 +84,6 @@ import { MoneyTransactionPage } from '../pages/money-transaction/money-transacti
     ExchangeAgentsPage,
     DetailExchangeAgentPage,
     ModifyAccountBankPage,
-    ExchangeAgentMyRequestsPage,
     ExchangeAgentMyOfferingsPage,
     ExchangeAgentMyRequestsPage,
     ExchangeAgentRequestDetailsPage,
@@ -80,7 +91,13 @@ import { MoneyTransactionPage } from '../pages/money-transaction/money-transacti
     CommonSelectBankAccountPage,
     CommonTransferToOtcPage,
     CommonSendVoucherPage,
-    MoneyTransactionPage
+    CommonMyNotificationsPage,
+    CommonMyTransactionsPage,
+    CommonMyProfilePage,
+    CommonViewProfilePage,
+    CommonMyBankAccountsPage,
+    CommonMyBankAccountsAddPage,
+    PersonNearExchangeAgentsPage
   ],
   imports: [
     BrowserModule,
@@ -89,7 +106,8 @@ import { MoneyTransactionPage } from '../pages/money-transaction/money-transacti
     FormsModule,
     ReactiveFormsModule,
     ComponentsModule,
-    PipesModule
+    PipesModule,
+    DirectivesModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -110,7 +128,6 @@ import { MoneyTransactionPage } from '../pages/money-transaction/money-transacti
     ChooseProfilePage,
     DetailExchangeAgentPage,
     ModifyAccountBankPage,
-    ExchangeAgentMyRequestsPage,
     ExchangeAgentMyOfferingsPage,
     ExchangeAgentMyRequestsPage,
     ExchangeAgentRequestDetailsPage,
@@ -118,13 +135,18 @@ import { MoneyTransactionPage } from '../pages/money-transaction/money-transacti
     CommonSelectBankAccountPage,
     CommonTransferToOtcPage,
     CommonSendVoucherPage,
-    MoneyTransactionPage
+    CommonMyNotificationsPage,
+    CommonMyTransactionsPage,
+    CommonMyProfilePage,
+    CommonViewProfilePage,
+    CommonMyBankAccountsPage,
+    CommonMyBankAccountsAddPage,
+    PersonNearExchangeAgentsPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthProvider,
     AppStateService,
     StorageUtil,
     JwtUtil,
@@ -140,7 +162,11 @@ import { MoneyTransactionPage } from '../pages/money-transaction/money-transacti
     ExchangeAgentOfferingsService,
     UsersService,
     TransactionsService,
-    ConstantsService
+    ConstantsService,
+    NotificationsService,
+    AuthProvider,
+    ContentsService,
+    ModalUtil
   ]
 })
 export class AppModule {}

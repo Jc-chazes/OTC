@@ -1,0 +1,38 @@
+ion-app{
+    ion-header{
+        &.otcHeader{
+            &--exchangeAgent{
+                color: #FFF;
+                .toolbar{
+                    height: 30px;
+                    min-height: unset;
+                    padding-left: 15px;
+                    padding-right: 15px;
+                }
+                .toolbar-background{
+                    background-color: #1463a5;
+                }
+                .toolbar-title{
+                    color: #FFF;
+                    font-size: 1.5rem;
+                }
+            }
+            h6{
+                margin: 0px;            
+            }
+        }
+    }
+    &.md{
+        ion-title:not(.brand){
+
+        }
+        ion-title.brand{
+            text-align: right;
+        }
+    }
+    &.ios{
+        ion-title.brand{
+            display: none;
+        }
+    }
+}

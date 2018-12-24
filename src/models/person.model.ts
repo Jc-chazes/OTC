@@ -6,7 +6,7 @@ export class Person extends BaseModel<Person>{
     firstName: String;
     lastName: String;
     birthdate: Date;
-    docuementNumber: string;
+    documentNumber: string;
     businessName: string;
     ruc: string;
     cellphone: string;

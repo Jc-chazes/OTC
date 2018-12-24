@@ -27,7 +27,7 @@ export class ApiUtil {
         let token = this.jwt.getToken();
         if( token && token != ''){
             headers = headers.append('Authorization', `Bearer ${this.jwt.getToken()}`);
-            headers = headers.append('Content-Type', 'application/json');
+            // headers = headers.append('Content-Type', 'application/json');
         }
         return headers;
     }

@@ -1,5 +1,3 @@
-import {Http, Headers} from '@angular/http';
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs/Rx'
@@ -11,10 +9,9 @@ import { JwtUtil } from './utils/jwt.util';
 import { User } from '../models/user.model';
 import { AppStateService } from './app-state.service';
 import { UsersService } from './users.service';
-import { NavController } from 'ionic-angular';
-import { PersonTabsPage } from '../pages/person-tabs/person-tabs';
-import { ExchangeAgentTabsPage } from '../pages/exchange-agent-tabs/exchange-agent-tabs';
 import { StorageUtil } from './utils/storage.util';
+import { Image } from '../models/shared/image.model';
+import { getImageUrl } from '../helpers/images.helper';
 
 @Injectable()
 export class AuthProvider {
@@ -80,6 +77,9 @@ export class AuthProvider {
       }
       let user = new User({
         ...pick(resp,['id','username','email','userType']),
+        photo: new Image({
+          fileUrl: resp.photo ? getImageUrl( resp.photo.url ) : ''
+        }),
         exchangeAgent: {
           ...omit(resp.profile,['user'])
         }
@@ -94,14 +94,6 @@ export class AuthProvider {
 
   purge(){
     this.storage.clear();
-  }
-
-  getTabsByUserType(){
-    if( this.users.currentUser.userType == '0' ){
-      return PersonTabsPage;
-    }else {
-      return ExchangeAgentTabsPage;
-    }
   }
   
 }

@@ -41,6 +41,12 @@
         *ngIf="!!voucher.fileUrl"></div>
       </ion-col>
     </ion-row>
+    <div class="spacer-30"></div>
+    <div class="text-center">
+      <button fluid ion-button color="secondary" (tap)="onSend()">
+        Enviar
+      </button>
+    </div>
   </div>
   <input type="file" class="hide" #voucherFile (change)="voucherFileChange($event)">
 </ion-content>
