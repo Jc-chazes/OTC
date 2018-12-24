@@ -14,9 +14,10 @@ import { AppStateService } from '../../providers/app-state.service';
 export class ExchangeAgentsPage {
   searchTerm: string = '';
   searchControl: FormControl;
-  exchange_agents: any;
+  exchange_agents:any;
   searching: any = false;
   data_price :any;
+  exchange_agent:any
   constructor(public navCtrl: NavController, public navParams: NavParams, public dataService: DataService,
     public appService : AppStateService) {
     this.searchControl = new FormControl();
@@ -24,8 +25,8 @@ export class ExchangeAgentsPage {
     this.appService.onStateChange.subscribe(res=>{
       this.data_price = res.price
       })
-      
-
+     
+      console.log('DATAs',this.dataService.exchange_agents)
   }
   public counter(i: number) {
     return new Array(i);
@@ -36,19 +37,26 @@ export class ExchangeAgentsPage {
       this.searching = false;
       this.setFilteredItems();
       });
-    
-    
+
+   
+ 
+  }
+  ionViewWillLoad(){
+    this.exchange_agent=this.dataService.exchange_agents
   }
   onSearchInput(){
   this.searching = true;
     }
 
   setFilteredItems() {
-    this.exchange_agents = this.dataService.filterItems(this.searchTerm);
+      this.exchange_agents = this.filterItems(this.searchTerm);
+    
   }
 
+  
+
   filterItems(searchTerm){
-    return this.exchange_agents.filter((item) => {
+    return this.exchange_agent.filter((item) => {
         return item.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 ;
     });    
 

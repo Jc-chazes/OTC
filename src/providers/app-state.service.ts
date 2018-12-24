@@ -20,7 +20,7 @@ export class AppStateService{
       text_buy :"",
       text_money:""
     },
-    detail_exchangue :{}
+    detail_exchangue :{},
   };
 
   private onStateChangeSubject = new BehaviorSubject<any>(this.initialState);

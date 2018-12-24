@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AppStateService } from '../../providers/app-state.service';
 import { ExchangeAgentsPage } from '../exchange-agents/exchange-agents';
+import { DataService } from '../../providers/data.service';
 
 
 @Component({
@@ -15,13 +16,17 @@ export class QuotePage {
   text_buy : string;
   text_money:string
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public appState : AppStateService) {
+              public appState : AppStateService,private dataService : DataService) {
     this.checkButton = 0;
     this.selectCurrency = 1;
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad QuotePage');
+    this.dataService.getDataExchangueAgents().subscribe(data =>{
+      this.dataService.exchange_agents = data
+   
+  })
   }
   clickUser(numb){
     this.checkButton = numb
@@ -48,6 +53,7 @@ export class QuotePage {
         text_money :this.text_money
       }
     })
+  
   this.navCtrl.push(ExchangeAgentsPage)  
   }
 }

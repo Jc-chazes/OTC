@@ -33,10 +33,7 @@ export class Login implements OnInit {
   }
 
   login(){
-<<<<<<< HEAD
     this.nvCtrl.push(QuotePage)
-=======
->>>>>>> 4e211ec670dc59007dec811e2c1e35e3c71d3e14
     if( this.user.password && this.user.email ){
       let loading = this.loadingCtrl.create();
       loading.present();
