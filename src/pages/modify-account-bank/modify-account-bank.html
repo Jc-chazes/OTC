@@ -15,22 +15,20 @@
 
 <ion-content padding class='wapper-contain'>
     <div class="quote__select-buy">
-        <div style='display: flex;width: 87px;display:flex;justify-content:space-between;align-items: center'>
-            <div  (tap)="clickUser(0)"  class='quote__choose-user___button-radio'>
-              <div [ngClass]="checkButton === 0? 'quote__choose-user___button-radio__background':'' "></div>
+        <div style='display: flex;width:200px;;display:flex;justify-content:space-between;align-items: center'>
+            <div (tap)="clickUser(0)" class='quote__choose-user___button-radio'>
+              <div   [ngClass]="checkButton === 0? 'quote__choose-user___button-radio__background':'' "></div>
             </div>
-            <div style='width: 59px; color:#ffffff'>Comprar</div>
+            <div style='width: 127px ; color:#ffffff'>Seleccionar cuenta corriente</div>
         </div>
-
-
-        <div style='display: flex;width: 87px;display:flex;justify-content:space-between;align-items: center'>
-            <div (tap)="clickUser(1)" class='quote__choose-user___button-radio'>
-              <div   [ngClass]="checkButton === 1? 'quote__choose-user___button-radio__background':'' "></div>
+        <div style='display: flex;width:200px;;display:flex;justify-content:space-between;align-items: center'>
+            <div  (tap)="clickUser(1)"  class='quote__choose-user___button-radio'>
+              <div [ngClass]="checkButton === 1? 'quote__choose-user___button-radio__background':'' "></div>
             </div>
-            <div style='width: 59px ; color:#ffffff'>Vender</div>
+            <div style='width: 127px; color:#ffffff'>Agregar una cuenta corriente</div>
         </div>
     </div>
-    <form [formGroup]="userBankAccountFG" (submit)="submit()">
+    <form [formGroup]="userBankAccountFG" (submit)="submit()" *ngIf='!checkButton ,else registerBank '>
         <h4 class="text-center">Ingrese su número de cuenta bancaria</h4>
         <div class="spacer-50"></div>
         <ion-grid>
@@ -108,6 +106,7 @@
           </button>
         </div>
       </form>
+<ng-template #registerBank>    
   <form [formGroup]="userBankAccountFG" (submit)="submit()">
     <h4 class="text-center">Ingrese su número de cuenta bancaria</h4>
     <div class="spacer-50"></div>
@@ -188,6 +187,6 @@
       </button>
     </div>
   </form>
-
+</ng-template>
  
 </ion-content>

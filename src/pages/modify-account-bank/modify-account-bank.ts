@@ -7,6 +7,7 @@ import { Currency } from '../../models/currency.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { AppStateService } from '../../providers/app-state.service';
+import { MoneyTransactionPage } from '../money-transaction/money-transaction';
 
 @Component({
   selector: 'page-modify-account-bank',
@@ -76,7 +77,11 @@ export class ModifyAccountBankPage {
         savedUserBankAccount: this.userBankAccountFG.value
       }
     })
-    this.navCtrl.pop();
+    this.navCtrl.push(MoneyTransactionPage)
+  }
+
+  clickUser(e){
+    this.checkButton=e
   }
 
 }

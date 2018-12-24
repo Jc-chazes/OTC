@@ -13,11 +13,10 @@
 </ion-header>
 
 
-<ion-content >
-  <div style="background-color:#636363;display:flex;justify-content: center;align-items: center;
-  flex-direction: column;width: 100vw;height:100vh">
-    <div style='color:#ffffff'>La forma mas segura de comprar y vender su dinero</div>
-    <div style='color:#ffffff'>¿Que desea hacer?</div>
+<ion-content padding class='page'>
+  <div>
+    <div style='color:#ffffff' class='wapper_quote'>La forma mas segura de comprar y vender su dinero</div>
+    <div style='color:#ffffff' class='wapper_quote-second'>¿Que desea hacer?</div>
       <div class="quote__select-buy">
           <div style='display: flex;width: 87px;display:flex;justify-content:space-between;align-items: center'>
               <div  (tap)="clickUser(0)"  class='quote__choose-user___button-radio'>
@@ -34,15 +33,24 @@
               <div style='width: 59px ; color:#ffffff'>Vender</div>
           </div>
       </div>
-    <div style='color:#ffffff'>¿Que cantidad?</div>
+    <div style='color:#ffffff' class='wapper_quote-second'>¿Que cantidad?</div>
     <div class='quote__select'>
-          <select class='quote__option-currency' [(ngModel)]="selectCurrency" (change)="onHandle($event.target.value)">
-            <option value="1">S</option>
-            <option value="2">$</option>
-          </select>
+       
+            <select class='button-select' [(ngModel)]="selectCurrency" (change)="onHandle($event.target.value)">
+              <option value="1">S</option>
+              <option value="2">$</option>
+            </select>
+     
+          
       <input class='quote__cant-currency' type="text" [(ngModel)]="cant">
     </div>
-    <button class='button-next' (tap)='nextPage()'>Siguiente</button>
+  
   </div>
+  <ion-row class='text-amount'>
+    Se aceptan montos como tope maximo $10 000  o el equivalente en soles de lo contrario, haga mas transacciones.
+  </ion-row>
+    <ion-row class='wapper-button'>
+      <button class='button-next' (tap)='nextPage()'>Siguiente</button>
+    </ion-row>
 
 </ion-content>

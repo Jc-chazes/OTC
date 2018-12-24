@@ -13,11 +13,21 @@
 </ion-header>
 
 
-<ion-content style="background-color: #5b5a5f">
+<ion-content padding class='page'>
   <ion-grid >
+    <ion-grid class='wapper-text-data'>
+      <ion-row>
+        <ion-col col6><div class="exchange-agents__text">Cantidad solcitada</div></ion-col>
+        <ion-col col6><div class='exchange-agents__data'></div></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col6><div class='exchange-agents__text2'>tipo</div></ion-col>
+        <ion-col col6><div class='exchange-agents__data'></div></ion-col>
+      </ion-row>
+    </ion-grid>
     <div class="search-agents">
       <ion-icon ios="ios-search" md="md-search"></ion-icon>
-      <input placeholder="hola" class="search-agents__input" [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="onSearchInput()">
+      <input placeholder="Busca la casa de cambio de tu preferencia" class="search-agents__input" [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="onSearchInput()">
       <select class="search-agents__select">
         <option class="search-agents__select___option">Por calificacion</option>
         <option class="search-agents__select___option">Por mejor precio</option>
@@ -27,7 +37,7 @@
   <ion-grid *ngFor='let item of exchange_agents'>
     <ion-row align-items-center>
       <ion-col col-3 class="exchangue-agents__style">
-        <img src="assets/imgs/logo.png" class="exchangue-agents__icon"/>
+        <img src="assets/imgs/avatar_placeholder.png" class="exchangue-agents__icon"/>
       </ion-col>
       <ion-col col-3 >
         <div class="exchangue-agents__style">{{item.name}}</div>

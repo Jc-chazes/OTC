@@ -1,0 +1,148 @@
+<!--
+  Generated template for the MoneyTransactionPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>money transaction</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="page" >
+  <ion-grid *ngIf='!checkButton;else banks'>
+  <ion-row class='title'>
+    Por favor realice la transferencia  o deposito del monto correpondiente a culaquiera de las siguientes cuentas
+  </ion-row>
+
+  <ion-row class='wapper-text'>
+    <ion-col col-3>
+      <ion-row class="wapper-text-data">Monto a depositar</ion-row>
+    </ion-col>
+    <ion-col col-3 >
+      <ion-row><div class='wapper-text-pay'>$300</div></ion-row>
+    </ion-col>
+    <ion-col col-3>
+      <ion-row class="wapper-text-data"> Solicitud + comision </ion-row>
+    </ion-col>
+  </ion-row> 
+
+  <ion-row class='wapper-account'>
+    <ion-col col-6>
+      <ion-row class='wapper-account-text'>Nombre de la cuenta :</ion-row>
+      <ion-row  class='wapper-account-text'>RUC :</ion-row>
+    </ion-col>
+    <ion-col col-6>
+      <ion-row  class='wapper-account-text-data'>OTC PERU</ion-row>
+      <ion-row  class='wapper-account-text-data'>10344266957</ion-row>
+    </ion-col>
+
+  </ion-row>
+  <ion-row>
+    Nuestras cuentas
+  </ion-row> 
+  
+  <ion-row class='wapper-names-banks'>
+    <ion-col col-3>
+     <div>BCP</div>
+    </ion-col> 
+
+    <ion-col col-3>
+        <div>SKOTIABANK</div>
+    </ion-col> 
+
+    <ion-col col-3>
+        <div>B CONTINENTAL</div>
+    </ion-col>
+  </ion-row>  
+  <ion-row>
+    <ion-col col-6>
+      <img src='/assets/imgs/avatar_placeholder.png'/>
+    </ion-col>
+    <ion-col col-6>
+      <ion-row>
+        <ion-row >Numero de cuenta</ion-row>
+        <ion-row class='wapper-names-banks-text'>123456789</ion-row>
+      </ion-row>
+
+      <ion-row>
+          <ion-row>Tipo de cuenta</ion-row>
+        <ion-row class='wapper-names-banks-text'>Cuenta Corriente</ion-row>
+      </ion-row>
+
+      <ion-row>
+          <ion-row>Moneda</ion-row>
+          <ion-row class='wapper-names-banks-text'>Dolares</ion-row>
+      </ion-row>
+
+    </ion-col>    
+  </ion-row>
+  <ion-row class='button'>
+      <button (tap)='next_page()' ion-button color="light" >Light</button>
+  </ion-row>
+</ion-grid>
+
+<ng-template #banks >
+    <ion-row>
+        Nuestras cuentas
+      </ion-row> 
+      
+      <ion-row class='wapper-names-banks'>
+        <ion-col col-3>
+         <div>BCP</div>
+        </ion-col> 
+    
+        <ion-col col-3>
+            <div>SKOTIABANK</div>
+        </ion-col> 
+    
+        <ion-col col-3>
+            <div>B CONTINENTAL</div>
+        </ion-col>
+      </ion-row>  
+      <ion-row>
+        <ion-col col-6>
+          <img src='/assets/imgs/avatar_placeholder.png'/>
+        </ion-col>
+        <ion-col col-6>
+          <ion-row>
+            <ion-row >Numero de cuenta</ion-row>
+            <ion-row class='wapper-names-banks-text'>123456789</ion-row>
+          </ion-row>
+    
+          <ion-row>
+              <ion-row>Tipo de cuenta</ion-row>
+            <ion-row class='wapper-names-banks-text'>Cuenta Corriente</ion-row>
+          </ion-row>
+    
+          <ion-row>
+              <ion-row>Moneda</ion-row>
+              <ion-row class='wapper-names-banks-text'>Dolares</ion-row>
+          </ion-row>
+    
+        </ion-col>    
+      </ion-row>
+      <ion-row><div>BCP</div></ion-row>
+      <ion-grid class='text-row'>
+        <ion-row>-Banca por internet y banca movil(Token fisico y digital)</ion-row>
+        <ion-row>-Agentes y bodegas</ion-row>
+        <ion-row>-Banca por internet y banca movil(Token fisico y digital)</ion-row>
+        <ion-row>agentes y bodegas</ion-row>
+        <ion-row>-Banca por internet y banca movil(Token fisico y digital)</ion-row>
+        <ion-row>agentes y bodegas</ion-row>
+        <ion-row>-Banca por internet y banca movil(Token fisico y digital)</ion-row>
+        <ion-row>agentes y bodegas</ion-row>
+      </ion-grid>
+
+      <ion-row class='button'>
+          <button (tap)='next()' ion-button color="light" >siguiente</button>
+      </ion-row>
+       
+</ng-template> 
+</ion-content>
+
+ 

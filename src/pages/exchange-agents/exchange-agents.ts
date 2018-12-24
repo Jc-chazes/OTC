@@ -18,6 +18,9 @@ export class ExchangeAgentsPage {
   searching: any = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public dataService: DataService,public appService : AppStateService) {
     this.searchControl = new FormControl();
+
+
+
   }
   public counter(i: number) {
     return new Array(i);
@@ -37,6 +40,12 @@ export class ExchangeAgentsPage {
     this.exchange_agents = this.dataService.filterItems(this.searchTerm);
   }
 
+  filterItems(searchTerm){
+    return this.exchange_agents.filter((item) => {
+        return item.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 ;
+    });    
+
+}
   public detailExchangeAgent(item :any){
     this.appService.setState({detail_exchangue:item})
     this.navCtrl.push(DetailExchangeAgentPage)

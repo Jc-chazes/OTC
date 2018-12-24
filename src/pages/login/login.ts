@@ -10,6 +10,7 @@ import { AppStateService } from '../../providers/app-state.service';
 import { ExchangeAgent } from '../../models/exchange-agent.model';
 import { ExchangeAgentTabsPage } from '../exchange-agent-tabs/exchange-agent-tabs';
 import { UsersService } from '../../providers/users.service';
+import { QuotePage } from '../quote/quote';
 
 
 @Component({
@@ -32,7 +33,7 @@ export class Login implements OnInit {
   }
 
   login(){
-    this.nvCtrl.push(ExchangeAgentsPage)
+    this.nvCtrl.push(QuotePage)
     if( this.user.password && this.user.email ){
       let loading = this.loadingCtrl.create();
       loading.present();

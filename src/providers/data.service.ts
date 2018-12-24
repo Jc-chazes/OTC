@@ -4,7 +4,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class DataService {
  
-    exchange_agents: any; 
+    exchange_agents: any ; 
  
     constructor() {
  
@@ -125,6 +125,8 @@ export class DataService {
           ]
  
     }
+
+    
  
     filterItems(searchTerm){
         return this.exchange_agents.filter((item) => {

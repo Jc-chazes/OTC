@@ -10,11 +10,13 @@ page-exchange-agents {
     -moz-border-radius: 6px;
     border-radius: 6px;
     height: 23px;
+    color: black;
   }
   .search-agents__input{
     height: 20px !important;
     border: 6px;
     min-height: 21px !important;
+    width: 214px;
   }
   .search-agents__select{
     height: 21px;
@@ -46,6 +48,35 @@ page-exchange-agents {
     display:flex;
     align-items: center;
     justify-content: space-evenly
+  }
+  .exchange-agents__data{
+    background-color: #ffffff;
+    width: 80px;
+    height: 23px;
+    border-radius: 6px;
+  }
+  .exchange-agents__text{
+    height: 23px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    padding-left: 47%;
+  }
+  .exchange-agents__text2{
+    height: 23px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    padding-left: 19%;
+  }
+  .wapper-text-data{
+    margin-bottom: 40px;
+  }
+  ion-col{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column
   }
   
 }

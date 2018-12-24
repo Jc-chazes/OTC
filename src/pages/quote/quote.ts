@@ -31,7 +31,7 @@ export class QuotePage {
     this.appState.setState({
       price :{ 
         currency : this.selectCurrency,
-        cant : this.cant
+        cant : Number(this.cant)
       }
     })
   this.navCtrl.push(ExchangeAgentsPage)  

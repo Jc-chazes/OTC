@@ -51,6 +51,7 @@ import { ExchangeAgentSelectBankAccountPage } from '../pages/exchange-agent-sele
 import { CommonSelectBankAccountPage } from '../pages/common-select-bank-account/common-select-bank-account';
 import { CommonTransferToOtcPage } from '../pages/common-transfer-to-otc/common-transfer-to-otc';
 import { CommonSendVoucherPage } from '../pages/common-send-voucher/common-send-voucher';
+import { MoneyTransactionPage } from '../pages/money-transaction/money-transaction';
 
 
 @NgModule({
@@ -68,20 +69,18 @@ import { CommonSendVoucherPage } from '../pages/common-send-voucher/common-send-
     PersonTabsPage,
     ExchangeAgentTabsPage,
     ChooseProfilePage,
-<<<<<<< HEAD
     ExchangeAgentsPage,
     DetailExchangeAgentPage,
     ModifyAccountBankPage,
-    ExchangeAgentMyRequestsPage
-=======
+    ExchangeAgentMyRequestsPage,
     ExchangeAgentMyOfferingsPage,
     ExchangeAgentMyRequestsPage,
     ExchangeAgentRequestDetailsPage,
     ExchangeAgentSelectBankAccountPage,
     CommonSelectBankAccountPage,
     CommonTransferToOtcPage,
-    CommonSendVoucherPage
->>>>>>> 53ec82a0997bfb90d8a1b9066126257a609caadf
+    CommonSendVoucherPage,
+    MoneyTransactionPage
   ],
   imports: [
     BrowserModule,
@@ -107,21 +106,19 @@ import { CommonSendVoucherPage } from '../pages/common-send-voucher/common-send-
     PersonTabsPage,
     ExchangeAgentTabsPage,
     ChooseProfilePage,
-<<<<<<< HEAD
     ExchangeAgentsPage,
     ChooseProfilePage,
     DetailExchangeAgentPage,
     ModifyAccountBankPage,
-    ExchangeAgentMyRequestsPage
-=======
+    ExchangeAgentMyRequestsPage,
     ExchangeAgentMyOfferingsPage,
     ExchangeAgentMyRequestsPage,
     ExchangeAgentRequestDetailsPage,
     ExchangeAgentSelectBankAccountPage,
     CommonSelectBankAccountPage,
     CommonTransferToOtcPage,
-    CommonSendVoucherPage
->>>>>>> 53ec82a0997bfb90d8a1b9066126257a609caadf
+    CommonSendVoucherPage,
+    MoneyTransactionPage
   ],
   providers: [
     StatusBar,
