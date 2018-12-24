@@ -34,7 +34,9 @@ export class MyApp {
           }
           this.rootPage = tabs;
         }
-        splashScreen.hide();
+        setTimeout(() => {
+          splashScreen.hide();          
+        }, 3000);
       })
     });
   }

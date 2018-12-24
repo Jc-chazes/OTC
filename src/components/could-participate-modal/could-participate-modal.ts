@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ViewController } from 'ionic-angular';
 
 /**
  * Generated class for the CouldParticipateModalComponent component.
@@ -14,7 +15,7 @@ export class CouldParticipateModalComponent {
 
   text: string;
 
-  constructor() {
+  constructor(public viewCtrl: ViewController) {
     console.log('Hello CouldParticipateModalComponent Component');
     this.text = 'Hello World';
   }

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "100315142938",
+    "firebase_url": "https://otc-dev-e0517.firebaseio.com",
+    "project_id": "otc-dev-e0517",
+    "storage_bucket": "otc-dev-e0517.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:100315142938:android:3ab8f2f1fe40d95e",
+        "android_client_info": {
+          "package_name": "com.otc.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "100315142938-er70ruu5jvhvsqag3trc1mbm03svi3cf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNVCUa5TXfXj6EVQA61IG4yQCfxB-nFx0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

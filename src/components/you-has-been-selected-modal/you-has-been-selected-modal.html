@@ -1,4 +1,17 @@
-<!-- Generated template for the YouHasBeenSelectedModalComponent component -->
-<div>
-  {{text}}
+<div class="youHasBeenSelected flex-col-layout jc-center fill-height">
+  <div class="modal-content">
+    <div class="spacer-45"></div>
+    <p class="text-center">
+      <b>¡Felicidades!</b>
+    </p>
+    <p class="text-center no-margin">
+      Haz sido seleccionado.
+    </p>
+    <div class="spacer-45"></div>
+    <div class="flex-col-layout ai-center" padding>
+      <button fluid ion-button color="dark" (tap)="viewCtrl.dismiss(true)">
+        Iniciar el proceso
+      </button>
+    </div>
+  </div>
 </div>

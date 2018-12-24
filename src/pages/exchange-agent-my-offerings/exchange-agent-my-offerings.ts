@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
 import { Currency } from '../../models/currency.model';
 import { ExchangeAgentOffering } from '../../models/exchange-agent-offering.model';
 import { CurrenciesService } from '../../providers/currencies.service';
@@ -10,6 +10,7 @@ import { LoadingUtil } from '../../providers/utils/loading.util';
 import { AlertUtil } from '../../providers/utils/alert.util';
 import { ExchangeAgentMyRequestsPage } from '../exchange-agent-my-requests/exchange-agent-my-requests';
 import { ExchangeAgentOfferingGroup } from '../../models/exchang-agent-offering-group.model';
+import { ModalUtil, AvailableModals } from '../../providers/utils/modal.util';
 
 /**
  * Generated class for the ExchangeAgentMyOfferingsPage page.
@@ -28,7 +29,7 @@ export class ExchangeAgentMyOfferingsPage {
   currencyList: Currency[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController,
-  private loading: LoadingUtil, private alert: AlertUtil,
+  private loading: LoadingUtil, private alert: AlertUtil, private modalCtrl: ModalController, private modals: ModalUtil,
   private currencies: CurrenciesService, private exchangeAgentOfferings: ExchangeAgentOfferingsService) {
     this.exchangeAgentOfferings.getGroupedExchangeAgentOfferings()
     .subscribe( results => {

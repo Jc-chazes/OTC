@@ -61,10 +61,16 @@ import { PersonNearExchangeAgentsPage } from '../pages/person-near-exchange-agen
 import { NotificationsService } from '../providers/notifications.service';
 
 import moment from 'moment';
+moment.locale('es');
+
 import { DirectivesModule } from '../directives/directives.module';
 import { ContentsService } from '../providers/contents.service';
 import { ModalUtil } from '../providers/utils/modal.util';
-moment.locale('es');
+import { DeviceUtil } from '../providers/utils/device.util';
+import { Device } from '@ionic-native/device';
+import { Firebase } from '@ionic-native/firebase';
+import { LocalNotifications } from '@ionic-native/local-notifications';
+import { ContestsService } from '../providers/contests.service';
 
 @NgModule({
   declarations: [
@@ -166,7 +172,12 @@ moment.locale('es');
     NotificationsService,
     AuthProvider,
     ContentsService,
-    ModalUtil
+    ModalUtil,
+    DeviceUtil,
+    Device,
+    Firebase,
+    LocalNotifications,
+    ContestsService
   ]
 })
 export class AppModule {}

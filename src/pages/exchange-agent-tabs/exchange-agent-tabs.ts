@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { ExchangeAgentMyOfferingsPage } from '../exchange-agent-my-offerings/exchange-agent-my-offerings';
 import { CommonMyNotificationsPage } from '../common-my-notifications/common-my-notifications';
 import { CommonMyTransactionsPage } from '../common-my-transactions/common-my-transactions';
 import { CommonMyProfilePage } from '../common-my-profile/common-my-profile';
+import { TransactionsService } from '../../providers/transaction.service';
 
 /**
  * Generated class for the ExchangeAgentTabsPage page.
@@ -25,7 +26,9 @@ export class ExchangeAgentTabsPage {
   tabHistorial = CommonMyTransactionsPage;
   tabProfile = CommonMyProfilePage;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private transactions: TransactionsService,
+    private modalCtrl: ModalController) {
+    this.transactions.listenToContests(this.modalCtrl);
   }
 
   ionViewDidLoad() {
