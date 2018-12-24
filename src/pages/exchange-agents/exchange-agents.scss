@@ -54,6 +54,11 @@ page-exchange-agents {
     width: 80px;
     height: 23px;
     border-radius: 6px;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 17px;
   }
   .exchange-agents__text{
     height: 23px;

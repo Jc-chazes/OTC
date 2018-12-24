@@ -10,9 +10,11 @@ import { ModifyAccountBankPage } from '../modify-account-bank/modify-account-ban
 })
 export class DetailExchangeAgentPage {
   detail_exchangue : any;
+  data_price :any;
   constructor(public navCtrl: NavController, public navParams: NavParams,public appService : AppStateService) {
   this.appService.onStateChange.subscribe(res=>{
-    this.detail_exchangue = res.detail_exchangue
+    this.detail_exchangue = res.detail_exchangue,
+    this.data_price = res.price
     })
   }
   public counter(i: number) {

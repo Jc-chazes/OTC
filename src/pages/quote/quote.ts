@@ -11,7 +11,9 @@ import { ExchangeAgentsPage } from '../exchange-agents/exchange-agents';
 export class QuotePage {
   checkButton:number;
   selectCurrency:number;
-  cant : number
+  cant : number;
+  text_buy : string;
+  text_money:string
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public appState : AppStateService) {
     this.checkButton = 0;
@@ -28,10 +30,22 @@ export class QuotePage {
     this.selectCurrency = event
   }
   nextPage(){
+    if(this.checkButton===0){
+      this.text_buy ='Comprar';     
+    }else if(this.checkButton===1){
+      this.text_buy = 'Vender';
+    }
+    if(this.selectCurrency === 1){
+      this.text_money = "S"
+    }else if(this.selectCurrency === 2){
+      this.text_money = "$"
+    }
     this.appState.setState({
       price :{ 
         currency : this.selectCurrency,
-        cant : Number(this.cant)
+        cant : Number(this.cant),
+        text_buy : this.text_buy,
+        text_money :this.text_money
       }
     })
   this.navCtrl.push(ExchangeAgentsPage)  

@@ -42,7 +42,7 @@
      
             <div class='title'>Servicio :</div>
      
-              <div class='text'>Venta</div>
+              <div class='text'>{{data_price.text_buy}}</div>
         </div> 
   
       
@@ -50,7 +50,8 @@
      
               <div class='title'>Tipo de moneda :</div>
      
-              <div class='text'>Dolar</div>
+              <div class='text' *ngIf='data_price.currency===1'>Dolar</div>
+              <div class='text' *ngIf='data_price.currency===2'>Soles</div>
 
         </div>  
       
@@ -61,7 +62,7 @@
 
 
      
-              <div class='text'>$300</div>
+              <div class='text'>{{data_price.text_money}}{{data_price.cant}}</div>
 
 
             </div>
@@ -71,7 +72,7 @@
                     <div class='title'>Valor tipo de cambio :</div>
     
             
-                  <div class='text'> S/ 3.22</div>
+                  <div class='text'>{{data_price.text_money}}{{detail_exchangue.exchangeagentofferings[0].requestedCurrencyAmount}}</div>
 
     
                </div> 
@@ -93,7 +94,7 @@
                     <div class='title'>Monto a depositar en OTC :</div>
       
              
-                      <div class='text'>$ 301</div>
+                      <div class='text'>{{data_price.text_money}}{{data_price.cant}}</div>
         
                    </div> 
            
@@ -104,7 +105,7 @@
                     <div class='title'>Monto a recibir de OTC :</div>
       
              
-                      <div class='text'>S/ 966.00</div>
+                      <div class='text'>{{data_price.text_money}}{{detail_exchangue.exchangeagentofferings[0].requestedCurrencyAmount*data_price.cant}}</div>
         
                   </div>
                   <div class='next' (tap)='nextPage()'>Siguiente</div>

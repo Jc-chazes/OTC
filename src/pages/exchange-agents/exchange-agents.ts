@@ -16,10 +16,15 @@ export class ExchangeAgentsPage {
   searchControl: FormControl;
   exchange_agents: any;
   searching: any = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public dataService: DataService,public appService : AppStateService) {
+  data_price :any;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public dataService: DataService,
+    public appService : AppStateService) {
     this.searchControl = new FormControl();
 
-
+    this.appService.onStateChange.subscribe(res=>{
+      this.data_price = res.price
+      })
+      
 
   }
   public counter(i: number) {
@@ -31,6 +36,8 @@ export class ExchangeAgentsPage {
       this.searching = false;
       this.setFilteredItems();
       });
+    
+    
   }
   onSearchInput(){
   this.searching = true;

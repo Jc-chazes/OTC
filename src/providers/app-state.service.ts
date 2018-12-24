@@ -16,7 +16,9 @@ export class AppStateService{
     },
     price: {
       currency: "",
-      cant: 0
+      cant: 0,
+      text_buy :"",
+      text_money:""
     },
     detail_exchangue :{}
   };
