@@ -44,7 +44,10 @@ export class ExchangeAgentRequestDetailsPage {
   }
 
   get avatarUrl(){
-    return this.sanitizer.bypassSecurityTrustStyle(`url('${this.transaction.person.user.photo.fileUrl}')`);
+    if( this.transaction.person.user.photo ){
+      return this.sanitizer.bypassSecurityTrustStyle(`url('${this.transaction.person.user.photo.fileUrl}')`);
+    }
+    return this.sanitizer.bypassSecurityTrustStyle(`url('/assets/imgs/avatar_placeholder.png')`);
   }
 
   continue(){

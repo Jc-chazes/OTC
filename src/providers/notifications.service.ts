@@ -10,13 +10,18 @@ import { Notification } from "../models/notification.model";
 import { Transaction } from "../models/transaction.model";
 import { uniqBy, sortBy } from 'lodash';
 import { NotificationMapper } from "./mappers/notification.mapper";
+import { ModalController, Platform } from "ionic-angular";
+import { Firebase } from "@ionic-native/firebase";
+import { AvailableModals, ModalUtil } from "./utils/modal.util";
+import { LocalNotifications } from "@ionic-native/local-notifications";
 
 @Injectable()
 export class NotificationsService extends BaseService implements CrudService<Notification>{
 
     mapper = new NotificationMapper();
 
-    constructor(api: ApiUtil, private users: UsersService){
+    constructor(api: ApiUtil, private users: UsersService, private firebaseNative: Firebase,
+    private platform: Platform, private modals: ModalUtil, private localNotifications: LocalNotifications){
         super(api);
     }
 
@@ -70,6 +75,62 @@ export class NotificationsService extends BaseService implements CrudService<Not
         },[]);
         toReturn = sortBy( toReturn, 'created_at' ).reverse();
         return toReturn;
+    }
+
+    listenToContests(modalCtrl: ModalController){
+        try{
+            this.firebaseNative.onNotificationOpen().subscribe( (notification) => {
+    
+                alert(JSON.stringify(notification));
+
+                // if(notification.tap){
+                //     return ;
+                // }
+        
+                let messageText: string;
+                let messageTitle: string;
+                
+                if (this.platform.is('android')) {
+                    messageText = notification.body;
+                    messageTitle = notification.title;
+                }
+                
+                if (this.platform.is('ios')) {
+                    messageText = notification.aps.alert;
+                }
+        
+                this.localNotifications.schedule({
+                    title: messageTitle,
+                    text: messageText,
+                    color: '#23c7b1',
+                    smallIcon: 'res://notification_icon.png',
+                    icon:'file://assets/images/icon.png'
+                });
+
+                switch(notification.type){
+                    case 'NEW_CONTEST':
+                        this.modals.openModal(modalCtrl,AvailableModals.OpportunityToParticipate,{
+                            ...notification
+                        }).then( couldParticipate => {
+                            if( couldParticipate ){
+                                this.modals.openModal(modalCtrl,AvailableModals.CouldParticipateModal);
+                            }else{
+                                this.modals.openModal(modalCtrl,AvailableModals.CouldNotParticipateModal);
+                            }
+                        });
+                        break;
+                    case 'REJECTED_CONTEST':
+                        this.modals.openModal(modalCtrl,AvailableModals.YouHasNotBeenSelectedModal);
+                        break;
+                    case 'SUCCESSFUL_CONTEST':
+                        this.modals.openModal(modalCtrl,AvailableModals.YouHasBeenSelectedModal);
+                        break;
+                }
+                
+            });
+        }catch(err){
+            console.error(err);
+        }
     }
 
 

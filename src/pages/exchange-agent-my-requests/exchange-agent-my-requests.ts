@@ -136,8 +136,10 @@ export class ExchangeAgentMyRequestsPage {
   }
 
   canContinue(transaction: Transaction){
-    return ( this.users.currentUser.userType == '0' && !!transaction.personBankAccount ) || 
-      ( this.users.currentUser.userType == '1' && !!transaction.exchangeAgentBankAccount );
+    return transaction.type == 'FAST' || transaction.status == '3';
+    // return ( this.users.currentUser.userType == '0' && !!transaction.personBankAccount ) || 
+    //   ( this.users.currentUser.userType == '1' && !!transaction.exchangeAgentBankAccount );
+
   }
 
 }

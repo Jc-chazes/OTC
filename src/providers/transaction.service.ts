@@ -149,48 +149,4 @@ export class TransactionsService extends BaseService implements CrudService<Tran
         }) );
     }
 
-    listenToContests(modalCtrl: ModalController){
-        try{
-            this.firebaseNative.onNotificationOpen().subscribe( (notification) => {
-    
-                if(notification.tap){
-                    return ;
-                }
-        
-                let messageText: string;
-                let messageTitle: string;
-                
-                if (this.platform.is('android')) {
-                    messageText = notification.body;
-                    messageTitle = notification.title;
-                }
-                
-                if (this.platform.is('ios')) {
-                    messageText = notification.aps.alert;
-                }
-        
-                this.localNotifications.schedule({
-                    title: messageTitle,
-                    text: messageText,
-                    color: '#23c7b1',
-                    smallIcon: 'res://notification_icon.png',
-                    icon:'file://assets/images/icon.png'
-                });
-                    
-                this.modals.openModal(modalCtrl,AvailableModals.OpportunityToParticipate,{
-                    ...notification
-                }).then( couldParticipate => {
-                    if( couldParticipate ){
-                        this.modals.openModal(modalCtrl,AvailableModals.CouldParticipateModal);
-                    }else{
-                        this.modals.openModal(modalCtrl,AvailableModals.CouldNotParticipateModal);
-                    }
-                });
-                
-            });
-        }catch(err){
-            console.error(err);
-        }
-    }
-
 }
