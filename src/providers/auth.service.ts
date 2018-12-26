@@ -50,9 +50,9 @@ export class AuthProvider {
       profile: {
         ...omit(person,['user','score','fullName'])
       }
-    }).map( resp => {
+    }).flatMap( resp => {
       this.jwt.setToken(resp.jwt);
-      return true;
+      return this.populate();
     }).catch( err => {
       return Observable.of(false);
     });
@@ -65,9 +65,9 @@ export class AuthProvider {
       profile: {
         ...omit(exchangeAgent,['user','score'])
       }
-    }).map( resp => {
+    }).flatMap( resp => {
       this.jwt.setToken(resp.jwt);
-      return true;
+      return this.populate();
     }).catch( err => {
       return Observable.of(false);
     });
