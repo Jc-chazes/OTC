@@ -35,4 +35,6 @@ export class Transaction extends BaseModel<Transaction>{
 
     notifications: Notification[];
 
+    limitDate: Date;
+
 }

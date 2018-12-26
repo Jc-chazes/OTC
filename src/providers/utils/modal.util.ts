@@ -6,6 +6,11 @@ import { CouldNotParticipateModalComponent } from "../../components/could-not-pa
 import { CouldParticipateModalComponent } from "../../components/could-participate-modal/could-participate-modal";
 import { YouHasBeenSelectedModalComponent } from "../../components/you-has-been-selected-modal/you-has-been-selected-modal";
 import { YouHasNotBeenSelectedModalComponent } from "../../components/you-has-not-been-selected-modal/you-has-not-been-selected-modal";
+import { WaitYourRequestModalComponent } from "../../components/wait-your-request-modal/wait-your-request-modal";
+import { RequestWasAcceptedModalComponent } from "../../components/request-was-accepted-modal/request-was-accepted-modal";
+import { RequestWasRejectedModalComponent } from "../../components/request-was-rejected-modal/request-was-rejected-modal";
+import { ScoreYourExperienceModalComponent } from "../../components/score-your-experience-modal/score-your-experience-modal";
+import { QuoteAgainModalComponent } from "../../components/quote-again-modal/quote-again-modal";
 
 export enum  AvailableModals{
     TermsAndConditions,
@@ -13,7 +18,12 @@ export enum  AvailableModals{
     CouldNotParticipateModal,
     CouldParticipateModal,
     YouHasBeenSelectedModal,
-    YouHasNotBeenSelectedModal
+    YouHasNotBeenSelectedModal,
+    WaitYourRequestModal,
+    RequestWasRejectedModal,
+    RequestWasAcceptedModal,
+    ScoreYourExperienceModal,
+    QuoteAgainModal
 };
 
 @Injectable()
@@ -31,7 +41,8 @@ export class ModalUtil{
                 break;
             case AvailableModals.OpportunityToParticipate:
                 modalInstance = modalCtrl.create(OpportunityToParticipateModalComponent,data,
-                Object.assign({ enableBackdropDismiss: false },options,{ cssClass: 'alertModal opportunityToParticipateModal' }));
+                Object.assign({ enableBackdropDismiss: false },options,{ 
+                    cssClass: 'alertModal opportunityToParticipateModal' }));
                 break;
             case AvailableModals.CouldNotParticipateModal:
                 modalInstance = modalCtrl.create(CouldNotParticipateModalComponent,data,
@@ -48,6 +59,29 @@ export class ModalUtil{
             case AvailableModals.YouHasNotBeenSelectedModal:
                 modalInstance = modalCtrl.create(YouHasNotBeenSelectedModalComponent,data,
                 Object.assign({},options,{ cssClass: 'alertModal youHasNotBeenSelectedModalComponent' }));
+                break;
+            case AvailableModals.WaitYourRequestModal:
+                modalInstance = modalCtrl.create(WaitYourRequestModalComponent,data,
+                Object.assign({},options,{ cssClass: 'alertModal waitYourRequestModalComponent' }));
+                break;
+            case AvailableModals.RequestWasAcceptedModal:
+                modalInstance = modalCtrl.create(RequestWasAcceptedModalComponent,data,
+                Object.assign({},options,{ cssClass: 'alertModal requestWasAcceptedModalComponent' }));
+                modalInstance.onDidDismiss( () => {
+
+                });
+                break;
+            case AvailableModals.RequestWasRejectedModal:
+                modalInstance = modalCtrl.create(RequestWasRejectedModalComponent,data,
+                Object.assign({},options,{ cssClass: 'alertModal requestWasRejectedModalComponent' }));
+                break;
+            case AvailableModals.ScoreYourExperienceModal:
+                modalInstance = modalCtrl.create(ScoreYourExperienceModalComponent,data,
+                Object.assign({},options,{ cssClass: 'alertModal scoreYourExperienceModalComponent' }));
+                break;
+            case AvailableModals.QuoteAgainModal:
+                modalInstance = modalCtrl.create(QuoteAgainModalComponent,data,
+                Object.assign({},options,{ cssClass: 'alertModal quoteAgainModalComponent' }));
                 break;
         }
 

@@ -32,7 +32,7 @@
                   <ion-radio mode="md" color="secondary" [value]="'SELECT'" [disabled]="userBankAccountList.length == 0"></ion-radio>
               </div>
               </ion-col>
-              <ion-col col-auto (tap)="mode = 'SELECT'">
+              <ion-col col-auto (tap)="userBankAccountList.length > 0 && mode = 'SELECT'">
               Seleccionar <br> cuenta existente
               </ion-col>
           </ion-row>        

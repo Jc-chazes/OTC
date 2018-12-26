@@ -1,5 +1,5 @@
 <!-- Generated template for the StepperComponent component -->
-<div class="stepper" *ngIf="mode == 'exchange-agent'">
+<div class="stepper">
   <div class="flex-row-layout jc-space-between">
     <div class="step" *ngFor="let step of steps" (tap)="onTapStep(step)"
     [ngClass]="{ 'active': step.step == currentStep }">

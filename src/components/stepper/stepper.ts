@@ -34,6 +34,14 @@ export class StepperComponent implements OnInit {
         { step: 4, stepLabel: 'Transferir' },
         { step: 5, stepLabel: 'Enviar constancia' }
       ]
+    }else{
+      this.steps = [
+        { step: 1, stepLabel: 'Cotiza' },
+        { step: 2, stepLabel: 'Elige el mejor' },
+        { step: 3, stepLabel: 'Registre su cuenta' },
+        { step: 4, stepLabel: 'Transferir' },
+        { step: 5, stepLabel: 'Enviar constancia' }
+      ]
     }
   }
 

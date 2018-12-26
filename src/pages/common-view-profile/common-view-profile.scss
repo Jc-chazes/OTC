@@ -4,9 +4,10 @@
 page-common-view-profile {
     .viewProfile{
         &__avatar{
+            $size: 150px;
             margin: 0 auto;
-            width: 125px;
-            height: 125px;
+            width: $size;
+            height: $size;
             border: 2px solid $accent-color;
             position: relative;
             @include borderRadius(50%);

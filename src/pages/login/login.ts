@@ -33,7 +33,6 @@ export class Login implements OnInit {
   }
 
   login(){
-    this.nvCtrl.push(QuotePage)
     if( this.user.password && this.user.email ){
       let loading = this.loadingCtrl.create();
       loading.present();

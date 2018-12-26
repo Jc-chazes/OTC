@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { padStart } from 'lodash';
 
@@ -18,7 +18,9 @@ export class CountdownComponent implements OnDestroy, OnInit{
 
   remainingText: string;
   remainingTime: number;
-  final: EventEmitter<any> = new EventEmitter<any>(); 
+  @Output() final: EventEmitter<any> = new EventEmitter<any>(); 
+  objectDestroy: EventEmitter<any> = new EventEmitter<any>(); 
+  finalReached = false;
 
   constructor() {
    
@@ -27,7 +29,7 @@ export class CountdownComponent implements OnDestroy, OnInit{
   ngOnInit(){
     this.calculateRemainingText();
     Observable.interval(1000)
-    .takeUntil( this.final.asObservable() )
+    .takeUntil( this.objectDestroy.asObservable() )
     .subscribe( () => {
       this.calculateRemainingText();      
     })
@@ -37,7 +39,10 @@ export class CountdownComponent implements OnDestroy, OnInit{
     this.remainingTime = this.date.getTime() - (new Date()).getTime();
     if( this.remainingTime < 0 ){
       this.remainingText = '00:00';
-      this.final.emit({});
+      if( !this.finalReached ){
+        this.final.emit({});
+        this.finalReached = true;
+      }
       return; 
     }
     let remainingMinutes = Math.floor( this.remainingTime / 60000 );
@@ -46,7 +51,7 @@ export class CountdownComponent implements OnDestroy, OnInit{
   }
 
   ngOnDestroy(){
-    this.final.emit({});
+    this.objectDestroy.emit({});
   }
 
 }

@@ -5,6 +5,7 @@ import { Login } from '../login/login';
 import { RegisterExchangeAgentPage } from '../register-exchange-agent/register-exchange-agent';
 import { ChooseAccessPage } from '../choose-access/choose-access';
 import { AuthProvider } from '../../providers/auth.service';
+import { AlertUtil } from '../../providers/utils/alert.util';
 
 /**
  * Generated class for the ChooseProfilePage page.
@@ -19,9 +20,10 @@ import { AuthProvider } from '../../providers/auth.service';
 })
 export class ChooseProfilePage {
 
-  userType: string = '0';
+  userType: string;
 
-  constructor(public nav : NavController, private appState: AppStateService, private auth: AuthProvider) { }
+  constructor(public nav : NavController, private appState: AppStateService, private auth: AuthProvider,
+    private alert: AlertUtil) { }
 
   ngOnInit() {
     
@@ -36,6 +38,10 @@ export class ChooseProfilePage {
   }
 
   ready(){
+    if( !this.userType ){
+      this.alert.show('Seleccione un perfil','OTC');
+      return;
+    }
     this.auth.setAppUserType(this.userType);
     this.nav.push(ChooseAccessPage)
   }

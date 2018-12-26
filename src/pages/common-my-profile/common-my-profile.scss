@@ -2,7 +2,8 @@ page-common-my-profile {
     .myProfile{
         &__option{
             &__icon{
-                width: 50%;
+                max-width: 50%;
+                width: 22px;
             }
             padding: 12px 15px;
             border-left: 4px solid #FFF;

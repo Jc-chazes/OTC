@@ -1,64 +1,66 @@
-<!--
-  Generated template for the ExchangeAgentsPage page.
+<ion-header profile-background-color>
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>exchange-agents</ion-title>
+  <ion-navbar hideBackButton>
+      <div class="flex-row-layout ai-center">
+        <ion-title>Inicio</ion-title>
+        <span class="flex"></span>
+        <ion-title class="brand">OTC</ion-title>
+      </div>
   </ion-navbar>
-
+  
 </ion-header>
 
-
-<ion-content padding class='page'>
-  <ion-grid >
+<ion-content class='page'>  
+  <div class="spacer-30"></div>
+  <back-button [navCtrl]="navCtrl"></back-button>
+  <stepper [currentStep]="2"></stepper>
+  <ion-grid padding>
     <ion-grid class='wapper-text-data'>
       <ion-row>
-        <ion-col col6><div class="exchange-agents__text">Cantidad solcitada</div></ion-col>
+        <ion-col col6><div class="exchange-agents__text text-muted">Cantidad solcitada:</div></ion-col>
         <ion-col col6><div class='exchange-agents__data'>{{data_price.text_money}}{{data_price.cant}}</div></ion-col>
       </ion-row>
       <ion-row>
-        <ion-col col6><div class='exchange-agents__text2'>tipo</div></ion-col>
+        <ion-col col6><div class='exchange-agents__text2 text-muted'>Tipo:</div></ion-col>
         <ion-col col6><div class='exchange-agents__data'>{{data_price.text_buy}}</div></ion-col>
       </ion-row>
     </ion-grid>
     <div class="search-agents">
       <ion-icon ios="ios-search" md="md-search"></ion-icon>
       <input placeholder="Busca la casa de cambio de tu preferencia" class="search-agents__input" [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="onSearchInput()">
-      <select class="search-agents__select">
+      <!-- <select class="search-agents__select">
         <option class="search-agents__select___option">Por calificacion</option>
         <option class="search-agents__select___option">Por mejor precio</option>
-      </select>
+      </select> -->
+      <ion-icon name="arrow-down" md="ios-arrow-down" (tap)="openSearchExchangeAgentMode()"></ion-icon>
     </div>
   </ion-grid>
-  <ion-grid  *ngFor='let item of exchange_agents'>
-    <ion-row align-items-center>
-      <ion-col col-3 class="exchangue-agents__style">
-        <img src="assets/imgs/avatar_placeholder.png" class="exchangue-agents__icon"/>
-      </ion-col>
-      <ion-col col-3 >
-        <div class="exchangue-agents__style">{{item.name}}</div>
-        <div  class="exchangue-agents__style__stars">
-          <div *ngFor='let in of counter(item.score)'>
-              <img src='assets/imgs/star.png' class="exchange-agents__icon-star"/>
-          </div>
-          <div *ngFor='let in of counter(5-item.score)' >
-              <img src='assets/imgs/star-white.png' class="exchange-agents__icon-star"  />
-          </div>
+  <ion-row class="exchange-agents__item" align-items-center *ngFor='let item of exchangeAgentList'
+  (tap)='detailExchangeAgent(item)'>
+    <ion-col col-2 class="exchangue-agents__style">
+      <div class="square w-background-image" [style.backgroundImage]="getAvatarUrl(item)"></div>
+    </ion-col>
+    <ion-col col-6 >
+      <div>
+        <span class="text-muted">{{item.type == '0' ? 'Casa de cambio' : 'Cambista'}}:&nbsp;</span>  {{item.name}}
+      </div>
+      <div class="exchangue-agents__style__stars flex-row-layout ai-center">
+        <div *ngFor='let in of counter(item.score)'>
+            <img src='assets/imgs/star.png' class="exchange-agents__icon-star"/>
         </div>
-      </ion-col>
-      <ion-col col-3 >
-          <div class="exchangue-agents__style">Valor</div>
-          <div class="exchangue-agents__style">{{item.exchangeagentofferings[0].requestedCurrencyAmount}}</div>
-      </ion-col> 
-      <ion-col col-3 >
-          <div (tap)='detailExchangeAgent(item)'>
-              <img src='assets/imgs/circle-three.png' class="exchange-agents__circle-three"/>
-          </div>
-      </ion-col>      
-    </ion-row>
-  </ion-grid>
+        <div *ngFor='let in of counter(5-item.score)' >
+            <img src='assets/imgs/star-white.png' class="exchange-agents__icon-star"  />
+        </div>
+      </div>
+    </ion-col>
+    <ion-col col-3 >
+        <div class="exchangue-agents__style text-muted"><small>Valor</small></div>
+        <div class="exchangue-agents__style text-14">S/. {{item.exchangeAgentOfferings[0][currencyAmountField]}}</div>
+    </ion-col> 
+    <ion-col col-1 >
+      <div>
+        <ion-icon ios="ios-more" md="ios-more"></ion-icon>
+      </div>
+    </ion-col>      
+  </ion-row>
 </ion-content>

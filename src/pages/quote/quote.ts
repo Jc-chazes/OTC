@@ -3,7 +3,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AppStateService } from '../../providers/app-state.service';
 import { ExchangeAgentsPage } from '../exchange-agents/exchange-agents';
 import { DataService } from '../../providers/data.service';
-
+import { Currency } from '../../models/currency.model';
+import { CurrenciesService } from '../../providers/currencies.service';
+import { AlertUtil } from '../../providers/utils/alert.util';
+import { isString } from 'lodash';
 
 @Component({
   selector: 'page-quote',
@@ -11,14 +14,20 @@ import { DataService } from '../../providers/data.service';
 })
 export class QuotePage {
   checkButton:number;
-  selectCurrency:number;
+  selectedCurrency: Currency;
   cant : number;
   text_buy : string;
   text_money:string
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-              public appState : AppStateService,private dataService : DataService) {
+  currencyList: Currency[];
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private alerts: AlertUtil
+    , private currencies: CurrenciesService, public appState : AppStateService
+    , private dataService : DataService) {
     this.checkButton = 0;
-    this.selectCurrency = 1;
+    this.currencies.find().subscribe( results => {
+      this.currencyList = results.filter( c => c.code != 'PEN' );
+      this.selectedCurrency = this.currencyList[0];
+    })
   }
 
   ionViewDidLoad() {
@@ -32,28 +41,38 @@ export class QuotePage {
     this.checkButton = numb
   }
   onHandle(event){
-    this.selectCurrency = event
+    this.selectedCurrency = event
   }
   nextPage(){
-    if(this.checkButton===0){
-      this.text_buy ='Comprar';     
-    }else if(this.checkButton===1){
-      this.text_buy = 'Vender';
+    // if(this.checkButton===0){
+    //   this.text_buy ='Comprar';     
+    // }else if(this.checkButton===1){
+    //   this.text_buy = 'Vender';
+    // }
+    // if(this.selectedCurrency === 1){
+    //   this.text_money = "S"
+    // }else if(this.selectedCurrency === 2){
+    //   this.text_money = "$"
+    // }
+
+    if( !this.cant  ){
+      this.alerts.show('Ingrese el monto','Cotiza');
+      return;
     }
-    if(this.selectCurrency === 1){
-      this.text_money = "S"
-    }else if(this.selectCurrency === 2){
-      this.text_money = "$"
-    }
+
     this.appState.setState({
       price :{ 
-        currency : this.selectCurrency,
+        currency : this.selectedCurrency,
         cant : Number(this.cant),
-        text_buy : this.text_buy,
-        text_money :this.text_money
+        text_buy : this.checkButton == 0 ? ' Comprar' : 'Vender',//this.text_buy,
+        text_money : this.selectedCurrency.symbol
       }
     })
   
-  this.navCtrl.push(ExchangeAgentsPage)  
+    this.navCtrl.push(ExchangeAgentsPage,{
+      operation: this.checkButton == 0 ? 'C' : 'V',
+      currency: this.selectedCurrency,
+      amount : this.cant
+    });
   }
 }

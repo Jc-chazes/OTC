@@ -53,7 +53,7 @@ ion-modal ion-backdrop{
     }
 }
 
-.termsAndConditionsModal{
+.termsAndConditionsModal, .requestWasAcceptedModalComponent{
     .modal-wrapper{
         height: 380px !important;
         top: calc( 50% - 190px ) !important;
@@ -64,5 +64,11 @@ ion-modal ion-backdrop{
     .modal-wrapper{
         height: 340px !important;
         top: calc( 50% - 170px ) !important;
+    }
+}
+.requestWasRejectedModalComponent{
+    .modal-wrapper{
+        height: 400px !important;
+        top: calc( 50% - 200px ) !important;
     }
 }

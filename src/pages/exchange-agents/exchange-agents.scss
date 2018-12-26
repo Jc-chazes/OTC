@@ -1,3 +1,5 @@
+@import "../../styles/1-settings/index";
+
 page-exchange-agents {
   .search-agents{
     display: flex;
@@ -35,19 +37,9 @@ page-exchange-agents {
     width: 43px;
     height: 46px;
   }
-  .exchangue-agents__style{
-    display:flex;
-    align-items: center;
-    justify-content: center
-  }
   .exchange-agents__icon-star{
     width: 10px;
     height: 10px;
-  }
-  .exchangue-agents__style__stars{
-    display:flex;
-    align-items: center;
-    justify-content: space-evenly
   }
   .exchange-agents__data{
     background-color: #ffffff;
@@ -77,11 +69,22 @@ page-exchange-agents {
   .wapper-text-data{
     margin-bottom: 40px;
   }
-  ion-col{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column
+  .exchange-agents{
+    &__item{      
+      padding: 5px;
+      padding-left: 8px;
+      border-top: 1px solid #000;
+      border-bottom: 1px solid #000;
+      border-left: 6px solid #000;
+      &:nth-child(3n+1){
+        border-left-color: $accent-color;
+      }
+      &:nth-child(3n+2){
+        border-left-color: $primary-color;
+      }
+      &:nth-child(3n){
+        border-left-color: $secondary-color;
+      }
+    }
   }
-  
 }

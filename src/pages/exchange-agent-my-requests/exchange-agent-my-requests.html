@@ -76,9 +76,9 @@
             </p>
           </ion-col>
           <ion-col col-2 class="no-padding pt-5" (tap)="openRequestOperations(transaction,$event)">
-            <p class="text-thin" *ngIf="canContinue(transaction); else countdown">Continuar</p>
+            <p class="text-thin" *ngIf="!showCountdown(transaction); else countdown">Continuar</p>
             <ng-template #countdown>
-              <p class="text-accent"> <b><countdown [date]="transaction.created_at"></countdown></b> </p>
+              <p class="text-accent"> <b><countdown [date]="transaction.limitDate" (final)="refresh()"></countdown></b> </p>
             </ng-template>            
             <ion-icon ios="ios-more" md="ios-more"></ion-icon>
           </ion-col>

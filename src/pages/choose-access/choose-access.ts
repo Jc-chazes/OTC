@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Login } from '../login/login';
 import { AppStateService } from '../../providers/app-state.service';
-import { RegisterExchangeAgentPage } from '../register-exchange-agent/register-exchange-agent';
+import { CommonRegisterAccountPage } from '../common-register-account/common-register-account';
 
 /**
  * Generated class for the ChooseAccessPage page.
@@ -28,9 +28,9 @@ export class ChooseAccessPage {
 
   registerUser(){
     if( this.appState.currentState.global.userType == '0' ){
-
+      this.nvCtrl.push(CommonRegisterAccountPage)
     }else{
-      this.nvCtrl.push(RegisterExchangeAgentPage)
+      this.nvCtrl.push(CommonRegisterAccountPage)
     }
   }
 

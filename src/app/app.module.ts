@@ -59,6 +59,7 @@ import { CommonMyBankAccountsPage } from '../pages/common-my-bank-accounts/commo
 import { CommonMyBankAccountsAddPage } from '../pages/common-my-bank-accounts-add/common-my-bank-accounts-add';
 import { PersonNearExchangeAgentsPage } from '../pages/person-near-exchange-agents/person-near-exchange-agents';
 import { NotificationsService } from '../providers/notifications.service';
+import { Camera } from '@ionic-native/camera';
 
 import moment from 'moment';
 moment.locale('es');
@@ -71,6 +72,7 @@ import { Device } from '@ionic-native/device';
 import { Firebase } from '@ionic-native/firebase';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { ContestsService } from '../providers/contests.service';
+import { CommonRegisterAccountPage } from '../pages/common-register-account/common-register-account';
 
 @NgModule({
   declarations: [
@@ -103,7 +105,8 @@ import { ContestsService } from '../providers/contests.service';
     CommonViewProfilePage,
     CommonMyBankAccountsPage,
     CommonMyBankAccountsAddPage,
-    PersonNearExchangeAgentsPage
+    PersonNearExchangeAgentsPage,
+    CommonRegisterAccountPage
   ],
   imports: [
     BrowserModule,
@@ -147,7 +150,8 @@ import { ContestsService } from '../providers/contests.service';
     CommonViewProfilePage,
     CommonMyBankAccountsPage,
     CommonMyBankAccountsAddPage,
-    PersonNearExchangeAgentsPage
+    PersonNearExchangeAgentsPage,
+    CommonRegisterAccountPage
   ],
   providers: [
     StatusBar,
@@ -177,7 +181,8 @@ import { ContestsService } from '../providers/contests.service';
     Device,
     Firebase,
     LocalNotifications,
-    ContestsService
+    ContestsService,
+    Camera
   ]
 })
 export class AppModule {}

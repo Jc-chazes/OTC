@@ -8,6 +8,8 @@ import { ExchangeAgentMyRequestsPage } from '../exchange-agent-my-requests/excha
 import { AlertUtil } from '../../providers/utils/alert.util';
 import { LoadingUtil } from '../../providers/utils/loading.util';
 import { TransactionsService } from '../../providers/transaction.service';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { b64toBlob } from '../../helpers/images.helper';
 
 /**
  * Generated class for the CommonSendVoucherPage page.
@@ -25,10 +27,16 @@ export class CommonSendVoucherPage {
   voucher: Image = new Image();
   voucherFileReader = new FileReader();
   transaction: Transaction;
+  options: CameraOptions = {
+    quality: 100,
+    destinationType: this.camera.DestinationType.DATA_URL,
+    encodingType: this.camera.EncodingType.JPEG,
+    mediaType: this.camera.MediaType.PICTURE
+  }
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alerts: AlertUtil,
     public sanitizer: DomSanitizer, private modalCtrl: ModalController, private loading: LoadingUtil,
-    private transactions: TransactionsService) {
+    private transactions: TransactionsService, private camera: Camera) {
     this.transaction = this.navParams.get('transaction');
     this.voucherFileReader.onload = () => {
       this.voucher.fileUrl = this.voucherFileReader.result as string;
@@ -45,6 +53,21 @@ export class CommonSendVoucherPage {
       this.voucher.file = file;
       this.voucherFileReader.readAsDataURL(file);
     }
+  }
+
+  voucherTakePhoto(){
+    this.camera.getPicture(this.options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
+      this.voucher.fileUrl = base64Image;
+      this.voucher.file = b64toBlob(imageData,'image/jpeg');
+      // fetch(base64Image)
+      // .then(res => res.blob() )
+      // .then(blob => this.voucher.file = blob)
+    }, (err) => {
+      alert(err);
+    });
   }
 
   onSend(){

@@ -1,0 +1,23 @@
+<div class="requestWasRejectedModal flex-col-layout jc-center fill-height">
+  <div class="modal-content">
+    <p class="text-center">
+      <b>Tu solicitud ha sido <br> rechazada por la casa <br> de cambio. </b>
+    </p>
+    <div class="spacer-15"></div>
+    <p class="text-center">
+      Motivo: <br> {{ rejectionReasonText }}
+    </p>
+    <div class="spacer-15"></div>
+    <p class="text-center">
+      <b>¿Desea calificar a la <br> casa de cambio? </b>
+    </p>
+  </div>
+  <div class="flex-col-layout ai-center">
+    <button fluid ion-button color="dark" (tap)="viewCtrl.dismiss(true)">
+      Sí
+    </button>
+    <button fluid ion-button color="dark" (tap)="viewCtrl.dismiss(false)">
+      No deseo
+    </button>
+  </div>
+</div>

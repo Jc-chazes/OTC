@@ -1,32 +1,35 @@
-<!--
-  Generated template for the DetailExchangeAgentPage page.
+<ion-header profile-background-color>
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-
-  <ion-navbar>
-    <ion-title></ion-title>
+  <ion-navbar hideBackButton>
+      <div class="flex-row-layout ai-center">
+        <ion-title>Ver más</ion-title>
+        <span class="flex"></span>
+        <ion-title class="brand">OTC</ion-title>
+      </div>
   </ion-navbar>
-
+    
 </ion-header>
+  
 
 
-<ion-content class='contain'>
-  <ion-grid>
-    <div style='text-align: center;color:#ffffff'>Detalles de la casa de cambio</div>
-    <ion-row>
+<ion-content class="page" padding>
+  <div class="spacer-30"></div>
+  <back-button [navCtrl]="navCtrl"></back-button>
+  <stepper [currentStep]="2"></stepper>
+  <div class="detailExchangeAgent__header page-content-container">
+    <div class="text-center text-muted">Detalles de la casa de cambio</div>
+    <ion-row class="text-muted" align-items-center>
       <ion-col col-6 >
-        <div class="detailExchangeAgent__icon-user">
-            <img src="assets/imgs/user.png" style="width:70px;height: 70px"/>  
-        </div>  
+        <div class="flex-row-layout jc-flex-end">
+          <div class="detailExchangeAgent__icon-user w-background-image" [style.backgroundImage]="getAvatarUrl(transaction.exchangeAgent)">          
+          </div>
+        </div>
       </ion-col>
       <ion-col col-6>
-       <div style='color:#ffffff'>{{detail_exchangue.name}}</div>
-       <div style='color:#ffffff'>{{detail_exchangue.address}}</div>
-       <div style='color:#ffffff'>RUC : {{detail_exchangue.documentNumber}}</div>
-       <div  class="detailExchangeAgent__style__stars">
+        <div>{{detail_exchangue.name}}</div>
+        <div>{{detail_exchangue.address}}</div>
+        <div>RUC : {{detail_exchangue.documentNumber}}</div>
+        <div  class="detailExchangeAgent__style__stars">
           <div *ngFor='let in of counter(detail_exchangue.score)'>
               <img src='assets/imgs/star.png' class="detailExchangeAgent__icon-star"/>
           </div>
@@ -36,80 +39,72 @@
         </div>
       </ion-col>
     </ion-row>
-    <ion-grid class='wapper-contain-text'>
-     
-        <div class='wapper'>
-     
-            <div class='title'>Servicio :</div>
-     
-              <div class='text'>{{data_price.text_buy}}</div>
-        </div> 
-  
-      
-        <div class='wapper'>
-     
-              <div class='title'>Tipo de moneda :</div>
-     
-              <div class='text' *ngIf='data_price.currency===1'>Dolar</div>
-              <div class='text' *ngIf='data_price.currency===2'>Soles</div>
-
-        </div>  
-      
-     
-          <div class='wapper'>
-         
-                  <div class='title'>Monto solicitado :</div>
-
-
-     
-              <div class='text'>{{data_price.text_money}}{{data_price.cant}}</div>
-
-
-            </div>
-          
-              <div class='wapper'>
-           
-                    <div class='title'>Valor tipo de cambio :</div>
-    
-            
-                  <div class='text'>{{data_price.text_money}}{{detail_exchangue.exchangeagentofferings[0].requestedCurrencyAmount}}</div>
-
-    
-               </div> 
- 
-                <div class='wapper'>
-             
-                    <div class='title'>Cobro por transaccion</div>
-      
-             
-                      <div class='text'>$ 1</div>
-        
-                  </div>
-            
-              <div class='title_small'>Incluye comision por transaccion mas IGV</div> 
-
-        
-                <div class='wapper'>
-             
-                    <div class='title'>Monto a depositar en OTC :</div>
-      
-             
-                      <div class='text'>{{data_price.text_money}}{{data_price.cant}}</div>
-        
-                   </div> 
-           
-              
-          
-                <div class='wapper'>
-             
-                    <div class='title'>Monto a recibir de OTC :</div>
-      
-             
-                      <div class='text'>{{data_price.text_money}}{{detail_exchangue.exchangeagentofferings[0].requestedCurrencyAmount*data_price.cant}}</div>
-        
-                  </div>
-                  <div class='next' (tap)='nextPage()'>Siguiente</div>
-    </ion-grid>  
- 
-  </ion-grid>
+    <div class="spacer-10"></div>
+    <div class="details__wrapper">
+      <div class="pb-10">
+        <div class="input flex-row-layout text-bold">        
+          <span>Servicio:</span>
+          <span class="flex"></span>
+          <span>{{ transaction.exchangeAgentOffering.type == 'V' ? 'Venta' : 'Compra' }}</span>
+        </div>
+      </div>
+      <div class="pb-10">
+        <div class="input flex-row-layout text-bold">
+          <span>Tipo de moneda:</span>
+          <span class="flex"></span>
+          <span>{{ transaction.targetCurrency.name }}</span>
+        </div>
+      </div>
+      <div class="pb-10">
+        <div class="input flex-row-layout text-bold">
+          <span>Monto solicitado:</span>
+          <span class="flex"></span>
+          <span>{{ transaction.targetCurrency.symbol }}</span>&nbsp;
+          <span>{{ transaction.amount }}</span>
+        </div>
+      </div>
+      <div class="pb-10">
+        <div class="input flex-row-layout text-bold">
+          <span>Valor de tipo de cambio:</span>
+          <span class="flex"></span>
+          <span>{{ transaction.fromCurrency.symbol }}</span>&nbsp;
+          <span>{{ transaction.exchangeAgentOffering.type == 'V' ? 
+            transaction.exchangeAgentOffering.requestedCurrencyAmount : 
+            transaction.exchangeAgentOffering.receivedCurrencyAmount
+          }}</span>
+        </div>
+      </div>
+      <div class="pb-10">
+        <div class="input flex-row-layout text-bold">
+          <span>Cobro por transacción:</span>
+          <span class="flex"></span>
+          <span>{{ transaction.currencyToDeposit.symbol }}</span>&nbsp;
+          <span>{{ otcComission.content }}</span>
+        </div>
+        <span><small>Incluye comisión OTC más IGV</small></span>
+      </div>
+      <div class="pb-10">
+        <div class="input flex-row-layout text-bold">
+          <span>Monto a depositar a OTC:</span>
+          <span class="flex"></span>
+          <span>{{ transaction.currencyToDeposit.symbol }}</span>&nbsp;
+          <span>{{ otcComission.content + transaction.amountToDeposit }}</span>
+        </div>
+      </div>
+      <div class="pb-10">
+        <div class="input flex-row-layout text-bold">
+          <span>Monto a recibir de OTC:</span>
+          <span class="flex"></span>
+          <span>{{ transaction.currencyToReceive.symbol }}</span>&nbsp;
+          <span>{{ transaction.amountToReceive }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="spacer-20"></div>
+    <div class="flex-col-layout ai-center">
+      <button fluid ion-button color="secondary" (tap)="continue()">
+        Siguiente
+      </button>
+    </div>
+  </div>
 </ion-content>

@@ -1,7 +1,7 @@
 import { BaseService } from "./base/base.service";
 import { CrudService } from "./contracts/crud.service";
 import { Transaction } from "../models/transaction.model";
-import { BaseSpecification } from './specifications/base.specification';
+import { BaseSpecification, ByIdSpecification } from './specifications/base.specification';
 import { Observable } from 'rxjs';
 import { Injectable, NgZone } from "@angular/core";
 import { MyPendingTransactions } from "./specifications/transaction.specification";
@@ -73,10 +73,28 @@ export class TransactionsService extends BaseService implements CrudService<Tran
         }
     }    
     findOne(specification?: BaseSpecification): Observable<Transaction> {
+        if( specification instanceof ByIdSpecification ){
+            return this.api.get(`/transactions?id=${specification.id}`).map( resp => {
+                return this.mapper.mapFromBe(resp[0]);
+            }).catch( err => {
+                console.error(err);
+                return Observable.of(null);
+            }); 
+        }
         throw new Error("Method not implemented.");
     }
     add(entity: Transaction): Observable<Transaction> {
-        throw new Error("Method not implemented.");
+        return this.api.post('/transactions',{
+            person: entity.person.id,
+        	exchangeagent: entity.exchangeAgent.id,
+        	exchangeagentoffering: entity.exchangeAgentOffering.id,
+        	amount: entity.amount
+        }).map( resp => {
+            return this.mapper.mapFromBe(resp);
+        }).catch(err => {
+            console.error(err);
+            return Observable.of(null);
+        });
     }
     update(entity: Transaction): Observable<Transaction> {
         throw new Error("Method not implemented.");
@@ -122,7 +140,7 @@ export class TransactionsService extends BaseService implements CrudService<Tran
 
     uploadVoucher( transaction: Transaction, voucher: Image ): Observable<boolean>{
         let formData = new FormData();
-        formData.append('files', voucher.file, voucher.name );
+        formData.append('files', voucher.file, voucher.name || moment().format('YYYY-MM-DD HH:mm:ss')+'.jpg' );
         formData.append('path','transactions');
         formData.append('refId',transaction.id.toString());
         formData.append('ref','transaction');

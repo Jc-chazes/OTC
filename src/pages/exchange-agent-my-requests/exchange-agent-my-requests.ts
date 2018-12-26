@@ -142,4 +142,8 @@ export class ExchangeAgentMyRequestsPage {
 
   }
 
+  showCountdown(transaction: Transaction){
+    return transaction.type == 'SAFE' &&  transaction.status == '2' ;
+  }
+
 }

@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, App } from 'ionic-angular';
 import { CommonViewProfilePage } from '../common-view-profile/common-view-profile';
+import { UsersService } from '../../providers/users.service';
+import { AuthProvider } from '../../providers/auth.service';
+import { ChooseProfilePage } from '../choose-profile/choose-profile';
 
 /**
  * Generated class for the CommonMyProfilePage page.
@@ -24,7 +27,8 @@ export class CommonMyProfilePage {
     { name: '@otc.perú', icon: '/assets/imgs/icons/profile_fb.png', page: CommonViewProfilePage }
   ]
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthProvider,
+    private app: App) {
   }
 
   ionViewDidLoad() {
@@ -33,6 +37,11 @@ export class CommonMyProfilePage {
 
   goToOption(option: { name: string, icon: string, page: any }){
     this.navCtrl.push( option.page );
+  }
+
+  logout(){
+    this.auth.purge();
+    this.app.getRootNav().setRoot( ChooseProfilePage );
   }
 
 }

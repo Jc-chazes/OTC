@@ -51,7 +51,8 @@ export class UsersBankAccountsService extends BaseService implements CrudService
         return this.api.post('/userbankaccounts',{
             ...omit( entity, ['currency','bank','type'] ),
             currency: entity.currency.id,
-            bank: entity.bank.id
+            bank: entity.bank.id,
+            user: this.users.currentUser.id
         }).map( resp => {
             return new UserBankAccount({
                 ...entity,

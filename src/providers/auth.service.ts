@@ -13,6 +13,7 @@ import { StorageUtil } from './utils/storage.util';
 import { Image } from '../models/shared/image.model';
 import { getImageUrl } from '../helpers/images.helper';
 import { DeviceUtil } from './utils/device.util';
+import { Person } from '../models/person.model';
 
 @Injectable()
 export class AuthProvider {
@@ -40,6 +41,21 @@ export class AuthProvider {
     return this.http.post(url,data,{headers:headers}).map(res =>{
               return res
           })
+  }
+
+  registerPerson(person: Person): Observable<boolean>{
+    return this.api.post('/auth/local/register',{
+      ...pick(person.user,[,'email','password','userType']),
+      username: person.user.email.substring( 0, person.user.email.indexOf('@') ),
+      profile: {
+        ...omit(person,['user','score','fullName'])
+      }
+    }).map( resp => {
+      this.jwt.setToken(resp.jwt);
+      return true;
+    }).catch( err => {
+      return Observable.of(false);
+    });
   }
 
   registerExchangeAgent(exchangeAgent: ExchangeAgent): Observable<boolean>{
@@ -89,6 +105,9 @@ export class AuthProvider {
             fileUrl: resp.photo ? getImageUrl( resp.photo.url ) : ''
           }),
           exchangeAgent: {
+            ...omit(resp.profile,['user'])
+          },
+          person: {
             ...omit(resp.profile,['user'])
           }
         });

@@ -1,4 +1,12 @@
+@import "../../styles/1-settings/index";
+@import "../../styles/2-tools/index";
+
 page-detail-exchange-agent {
+    .detailExchangeAgent{
+      &__header{
+        line-height: 1.5;
+      }
+    }
     .detailExchangeAgent__icon-star{
         width: 10px;
         height: 10px;
@@ -9,8 +17,8 @@ page-detail-exchange-agent {
         justify-content: flex-start;
       }
       .detailExchangeAgent__icon-user{
-        display: flex;
-        justify-content:flex-end;
+        width: 70px;
+        height: 70px;
       }
       .title{
           font-size: 12px;

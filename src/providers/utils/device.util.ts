@@ -25,7 +25,7 @@ export class DeviceUtil{
                 if (!this.platform.is('cordova')) {
                 }
             }catch(err){
-                alert(`Error obteniendo token: ${err}`);
+                // alert(`Error obteniendo token: ${err}`);
             }
             return token;
         })

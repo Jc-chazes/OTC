@@ -1,8 +1,8 @@
 import { BaseService } from "./base/base.service";
 import { CrudService } from "./contracts/crud.service";
-import { BaseSpecification } from './specifications/base.specification';
+import { BaseSpecification, ByIdSpecification } from './specifications/base.specification';
 import { Observable } from 'rxjs';
-import { Injectable } from "@angular/core";
+import { Injectable, EventEmitter } from "@angular/core";
 import { MyNotificationsSpecification } from "./specifications/notification.specification";
 import { ApiUtil } from "./utils/api.util";
 import { UsersService } from "./users.service";
@@ -14,14 +14,17 @@ import { ModalController, Platform } from "ionic-angular";
 import { Firebase } from "@ionic-native/firebase";
 import { AvailableModals, ModalUtil } from "./utils/modal.util";
 import { LocalNotifications } from "@ionic-native/local-notifications";
+import { TransactionsService } from "./transaction.service";
 
 @Injectable()
 export class NotificationsService extends BaseService implements CrudService<Notification>{
 
     mapper = new NotificationMapper();
+    onTabChangeRequested = new EventEmitter<{data: any, tabIndex: number, type: string}>();
 
     constructor(api: ApiUtil, private users: UsersService, private firebaseNative: Firebase,
-    private platform: Platform, private modals: ModalUtil, private localNotifications: LocalNotifications){
+    private platform: Platform, private modals: ModalUtil, private localNotifications: LocalNotifications,
+    private transactions: TransactionsService){
         super(api);
     }
 
@@ -81,8 +84,6 @@ export class NotificationsService extends BaseService implements CrudService<Not
         try{
             this.firebaseNative.onNotificationOpen().subscribe( (notification) => {
     
-                alert(JSON.stringify(notification));
-
                 // if(notification.tap){
                 //     return ;
                 // }
@@ -124,6 +125,29 @@ export class NotificationsService extends BaseService implements CrudService<Not
                         break;
                     case 'SUCCESSFUL_CONTEST':
                         this.modals.openModal(modalCtrl,AvailableModals.YouHasBeenSelectedModal);
+                        break;
+                    case 'ACCEPTED_BY_EXCHANGE_AGENT':
+                        if( this.users.currentUser.isPerson() ){
+                            this.modals.openModal(modalCtrl,AvailableModals.RequestWasAcceptedModal)
+                            .then( resp => {
+                                let transactionId = Number(notification.transactionId);
+                                this.transactions.findOne( new ByIdSpecification(transactionId) )
+                                .subscribe( transaction => {
+                                    this.onTabChangeRequested.emit({ 
+                                        data:  { transaction },
+                                        tabIndex: 0,
+                                        type: notification.type
+                                    });
+                                })
+                            })                            
+                        }
+                        break;
+                    case 'REJECTED_BY_EXCHANGE_AGENT':
+                        if( this.users.currentUser.isPerson() ){
+                            this.modals.openModal(modalCtrl,AvailableModals.RequestWasRejectedModal,{
+                                rejectionReason: notification.rejectionReason
+                            })
+                        }
                         break;
                 }
                 
