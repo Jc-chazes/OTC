@@ -7,6 +7,7 @@ import { Currency } from '../../models/currency.model';
 import { CurrenciesService } from '../../providers/currencies.service';
 import { AlertUtil } from '../../providers/utils/alert.util';
 import { isString } from 'lodash';
+import { PersonSelectSearchModePage } from '../person-select-search-mode/person-select-search-mode';
 
 @Component({
   selector: 'page-quote',
@@ -69,7 +70,7 @@ export class QuotePage {
       }
     })
   
-    this.navCtrl.push(ExchangeAgentsPage,{
+    this.navCtrl.push(PersonSelectSearchModePage,{
       operation: this.checkButton == 0 ? 'C' : 'V',
       currency: this.selectedCurrency,
       amount : this.cant

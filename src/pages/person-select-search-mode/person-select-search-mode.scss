@@ -1,0 +1,28 @@
+@import "../../styles/1-settings/index";
+@import "../../styles/2-tools/index";
+
+page-person-select-search-mode {
+    .personSelecSearchMode{
+        &__options{
+            height: 320px;
+            &__person{
+                width: 40%;
+                position: absolute;
+                left: 0;
+                top: 50%;
+                @include transform(translateY(-50%));
+            }
+            &__mode{
+                border: 2px solid $accent-color;
+                &__icon{
+                    width: 35px;
+                    background-color: $accent-color;
+                }
+                &__label{
+                    padding-left: 20px;
+                    padding-right: 20px;
+                }
+            }
+        }
+    }
+}

@@ -73,6 +73,7 @@ import { Firebase } from '@ionic-native/firebase';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { ContestsService } from '../providers/contests.service';
 import { CommonRegisterAccountPage } from '../pages/common-register-account/common-register-account';
+import { PersonSelectSearchModePage } from '../pages/person-select-search-mode/person-select-search-mode';
 
 @NgModule({
   declarations: [
@@ -106,7 +107,8 @@ import { CommonRegisterAccountPage } from '../pages/common-register-account/comm
     CommonMyBankAccountsPage,
     CommonMyBankAccountsAddPage,
     PersonNearExchangeAgentsPage,
-    CommonRegisterAccountPage
+    CommonRegisterAccountPage,
+    PersonSelectSearchModePage
   ],
   imports: [
     BrowserModule,
@@ -151,7 +153,8 @@ import { CommonRegisterAccountPage } from '../pages/common-register-account/comm
     CommonMyBankAccountsPage,
     CommonMyBankAccountsAddPage,
     PersonNearExchangeAgentsPage,
-    CommonRegisterAccountPage
+    CommonRegisterAccountPage,
+    PersonSelectSearchModePage
   ],
   providers: [
     StatusBar,

@@ -23,7 +23,6 @@ export class TransactionMapper extends BaseMapper<Transaction>{
         delete be.code;
         let target = new Transaction({
             ...be,
-            code: `OTC-${be.exchangeagentoffering.type}${padStart(be.id.toString(),6,'0')}`,
             created_at: new Date(be.created_at),
             exchangeAgent: new ExchangeAgent({ ...(be.exchangeagent || be.exchangeAgent) }),
             person: this.personMapper.mapFromBe( be.person ),
@@ -35,6 +34,9 @@ export class TransactionMapper extends BaseMapper<Transaction>{
                 ...(be.exchangeagentbankaccount || be.exchangeAgentBankAccount)
             }): null
         })
+        if( target.id ){
+            target.code = `OTC-${(be.exchangeagentoffering || be.exchangeAgentOffering).type}${padStart(be.id.toString(),6,'0')}`;
+        }
         if( target.type == 'SAFE' ){
             target.limitDate = moment(target.created_at).add(5,'minutes').toDate();
         }
