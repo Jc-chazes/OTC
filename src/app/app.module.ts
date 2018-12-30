@@ -74,6 +74,11 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 import { ContestsService } from '../providers/contests.service';
 import { CommonRegisterAccountPage } from '../pages/common-register-account/common-register-account';
 import { PersonSelectSearchModePage } from '../pages/person-select-search-mode/person-select-search-mode';
+import { CommonTransactionInProgressPage } from '../pages/common-transaction-in-progress/common-transaction-in-progress';
+
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 @NgModule({
   declarations: [
@@ -108,7 +113,8 @@ import { PersonSelectSearchModePage } from '../pages/person-select-search-mode/p
     CommonMyBankAccountsAddPage,
     PersonNearExchangeAgentsPage,
     CommonRegisterAccountPage,
-    PersonSelectSearchModePage
+    PersonSelectSearchModePage,
+    CommonTransactionInProgressPage
   ],
   imports: [
     BrowserModule,
@@ -118,7 +124,17 @@ import { PersonSelectSearchModePage } from '../pages/person-select-search-mode/p
     ReactiveFormsModule,
     ComponentsModule,
     PipesModule,
-    DirectivesModule
+    DirectivesModule,
+    AngularFireModule.initializeApp({
+      apiKey: "AIzaSyCEnU8jfSN9y0dlaKkHU7F9mrEGIeEKy3o",
+      authDomain: "otc-dev-e0517.firebaseapp.com",
+      databaseURL: "https://otc-dev-e0517.firebaseio.com",
+      projectId: "otc-dev-e0517",
+      storageBucket: "otc-dev-e0517.appspot.com",
+      messagingSenderId: "100315142938"
+    }),
+    AngularFireAuthModule,
+    AngularFirestoreModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -154,7 +170,8 @@ import { PersonSelectSearchModePage } from '../pages/person-select-search-mode/p
     CommonMyBankAccountsAddPage,
     PersonNearExchangeAgentsPage,
     CommonRegisterAccountPage,
-    PersonSelectSearchModePage
+    PersonSelectSearchModePage,
+    CommonTransactionInProgressPage
   ],
   providers: [
     StatusBar,

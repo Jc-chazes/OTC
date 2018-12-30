@@ -11,6 +11,7 @@ import { RequestWasAcceptedModalComponent } from "../../components/request-was-a
 import { RequestWasRejectedModalComponent } from "../../components/request-was-rejected-modal/request-was-rejected-modal";
 import { ScoreYourExperienceModalComponent } from "../../components/score-your-experience-modal/score-your-experience-modal";
 import { QuoteAgainModalComponent } from "../../components/quote-again-modal/quote-again-modal";
+import { FastSearchModalComponent } from "../../components/fast-search-modal/fast-search-modal";
 
 export enum  AvailableModals{
     TermsAndConditions,
@@ -23,7 +24,8 @@ export enum  AvailableModals{
     RequestWasRejectedModal,
     RequestWasAcceptedModal,
     ScoreYourExperienceModal,
-    QuoteAgainModal
+    QuoteAgainModal,
+    FastSearchModal
 };
 
 @Injectable()
@@ -82,6 +84,10 @@ export class ModalUtil{
             case AvailableModals.QuoteAgainModal:
                 modalInstance = modalCtrl.create(QuoteAgainModalComponent,data,
                 Object.assign({},options,{ cssClass: 'alertModal quoteAgainModalComponent' }));
+                break;
+            case AvailableModals.FastSearchModal:
+                modalInstance = modalCtrl.create(FastSearchModalComponent,data,
+                Object.assign({ enableBackdropDismiss: false },options,{ cssClass: 'alertModal fastSearchModalComponent' }));
                 break;
         }
 

@@ -1,5 +1,7 @@
 import { BaseModel } from "./base/base.model";
 import { User } from "./user.model";
+import { Transaction } from "./transaction.model";
+import { Contest } from "./contest.model";
 
 export class Person extends BaseModel<Person>{
 
@@ -12,6 +14,8 @@ export class Person extends BaseModel<Person>{
     cellphone: string;
     type: '0' | '1';
     user: User;
+    currentTransaction: Transaction;
+    currentContest: Contest;
 
     get fullName(): string{
         return this.firstName + ' ' + this.lastName;

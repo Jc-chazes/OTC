@@ -25,6 +25,8 @@ import { RequestWasRejectedModalComponent } from './request-was-rejected-modal/r
 import { RequestWasAcceptedModalComponent } from './request-was-accepted-modal/request-was-accepted-modal';
 import { ScoreYourExperienceModalComponent } from './score-your-experience-modal/score-your-experience-modal';
 import { QuoteAgainModalComponent } from './quote-again-modal/quote-again-modal';
+import { CancelTransactionTriggerComponent } from './cancel-transaction-trigger/cancel-transaction-trigger';
+import { FastSearchModalComponent } from './fast-search-modal/fast-search-modal';
 
 @NgModule({
 	declarations: [UpdateExchangeReminderComponent,
@@ -50,7 +52,9 @@ import { QuoteAgainModalComponent } from './quote-again-modal/quote-again-modal'
     RequestWasRejectedModalComponent,
     RequestWasAcceptedModalComponent,
     ScoreYourExperienceModalComponent,
-    QuoteAgainModalComponent],
+    QuoteAgainModalComponent,
+    CancelTransactionTriggerComponent,
+    FastSearchModalComponent],
 	imports: [ CommonModule, IonicModule, DirectivesModule ],
 	exports: [UpdateExchangeReminderComponent,
     StepperComponent,
@@ -75,7 +79,9 @@ import { QuoteAgainModalComponent } from './quote-again-modal/quote-again-modal'
     RequestWasRejectedModalComponent,
     RequestWasAcceptedModalComponent,
     ScoreYourExperienceModalComponent,
-    QuoteAgainModalComponent],
+    QuoteAgainModalComponent,
+    CancelTransactionTriggerComponent,
+    FastSearchModalComponent],
     entryComponents: [
         RejectWarningComponent,
         RejectReasonSelectComponent,
@@ -94,7 +100,8 @@ import { QuoteAgainModalComponent } from './quote-again-modal/quote-again-modal'
         RequestWasRejectedModalComponent,
         RequestWasAcceptedModalComponent,
         ScoreYourExperienceModalComponent,
-        QuoteAgainModalComponent
+        QuoteAgainModalComponent,
+        FastSearchModalComponent
     ]
 })
 export class ComponentsModule {}

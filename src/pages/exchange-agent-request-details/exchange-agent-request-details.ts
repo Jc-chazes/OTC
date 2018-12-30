@@ -55,6 +55,8 @@ export class ExchangeAgentRequestDetailsPage {
     this.transactions.acceptTransaction( this.transaction )
     .subscribe( coudlBeAccepted => {
       this.loading.hide();
+      this.transactions.setCurrentTransaction(this.transaction)
+      .subscribe()
       this.navCtrl.push( CommonSelectBankAccountPage,{
         transaction: this.transaction
       });

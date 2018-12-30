@@ -35,6 +35,7 @@ export class CommonSelectBankAccountPage {
   userBankAccountFG: FormGroup;
   transaction: Transaction;
   acceptTermsAndConditions = false;
+  canContinue = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alerts: AlertUtil,
     private userBankAccounts: UsersBankAccountsService, private loading: LoadingUtil, private users: UsersService,
@@ -55,6 +56,22 @@ export class CommonSelectBankAccountPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CommonSelectBankAccountPage');
+  }
+
+  ionViewCanLeave(){
+    if( this.canContinue ){
+      return true;
+    }
+    let canLeave = false;
+    if( this.users.currentUser.isPerson() ){
+      canLeave = !this.users.currentUser.person.currentTransaction;
+    }else{
+      canLeave = !this.users.currentUser.exchangeAgent.currentTransaction ;
+    }
+    if( !canLeave ){
+      this.alerts.show('Tienes una transacción en curso',"OTC");
+    }
+    return canLeave;
   }
 
   ionViewWillEnter(){
@@ -131,6 +148,7 @@ export class CommonSelectBankAccountPage {
     .subscribe( results => {
       this.loading.hide();
       if( results ){
+        this.canContinue = true;
         this.navCtrl.push( CommonTransferToOtcPage, {
           transaction: this.transaction
         });
@@ -145,4 +163,9 @@ export class CommonSelectBankAccountPage {
       this.acceptTermsAndConditions = true;
     });
   }
+
+  onCancel(){
+    this.navCtrl.popToRoot();    
+  }
+
 }

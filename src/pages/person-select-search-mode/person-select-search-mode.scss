@@ -14,13 +14,19 @@ page-person-select-search-mode {
             }
             &__mode{
                 border: 2px solid $accent-color;
+                &.active{
+                    .personSelecSearchMode__options__mode__label{
+                        background-color: rgba($accent-color,.4);
+                    }
+                }
                 &__icon{
                     width: 35px;
                     background-color: $accent-color;
                 }
                 &__label{
-                    padding-left: 20px;
-                    padding-right: 20px;
+                    width: 155px;
+                    padding-left: 5px;
+                    padding-right: 5px;
                 }
             }
         }

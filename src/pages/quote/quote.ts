@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AppStateService } from '../../providers/app-state.service';
 import { ExchangeAgentsPage } from '../exchange-agents/exchange-agents';
@@ -8,12 +8,15 @@ import { CurrenciesService } from '../../providers/currencies.service';
 import { AlertUtil } from '../../providers/utils/alert.util';
 import { isString } from 'lodash';
 import { PersonSelectSearchModePage } from '../person-select-search-mode/person-select-search-mode';
+import { UsersService } from '../../providers/users.service';
+import { CommonSelectBankAccountPage } from '../common-select-bank-account/common-select-bank-account';
+import { CommonTransferToOtcPage } from '../common-transfer-to-otc/common-transfer-to-otc';
 
 @Component({
   selector: 'page-quote',
   templateUrl: 'quote.html',
 })
-export class QuotePage {
+export class QuotePage implements OnInit {
   checkButton:number;
   selectedCurrency: Currency;
   cant : number;
@@ -23,7 +26,7 @@ export class QuotePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alerts: AlertUtil
     , private currencies: CurrenciesService, public appState : AppStateService
-    , private dataService : DataService) {
+    , private dataService : DataService, private users: UsersService) {
     this.checkButton = 0;
     this.currencies.find().subscribe( results => {
       this.currencyList = results.filter( c => c.code != 'PEN' );
@@ -35,15 +38,35 @@ export class QuotePage {
     console.log('ionViewDidLoad QuotePage');
     this.dataService.getDataExchangueAgents().subscribe(data =>{
       this.dataService.exchange_agents = data
-   
-  })
+    })
   }
+
+  ionViewWillEnter(){
+  }
+
+  ngOnInit(){
+    this.interceptVerifyCurrenTransaction();
+  }
+
+  interceptVerifyCurrenTransaction(){
+    let { currentTransaction } = this.users.currentUser.person;
+    if( !!currentTransaction ){
+      if( !currentTransaction.personBankAccount ){
+        this.navCtrl.push(CommonSelectBankAccountPage,{ transaction: currentTransaction });
+      }else{
+        this.navCtrl.push(CommonTransferToOtcPage,{ transaction: currentTransaction });
+      }
+    }
+  }
+
   clickUser(numb){
     this.checkButton = numb
   }
+
   onHandle(event){
     this.selectedCurrency = event
   }
+
   nextPage(){
     // if(this.checkButton===0){
     //   this.text_buy ='Comprar';     

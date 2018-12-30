@@ -129,23 +129,33 @@ export class NotificationsService extends BaseService implements CrudService<Not
                     case 'ACCEPTED_BY_EXCHANGE_AGENT':
                         if( this.users.currentUser.isPerson() ){
                             this.modals.openModal(modalCtrl,AvailableModals.RequestWasAcceptedModal)
-                            .then( resp => {
-                                let transactionId = Number(notification.transactionId);
-                                this.transactions.findOne( new ByIdSpecification(transactionId) )
-                                .subscribe( transaction => {
-                                    this.onTabChangeRequested.emit({ 
-                                        data:  { transaction },
-                                        tabIndex: 0,
-                                        type: notification.type
-                                    });
-                                })
-                            })                            
+                            // .then( resp => {
+                            //     let transactionId = Number(notification.transactionId);
+                            //     this.transactions.findOne( new ByIdSpecification(transactionId) )
+                            //     .subscribe( transaction => {
+                            //         this.onTabChangeRequested.emit({ 
+                            //             data:  { transaction },
+                            //             tabIndex: 0,
+                            //             type: notification.type
+                            //         });
+                            //     })
+                            // })                            
                         }
                         break;
                     case 'REJECTED_BY_EXCHANGE_AGENT':
                         if( this.users.currentUser.isPerson() ){
                             this.modals.openModal(modalCtrl,AvailableModals.RequestWasRejectedModal,{
                                 rejectionReason: notification.rejectionReason
+                            }).then( scoreExchangeAgent => {
+                                if( scoreExchangeAgent ){
+                                    let transactionId = Number(notification.transactionId);
+                                    this.transactions.findOne( new ByIdSpecification(transactionId) )
+                                    .subscribe( transaction => {
+                                        this.modals.openModal(modalCtrl,AvailableModals.ScoreYourExperienceModal,{
+                                            transaction
+                                        });
+                                    })                                    
+                                }
                             })
                         }
                         break;

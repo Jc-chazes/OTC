@@ -14,25 +14,36 @@
 <ion-content padding class="page">
   <div class="personSelecSearchMode flex-col-layout fill-height jc-center">
     <h1 class="text-accent text-center"><b>¿Qué desea para <br> su tipo de cambio?</b></h1>
-    <div class="spacer-40"></div>
-    <div class="personSelecSearchMode__options pos-relative flex-col-layout jc-flex-end">
+    <div class="spacer-20"></div>
+    <div class="personSelecSearchMode__options pos-relative flex-col-layout ai-flex-end jc-center">
       <img src="/assets/imgs/person_search.png" alt="" class="personSelecSearchMode__options__person">
-      <div class="personSelecSearchMode__options__mode flex-row-layout">
+      <div class="personSelecSearchMode__options__mode flex-row-layout"
+      [ngClass]="{ 'active': selectedSearch == 'SAFE' }"
+      (tap)="selectedSearch = 'SAFE'">
         <div class="personSelecSearchMode__options__mode__icon">
           <img src="/assets/imgs/icons/safe_search.png" alt="">
         </div>
-        <div class="personSelecSearchMode__options__mode__label">
+        <div class="personSelecSearchMode__options__mode__label flex-col-layout jc-center">
           <div> Elige tu casa de cambio <br> o cambista favorita </div>
         </div>
       </div>
-      <div class="personSelecSearchMode__options__mode flex-row-layout">
+      <div class="spacer-30"></div>
+      <div class="personSelecSearchMode__options__mode flex-row-layout"
+      [ngClass]="{ 'active': selectedSearch == 'FAST' }"
+      (tap)="selectedSearch = 'FAST'">
         <div class="personSelecSearchMode__options__mode__icon">
           <img src="/assets/imgs/icons/fast_search.png" alt="">
         </div>
-        <div class="personSelecSearchMode__options__mode__label">
+        <div class="personSelecSearchMode__options__mode__label flex-col-layout jc-center">
           <div> Encuentra tu tipo de cambio <br> al instante </div>
         </div>
       </div>
+    </div>
+    <div class="spacer-20"></div>
+    <div class="flex-row-layout jc-center">
+      <button fluid ion-button color="secondary" (tap)="continue()">
+        Siguiente
+      </button>
     </div>
   </div>
 </ion-content>

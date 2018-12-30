@@ -11,6 +11,7 @@ import { UserBankAccount } from '../../models/user-bank-account.model';
 import { OtcBankAccountsSpecification } from '../../providers/specifications/user-bank-account.specification';
 import { CommonSendVoucherPage } from '../common-send-voucher/common-send-voucher';
 import { TransferIsRealizedModalComponent } from '../../components/transfer-is-realized-modal/transfer-is-realized-modal';
+import { AlertUtil } from '../../providers/utils/alert.util';
 
 /**
  * Generated class for the CommonTransferToOtcPage page.
@@ -31,10 +32,11 @@ export class CommonTransferToOtcPage {
   otcBusinessName: Constant = new Constant();
   otcBankAccountList: UserBankAccount[];
   selectedOtcBankAccount: UserBankAccount;
+  canContinue = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private users: UsersService,
     private constants: ConstantsService, private userBankAccounts : UsersBankAccountsService,
-    private modalCtrl: ModalController ) {
+    private modalCtrl: ModalController, private alerts: AlertUtil ) {
     this.transaction = this.navParams.get('transaction');
     Observable.forkJoin(
       this.constants.findOne( new ConstantByCodeSpecification(
@@ -62,6 +64,22 @@ export class CommonTransferToOtcPage {
     console.log('ionViewDidLoad CommonTransferToOtcPage');
   }
 
+  ionViewCanLeave(){
+    if( this.canContinue ){
+      return true;
+    }
+    let canLeave = false;
+    if( this.users.currentUser.isPerson() ){
+      canLeave = !this.users.currentUser.person.currentTransaction;
+    }else{
+      canLeave = !this.users.currentUser.exchangeAgent.currentTransaction ;
+    }
+    if( !canLeave ){
+      this.alerts.show('Tienes una transacción en curso',"OTC");
+    }
+    return canLeave;
+  }
+
   continue(){
     let transferIsRealizedModal = this.modalCtrl.create(TransferIsRealizedModalComponent,{},{
       cssClass: 'alertModal'
@@ -69,11 +87,16 @@ export class CommonTransferToOtcPage {
     transferIsRealizedModal.present();
     transferIsRealizedModal.onDidDismiss( isRealized => {
       if( isRealized ){
+        this.canContinue = true;
         this.navCtrl.push( CommonSendVoucherPage, {
           transaction: this.transaction
         });
       }
     })
+  }
+
+  onCancel(){
+    this.navCtrl.popToRoot();
   }
 
 }

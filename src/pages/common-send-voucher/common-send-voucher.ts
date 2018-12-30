@@ -10,6 +10,8 @@ import { LoadingUtil } from '../../providers/utils/loading.util';
 import { TransactionsService } from '../../providers/transaction.service';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { b64toBlob } from '../../helpers/images.helper';
+import { UsersService } from '../../providers/users.service';
+import { CommonTransactionInProgressPage } from '../common-transaction-in-progress/common-transaction-in-progress';
 
 /**
  * Generated class for the CommonSendVoucherPage page.
@@ -36,7 +38,7 @@ export class CommonSendVoucherPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alerts: AlertUtil,
     public sanitizer: DomSanitizer, private modalCtrl: ModalController, private loading: LoadingUtil,
-    private transactions: TransactionsService, private camera: Camera) {
+    private transactions: TransactionsService, private camera: Camera, private users: UsersService) {
     this.transaction = this.navParams.get('transaction');
     this.voucherFileReader.onload = () => {
       this.voucher.fileUrl = this.voucherFileReader.result as string;
@@ -88,7 +90,14 @@ export class CommonSendVoucherPage {
           enableBackdropDismiss: false
         });
         successfulTransactionModal.onDidDismiss( exit => {
-          this.navCtrl.popTo( this.navCtrl.getByIndex(1) );
+          // if( this.users.currentUser.isPerson() ){
+          //   this.navCtrl.popTo( this.navCtrl.getByIndex(0) );
+          // }else{
+          //   this.navCtrl.popTo( this.navCtrl.getByIndex(0) );
+          // }
+          this.transactions.setTransactionTabRoot( 'TRANSACTION_IN_PROGRESS' );
+          this.navCtrl.setRoot(CommonTransactionInProgressPage);
+          this.navCtrl.popToRoot();
         });
         successfulTransactionModal.present();
       }

@@ -1,0 +1,49 @@
+<ion-header profile-background-color>
+
+  <ion-navbar hideBackButton>
+      <div class="flex-row-layout ai-center">
+        <ion-title>Inicio</ion-title>
+        <span class="flex"></span>
+        <ion-title class="brand">OTC</ion-title>
+        <cancel-transaction-trigger (cancel)="onCancel()"></cancel-transaction-trigger>
+      </div>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="page text-14">
+  <div class="fill-height flex-col-layout jc-center">
+    <p class="text-center no-margin page-title">
+      <b>Transacción en proceso</b>
+    </p>
+    <div class="spacer-20"></div>
+    <ion-row align-items-center>
+      <ion-col col-6 class="text-right"> <span><b>Tu número de <br> transacción es: </b></span> </ion-col>
+      <ion-col col-6>
+        <ion-badge color="secondary" class="successfulTransactionModal__transationCode pt-10 pb-10">
+          {{ transaction.code }}
+        </ion-badge>
+      </ion-col>
+    </ion-row>
+    <ng-container *ngIf="transaction.status == '2'">
+      <p class="text-center">
+        La transacción se encuentra a la <br> 
+        espera de aceptación por parte del <br>
+        agente de cambio.
+      </p>
+    </ng-container>
+    <ng-container *ngIf="transaction.status == '3'">
+      <p class="text-center">
+        Validaremos el proceso, y a la brevedad <br>
+        realizaremos la transferencia que <br>
+        corresponde a tu cuenta bancaria.
+      </p>      
+    </ng-container>
+    <div class="text-center">
+      <ion-badge color="secondary" class="pt-10 pb-10 pl-25 pr-25">
+        {{ transaction.currencyToReceive.symbol }} {{ transaction.amountToReceive.toFixed(2) }}
+      </ion-badge>
+    </div>
+  </div>
+</ion-content>

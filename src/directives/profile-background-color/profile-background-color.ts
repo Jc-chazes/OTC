@@ -20,7 +20,7 @@ export class ProfileBackgroundColorDirective implements OnDestroy, OnInit {
   ngOnInit(){
     this.users.currentUserChanges().subscribe( user => {
       if(user){
-        if( user.person ){
+        if( user.isPerson() ){
           this.renderer.addClass(this.elmRef.nativeElement,'otcHeader')
           this.renderer.addClass(this.elmRef.nativeElement,'otcHeader--person');
         }else if( user.exchangeAgent ){

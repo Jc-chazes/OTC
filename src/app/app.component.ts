@@ -10,6 +10,8 @@ import { AuthProvider } from '../providers/auth.service';
 import { UsersService } from '../providers/users.service';
 import { PersonTabsPage } from '../pages/person-tabs/person-tabs';
 import { ExchangeAgentTabsPage } from '../pages/exchange-agent-tabs/exchange-agent-tabs';
+import { Observable } from 'rxjs';
+import { CurrenciesService } from '../providers/currencies.service';
 
 @Component({
   templateUrl: 'app.html'
@@ -18,13 +20,11 @@ export class MyApp {
   rootPage:any = ChooseProfilePage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
-    private auth: AuthProvider, private users: UsersService) {
-    platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      statusBar.styleDefault();
-      this.auth.populate()
-      .subscribe( couldPopulate => {
+    private auth: AuthProvider, private users: UsersService, private currencies: CurrenciesService) {
+    this.currencies.find()
+    .flatMap( (_noop) => {
+      return this.auth.populate()
+      .map( couldPopulate => {
         if( couldPopulate ){
           let tabs = null;
           if( this.users.currentUser.userType == '0' ){
@@ -34,11 +34,22 @@ export class MyApp {
           }
           this.rootPage = tabs;
         }
-        setTimeout(() => {
-          splashScreen.hide();          
-        }, 3000);
-      })
-    });
+      });
+    })
+    .flatMap( () => {
+      return Observable.fromPromise( platform.ready() )
+        .map( () => {
+          statusBar.styleDefault();
+          splashScreen.hide();   
+        })
+    })
+    .subscribe();
+    // .then(() => {
+      // Okay, so the platform is ready and our plugins are available.
+      // Here you can do any higher level native things you might need.
+      
+      
+    // });
   }
 }
 

@@ -9,6 +9,8 @@ import { UserBankAccount } from "../../models/user-bank-account.model";
 import { UsersService } from "../users.service";
 import moment from 'moment';
 import { padStart } from 'lodash'
+import { Image } from "../../models/shared/image.model";
+import { getImageUrl } from "../../helpers/images.helper";
 
 export class TransactionMapper extends BaseMapper<Transaction>{
 
@@ -32,7 +34,13 @@ export class TransactionMapper extends BaseMapper<Transaction>{
             }) : null ,
             exchangeAgentBankAccount: be.exchangeagentbankaccount ? new UserBankAccount({
                 ...(be.exchangeagentbankaccount || be.exchangeAgentBankAccount)
-            }): null
+            }): null,
+            userTransactionImage: be.userTransactionImage ? new Image({
+                fileUrl: getImageUrl(be.userTransactionImage)
+            }) : null,
+            exchangeAgentTransactionImage: be.exchangeAgentTransactionImage ? new Image({
+                fileUrl: getImageUrl(be.exchangeAgentTransactionImage)
+            }) : null
         })
         if( target.id ){
             target.code = `OTC-${(be.exchangeagentoffering || be.exchangeAgentOffering).type}${padStart(be.id.toString(),6,'0')}`;

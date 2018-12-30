@@ -21,6 +21,7 @@ export class CountdownComponent implements OnDestroy, OnInit{
   @Output() final: EventEmitter<any> = new EventEmitter<any>(); 
   objectDestroy: EventEmitter<any> = new EventEmitter<any>(); 
   finalReached = false;
+  firstTime = true;
 
   constructor() {
    
@@ -39,7 +40,7 @@ export class CountdownComponent implements OnDestroy, OnInit{
     this.remainingTime = this.date.getTime() - (new Date()).getTime();
     if( this.remainingTime < 0 ){
       this.remainingText = '00:00';
-      if( !this.finalReached ){
+      if( !this.finalReached && !this.firstTime ){
         this.final.emit({});
         this.finalReached = true;
       }
@@ -48,6 +49,7 @@ export class CountdownComponent implements OnDestroy, OnInit{
     let remainingMinutes = Math.floor( this.remainingTime / 60000 );
     let remainingSeconds = Math.floor( ( this.remainingTime % 60000 ) / 1000 ) ;
     this.remainingText = `${padStart(remainingMinutes.toString(),2,'0')}:${padStart(remainingSeconds.toString(),2,'0')}`;
+    this.firstTime = false;
   }
 
   ngOnDestroy(){

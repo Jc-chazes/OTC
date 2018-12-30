@@ -3,7 +3,7 @@ import { CrudService } from "./contracts/crud.service";
 import { Transaction } from "../models/transaction.model";
 import { BaseSpecification, ByIdSpecification } from './specifications/base.specification';
 import { Observable } from 'rxjs';
-import { Injectable, NgZone } from "@angular/core";
+import { Injectable, NgZone, EventEmitter } from "@angular/core";
 import { MyPendingTransactions } from "./specifications/transaction.specification";
 import { ApiUtil } from "./utils/api.util";
 import { UsersService } from "./users.service";
@@ -22,6 +22,7 @@ import { Platform, ModalController } from "ionic-angular";
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { ModalUtil, AvailableModals } from "./utils/modal.util";
 import { Currency } from "../models/currency.model";
+import { AngularFirestore } from "angularfire2/firestore";
 
 @Injectable()
 export class TransactionsService extends BaseService implements CrudService<Transaction>{
@@ -30,10 +31,15 @@ export class TransactionsService extends BaseService implements CrudService<Tran
 
     constructor(api: ApiUtil, private users: UsersService, private currencies: CurrenciesService,
         private http: HttpClient, private firebaseNative: Firebase, private ngZone: NgZone,
-        private platform: Platform, private localNotifications: LocalNotifications,
+        private platform: Platform, private localNotifications: LocalNotifications, private af: AngularFirestore,
         private modals: ModalUtil){
         super(api);
         this.mapper = new TransactionMapper(currencies,users);
+    }
+
+    transactionTabRootChange = new EventEmitter<any>();
+    setTransactionTabRoot(rootPage: 'TRANSACTION_IN_PROGRESS' | 'QUOTE' | 'OFFERINGS'){
+        this.transactionTabRootChange.emit(rootPage);
     }
 
     find(specification?: BaseSpecification): Observable<Transaction[]> {
@@ -106,7 +112,8 @@ export class TransactionsService extends BaseService implements CrudService<Tran
     rejectTransaction(transaction: Transaction): Observable<boolean>{
         return this.api.put(`/transactions/${transaction.id}`,{
             status: '0',
-            rejectionReason: transaction.rejectionReason
+            rejectionReason: transaction.rejectionReason,
+            cancelledBy: 'EXCHANGE_AGENT'
         }).map( resp => {
             return true; 
         }).catch( err => {
@@ -165,6 +172,39 @@ export class TransactionsService extends BaseService implements CrudService<Tran
             period: { year: Number(periodString.split('-')[0]), month: Number(periodString.split('-')[1]) },
             transactions: groups[periodString]
         }) );
+    }
+
+    cancelTransaction(transaction: Transaction){
+        return this.api.put(`/transactions/${transaction.id}`,{
+            status: '0',
+            cancelledBy: 'PERSON'
+        }).map( resp => {
+            return true; 
+        }).catch( err => {
+            console.error(err);
+            return Observable.of(false);
+        });
+    }
+
+    transactionChange(transaction: Transaction): Observable<Transaction>{
+        return this.af.collection('transactions').doc(String(transaction.id))
+        .valueChanges()
+        .delay(3000)
+        .map( (transaction:any) => {
+            return transaction ? new Transaction({...transaction}) : null;
+        });
+    }
+
+    setCurrentTransaction(transaction: Transaction): Observable<boolean>{
+        return this.findOne( new ByIdSpecification(transaction.id) )
+        .map( tx => {
+            this.users.currentUser.currentTransaction = tx;
+            return true;
+        })
+    }
+
+    clearCurrentTransaction(){
+        this.users.currentUser.currentTransaction = undefined;
     }
 
 }

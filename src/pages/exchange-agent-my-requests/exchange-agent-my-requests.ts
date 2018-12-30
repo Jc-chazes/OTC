@@ -15,6 +15,7 @@ import { RejectReasonSelectComponent } from '../../components/reject-reason-sele
 import { LoadingUtil } from '../../providers/utils/loading.util';
 import { UsersService } from '../../providers/users.service';
 import { CommonTransferToOtcPage } from '../common-transfer-to-otc/common-transfer-to-otc';
+import { CommonSelectBankAccountPage } from '../common-select-bank-account/common-select-bank-account';
 
 /**
  * Generated class for the ExchangeAgentMyRequestsPage page.
@@ -57,6 +58,18 @@ export class ExchangeAgentMyRequestsPage {
 
   ionViewWillEnter(){
     this.refresh();
+    let { currentTransaction } = this.users.currentUser;
+    if( currentTransaction ){
+      if( !currentTransaction.exchangeAgentBankAccount ){
+        this.navCtrl.push( CommonSelectBankAccountPage, {
+          transaction: currentTransaction
+        });
+      }else{
+        this.navCtrl.push( CommonTransferToOtcPage, {
+          transaction: currentTransaction
+        });
+      }
+    }
   }
 
   getAvatarUrl(transaction: Transaction){
@@ -67,12 +80,12 @@ export class ExchangeAgentMyRequestsPage {
   }
 
   goToRequestDetails(transaction: Transaction){
-    if( this.canContinue( transaction ) ){
-      this.navCtrl.push(CommonTransferToOtcPage,{
-        transaction
-      })
-      return;
-    }
+    // if( this.canContinue( transaction ) ){
+    //   this.navCtrl.push(CommonTransferToOtcPage,{
+    //     transaction
+    //   })
+    //   return;
+    // }
     this.navCtrl.push( ExchangeAgentRequestDetailsPage, { 
       transaction
     });

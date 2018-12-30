@@ -12,6 +12,8 @@ import { CommonSelectBankAccountPage } from '../common-select-bank-account/commo
 import { TransactionsService } from '../../providers/transaction.service';
 import { ModalUtil, AvailableModals } from '../../providers/utils/modal.util';
 import { LoadingUtil } from '../../providers/utils/loading.util';
+import { QuotePage } from '../quote/quote';
+import { CommonTransactionInProgressPage } from '../common-transaction-in-progress/common-transaction-in-progress';
 
 
 @Component({
@@ -64,6 +66,13 @@ export class DetailExchangeAgentPage {
       this.loading.hide();
       if( result ){
         this.modals.openModal(this.modalCtrl,AvailableModals.WaitYourRequestModal)
+        .then( () => {
+          this.transactions.setCurrentTransaction(result)
+          .subscribe( () => {
+            this.navCtrl.setRoot( CommonTransactionInProgressPage );
+            this.navCtrl.popToRoot();
+          });
+        })
       }
     })
   }

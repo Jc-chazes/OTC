@@ -1,10 +1,11 @@
 <ion-header profile-background-color>
 
     <ion-navbar hideBackButton>
-        <div class="flex-row-layout ai-center">
+        <div class="flex-row-layout ai-center pos-relative">
           <ion-title>Inicio</ion-title>
           <span class="flex"></span>
           <ion-title class="brand">OTC</ion-title>
+          <cancel-transaction-trigger (cancel)="onCancel()"></cancel-transaction-trigger>
         </div>
     </ion-navbar>
 

@@ -14,13 +14,20 @@ import { Image } from '../models/shared/image.model';
 import { getImageUrl } from '../helpers/images.helper';
 import { DeviceUtil } from './utils/device.util';
 import { Person } from '../models/person.model';
+import { Transaction } from '../models/transaction.model';
+import { TransactionMapper } from './mappers/transaction.mapper';
+import { CurrenciesService } from './currencies.service';
+import { Contest } from '../models/contest.model';
 
 @Injectable()
 export class AuthProvider {
 
+  transactionMapper: TransactionMapper;
+
   constructor( public http : HttpClient, private api: ApiUtil, private storage: StorageUtil,
   private jwt: JwtUtil, private appState: AppStateService, private users: UsersService,
-  private devices: DeviceUtil) {
+  private devices: DeviceUtil, private currencies: CurrenciesService) {
+    this.transactionMapper = new TransactionMapper(currencies,users);      
   }
 
   setAppUserType(userType: string){
@@ -112,9 +119,28 @@ export class AuthProvider {
           }
         });
         this.users.currentUser = user;
+        if( user.isPerson() ){
+          user.person.currentContest = resp.profile.currentContest ? new Contest({id:resp.profile.currentContest}) : null;
+          user.person.currentTransaction = resp.profile.currentTransaction ? this.transactionMapper.mapFromBe({
+            ...resp.profile.currentTransaction,
+            person: {
+              ...user.person,
+              user
+            }
+          }) : null;
+        }else{
+          user.exchangeAgent.currentTransaction = resp.profile.currentTransaction ? this.transactionMapper.mapFromBe({
+            ...resp.profile.currentTransaction,
+            exchangeAgent: {
+              ...user.exchangeAgent,
+              user
+            }
+          }) : null;
+        }
         return true;      
       }).catch( err => {
         this.purge();
+        console.log(err);
         return Observable.of(false);
       });
     });
