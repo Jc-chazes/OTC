@@ -59,10 +59,15 @@ export class ExchangueAgentService extends BaseService implements CrudService<Ex
     }
 
     addAscore(score: { person: Person, exchangeAgent: ExchangeAgent, score: number} ): Observable<boolean>{
+        // alert(JSON.stringify({
+        //     person: score.person.id,
+        //     exchangeagent: score.exchangeAgent.id,
+        //     score
+        // }));
         return this.api.post('/exchangeagentscores',{
             person: score.person.id,
             exchangeagent: score.exchangeAgent.id,
-            score
+            score: score.score
         }).map( resp => {
             return true;
         }).catch( err => {

@@ -28,7 +28,7 @@ export class CommonMyProfilePage {
   ]
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthProvider,
-    private app: App) {
+    private app: App, private users: UsersService) {
   }
 
   ionViewDidLoad() {
@@ -40,8 +40,10 @@ export class CommonMyProfilePage {
   }
 
   logout(){
-    this.auth.purge();
-    this.app.getRootNav().setRoot( ChooseProfilePage );
+    this.auth.logout().subscribe(()=>{
+      this.auth.purge();
+      this.app.getRootNav().setRoot( ChooseProfilePage );
+    },err=>{alert(JSON.stringify(err))});
   }
 
 }

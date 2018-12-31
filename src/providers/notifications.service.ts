@@ -30,7 +30,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
 
     find(specification?: BaseSpecification): Observable<Notification[]> {
         if( specification instanceof MyNotificationsSpecification ){
-            return this.api.get(`/notifications?user=${this.users.currentUser.id}`)
+            return this.api.get(`/notifications?user=${this.users.currentUser.id}&_sort=id:DESC`)
             .map( resp => {
                 return resp.map( be => this.mapper.mapFromBe(be) )
             })
@@ -124,7 +124,14 @@ export class NotificationsService extends BaseService implements CrudService<Not
                         this.modals.openModal(modalCtrl,AvailableModals.YouHasNotBeenSelectedModal);
                         break;
                     case 'SUCCESSFUL_CONTEST':
-                        this.modals.openModal(modalCtrl,AvailableModals.YouHasBeenSelectedModal);
+                        this.modals.openModal(modalCtrl,AvailableModals.YouHasBeenSelectedModal)
+                        .then( () => {
+                            let transactionId = Number(notification.transactionId);
+                            this.transactions.findOne( new ByIdSpecification(transactionId) )
+                            .subscribe( transaction => {
+                                this.users.currentUser.currentTransaction = transaction;
+                            })    
+                        });                        
                         break;
                     case 'ACCEPTED_BY_EXCHANGE_AGENT':
                         if( this.users.currentUser.isPerson() ){

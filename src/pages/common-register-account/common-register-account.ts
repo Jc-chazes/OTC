@@ -13,6 +13,7 @@ import { Person } from '../../models/person.model';
 import { AlertUtil } from '../../providers/utils/alert.util';
 import { PersonTabsPage } from '../person-tabs/person-tabs';
 import { ExchangeAgentTabsPage } from '../exchange-agent-tabs/exchange-agent-tabs';
+import { LoadingUtil } from '../../providers/utils/loading.util';
 
 /**
  * Generated class for the CommonRegisterAccountPage page.
@@ -33,7 +34,7 @@ export class CommonRegisterAccountPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private app: App,
   private fb: FormBuilder, private auth: AuthProvider, private appState: AppStateService,
   private UsersBankAccounts: UsersBankAccountsService, private modals: ModalUtil,
-  private modalCtrl: ModalController, private alerts: AlertUtil) {
+  private modalCtrl: ModalController, private alerts: AlertUtil, private loading: LoadingUtil) {
     this.userType = this.appState.currentState.global.userType;
     if( this.isPerson ){
       this.profileFG = this.fb.group({
@@ -101,6 +102,7 @@ export class CommonRegisterAccountPage {
       this.alerts.show('Falta completar campos','Registro')
       return;
     }
+    this.loading.show();
     if( this.isPerson ){
       this.auth.registerPerson( new Person({
         ...omit(this.profileFG.value,['acceptTermsAndConditions','formatBirthdate'])
@@ -109,6 +111,7 @@ export class CommonRegisterAccountPage {
         if( savedUserBankAccount ){
           this.UsersBankAccounts.add( savedUserBankAccount as UserBankAccount )
           .subscribe( results => {
+            this.loading.hide();  
           });
         }
         this.alerts.show('Registro exitoso','Registro');
@@ -123,7 +126,7 @@ export class CommonRegisterAccountPage {
         if( savedUserBankAccount ){
           this.UsersBankAccounts.add( savedUserBankAccount as UserBankAccount )
           .subscribe( results => {
-  
+            this.loading.hide();  
           });
         }
         this.alerts.show('Registro exitoso','Registro');

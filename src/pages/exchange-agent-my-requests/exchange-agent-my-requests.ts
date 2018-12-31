@@ -92,12 +92,12 @@ export class ExchangeAgentMyRequestsPage {
   }
 
   openRequestOperations(transaction: Transaction, event){
-    if( this.canContinue( transaction ) ){
-      this.navCtrl.push(CommonTransferToOtcPage,{
-        transaction
-      })
-      return;
-    }
+    // if( this.canContinue( transaction ) ){
+    //   this.navCtrl.push(CommonTransferToOtcPage,{
+    //     transaction
+    //   })
+    //   return;
+    // }
     let rejectAcceptPopover = this.popoverCtrl.create(RejectAcceptRequestPopoverComponent);
     rejectAcceptPopover.present({
       ev: event

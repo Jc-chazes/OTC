@@ -7,6 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { LoadingUtil } from '../../providers/utils/loading.util';
 import { AlertUtil } from '../../providers/utils/alert.util';
 import { CommonMyBankAccountsPage } from '../common-my-bank-accounts/common-my-bank-accounts';
+import { User } from '../../models/user.model';
 
 /**
  * Generated class for the CommonViewProfilePage page.
@@ -28,20 +29,25 @@ export class CommonViewProfilePage {
   sbs: string;
   email: string;
   photo: Image;
+  profileType: string;
+  currentUser: User;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private users: UsersService,
     private sanitizer: DomSanitizer, private loading: LoadingUtil, private alerts: AlertUtil, private auth: AuthProvider) {
     this.users.currentUserChanges().subscribe(  currentUser => {
+      this.currentUser = currentUser;
       if( currentUser.isPerson() ){
         this.name = currentUser.person.fullName;
         this.document = currentUser.person.documentNumber;
         this.phone = currentUser.person.cellphone;
+        this.profileType = currentUser.person.type == '0' ? 'Personal natural' : 'Persona jurídica'
       }else{
         this.name = currentUser.exchangeAgent.name;
         this.document = currentUser.exchangeAgent.documentNumber;
         this.address = currentUser.exchangeAgent.address;
         this.phone = currentUser.exchangeAgent.phone;
         this.sbs = currentUser.exchangeAgent.sbsRegisterNumber;
+        this.profileType = currentUser.person.type == '0' ? 'Cambista' : 'Casa de cambio'
       }
       this.photo = currentUser.photo;
       this.email = currentUser.email;

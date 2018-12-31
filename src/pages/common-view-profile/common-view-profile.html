@@ -22,67 +22,135 @@
         <img src="/assets/imgs/icons/profile_photo_add.png" alt="" class="viewProfile__avatar__add">
         <input type="file" class="hide" #photoUpload (change)="onChangePhoto($event)">
       </div>
-      <div class="spacer-40"></div>
-      <div class="mb-15">
-        <ion-row class="input">
-          <ion-col col-6>
-            Nombre / Razón social: 
-          </ion-col>
-          <ion-col col-6>
-            {{ name }}
-          </ion-col>
-        </ion-row>
+      <div class="spacer-30"></div>
+      <div class="text-center">
+        {{ profileType }}
       </div>
-      <div class="mb-15">
-        <ion-row class="input">
-          <ion-col col-6>
-            Dni / Ruc:
-          </ion-col>
-          <ion-col col-6>
-            {{ document }}
-          </ion-col>
-        </ion-row>
-      </div>
-      <div class="mb-15">
-        <ion-row class="input">
-          <ion-col col-6>
-            Dirección:
-          </ion-col>
-          <ion-col col-6>
-            {{ address }}
-          </ion-col>
-        </ion-row>
-      </div>
-      <div class="mb-15">
-        <ion-row class="input">
-          <ion-col col-6>
-            Celular:
-          </ion-col>
-          <ion-col col-6>
-            {{ phone }}
-          </ion-col>
-        </ion-row>
-      </div>
-      <div class="mb-15">
-        <ion-row class="input">
-          <ion-col col-6>
-            N° de registros de la SBS:
-          </ion-col>
-          <ion-col col-6>
-            {{ sbs }}
-          </ion-col>
-        </ion-row>
-      </div>
-      <div class="mb-15">
-        <ion-row class="input">
-          <ion-col col-6>
-            Correo:
-          </ion-col>
-          <ion-col col-6>
-            {{ email }}
-          </ion-col>
-        </ion-row>
-      </div>
+      <div class="spacer-20"></div>
+      <ng-container *ngIf="currentUser.isPerson()">
+        <div class="mb-15">
+          <ion-row class="input">
+            <ion-col col-6>
+              Nombres:
+            </ion-col>
+            <ion-col col-6>
+              {{ currentUser.person.firstName }}
+            </ion-col>
+          </ion-row>
+        </div>
+        <div class="mb-15">
+          <ion-row class="input">
+            <ion-col col-6>
+              Apéllidos:
+            </ion-col>
+            <ion-col col-6>
+              {{ currentUser.person.lastName }}
+            </ion-col>
+          </ion-row>
+        </div>
+        <div class="mb-15">
+          <ion-row class="input">
+            <ion-col col-6>
+              Correo electrónico:
+            </ion-col>
+            <ion-col col-6>
+              {{ currentUser.email }}
+            </ion-col>
+          </ion-row>
+        </div>
+        <div class="mb-15">
+          <ion-row class="input">
+            <ion-col col-6>
+              Celular:
+            </ion-col>
+            <ion-col col-6>
+              {{ phone }}
+            </ion-col>
+          </ion-row>
+        </div>
+        <div class="mb-15">
+          <ion-row class="input">
+            <ion-col col-6>
+              DNI / Carnet de extranjería:
+            </ion-col>
+            <ion-col col-6>
+              {{ currentUser.person.documentNumber }}
+            </ion-col>
+          </ion-row>
+        </div>
+        <div class="mb-15">
+          <ion-row class="input">
+            <ion-col col-6>
+              Fecha de nacimiento:
+            </ion-col>
+            <ion-col col-6>
+              {{ currentUser.person.birthdate ? ( currentUser.person.birthdate | date: 'dd/MM/yyyy' ) : '' }}
+            </ion-col>
+          </ion-row>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="currentUser.isExchangeAgent()">
+        <div class="mb-15">
+          <ion-row class="input">
+            <ion-col col-6>
+              Nombre / Razón social: 
+            </ion-col>
+            <ion-col col-6>
+              {{ name }}
+            </ion-col>
+          </ion-row>
+        </div>
+        <div class="mb-15">
+          <ion-row class="input">
+            <ion-col col-6>
+              Dni / Ruc:
+            </ion-col>
+            <ion-col col-6>
+              {{ document }}
+            </ion-col>
+          </ion-row>
+        </div>
+        <div class="mb-15">
+          <ion-row class="input">
+            <ion-col col-6>
+              Dirección:
+            </ion-col>
+            <ion-col col-6>
+              {{ address }}
+            </ion-col>
+          </ion-row>
+        </div>
+        <div class="mb-15">
+          <ion-row class="input">
+            <ion-col col-6>
+              Celular:
+            </ion-col>
+            <ion-col col-6>
+              {{ phone }}
+            </ion-col>
+          </ion-row>
+        </div>
+        <div class="mb-15">
+          <ion-row class="input">
+            <ion-col col-6>
+              N° de registros de la SBS:
+            </ion-col>
+            <ion-col col-6>
+              {{ sbs }}
+            </ion-col>
+          </ion-row>
+        </div>
+        <div class="mb-15">
+          <ion-row class="input">
+            <ion-col col-6>
+              Correo:
+            </ion-col>
+            <ion-col col-6>
+              {{ email }}
+            </ion-col>
+          </ion-row>
+        </div>        
+      </ng-container>
       <div class="flex-row-layout" (tap)="goToMyBankAccounts()">
         <span>Mis cuentas bancarias</span>
         <span class="flex"></span>

@@ -14,6 +14,10 @@ import { ModalUtil, AvailableModals } from '../../providers/utils/modal.util';
 import { LoadingUtil } from '../../providers/utils/loading.util';
 import { QuotePage } from '../quote/quote';
 import { CommonTransactionInProgressPage } from '../common-transaction-in-progress/common-transaction-in-progress';
+import { Contest } from '../../models/contest.model';
+import { Observable } from 'rxjs';
+import { ContestsService } from '../../providers/contests.service';
+import { UsersService } from '../../providers/users.service';
 
 
 @Component({
@@ -26,11 +30,14 @@ export class DetailExchangeAgentPage {
 
   transaction: Transaction;
   otcComission: Constant = new Constant({ content: 0 });
+  contest: Contest;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public appService : AppStateService,
   private sanitizer: DomSanitizer, private constants: ConstantsService, private transactions: TransactionsService,
-  private modals: ModalUtil, private modalCtrl: ModalController, private loading: LoadingUtil) {
+  private modals: ModalUtil, private modalCtrl: ModalController, private loading: LoadingUtil,
+  private contests: ContestsService, private users: UsersService) {
     this.transaction = this.navParams.get('transaction');
+    this.contest = this.navParams.get('contest');
     this.appService.onStateChange.subscribe(res=>{
       this.detail_exchangue = res.detail_exchangue,
       this.data_price = res.price
@@ -61,19 +68,41 @@ export class DetailExchangeAgentPage {
   
   continue(){
     this.loading.show();
-    this.transactions.add( this.transaction )
-    .subscribe( result => {
+    if( this.contest ){
+      this.transaction.type = 'FAST';
+    }
+    Observable.forkJoin(
+      this.transactions.add( this.transaction ),
+      ( this.contest ? this.contests.selectWinner(this.contest,this.transaction.exchangeAgent) : Observable.of(null) )
+    ).subscribe( ([ createdTransaction, _noop ]) => {
+      if( this.users.currentUser.isPerson() ){
+        this.users.currentUser.person.currentContest = undefined;
+      }
       this.loading.hide();
-      if( result ){
+      if( createdTransaction ){
         this.modals.openModal(this.modalCtrl,AvailableModals.WaitYourRequestModal)
         .then( () => {
-          this.transactions.setCurrentTransaction(result)
+          this.transactions.setCurrentTransaction(createdTransaction)
           .subscribe( () => {
             this.navCtrl.setRoot( CommonTransactionInProgressPage );
             this.navCtrl.popToRoot();
           });
         })
       }
-    })
+    });
+    // this.transactions.add( this.transaction )
+    // .subscribe( createdTransaction => {
+    //   this.loading.hide();
+    //   if( createdTransaction ){
+    //     this.modals.openModal(this.modalCtrl,AvailableModals.WaitYourRequestModal)
+    //     .then( () => {
+    //       this.transactions.setCurrentTransaction(createdTransaction)
+    //       .subscribe( () => {
+    //         this.navCtrl.setRoot( CommonTransactionInProgressPage );
+    //         this.navCtrl.popToRoot();
+    //       });
+    //     })
+    //   }
+    // })
   }
 }

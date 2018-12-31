@@ -27,6 +27,9 @@ export class ProfileBackgroundColorDirective implements OnDestroy, OnInit {
           this.renderer.addClass(this.elmRef.nativeElement,'otcHeader');
           this.renderer.addClass(this.elmRef.nativeElement,'otcHeader--exchangeAgent');
         }
+      }else{
+        this.renderer.addClass(this.elmRef.nativeElement,'otcHeader')
+        this.renderer.addClass(this.elmRef.nativeElement,'otcHeader--person');
       }
     })
   }

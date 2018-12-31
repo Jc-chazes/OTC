@@ -93,6 +93,19 @@ export class AuthProvider {
     });
   }
 
+  logout(): Observable<boolean>{
+    return this.devices.getToken()
+    .flatMap( token => {
+      // let query = new HttpParams();
+      // if(token){
+      //   query = query.append('deviceId',token);
+      // }
+      return this.api.post('/auth/logout',{
+        deviceId: token
+      })
+    });
+  }
+
   populate(userTypeToVerify?: string): Observable<boolean>{
     return this.devices.getToken()
     .flatMap( token => {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { AppStateService } from '../../providers/app-state.service';
 import { ExchangeAgentsPage } from '../exchange-agents/exchange-agents';
 import { DataService } from '../../providers/data.service';
@@ -11,6 +11,10 @@ import { PersonSelectSearchModePage } from '../person-select-search-mode/person-
 import { UsersService } from '../../providers/users.service';
 import { CommonSelectBankAccountPage } from '../common-select-bank-account/common-select-bank-account';
 import { CommonTransferToOtcPage } from '../common-transfer-to-otc/common-transfer-to-otc';
+import { ModalUtil, AvailableModals } from '../../providers/utils/modal.util';
+import { ContestsService } from '../../providers/contests.service';
+import { ByIdSpecification } from '../../providers/specifications/base.specification';
+import { Contest } from '../../models/contest.model';
 
 @Component({
   selector: 'page-quote',
@@ -26,7 +30,8 @@ export class QuotePage implements OnInit {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alerts: AlertUtil
     , private currencies: CurrenciesService, public appState : AppStateService
-    , private dataService : DataService, private users: UsersService) {
+    , private dataService : DataService, private users: UsersService, private modals: ModalUtil,
+    private modalCtrl: ModalController, private contests: ContestsService) {
     this.checkButton = 0;
     this.currencies.find().subscribe( results => {
       this.currencyList = results.filter( c => c.code != 'PEN' );
@@ -55,6 +60,36 @@ export class QuotePage implements OnInit {
         this.navCtrl.push(CommonSelectBankAccountPage,{ transaction: currentTransaction });
       }else{
         this.navCtrl.push(CommonTransferToOtcPage,{ transaction: currentTransaction });
+      }
+    }
+    if( this.users.currentUser.isPerson() ){
+      if( this.users.currentUser.person.currentContest ){
+        this.alerts.confirm('Tienes una búsqueda rápida en la cola, ¿Deseas continuar?','OTC Búsqueda rápida')
+        .then( accepted => {
+          if( accepted ){
+            this.modals.openModal(this.modalCtrl,AvailableModals.FastSearchModal,{
+              contest: {
+                id: this.users.currentUser.person.currentContest.id
+              }
+            }).then( (contest: Contest) => {
+              if( contest ){
+                this.contests.findOne( new ByIdSpecification( contest.id ) )
+                .subscribe( result => {
+                  this.users.currentUser.person.currentContest = result;
+                  this.navCtrl.push(ExchangeAgentsPage,{
+                    operation: result.operationType,
+                    currency: result.targetCurrency,
+                    amount: result.amount,
+                    contest: result
+                  });
+                })
+              }
+            })
+          }else{
+            this.contests.cancelContest( this.users.currentUser.person.currentContest.id )
+            .subscribe()
+          }
+        });
       }
     }
   }

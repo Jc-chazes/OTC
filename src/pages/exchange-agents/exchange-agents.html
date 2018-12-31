@@ -14,7 +14,8 @@
   <div class="spacer-30"></div>
   <back-button [navCtrl]="navCtrl"></back-button>
   <stepper [currentStep]="2"></stepper>
-  <ion-grid padding>
+  <div class="spacer-40" *ngIf="!!contest"></div>
+  <ion-grid padding *ngIf="!contest">
     <ion-grid class='wapper-text-data'>
       <ion-row>
         <ion-col col6><div class="exchange-agents__text text-muted">Cantidad solcitada:</div></ion-col>

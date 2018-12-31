@@ -18,6 +18,9 @@ import { CurrenciesService } from '../../providers/currencies.service';
 import { UsersService } from '../../providers/users.service';
 import { NotificationsService } from '../../providers/notifications.service';
 import { CommonSelectBankAccountPage } from '../common-select-bank-account/common-select-bank-account';
+import { Contest } from '../../models/contest.model';
+import { AlertUtil } from '../../providers/utils/alert.util';
+import { ContestsService } from '../../providers/contests.service';
 
 
 @Component({
@@ -27,7 +30,7 @@ import { CommonSelectBankAccountPage } from '../common-select-bank-account/commo
 export class ExchangeAgentsPage {
   searchTerm: string = '';
   searchControl: FormControl;
-  exchangeAgentList:any;
+  exchangeAgentList: ExchangeAgent[];
   searching: any = false;
   data_price :any;
   exchange_agent:any
@@ -37,15 +40,19 @@ export class ExchangeAgentsPage {
   sortBy: string;
   amount: number;
   transactionMapper: TransactionMapper;
+  contest: Contest;
+  canContinue = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public dataService: DataService,
   public appService : AppStateService, private popoverCtrl: PopoverController, private exchangeAgents: ExchangueAgentService,
   private sanitizer: DomSanitizer, private loading: LoadingUtil, private currencies: CurrenciesService,
-  private users: UsersService, private notifications: NotificationsService) {
+  private users: UsersService, private notifications: NotificationsService, private alerts: AlertUtil,
+  private contests: ContestsService) {
     this.transactionMapper = new TransactionMapper(currencies,users);
     this.currency = this.navParams.get('currency');
     this.operation = this.navParams.get('operation');
     this.amount = this.navParams.get('amount');
+    this.contest = this.navParams.get('contest');
 
     this.searchControl = new FormControl();
 
@@ -75,6 +82,21 @@ export class ExchangeAgentsPage {
     })
   }
 
+  async ionViewCanLeave(){
+    if( this.canContinue ) return true;
+    let contest = this.users.currentUser.person.currentContest;
+    if( contest ){
+      let continueSelected = await this.alerts.confirm('Tienes una búsqueda rápida en la cola, ¿Deseas continuar?','OTC Búsqueda rápida')
+      if( continueSelected ){
+        return false;
+      }else{
+        this.contests.cancelContest( contest.id ).subscribe()          
+        return true;
+      }
+    }
+    return true;
+  }
+
   ionViewWillLoad(){
     this.exchange_agent=this.dataService.exchange_agents
   }
@@ -97,6 +119,7 @@ export class ExchangeAgentsPage {
 }
   public detailExchangeAgent(exchangeAgent :ExchangeAgent){
     this.appService.setState({detail_exchangue:exchangeAgent})
+    this.canContinue = true;
     this.navCtrl.push(DetailExchangeAgentPage,{
       transaction: this.transactionMapper.mapFromBe({
         status: '2',
@@ -107,7 +130,8 @@ export class ExchangeAgentsPage {
           user: this.users.currentUser
         },
         exchangeAgentOffering: exchangeAgent.exchangeAgentOfferings[0]
-      })
+      }),
+      contest: this.contest
     });
   }
 
@@ -116,8 +140,12 @@ export class ExchangeAgentsPage {
     this.exchangeAgents.search(
       new SearchExchangeAgentSpecification(this.searchControl.value,'SAFE',this.operation,this.currency,this.sortBy)
     ).subscribe( (results: ExchangeAgent[]) => {
-      this.loading.hide();
+      this.loading.hide();      
       this.exchangeAgentList = results.filter( ea => ea.exchangeAgentOfferings.length > 0 );
+      if( this.contest && this.contest.exchangeAgents ){
+        let contestParticipantsIds = this.contest.exchangeAgents.map( ea => ea.id );
+        this.exchangeAgentList = this.exchangeAgentList.filter( ea => contestParticipantsIds.indexOf(ea.id) >= 0 );
+      }
     })
   }
 

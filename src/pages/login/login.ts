@@ -11,6 +11,7 @@ import { ExchangeAgent } from '../../models/exchange-agent.model';
 import { ExchangeAgentTabsPage } from '../exchange-agent-tabs/exchange-agent-tabs';
 import { UsersService } from '../../providers/users.service';
 import { QuotePage } from '../quote/quote';
+import { AlertUtil } from '../../providers/utils/alert.util';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class Login implements OnInit {
   exchangeAgent = new ExchangeAgent();
 
   constructor(public nvCtrl : NavController, private auth: AuthProvider, private appState: AppStateService,
-  private loadingCtrl: LoadingController, private users: UsersService, private app: App) {
+  private loadingCtrl: LoadingController, private users: UsersService, private app: App, private alerts : AlertUtil) {
     this.user.userType = this.appState.currentState.global.userType;
   }
 
@@ -46,6 +47,8 @@ export class Login implements OnInit {
             tabs = ExchangeAgentTabsPage;
           }
           this.app.getRootNav().setRoot(tabs);
+        }else{
+          this.alerts.show('Credenciales inválidas','Login');
         }
       })
     }

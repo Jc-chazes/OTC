@@ -62,23 +62,6 @@ export class PersonTabsPage {
         this.transactions.setTransactionTabRoot('TRANSACTION_IN_PROGRESS');
       }
     }
-    if( this.users.currentUser.isPerson() ){
-      if( this.users.currentUser.person.currentContest ){
-        this.alerts.confirm('Tienes una búsqueda rápida en la cola, ¿Deseas continuar?','OTC Búsqueda rápida')
-        .then( accepted => {
-          if( accepted ){
-            this.modals.openModal(this.modalCtrl,AvailableModals.FastSearchModal,{
-              contest: {
-                id: this.users.currentUser.person.currentContest.id
-              }
-            });
-          }else{
-            this.contests.cancelContest( this.users.currentUser.person.currentContest.id )
-            .subscribe()
-          }
-        });
-      }
-    }
   }
 
   ionViewDidLoad() {

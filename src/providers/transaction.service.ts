@@ -94,7 +94,8 @@ export class TransactionsService extends BaseService implements CrudService<Tran
             person: entity.person.id,
         	exchangeagent: entity.exchangeAgent.id,
         	exchangeagentoffering: entity.exchangeAgentOffering.id,
-        	amount: entity.amount
+            amount: entity.amount,
+            type: entity.type || 'SAFE'
         }).map( resp => {
             return this.mapper.mapFromBe(resp);
         }).catch(err => {
@@ -124,8 +125,15 @@ export class TransactionsService extends BaseService implements CrudService<Tran
 
     acceptTransaction(transaction: Transaction): Observable<boolean>{
         return this.api.put(`/transactions/${transaction.id}`,{
-            status: '3'
-        }).map( resp => {
+            status: '3',
+            exchangeagent: transaction.exchangeAgent.id
+        })
+        .flatMap( () => {
+            return this.api.put(`/exchangeagents/${transaction.exchangeAgent.id}`,{
+                currentTransaction: transaction.id
+            });
+        })
+        .map( resp => {
             return true; 
         }).catch( err => {
             console.error(err);
