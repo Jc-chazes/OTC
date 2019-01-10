@@ -98,7 +98,9 @@ export class CommonRegisterAccountPage {
       this.alerts.show('Términos y condiciones no aceptados','Registro')
       return;
     }
+    
     if( !this.profileFG.valid ){
+      console.log(this.profileFG)
       this.alerts.show('Falta completar campos','Registro')
       return;
     }
