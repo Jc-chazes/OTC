@@ -42,7 +42,7 @@ export class DetailExchangeAgentPage {
       this.detail_exchangue = res.detail_exchangue,
       this.data_price = res.price
     });
-    this.constants.findOne( new ConstantByCodeSpecification(`OTC_COMISSION_${this.transaction.exchangeAgentOffering.requestedCurrency}`) )
+    this.constants.findOne( new ConstantByCodeSpecification(`OTC_COMISSION_${this.transaction.exchangeAgentOffering.receivedCurrency}`) )
     .subscribe( result => {
       this.otcComission = result;
       this.otcComission.content = Number(this.otcComission.content);
