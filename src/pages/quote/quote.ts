@@ -123,7 +123,7 @@ export class QuotePage implements OnInit {
       price :{ 
         currency : this.selectedCurrency,
         cant : Number(this.cant),
-        text_buy : this.checkButton == 0 ? ' Comprar' : 'Vender',//this.text_buy,
+        text_buy : this.checkButton == 0 ? ' Compra' : 'Venta',//this.text_buy,
         text_money : this.selectedCurrency.symbol
       }
     })
