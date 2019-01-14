@@ -14,6 +14,7 @@ import { AlertUtil } from '../../providers/utils/alert.util';
 import { PersonTabsPage } from '../person-tabs/person-tabs';
 import { ExchangeAgentTabsPage } from '../exchange-agent-tabs/exchange-agent-tabs';
 import { LoadingUtil } from '../../providers/utils/loading.util';
+import moment from 'moment';
 
 /**
  * Generated class for the CommonRegisterAccountPage page.
@@ -30,6 +31,7 @@ export class CommonRegisterAccountPage {
 
   userType: string;
   profileFG: FormGroup;
+  showPassword = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private app: App,
   private fb: FormBuilder, private auth: AuthProvider, private appState: AppStateService,
@@ -40,7 +42,7 @@ export class CommonRegisterAccountPage {
       this.profileFG = this.fb.group({
         firstName: [undefined,[ this.byType('0',Validators.required) ]],//PERSON
         lastName: [undefined,[ this.byType('0',Validators.required) ]],//PERSON
-        birthdate: [null,[ this.byType('0',Validators.required) ]],//COMMON
+        birthdate: [null,[ this.byType('0',Validators.required), this.ageValidator ]],//COMMON
         formatBirthdate: [''],//COMMON
         documentNumber: [undefined,[ this.byType('0',Validators.required) ]],//COMMON
         businessName: [undefined,[ this.byType('1',Validators.required) ]],//PERSON
@@ -100,8 +102,11 @@ export class CommonRegisterAccountPage {
     }
     
     if( !this.profileFG.valid ){
-      console.log(this.profileFG)
-      this.alerts.show('Falta completar campos','Registro')
+      if( this.profileFG.get('birthdate').hasError('age') ){
+        this.alerts.show('Tienes que ser mayor de edad para registrarte','Registro');
+      }else{
+        this.alerts.show('Falta completar campos','Registro');
+      }
       return;
     }
     this.loading.show();
@@ -109,11 +114,11 @@ export class CommonRegisterAccountPage {
       this.auth.registerPerson( new Person({
         ...omit(this.profileFG.value,['acceptTermsAndConditions','formatBirthdate'])
       }) ).subscribe( results => {
+        this.loading.hide();  
         let savedUserBankAccount = this.appState.currentState.register.savedUserBankAccount;
         if( savedUserBankAccount ){
           this.UsersBankAccounts.add( savedUserBankAccount as UserBankAccount )
           .subscribe( results => {
-            this.loading.hide();  
           });
         }
         this.alerts.show('Registro exitoso','Registro');
@@ -124,6 +129,7 @@ export class CommonRegisterAccountPage {
       this.auth.registerExchangeAgent( new ExchangeAgent({
         ...omit(this.profileFG.value,['acceptTermsAndConditions','formatBirthdate'])
       }) ).subscribe( results => {
+        this.loading.hide();  
         let savedUserBankAccount = this.appState.currentState.register.savedUserBankAccount;
         if( savedUserBankAccount ){
           this.UsersBankAccounts.add( savedUserBankAccount as UserBankAccount )
@@ -169,6 +175,16 @@ export class CommonRegisterAccountPage {
         return null;
       }
     }
+  }
+
+  ageValidator(c: AbstractControl){
+    var age = moment(moment()).diff(c.value,'years');
+    if( !!c.value && age < 18 ){
+      return { 
+        age: true
+      }
+    }
+    return null;
   }
 
 }

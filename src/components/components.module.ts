@@ -27,6 +27,7 @@ import { ScoreYourExperienceModalComponent } from './score-your-experience-modal
 import { QuoteAgainModalComponent } from './quote-again-modal/quote-again-modal';
 import { CancelTransactionTriggerComponent } from './cancel-transaction-trigger/cancel-transaction-trigger';
 import { FastSearchModalComponent } from './fast-search-modal/fast-search-modal';
+import { CurrentNotificationWatcherComponent } from './current-notification-watcher/current-notification-watcher';
 
 @NgModule({
 	declarations: [UpdateExchangeReminderComponent,
@@ -54,7 +55,8 @@ import { FastSearchModalComponent } from './fast-search-modal/fast-search-modal'
     ScoreYourExperienceModalComponent,
     QuoteAgainModalComponent,
     CancelTransactionTriggerComponent,
-    FastSearchModalComponent],
+    FastSearchModalComponent,
+    CurrentNotificationWatcherComponent],
 	imports: [ CommonModule, IonicModule, DirectivesModule ],
 	exports: [UpdateExchangeReminderComponent,
     StepperComponent,
@@ -81,7 +83,8 @@ import { FastSearchModalComponent } from './fast-search-modal/fast-search-modal'
     ScoreYourExperienceModalComponent,
     QuoteAgainModalComponent,
     CancelTransactionTriggerComponent,
-    FastSearchModalComponent],
+    FastSearchModalComponent,
+    CurrentNotificationWatcherComponent],
     entryComponents: [
         RejectWarningComponent,
         RejectReasonSelectComponent,

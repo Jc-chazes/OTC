@@ -26,14 +26,18 @@
         <ion-col col6><div class='exchange-agents__data'>{{data_price.text_buy}}</div></ion-col>
       </ion-row>
     </ion-grid>
-    <div class="search-agents">
-      <ion-icon ios="ios-search" md="md-search"></ion-icon>
-      <input placeholder="Busca la casa de cambio de tu preferencia" class="search-agents__input" [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="onSearchInput()">
-      <!-- <select class="search-agents__select">
-        <option class="search-agents__select___option">Por calificacion</option>
-        <option class="search-agents__select___option">Por mejor precio</option>
-      </select> -->
-      <ion-icon name="arrow-down" md="ios-arrow-down" (tap)="openSearchExchangeAgentMode()"></ion-icon>
+    <div class="flex-row-layout ai-center">
+      <div class="search-agents flex no-padding">
+        <ion-icon ios="ios-search" md="md-search"></ion-icon>
+        <input placeholder="Busca la casa de cambio de tu preferencia" class="search-agents__input no-padding" [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="onSearchInput()">
+        <!-- <select class="search-agents__select">
+          <option class="search-agents__select___option">Por calificacion</option>
+          <option class="search-agents__select___option">Por mejor precio</option>
+        </select> -->
+        <ion-icon name="arrow-down" md="ios-arrow-down" (tap)="openSearchExchangeAgentMode()"></ion-icon>
+      </div>
+      <div class="spacer-h-15"></div>
+      <ion-icon name="refresh" (tap)="refresh()"></ion-icon>
     </div>
   </ion-grid>
   <ion-row class="exchange-agents__item" align-items-center *ngFor='let item of exchangeAgentList'

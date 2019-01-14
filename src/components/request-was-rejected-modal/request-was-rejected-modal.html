@@ -1,23 +1,37 @@
 <div class="requestWasRejectedModal flex-col-layout jc-center fill-height">
-  <div class="modal-content">
-    <p class="text-center">
-      <b>Tu solicitud ha sido <br> rechazada por la casa <br> de cambio. </b>
-    </p>
-    <div class="spacer-15"></div>
-    <p class="text-center">
-      Motivo: <br> {{ rejectionReasonText }}
-    </p>
-    <div class="spacer-15"></div>
-    <p class="text-center">
-      <b>¿Desea calificar a la <br> casa de cambio? </b>
-    </p>
-  </div>
-  <div class="flex-col-layout ai-center">
-    <button fluid ion-button color="dark" (tap)="viewCtrl.dismiss(true)">
-      Sí
-    </button>
-    <button fluid ion-button color="dark" (tap)="viewCtrl.dismiss(false)">
-      No deseo
-    </button>
-  </div>
+  <ng-container *ngIf="cancelledBy == 'EXCHANGE_AGENT'">
+    <div class="modal-content">
+      <p class="text-center">
+        <b>Tu solicitud ha sido <br> rechazada por la casa <br> de cambio. </b>
+      </p>
+      <div class="spacer-15"></div>
+      <p class="text-center">
+        Motivo: <br> {{ rejectionReasonText }}
+      </p>
+      <div class="spacer-15"></div>
+      <p class="text-center">
+        <b>¿Desea calificar a la <br> casa de cambio? </b>
+      </p>
+    </div>
+    <div class="flex-col-layout ai-center">
+      <button fluid ion-button color="dark" (tap)="viewCtrl.dismiss(true)">
+        Sí
+      </button>
+      <button fluid ion-button color="dark" (tap)="viewCtrl.dismiss(false)">
+        No deseo
+      </button>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="cancelledBy == 'PERSON'">
+    <div class="modal-content">
+      <p class="text-center">
+        <b>Tu solicitud ha sido <br> rechazada por el <br> usuario. </b>
+      </p>
+    </div>
+    <div class="flex-col-layout ai-center">
+      <button fluid ion-button color="dark" (tap)="viewCtrl.dismiss()">
+        Entendido
+      </button>
+    </div>
+  </ng-container>
 </div>

@@ -150,9 +150,11 @@ export class NotificationsService extends BaseService implements CrudService<Not
                         }
                         break;
                     case 'REJECTED_BY_EXCHANGE_AGENT':
+                        console.log(notification.cancelledBy);
                         if( this.users.currentUser.isPerson() ){
                             this.modals.openModal(modalCtrl,AvailableModals.RequestWasRejectedModal,{
-                                rejectionReason: notification.rejectionReason
+                                rejectionReason: notification.rejectionReason,
+                                cancelledBy: 'EXCHANGE_AGENT'
                             }).then( scoreExchangeAgent => {
                                 if( scoreExchangeAgent ){
                                     let transactionId = Number(notification.transactionId);
@@ -163,6 +165,15 @@ export class NotificationsService extends BaseService implements CrudService<Not
                                         });
                                     })                                    
                                 }
+                            })
+                        }
+                        break;
+                    case 'REJECTED_BY_PERSON':
+                        console.log(notification.cancelledBy);
+                        if( this.users.currentUser.isExchangeAgent() ){
+                            this.modals.openModal(modalCtrl,AvailableModals.RequestWasRejectedModal,{
+                                rejectionReason: notification.rejectionReason,
+                                cancelledBy: 'PERSON'
                             })
                         }
                         break;

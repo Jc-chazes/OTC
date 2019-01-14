@@ -37,4 +37,8 @@ export class Transaction extends BaseModel<Transaction>{
 
     limitDate: Date;
 
+    amountToDepositToOTC(OTCComission: number){
+        return OTCComission + Number(this.amountToDeposit.toFixed(2))
+    }
+
 }

@@ -63,6 +63,15 @@
     </div>
     <div class="pb-10">
       <div class="input flex-row-layout text-bold">
+        <span>Monto parcial a depositar a OTC:</span>
+        <span class="flex"></span>
+        <span>{{ transaction.currencyToDeposit.symbol }}</span>&nbsp;
+        <!-- <span>{{ otcComission.content + transaction.amountToDeposit }}</span> -->
+        <span>{{ transaction.amountToDeposit }}</span>
+      </div>
+    </div>
+    <div class="pb-10">
+      <div class="input flex-row-layout text-bold">
         <span>Cobro por transacción:</span>
         <span class="flex"></span>
         <span>{{ transaction.currencyToDeposit.symbol }}</span>&nbsp;
@@ -75,7 +84,8 @@
         <span>Monto a depositar a OTC:</span>
         <span class="flex"></span>
         <span>{{ transaction.currencyToDeposit.symbol }}</span>&nbsp;
-        <span>{{ otcComission.content + transaction.amountToDeposit }}</span>
+        <!-- <span>{{ otcComission.content + transaction.amountToDeposit }}</span> -->
+        <span>{{ transaction.amountToDepositToOTC(otcComission.content) }}</span>
       </div>
     </div>
     <div class="pb-10">

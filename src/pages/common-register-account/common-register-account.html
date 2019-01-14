@@ -60,27 +60,51 @@
       </ion-row>
     </ion-grid>
     <div>
-      <div class="p-5" *ngIf="isExchangeAgent"><input type="text" class="fill-width" placeholder="Nombre / Razón social" formControlName="name"></div>
-      <div class="p-5" *ngIf="isPerson && profileFG.value.type == '0'"><input type="text" class="fill-width" placeholder="Nombres" formControlName="firstName"></div>
-      <div class="p-5" *ngIf="isPerson && profileFG.value.type == '0'"><input type="text" class="fill-width" placeholder="Apellidos" formControlName="lastName"></div>
-      <div class="p-5" *ngIf="isPerson && profileFG.value.type == '1'"><input type="text" class="fill-width" placeholder="Razón social" formControlName="businessName"></div>
-      <div class="p-5" *ngIf="isPerson && profileFG.value.type == '1'"><input type="text" class="fill-width" placeholder="Ruc" formControlName="ruc"></div>
-      <div class="p-5" *ngIf="isExchangeAgent"><input type="text" class="fill-width" placeholder="Dni / Ruc" formControlName="documentNumber"></div>
+      <div class="p-5" *ngIf="isExchangeAgent">
+        <div class="form-input required">
+          <input type="text" class="fill-width" placeholder="Nombre / Razón social" formControlName="name">
+        </div>          
+      </div>
+      <div class="p-5" *ngIf="isPerson && profileFG.value.type == '0'">
+        <div class="form-input required"><input type="text" class="fill-width" placeholder="Nombres" formControlName="firstName"></div>
+      </div>
+      <div class="p-5" *ngIf="isPerson && profileFG.value.type == '0'">
+        <div class="form-input required"><input type="text" class="fill-width" placeholder="Apellidos" formControlName="lastName"></div></div>
+      <div class="p-5" *ngIf="isPerson && profileFG.value.type == '1'">
+        <div class="form-input required"><input type="text" class="fill-width" placeholder="Razón social" formControlName="businessName"></div></div>
+      <div class="p-5" *ngIf="isPerson && profileFG.value.type == '1'">
+        <div class="form-input required"><input type="text" class="fill-width" placeholder="Ruc" formControlName="ruc"></div></div>
+      <div class="p-5" *ngIf="isExchangeAgent">
+        <div class="form-input required"><input type="text" class="fill-width" placeholder="Dni / Ruc" formControlName="documentNumber"></div></div>
       <ng-container *ngIf=" (isExchangeAgent && profileFG.value.type == '1') || (isPerson && profileFG.value.type == '0') ">
         <div class="p-5 pos-relative">
-          <input type="text" class="fill-width" placeholder="Fecha de nacimiento" formControlName="formatBirthdate" readonly>
+          <div class="form-input required">
+            <input type="text" class="fill-width" placeholder="Fecha de nacimiento" formControlName="formatBirthdate" readonly>
+          </div>
           <ion-datetime class="opacity-0" displayFormat="DD/MM/YYYY" formControlName="birthdate"
           pickerFormat="DD MM YYYY"></ion-datetime>
         </div>
       </ng-container>
-      <div class="p-5" *ngIf="isPerson && profileFG.value.type == '0'"><input type="text" class="fill-width" placeholder="Dni / Carné de extranjería" formControlName="documentNumber"></div>
-      <div class="p-5" *ngIf="isExchangeAgent"><input type="text" class="fill-width" placeholder="Dirección" formControlName="address"></div>
-      <div class="p-5" *ngIf="isExchangeAgent"><input type="text" class="fill-width" placeholder="Teléfono / celular" formControlName="phone"></div>
-      <div class="p-5" *ngIf="isPerson"><input type="text" class="fill-width" placeholder="Celular" formControlName="cellphone"></div>
+      <div class="p-5" *ngIf="isPerson && profileFG.value.type == '0'">
+        <div class="form-input required"><input type="text" class="fill-width" placeholder="Dni / Carné de extranjería" formControlName="documentNumber"></div></div>
+      <div class="p-5" *ngIf="isExchangeAgent">
+        <div class="form-input required"><input type="text" class="fill-width" placeholder="Dirección" formControlName="address"></div></div>
+      <div class="p-5" *ngIf="isExchangeAgent">
+        <div class="form-input required"><input type="text" class="fill-width" placeholder="Teléfono / celular" formControlName="phone"></div></div>
+      <div class="p-5" *ngIf="isPerson">
+        <div class="form-input required"><input type="text" class="fill-width" placeholder="Celular" formControlName="cellphone"></div></div>
       <div class="p-5" *ngIf="isExchangeAgent"><input type="text" class="fill-width" placeholder="Número de registro de la SBS" formControlName="sbsRegisterNumber"></div>
       <ng-container formGroupName="user">
-          <div class="p-5"><input type="text" class="fill-width" placeholder="Correo electrónico" formControlName="email"></div>
-          <div class="p-5"><input type="password" class="fill-width" placeholder="Contraseña" formControlName="password"></div>
+          <div class="p-5">
+            <div class="form-input required"><input type="text" class="fill-width" placeholder="Correo electrónico" formControlName="email"></div></div>
+          <div class="p-5 login__password">
+            <div class="form-input pos-relative">
+              <input [type]=" showPassword ?  'text' : 'password'" class="fill-width" placeholder="Contraseña" formControlName="password">
+              <div class="login__password__toggler" (tap)="showPassword = !showPassword">
+                  <ion-icon [name]="showPassword ? 'eye-off' : 'eye' " color="dark"></ion-icon>
+              </div>
+            </div>
+          </div>
       </ng-container>
     </div>
     <div class="p-5">

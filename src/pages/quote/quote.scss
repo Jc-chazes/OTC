@@ -1,3 +1,5 @@
+@import "../../styles/2-tools/mixins/border.scss";
+
 page-quote {
     .quote__choose-user___button-radio{
         width: 14px;
@@ -86,5 +88,22 @@ page-quote {
         width: 100px;
         padding: 8px !important;
         max-width: unset;
+    }
+    .quote__remind{
+        background: #ffffff;
+        position: relative;
+        padding: 8px 15px;
+        @include borderRadius(10px);
+        &::before{
+            content: '';
+            position: absolute;
+            width: 0; 
+            height: 0; 
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 5px solid #ffffff;
+            left: 10px;
+            bottom: 100%;
+        }
     }
 }

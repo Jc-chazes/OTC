@@ -18,6 +18,8 @@
 
 
 <ion-content class="page">
+  <back-button [navCtrl]="navCtrl"></back-button>
+  <div class="spacer-40"></div>
   <div class="myBankAccounts">
     <div class="myBankAccounts__bankAccount text-thin" *ngFor="let bankAccount of bankAccountList">
       <ion-row>

@@ -15,9 +15,11 @@ export class RequestWasRejectedModalComponent {
 
   rejectionReason: string;
   rejectionReasonText: string;
+  cancelledBy: 'EXCHANGE_AGENT' | 'PERSON';
 
   constructor(public viewCtrl: ViewController, private params: NavParams) {
     this.rejectionReason = params.get('rejectionReason');
+    this.cancelledBy = params.get('cancelledBy');
     switch(this.rejectionReason){
       case 'NO_FONDO':
         this.rejectionReasonText = 'No cuenta son saldo suficiente'; break;
