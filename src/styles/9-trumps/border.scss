@@ -1,0 +1,5 @@
+@for $i from 1 through 20{
+    .br-#{$i*1}{
+        @include borderRadius(#{$i*1}px);
+    }
+} 

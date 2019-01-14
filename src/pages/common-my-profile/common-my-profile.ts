@@ -4,6 +4,9 @@ import { CommonViewProfilePage } from '../common-view-profile/common-view-profil
 import { UsersService } from '../../providers/users.service';
 import { AuthProvider } from '../../providers/auth.service';
 import { ChooseProfilePage } from '../choose-profile/choose-profile';
+import { UsPage } from '../us/us';
+import { LegalConditionsPage } from '../legal-conditions/legal-conditions';
+import { ContactUsPage } from '../contact-us/contact-us';
 
 /**
  * Generated class for the CommonMyProfilePage page.
@@ -20,9 +23,9 @@ export class CommonMyProfilePage {
 
   options = [
     { name: 'Mi perfil', icon: '/assets/imgs/icons/profile_user.png', page: CommonViewProfilePage },
-    { name: 'Nosotros', icon: '/assets/imgs/icons/profile_us.png', page: CommonViewProfilePage },
-    { name: 'Condiciones legales', icon: '/assets/imgs/icons/profile_legal.png', page: CommonViewProfilePage },
-    { name: 'Contáctenos', icon: '/assets/imgs/icons/profile_contact.png', page: CommonViewProfilePage },
+    { name: 'Nosotros', icon: '/assets/imgs/icons/profile_us.png', page: UsPage },
+    { name: 'Condiciones legales', icon: '/assets/imgs/icons/profile_legal.png', page: LegalConditionsPage },
+    { name: 'Contáctenos', icon: '/assets/imgs/icons/profile_contact.png', page: ContactUsPage },
     { name: 'www.otc.com', icon: '/assets/imgs/icons/profile_web.png', page: CommonViewProfilePage },
     { name: '@otc.perú', icon: '/assets/imgs/icons/profile_fb.png', page: CommonViewProfilePage }
   ]

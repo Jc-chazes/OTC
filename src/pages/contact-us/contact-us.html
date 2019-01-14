@@ -1,0 +1,42 @@
+
+<ion-header profile-background-color>
+  
+  <ion-navbar hideBackButton>
+    <div class="flex-row-layout ai-center">
+        <ion-title>Contáctenos</ion-title>
+        <span class="flex"></span>
+        <ion-title class="brand">OTC</ion-title>
+    </div>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="page page--white us text-black contact-us">
+  <back-button [navCtrl]="navCtrl"></back-button>
+  <div class="fill-height flex-col-layout" *ngIf="phone">
+    <h3 class="flex-auto text-center">
+      <b>Contáctenos</b>
+    </h3>
+    <div class="flex flex-col-layout jc-center">
+      <p class="text-center">
+        Puedes llamar o escribir a este número <br> para cualquier consulta
+      </p>
+      <div class="spacer-20"></div>
+      <div class="flex-row-layout jc-center flex-gap">
+        <a [href]="'whatsapp://send?abid='+phone.content+'&text=Hola!'">
+          <img src="/assets/imgs/icons/whatsapp.png" alt="" height="35">
+        </a>
+        <a [href]="'tel:'+phoneForTelHref">
+            <img src="/assets/imgs/icons/phone--secondary.png" alt="" height="35">
+        </a>
+      </div>
+      <div class="spacer-10"></div>
+      <div class="flex-row-layout jc-center">
+        <div class="br-5 bk-accent text-center pl-65 pr-65 pt-10 pb-10 text-white">
+          {{ phoneForOrangeBox }}
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

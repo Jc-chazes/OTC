@@ -10,6 +10,11 @@
     .page-title{
         font-size: 1.3em;
     }
+    &--white{
+        background-image: none;
+        background-color: #FFF;
+        color: $primary-color !important;
+    }
     &--money-4{
         background-image: url(/assets/imgs/backgrounds/money_bk_4.png);
         &:before{

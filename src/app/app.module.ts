@@ -79,6 +79,9 @@ import { CommonTransactionInProgressPage } from '../pages/common-transaction-in-
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { UsPage } from '../pages/us/us';
+import { ContactUsPage } from '../pages/contact-us/contact-us';
+import { LegalConditionsPage } from '../pages/legal-conditions/legal-conditions';
 
 @NgModule({
   declarations: [
@@ -114,7 +117,10 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
     PersonNearExchangeAgentsPage,
     CommonRegisterAccountPage,
     PersonSelectSearchModePage,
-    CommonTransactionInProgressPage
+    CommonTransactionInProgressPage,
+    UsPage,
+    ContactUsPage,
+    LegalConditionsPage
   ],
   imports: [
     BrowserModule,
@@ -171,7 +177,10 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
     PersonNearExchangeAgentsPage,
     CommonRegisterAccountPage,
     PersonSelectSearchModePage,
-    CommonTransactionInProgressPage
+    CommonTransactionInProgressPage,
+    UsPage,
+    ContactUsPage,
+    LegalConditionsPage
   ],
   providers: [
     StatusBar,
