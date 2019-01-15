@@ -21,6 +21,7 @@
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="FadeSplashScreen" value="false" />
     <preference name="AutoHideSplashScreen" value="false" />
+    <preference name="orientation" value="portrait" />
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
@@ -94,6 +95,11 @@
     </plugin>
     <plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.2" />
     <plugin name="cordova-plugin-camera" spec="^4.0.3" />
+    <plugin name="cordova-plugin-googleplus" spec="^5.3.2">
+        <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.740710948871-nvt4ps8huflgd92lbpqsf7hghqoedv8i" />
+        <variable name="PLAY_SERVICES_VERSION" value="12.0.0" />
+        <variable name="WEB_APPLICATION_CLIENT_ID" value="740710948871-ilm0aeau71i2bsv0bihdfqojgacvrpo4.apps.googleusercontent.com" />
+    </plugin>
     <engine name="android" spec="7.1.1" />
     <engine name="browser" spec="5.0.4" />
 </widget>

@@ -12,6 +12,7 @@ import { ExchangeAgentTabsPage } from '../exchange-agent-tabs/exchange-agent-tab
 import { UsersService } from '../../providers/users.service';
 import { QuotePage } from '../quote/quote';
 import { AlertUtil } from '../../providers/utils/alert.util';
+import { GooglePlus } from '@ionic-native/google-plus';
 
 
 @Component({
@@ -26,7 +27,8 @@ export class Login implements OnInit {
   exchangeAgent = new ExchangeAgent();
 
   constructor(public nvCtrl : NavController, private auth: AuthProvider, private appState: AppStateService,
-  private loadingCtrl: LoadingController, private users: UsersService, private app: App, private alerts : AlertUtil) {
+  private loadingCtrl: LoadingController, private users: UsersService, private app: App, private alerts : AlertUtil,
+  private googlePlus: GooglePlus) {
     this.user.userType = this.appState.currentState.global.userType;
   }
 
@@ -52,6 +54,12 @@ export class Login implements OnInit {
         }
       })
     }
+  }
+
+  loginWithGoogle(){
+    this.googlePlus.login({})
+    .then(res => alert(JSON.stringify(res)))
+    .catch(err => alert(JSON.stringify(err)));
   }
 
 }
