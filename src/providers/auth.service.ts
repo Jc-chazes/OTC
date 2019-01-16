@@ -18,6 +18,9 @@ import { Transaction } from '../models/transaction.model';
 import { TransactionMapper } from './mappers/transaction.mapper';
 import { CurrenciesService } from './currencies.service';
 import { Contest } from '../models/contest.model';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
+import { GooglePlus } from '@ionic-native/google-plus';
+import { AlertUtil } from './utils/alert.util';
 
 @Injectable()
 export class AuthProvider {
@@ -26,7 +29,8 @@ export class AuthProvider {
 
   constructor( public http : HttpClient, private api: ApiUtil, private storage: StorageUtil,
   private jwt: JwtUtil, private appState: AppStateService, private users: UsersService,
-  private devices: DeviceUtil, private currencies: CurrenciesService) {
+  private devices: DeviceUtil, private currencies: CurrenciesService, private alerts: AlertUtil,
+  private googlePlus: GooglePlus, private facebook: Facebook) {
     this.transactionMapper = new TransactionMapper(currencies,users);      
   }
 
@@ -50,13 +54,14 @@ export class AuthProvider {
           })
   }
 
-  registerPerson(person: Person): Observable<boolean>{
+  registerPerson(person: Person, provider: 'FACEBOOK' | 'GOOGLE'): Observable<boolean>{
     return this.api.post('/auth/local/register',{
       ...pick(person.user,[,'email','password','userType']),
       username: person.user.email.substring( 0, person.user.email.indexOf('@') ),
       profile: {
         ...omit(person,['user','score','fullName'])
-      }
+      },
+      provider
     }).flatMap( resp => {
       this.jwt.setToken(resp.jwt);
       return this.populate();
@@ -93,7 +98,69 @@ export class AuthProvider {
     });
   }
 
+  loginWithGoogle(): Observable<{ email?: string, couldLogin?: boolean, lastName?: string, firstName?: string }>{
+    return Observable.fromPromise( this.googlePlus.login({}) )
+    .flatMap( res => {
+      return this.api.post('/auth/local',{
+        provider: 'GOOGLE',
+        accessToken: res.accessToken
+      },{},false)
+      .flatMap( resp => {
+        if( !resp.error ){
+          this.jwt.setToken(resp.jwt);
+          return this.populate('0')
+          .map( couldPopulate => {
+            return { email: '', couldLogin: couldPopulate };
+          });
+        }else{
+          return Observable.of({ ...resp.data });
+        }          
+      }).catch( err => {
+        // this.alerts.show('No se pudo realizar el login con Google, por favor inténtelo más tarde ','Error login');
+        alert(JSON.stringify(err));
+        return Observable.of({ couldLogin: false });
+      });
+    })
+    .catch( err => {
+      // this.alerts.show('No se pudo realizar el login con Google, por favor inténtelo más tarde ','Error login');
+      alert(JSON.stringify(err));
+      return Observable.of({ couldLogin: false });
+    });
+  }
+
+  loginWithFacebook(): Observable<{ email?: string, couldLogin?: boolean, lastName?: string, firstName?: string }>{
+    return Observable.fromPromise( this.facebook.login(['public_profile', 'user_friends', 'email']) )
+    .flatMap( (res: FacebookLoginResponse) => {
+      return this.api.post('/auth/local',{
+        provider: 'FACEBOOK',
+        accessToken: res.authResponse.accessToken
+      },{},false)
+      .flatMap( resp => {
+        if( !resp.error ){
+          this.jwt.setToken(resp.jwt);
+          return this.populate('0')
+          .map( couldPopulate => {
+            return { email: '', couldLogin: couldPopulate };
+          });
+        }else{
+          return Observable.of({ ...resp.data });
+        }          
+      }).catch( err => {
+        // this.alerts.show('No se pudo realizar el login con Facebook, por favor inténtelo más tarde ','Error login');
+        alert(JSON.stringify(err));        
+        return Observable.of({ couldLogin: false });
+      });
+    })
+    .catch( err => {
+      // this.alerts.show('No se pudo realizar el login con Facebook, por favor inténtelo más tarde ','Error login');
+      alert(JSON.stringify(err));  
+      return Observable.of({ couldLogin: false });
+    });
+  }
+
   logout(): Observable<boolean>{
+    this.facebook.logout().then().catch();
+    this.googlePlus.logout().then().catch();
     return this.devices.getToken()
     .flatMap( token => {
       // let query = new HttpParams();

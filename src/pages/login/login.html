@@ -38,11 +38,6 @@
                 </ion-grid>
             </div>
         </ng-container>
-        <ng-container *ngIf="user.userType == '0'">
-            <button ion-button (tap)="loginWithGoogle()">
-                Google
-            </button>
-        </ng-container>
         <div>
             <input type="email" class="fill-width" [(ngModel)]="user.email"
             placeholder="Correo electrónico">

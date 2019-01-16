@@ -32,6 +32,7 @@ export class CommonRegisterAccountPage {
   userType: string;
   profileFG: FormGroup;
   showPassword = false;
+  provider: 'GOOGLE' | 'FACEBOOK';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private app: App,
   private fb: FormBuilder, private auth: AuthProvider, private appState: AppStateService,
@@ -40,9 +41,9 @@ export class CommonRegisterAccountPage {
     this.userType = this.appState.currentState.global.userType;
     if( this.isPerson ){
       this.profileFG = this.fb.group({
-        firstName: [undefined,[ this.byType('0',Validators.required) ]],//PERSON
-        lastName: [undefined,[ this.byType('0',Validators.required) ]],//PERSON
-        birthdate: [null,[ this.byType('0',Validators.required), this.ageValidator ]],//COMMON
+        firstName: [undefined,[ this.byType('0',Validators.required,'firstName') ]],//PERSON
+        lastName: [undefined,[ this.byType('0',Validators.required,'lastName') ]],//PERSON
+        birthdate: [null,[ this.byType('0',Validators.required,'birthdate'), this.ageValidator ]],//COMMON
         formatBirthdate: [''],//COMMON
         documentNumber: [undefined,[ this.byType('0',Validators.required) ]],//COMMON
         businessName: [undefined,[ this.byType('1',Validators.required) ]],//PERSON
@@ -56,6 +57,14 @@ export class CommonRegisterAccountPage {
           userType: ['0']
         })
       });
+      this.profileFG.patchValue({
+        user: {
+          email: this.navParams.get('email')
+        },
+        firstName: this.navParams.get('firstName'),
+        lastName: this.navParams.get('lastName')
+      });
+      this.provider = this.navParams.get('provider');
     }
     if( this.isExchangeAgent ){
       this.profileFG = this.fb.group({
@@ -82,6 +91,13 @@ export class CommonRegisterAccountPage {
           formatBirthdate
         });
       }
+    });
+    this.profileFG.get('type').valueChanges.subscribe( () => {
+      Object.keys( this.profileFG.controls )
+      .filter( control => [ 'firstName','lastName','birthdate','documentNumber','businessName','ruc' ].indexOf(control) >= 0 )
+      .forEach( control => {
+        this.profileFG.controls[control].updateValueAndValidity();
+      })
     })
   }
 
@@ -113,7 +129,7 @@ export class CommonRegisterAccountPage {
     if( this.isPerson ){
       this.auth.registerPerson( new Person({
         ...omit(this.profileFG.value,['acceptTermsAndConditions','formatBirthdate'])
-      }) ).subscribe( results => {
+      }), this.isPerson && this.profileFG.value.type == '0' ? this.provider : null ).subscribe( results => {
         this.loading.hide();  
         let savedUserBankAccount = this.appState.currentState.register.savedUserBankAccount;
         if( savedUserBankAccount ){
@@ -162,18 +178,17 @@ export class CommonRegisterAccountPage {
   get isPerson() { return this.userType == '0' }
   get isExchangeAgent() { return this.userType == '1' }
 
-  byType( isType: string, validator: Validator | ValidationErrors ){
+  byType( isType: string, validator: Validator | ValidationErrors, name?: string ){
     return (c:AbstractControl) => {
-      if( !c.parent ) return true;
-      if( c.parent.get('type').value == isType ){
+      let result = null;
+      if( !!c.parent && c.parent.get('type').value == isType ){
         if( typeof(validator) == 'function' ){
-          return validator(c);
-        }else{
-          return null;
+          result =  validator(c);
         }
-      }else{
-        return null;
+        // console.log(`${c.parent.get('type').value} - ${isType}`);
       }
+      // console.log(`el control ${name} es ${JSON.stringify(result)}`);
+      return result;
     }
   }
 

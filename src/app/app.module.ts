@@ -72,6 +72,7 @@ import { Device } from '@ionic-native/device';
 import { Firebase } from '@ionic-native/firebase';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { GooglePlus } from '@ionic-native/google-plus';
+import { Facebook } from '@ionic-native/facebook';
 import { ContestsService } from '../providers/contests.service';
 import { CommonRegisterAccountPage } from '../pages/common-register-account/common-register-account';
 import { PersonSelectSearchModePage } from '../pages/person-select-search-mode/person-select-search-mode';
@@ -213,7 +214,8 @@ import { LegalConditionsPage } from '../pages/legal-conditions/legal-conditions'
     LocalNotifications,
     ContestsService,
     Camera,
-    GooglePlus
+    GooglePlus,
+    Facebook
   ]
 })
 export class AppModule {}
