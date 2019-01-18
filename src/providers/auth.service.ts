@@ -9,7 +9,7 @@ import { JwtUtil } from './utils/jwt.util';
 import { User } from '../models/user.model';
 import { AppStateService } from './app-state.service';
 import { UsersService } from './users.service';
-import { StorageUtil } from './utils/storage.util';
+import { StorageUtil, StorageKeys } from './utils/storage.util';
 import { Image } from '../models/shared/image.model';
 import { getImageUrl } from '../helpers/images.helper';
 import { DeviceUtil } from './utils/device.util';
@@ -228,6 +228,7 @@ export class AuthProvider {
 
   purge(){
     this.storage.clear();
+    localStorage.setItem(StorageKeys.SLIDER_HAS_BEEN_SHOWED,'{ loaded: true }'); 
   }
   
 }

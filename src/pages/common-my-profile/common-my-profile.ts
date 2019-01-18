@@ -7,6 +7,7 @@ import { ChooseProfilePage } from '../choose-profile/choose-profile';
 import { UsPage } from '../us/us';
 import { LegalConditionsPage } from '../legal-conditions/legal-conditions';
 import { ContactUsPage } from '../contact-us/contact-us';
+import { StorageUtil, StorageKeys } from '../../providers/utils/storage.util';
 
 /**
  * Generated class for the CommonMyProfilePage page.
@@ -31,7 +32,7 @@ export class CommonMyProfilePage {
   ]
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthProvider,
-    private app: App, private users: UsersService) {
+    private app: App, private users: UsersService, private storage: StorageUtil) {
   }
 
   ionViewDidLoad() {
@@ -46,6 +47,7 @@ export class CommonMyProfilePage {
     this.auth.logout().subscribe(()=>{
       this.auth.purge();
       this.app.getRootNav().setRoot( ChooseProfilePage );
+      this.storage.save(StorageKeys.SLIDER_HAS_BEEN_SHOWED,{ loaded: true });
     },err=>{alert(JSON.stringify(err))});
   }
 

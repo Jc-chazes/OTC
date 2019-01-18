@@ -83,7 +83,6 @@ export class NotificationsService extends BaseService implements CrudService<Not
     listenToContests(modalCtrl: ModalController){
         try{
             this.firebaseNative.onNotificationOpen().subscribe( (notification) => {
-    
                 // if(notification.tap){
                 //     return ;
                 // }

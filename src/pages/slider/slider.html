@@ -1,0 +1,31 @@
+<ion-content class="slider">
+  <span class="slider__closer" (tap)="close()">
+    &times;
+  </span>
+  <div class="slider__background" *ngFor="let slider of sliders; let i = index;"
+  [style.backgroundImage]="getBackgroundImage(slider)"
+  [ngClass]="{ active: currentSlider == i }"></div>
+  <div class="fill-height flex-col-layout ai-center jc-center">
+    <!-- <div class="flex-col-layout ai-center jc-center pos-relative"> -->
+        <ion-slides (ionSlideDidChange)="onSlideChange()" [pager]="true">
+          <ion-slide *ngFor="let slider of sliders; let i = index;">
+            <div class="slider__item pos-relative flex-col-layout jc-center ai-center">
+              <h1 class="text-accent text-center slider__item__title">
+                <b [innerHTML]="slider.text"></b>
+              </h1>
+              <br>
+              <img [src]="slider.icon" alt="" width="80">
+            </div>
+          </ion-slide>
+        </ion-slides>
+        <!-- <div class="spacer-25">
+        </div> -->
+        <!-- <div class="slider__paginator">
+          <div class="slider__paginator__dot"
+          *ngFor="let slider of sliders; let i = index" [ngClass]="{ active: currentSlider == i }">
+  
+          </div>
+        </div> -->
+    <!-- </div> -->
+  </div>
+</ion-content>

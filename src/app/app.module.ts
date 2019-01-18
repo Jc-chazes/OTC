@@ -84,6 +84,7 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { UsPage } from '../pages/us/us';
 import { ContactUsPage } from '../pages/contact-us/contact-us';
 import { LegalConditionsPage } from '../pages/legal-conditions/legal-conditions';
+import { SliderPage } from '../pages/slider/slider';
 
 @NgModule({
   declarations: [
@@ -122,7 +123,8 @@ import { LegalConditionsPage } from '../pages/legal-conditions/legal-conditions'
     CommonTransactionInProgressPage,
     UsPage,
     ContactUsPage,
-    LegalConditionsPage
+    LegalConditionsPage,
+    SliderPage
   ],
   imports: [
     BrowserModule,
@@ -182,7 +184,8 @@ import { LegalConditionsPage } from '../pages/legal-conditions/legal-conditions'
     CommonTransactionInProgressPage,
     UsPage,
     ContactUsPage,
-    LegalConditionsPage
+    LegalConditionsPage,
+    SliderPage
   ],
   providers: [
     StatusBar,
