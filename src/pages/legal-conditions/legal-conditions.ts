@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { ContentsService } from '../../providers/contents.service';
+import { LoadingUtil } from '../../providers/utils/loading.util';
+import { ContentByCodeSpecification } from '../../providers/specifications/content.specification';
+import { getImageUrl } from '../../helpers/images.helper';
 
 /**
  * Generated class for the LegalConditionsPage page.
@@ -14,7 +18,16 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class LegalConditionsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  pdfSrc = '';
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private contents: ContentsService,
+    private loading: LoadingUtil) {
+    this.loading.show();
+    this.contents.findOne( new ContentByCodeSpecification('LEGAL_CONDITIONS') )
+    .subscribe( result => {
+      this.loading.hide();
+      this.pdfSrc = getImageUrl(result.content);
+    })
   }
 
   ionViewDidLoad() {

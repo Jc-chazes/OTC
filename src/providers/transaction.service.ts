@@ -182,10 +182,10 @@ export class TransactionsService extends BaseService implements CrudService<Tran
         }) );
     }
 
-    cancelTransaction(transaction: Transaction){
+    cancelTransaction(transaction: Transaction, cancelledBy: string = 'PERSON'){
         return this.api.put(`/transactions/${transaction.id}`,{
             status: '0',
-            cancelledBy: 'PERSON'
+            cancelledBy: cancelledBy
         }).map( resp => {
             return true; 
         }).catch( err => {

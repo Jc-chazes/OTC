@@ -58,7 +58,7 @@
         <span>Monto parcial solicitado:</span>
         <span class="flex"></span>
         <span>{{ transaction.targetCurrency.symbol }}</span>&nbsp;
-        <span>{{ transaction.amount }}</span>
+        <span>{{ transaction.amount.toFixed(2) }}</span>
       </div>
     </div>
     <div class="pb-10">
@@ -67,7 +67,7 @@
         <span class="flex"></span>
         <span>{{ transaction.currencyToDeposit.symbol }}</span>&nbsp;
         <!-- <span>{{ otcComission.content + transaction.amountToDeposit }}</span> -->
-        <span>{{ transaction.amountToDeposit }}</span>
+        <span>{{ transaction.amountToDeposit.toFixed(2) }}</span>
       </div>
     </div>
     <div class="pb-10">

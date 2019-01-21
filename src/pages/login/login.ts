@@ -15,6 +15,7 @@ import { AlertUtil } from '../../providers/utils/alert.util';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { CommonRegisterAccountPage } from '../common-register-account/common-register-account';
+import { RequestResetPasswordPage } from '../request-reset-password/request-reset-password';
 
 
 @Component({
@@ -56,6 +57,11 @@ export class Login implements OnInit {
         }
       })
     }
+  }
+
+  forgotPassword($event){
+    $event.preventDefault();
+    this.nvCtrl.push(RequestResetPasswordPage);
   }
 
 }

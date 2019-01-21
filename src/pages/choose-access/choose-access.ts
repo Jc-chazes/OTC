@@ -48,6 +48,9 @@ export class ChooseAccessPage {
     // .catch(err => alert(JSON.stringify(err)));
     this.auth.loginWithGoogle()
     .subscribe( result => {
+      if( result.canceled ){
+        return ;
+      }
       if( result.couldLogin ){
         let tabs = null;
         if( this.users.currentUser.userType == '0' ){
@@ -76,6 +79,9 @@ export class ChooseAccessPage {
     // .catch(e => alert(JSON.stringify(e)));
     this.auth.loginWithFacebook()
     .subscribe( result => {
+      if( result.canceled ){
+        return ;
+      }
       if( result.couldLogin ){
         let tabs = null;
         if( this.users.currentUser.userType == '0' ){

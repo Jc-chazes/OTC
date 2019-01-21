@@ -1,4 +1,4 @@
-<div class="termsAndConditionsModal flex-col-layout jc-center fill-height">
+<!-- <div class="termsAndConditionsModal flex-col-layout jc-center fill-height">
   <div class="modal-content fill-height flex-col-layout">
     <p class="text-center">
       <b>Términos y condiciones</b>
@@ -14,4 +14,24 @@
       </button>
     </div>
   </div>
-</div>
+</div> -->
+
+<ion-header profile-background-color>
+
+  <ion-navbar>
+    <div class="flex-row-layout ai-center">
+      <h6>Términos y condiciones</h6>
+      <span class="flex"></span>
+      <h6 (tap)="viewCtrl.dismiss(true)">Entendido</h6>
+    </div>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <pdf-viewer *ngIf="showing" [src]="pdfSrc" 
+    [render-text]="true"
+    style="display: block;"
+    [fit-to-page]="true">
+  </pdf-viewer>
+</ion-content>

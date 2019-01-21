@@ -85,6 +85,10 @@ import { UsPage } from '../pages/us/us';
 import { ContactUsPage } from '../pages/contact-us/contact-us';
 import { LegalConditionsPage } from '../pages/legal-conditions/legal-conditions';
 import { SliderPage } from '../pages/slider/slider';
+import { Deeplinks } from '@ionic-native/deeplinks';
+import { ResetPasswordPage } from '../pages/reset-password/reset-password';
+import { RequestResetPasswordPage } from '../pages/request-reset-password/request-reset-password';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -124,7 +128,9 @@ import { SliderPage } from '../pages/slider/slider';
     UsPage,
     ContactUsPage,
     LegalConditionsPage,
-    SliderPage
+    SliderPage,
+    ResetPasswordPage,
+    RequestResetPasswordPage
   ],
   imports: [
     BrowserModule,
@@ -144,7 +150,8 @@ import { SliderPage } from '../pages/slider/slider';
       messagingSenderId: "100315142938"
     }),
     AngularFireAuthModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    PdfViewerModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -185,7 +192,9 @@ import { SliderPage } from '../pages/slider/slider';
     UsPage,
     ContactUsPage,
     LegalConditionsPage,
-    SliderPage
+    SliderPage,
+    ResetPasswordPage,
+    RequestResetPasswordPage
   ],
   providers: [
     StatusBar,
@@ -218,7 +227,8 @@ import { SliderPage } from '../pages/slider/slider';
     ContestsService,
     Camera,
     GooglePlus,
-    Facebook
+    Facebook,
+    Deeplinks
   ]
 })
 export class AppModule {}

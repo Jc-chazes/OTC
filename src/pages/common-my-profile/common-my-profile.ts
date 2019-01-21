@@ -27,8 +27,8 @@ export class CommonMyProfilePage {
     { name: 'Nosotros', icon: '/assets/imgs/icons/profile_us.png', page: UsPage },
     { name: 'Condiciones legales', icon: '/assets/imgs/icons/profile_legal.png', page: LegalConditionsPage },
     { name: 'Contáctenos', icon: '/assets/imgs/icons/profile_contact.png', page: ContactUsPage },
-    { name: 'www.otc.com', icon: '/assets/imgs/icons/profile_web.png', page: CommonViewProfilePage },
-    { name: '@otc.perú', icon: '/assets/imgs/icons/profile_fb.png', page: CommonViewProfilePage }
+    { name: 'www.otc.com', icon: '/assets/imgs/icons/profile_web.png', page: null, href: 'https://www.otc.com' },
+    { name: '@otc.perú', icon: '/assets/imgs/icons/profile_fb.png', page: null, href: 'https://www.facebook.com/OTC-PERU-948228435371020' }
   ]
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthProvider,
@@ -39,8 +39,12 @@ export class CommonMyProfilePage {
     console.log('ionViewDidLoad CommonMyProfilePage');
   }
 
-  goToOption(option: { name: string, icon: string, page: any }){
-    this.navCtrl.push( option.page );
+  goToOption(option: { name: string, icon: string, page: any, href: string }){
+    if( option.page ){
+      this.navCtrl.push( option.page );
+    }else if( option.href ){
+      window.open(option.href, '_system', 'location=yes');
+    }
   }
 
   logout(){

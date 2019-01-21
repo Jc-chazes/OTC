@@ -28,6 +28,7 @@ import { QuoteAgainModalComponent } from './quote-again-modal/quote-again-modal'
 import { CancelTransactionTriggerComponent } from './cancel-transaction-trigger/cancel-transaction-trigger';
 import { FastSearchModalComponent } from './fast-search-modal/fast-search-modal';
 import { CurrentNotificationWatcherComponent } from './current-notification-watcher/current-notification-watcher';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
 	declarations: [UpdateExchangeReminderComponent,
@@ -57,7 +58,7 @@ import { CurrentNotificationWatcherComponent } from './current-notification-watc
     CancelTransactionTriggerComponent,
     FastSearchModalComponent,
     CurrentNotificationWatcherComponent],
-	imports: [ CommonModule, IonicModule, DirectivesModule ],
+	imports: [ CommonModule, IonicModule, DirectivesModule, PdfViewerModule ],
 	exports: [UpdateExchangeReminderComponent,
     StepperComponent,
     CountdownComponent,

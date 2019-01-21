@@ -53,7 +53,7 @@ export class CommonRegisterAccountPage {
         acceptTermsAndConditions: [false,[]],//COMMON        
         user: this.fb.group({//COMMON
           email: ['',[Validators.email]],
-          password: ['',[Validators.required]],
+          password: ['', this.navParams.get('email') ? [] : [Validators.required ]],
           userType: ['0']
         })
       });

@@ -42,7 +42,7 @@ export class CancelTransactionTriggerComponent implements OnDestroy{
       this.users.currentUser.isPerson() ? 
         this.users.currentUser.person.currentTransaction :
         this.users.currentUser.exchangeAgent.currentTransaction 
-    )
+    , this.users.currentUser.isPerson() ? 'PERSON' : 'EXCHANGE_AGENT' )
     .subscribe( couldCancel => {
       if( couldCancel ){
         // if( this.users.currentUser.isPerson() ){

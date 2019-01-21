@@ -21,6 +21,7 @@ import { Contest } from '../models/contest.model';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { AlertUtil } from './utils/alert.util';
+import { Configuration } from '../settings/configuration.settings';
 
 @Injectable()
 export class AuthProvider {
@@ -32,6 +33,31 @@ export class AuthProvider {
   private devices: DeviceUtil, private currencies: CurrenciesService, private alerts: AlertUtil,
   private googlePlus: GooglePlus, private facebook: Facebook) {
     this.transactionMapper = new TransactionMapper(currencies,users);      
+  }
+
+  resetPassword(newPassword: string, resetPasswordToken: string): Observable<boolean>{
+    return this.api.post('/auth/reset-password',{
+      password: newPassword,
+      passwordConfirmation: newPassword,
+      code: resetPasswordToken
+    },{},false).map( resp => {
+      return true;
+    }).catch( err => {
+      console.error(err);
+      return Observable.of(false);
+    })
+  }
+
+  sendResetPasswordEmail(email: string){
+    return this.api.post('/auth/forgot-password',{
+      email,
+      url: Configuration.resetPasswordUrl
+    },{},false).map( resp => {
+      return true;
+    }).catch( err => {
+      console.error(err);
+      return Observable.of(false);
+    })
   }
 
   setAppUserType(userType: string){
@@ -98,13 +124,15 @@ export class AuthProvider {
     });
   }
 
-  loginWithGoogle(): Observable<{ email?: string, couldLogin?: boolean, lastName?: string, firstName?: string }>{
+  loginWithGoogle(): Observable<{ email?: string, couldLogin?: boolean, lastName?: string, firstName?: string, canceled?: boolean }>{
     return Observable.fromPromise( this.googlePlus.login({}) )
-    .flatMap( res => {
+    .flatMap( resp => {
       return this.api.post('/auth/local',{
         provider: 'GOOGLE',
-        accessToken: res.accessToken
+        accessToken: resp.accessToken
       },{},false)
+      .do( resp => {
+      })
       .flatMap( resp => {
         if( !resp.error ){
           this.jwt.setToken(resp.jwt);
@@ -113,22 +141,22 @@ export class AuthProvider {
             return { email: '', couldLogin: couldPopulate };
           });
         }else{
-          return Observable.of({ ...resp.data });
+          return Observable.of({ ...resp.data, couldLogin: false });
         }          
       }).catch( err => {
         // this.alerts.show('No se pudo realizar el login con Google, por favor inténtelo más tarde ','Error login');
-        alert(JSON.stringify(err));
+        // alert(JSON.stringify(err));
         return Observable.of({ couldLogin: false });
       });
     })
     .catch( err => {
       // this.alerts.show('No se pudo realizar el login con Google, por favor inténtelo más tarde ','Error login');
-      alert(JSON.stringify(err));
+      // alert(JSON.stringify(err));
       return Observable.of({ couldLogin: false });
     });
   }
 
-  loginWithFacebook(): Observable<{ email?: string, couldLogin?: boolean, lastName?: string, firstName?: string }>{
+  loginWithFacebook(): Observable<{ email?: string, couldLogin?: boolean, lastName?: string, firstName?: string, canceled?: boolean }>{
     return Observable.fromPromise( this.facebook.login(['public_profile', 'user_friends', 'email']) )
     .flatMap( (res: FacebookLoginResponse) => {
       return this.api.post('/auth/local',{
@@ -143,17 +171,20 @@ export class AuthProvider {
             return { email: '', couldLogin: couldPopulate };
           });
         }else{
-          return Observable.of({ ...resp.data });
+          return Observable.of({ ...resp.data, couldLogin: false });
         }          
       }).catch( err => {
         // this.alerts.show('No se pudo realizar el login con Facebook, por favor inténtelo más tarde ','Error login');
-        alert(JSON.stringify(err));        
+        // alert(JSON.stringify(err));        
         return Observable.of({ couldLogin: false });
       });
     })
     .catch( err => {
       // this.alerts.show('No se pudo realizar el login con Facebook, por favor inténtelo más tarde ','Error login');
-      alert(JSON.stringify(err));  
+      if( err.errorCode ){
+        return Observable.of({ couldLogin: false, canceled: true });
+      }
+      // alert(JSON.stringify(err));  
       return Observable.of({ couldLogin: false });
     });
   }
@@ -184,6 +215,7 @@ export class AuthProvider {
       .map( resp => {
         if( !!userTypeToVerify && resp.userType != userTypeToVerify ){
           console.warn('Autenticación fallida para el perfil seleccionado');
+          this.purge();
           return false;
         }
         let user = new User({

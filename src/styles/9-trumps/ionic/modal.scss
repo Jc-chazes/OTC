@@ -1,7 +1,7 @@
 .modal-wrapper{
 }
 
-ion-modal ion-backdrop{
+ion-modal:not(.termsAndConditionsModal) ion-backdrop{
     visibility: visible !important;
 }
 
@@ -57,7 +57,7 @@ ion-modal ion-backdrop{
     }
 }
 
-.termsAndConditionsModal, .requestWasAcceptedModalComponent{
+.requestWasAcceptedModalComponent{
     .modal-wrapper{
         height: 380px !important;
         top: calc( 50% - 190px ) !important;

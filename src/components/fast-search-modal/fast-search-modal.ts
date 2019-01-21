@@ -33,7 +33,7 @@ export class FastSearchModalComponent implements OnDestroy {
       this.constants.findOne( new ConstantByCodeSpecification(`OTC_FAST_SEARCH_SECOND_TIME`) )
     ).subscribe( results => {
       this.otcFastSearchFirstTime = results[0];
-      this.otcFastSearchSecondTime = results[0];
+      this.otcFastSearchSecondTime = results[1];
       this.contests.contestChange( this.contest.id )
         .takeUntil( componentDestroyed(this) )
         .subscribe( contest => {

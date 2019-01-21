@@ -39,7 +39,7 @@ export class ModalUtil{
         switch(modal){
             case AvailableModals.TermsAndConditions:
                 modalInstance = modalCtrl.create(TermsAndConditionsModalComponent,data,
-                Object.assign({},options,{ cssClass: 'alertModal termsAndConditionsModal' }));
+                Object.assign({},options,{ cssClass: 'termsAndConditionsModal' }));
                 break;
             case AvailableModals.OpportunityToParticipate:
                 modalInstance = modalCtrl.create(OpportunityToParticipateModalComponent,data,

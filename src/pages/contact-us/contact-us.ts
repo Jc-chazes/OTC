@@ -31,11 +31,11 @@ export class ContactUsPage {
   }
 
   get phoneForOrangeBox(){
-    return (this.phone.content as string).match(/.{1,3}/g).join(' ');
+    return this.phone && this.phone.content ? (this.phone.content as string).match(/.{1,3}/g).join(' ') : '';
   }
 
   get phoneForTelHref(){
-    return (this.phone.content as string).match(/.{1,3}/g).join('-');
+    return this.phone && this.phone.content ? (this.phone.content as string).match(/.{1,3}/g).join('-') : '';
   }
 
 }
