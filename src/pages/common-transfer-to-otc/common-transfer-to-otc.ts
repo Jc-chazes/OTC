@@ -68,16 +68,23 @@ export class CommonTransferToOtcPage {
     if( this.canContinue ){
       return true;
     }
-    let canLeave = false;
     if( this.users.currentUser.isPerson() ){
-      canLeave = !this.users.currentUser.person.currentTransaction;
-    }else{
-      canLeave = !this.users.currentUser.exchangeAgent.currentTransaction ;
-    }
-    if( !canLeave ){
       this.alerts.show('Tienes una transacción en curso',"OTC");
+      return false;
     }
-    return canLeave;
+    // if( this.canContinue ){
+    //   return true;
+    // }
+    // let canLeave = false;
+    // if( this.users.currentUser.isPerson() ){
+    //   canLeave = !this.users.currentUser.person.currentTransaction;
+    // }else{
+    //   canLeave = !this.users.currentUser.exchangeAgent.currentTransaction ;
+    // }
+    // if( !canLeave ){
+    //   this.alerts.show('Tienes una transacción en curso',"OTC");
+    // }
+    // return canLeave;
   }
 
   continue(){

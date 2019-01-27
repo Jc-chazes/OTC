@@ -129,8 +129,11 @@ export class CommonRegisterAccountPage {
     if( this.isPerson ){
       this.auth.registerPerson( new Person({
         ...omit(this.profileFG.value,['acceptTermsAndConditions','formatBirthdate'])
-      }), this.isPerson && this.profileFG.value.type == '0' ? this.provider : null ).subscribe( results => {
+      }), this.isPerson && this.profileFG.value.type == '0' ? this.provider : null ).subscribe( couldRegister => {
         this.loading.hide();  
+        if( !couldRegister ){
+          return ;
+        }
         let savedUserBankAccount = this.appState.currentState.register.savedUserBankAccount;
         if( savedUserBankAccount ){
           this.UsersBankAccounts.add( savedUserBankAccount as UserBankAccount )
@@ -144,8 +147,11 @@ export class CommonRegisterAccountPage {
     if( this.isExchangeAgent ){
       this.auth.registerExchangeAgent( new ExchangeAgent({
         ...omit(this.profileFG.value,['acceptTermsAndConditions','formatBirthdate'])
-      }) ).subscribe( results => {
+      }) ).subscribe( couldRegister => {
         this.loading.hide();  
+        if( !couldRegister ){
+          return ;
+        }
         let savedUserBankAccount = this.appState.currentState.register.savedUserBankAccount;
         if( savedUserBankAccount ){
           this.UsersBankAccounts.add( savedUserBankAccount as UserBankAccount )

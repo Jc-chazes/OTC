@@ -99,12 +99,27 @@
   </div>
   <div class="spacer-20"></div>
   <div class="flex-col-layout ai-center">
-    <button fluid ion-button color="secondary" (tap)="reject()">
-      Rechazar
-    </button>
-    <div class="spacer-10"></div>
-    <button fluid ion-button color="secondary" (tap)="continue()">
-      Siguiente
-    </button>
+    <ng-container *ngIf="isFast">
+      <button fluid ion-button color="secondary" (tap)="continue()">
+        Siguiente
+      </button>
+      <!-- <div class="spacer-10"></div>
+      <button fluid ion-button color="secondary" (tap)="reject()">
+        Rechazar
+      </button> -->
+    </ng-container>
+    <ng-container *ngIf="isSafe">
+      <div class="input flex-row-layout jc-center countdown">
+        <countdown [date]="transaction.limitDate"></countdown>
+      </div>
+      <div class="spacer-10"></div>
+      <button fluid ion-button color="secondary" (tap)="continue()">
+        Aceptar solicitud
+      </button>
+      <div class="spacer-10"></div>
+      <button fluid ion-button color="secondary" (tap)="reject()">
+        Rechazar solicitud
+      </button>
+    </ng-container>
   </div>
 </ion-content>

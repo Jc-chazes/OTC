@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ViewController } from 'ionic-angular';
+import { ViewController, NavParams } from 'ionic-angular';
 
 /**
  * Generated class for the WaitYourRequestModalComponent component.
@@ -14,10 +14,10 @@ import { ViewController } from 'ionic-angular';
 export class WaitYourRequestModalComponent {
 
   text: string;
+  isFastRequest: boolean;
 
-  constructor(public viewCtrl: ViewController) {
-    console.log('Hello WaitYourRequestModalComponent Component');
-    this.text = 'Hello World';
+  constructor(public viewCtrl: ViewController, public navParams: NavParams) {
+    this.isFastRequest = navParams.get('isFastRequest');
   }
 
 }

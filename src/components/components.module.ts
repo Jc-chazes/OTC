@@ -29,6 +29,8 @@ import { CancelTransactionTriggerComponent } from './cancel-transaction-trigger/
 import { FastSearchModalComponent } from './fast-search-modal/fast-search-modal';
 import { CurrentNotificationWatcherComponent } from './current-notification-watcher/current-notification-watcher';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { ContinueTransactionOrBackModalComponent } from './continue-transaction-or-back-modal/continue-transaction-or-back-modal';
+import { RequestAcceptedComponent } from './request-accepted/request-accepted';
 
 @NgModule({
 	declarations: [UpdateExchangeReminderComponent,
@@ -57,7 +59,9 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     QuoteAgainModalComponent,
     CancelTransactionTriggerComponent,
     FastSearchModalComponent,
-    CurrentNotificationWatcherComponent],
+    CurrentNotificationWatcherComponent,
+    ContinueTransactionOrBackModalComponent,
+    RequestAcceptedComponent],
 	imports: [ CommonModule, IonicModule, DirectivesModule, PdfViewerModule ],
 	exports: [UpdateExchangeReminderComponent,
     StepperComponent,
@@ -85,7 +89,9 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     QuoteAgainModalComponent,
     CancelTransactionTriggerComponent,
     FastSearchModalComponent,
-    CurrentNotificationWatcherComponent],
+    CurrentNotificationWatcherComponent,
+    ContinueTransactionOrBackModalComponent,
+    RequestAcceptedComponent],
     entryComponents: [
         RejectWarningComponent,
         RejectReasonSelectComponent,
@@ -105,7 +111,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
         RequestWasAcceptedModalComponent,
         ScoreYourExperienceModalComponent,
         QuoteAgainModalComponent,
-        FastSearchModalComponent
+        FastSearchModalComponent,
+        ContinueTransactionOrBackModalComponent
     ]
 })
 export class ComponentsModule {}

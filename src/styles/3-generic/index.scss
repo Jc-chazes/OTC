@@ -1,7 +1,7 @@
 @include font-face($font-primary,"../../assets/fonts/Champagne & Limousines", 400, normal, ttf);
 @include font-face($font-primary,"../../assets/fonts/Champagne & Limousines Italic", 400, italic, ttf);
-@include font-face($font-primary,"../../assets/fonts/Champagne & Limousines Bold", 600, normal, ttf);
-@include font-face($font-primary,"../../assets/fonts/Champagne & Limousines Bold Italic", 600, italic, ttf);
+// @include font-face($font-primary,"../../assets/fonts/Champagne & Limousines Bold", 600, normal, ttf);
+// @include font-face($font-primary,"../../assets/fonts/Champagne & Limousines Bold Italic", 600, italic, ttf);
 
 body{
     font-size: $font-size;

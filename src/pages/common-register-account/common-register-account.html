@@ -97,7 +97,8 @@
       <div class="p-5" *ngIf="isExchangeAgent"><input type="text" class="fill-width" placeholder="Número de registro de la SBS" formControlName="sbsRegisterNumber"></div>
       <ng-container formGroupName="user">
           <div class="p-5">
-            <div class="form-input required"><input type="text" class="fill-width" placeholder="Correo electrónico" formControlName="email"></div></div>
+            <div class="form-input required"><input type="text" class="fill-width" placeholder="Correo electrónico" 
+            formControlName="email" [readonly]="!!this.navParams.get('email')"></div></div>
           <div class="p-5 login__password" *ngIf="!this.navParams.get('email')">
             <div class="form-input pos-relative">
               <input [type]=" showPassword ?  'text' : 'password'" class="fill-width" placeholder="Contraseña" formControlName="password">

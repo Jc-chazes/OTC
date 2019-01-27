@@ -1,0 +1,22 @@
+<div class="continueTransactionOrBackModal flex-col-layout jc-center fill-height">
+  <div class="modal-content">
+    <p class="text-center">
+      <b>Motivos</b>
+    </p>
+  </div>
+  <div radio-group [(ngModel)]="option" padding>
+    <div class="flex-row-layout ai-center flex-gap">
+      <ion-radio mode="md" color="secondary" [value]="'CONTINUE'"></ion-radio>
+      <p (tap)="option = 'CONTINUE'">Deseo continuar y culminar todo el proceso</p>
+    </div>
+    <div class="flex-row-layout ai-center flex-gap">
+      <ion-radio mode="md" color="secondary" [value]="'RETURN'"></ion-radio>
+      <p (tap)="option = 'RETURN'">Volver a ver lista de solicitudes</p>
+    </div>
+  </div>
+  <div class="flex-col-layout ai-center">
+    <button fluid ion-button color="dark" (tap)="viewCtrl.dismiss(option)">
+      Ok
+    </button>
+  </div>
+</div>

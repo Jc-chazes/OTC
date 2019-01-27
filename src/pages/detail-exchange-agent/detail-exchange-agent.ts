@@ -18,6 +18,7 @@ import { Contest } from '../../models/contest.model';
 import { Observable } from 'rxjs';
 import { ContestsService } from '../../providers/contests.service';
 import { UsersService } from '../../providers/users.service';
+import { ByIdSpecification } from '../../providers/specifications/base.specification';
 
 
 @Component({
@@ -80,13 +81,24 @@ export class DetailExchangeAgentPage {
       }
       this.loading.hide();
       if( createdTransaction ){
-        this.modals.openModal(this.modalCtrl,AvailableModals.WaitYourRequestModal)
+        this.modals.openModal(this.modalCtrl,AvailableModals.WaitYourRequestModal,{ isFastRequest: this.transaction.type == 'FAST' })
         .then( () => {
-          this.transactions.setCurrentTransaction(createdTransaction)
-          .subscribe( () => {
-            this.navCtrl.setRoot( CommonTransactionInProgressPage );
-            this.navCtrl.popToRoot();
-          });
+          if( this.transaction.type == 'FAST' ){
+            this.loading.show();
+            this.transactions.findOne( new ByIdSpecification(this.transaction.id) )
+            .subscribe( transaction => {
+              this.loading.hide();
+              this.navCtrl.push(CommonSelectBankAccountPage,{
+                transaction
+              });
+            })
+          }else{
+            this.transactions.setCurrentTransaction(createdTransaction)
+            .subscribe( () => {
+              this.navCtrl.setRoot( CommonTransactionInProgressPage );
+              this.navCtrl.popToRoot();
+            });
+          }
         })
       }
     });

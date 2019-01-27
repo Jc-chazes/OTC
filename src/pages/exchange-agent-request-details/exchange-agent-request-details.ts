@@ -11,6 +11,7 @@ import { RejectReasonSelectComponent } from '../../components/reject-reason-sele
 import { LoadingUtil } from '../../providers/utils/loading.util';
 import { TransactionsService } from '../../providers/transaction.service';
 import { CommonSelectBankAccountPage } from '../common-select-bank-account/common-select-bank-account';
+import { ModalUtil, AvailableModals } from '../../providers/utils/modal.util';
 
 /**
  * Generated class for the ExchangeAgentRequestDetailsPage page.
@@ -30,7 +31,7 @@ export class ExchangeAgentRequestDetailsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private sanitizer: DomSanitizer,
   private constants: ConstantsService, private alerts: AlertUtil, private modalCtrl: ModalController,
-  private loading: LoadingUtil, private transactions: TransactionsService) {
+  private loading: LoadingUtil, private transactions: TransactionsService, private modals: ModalUtil) {
     this.transaction = this.navParams.get('transaction');
     this.constants.findOne( new ConstantByCodeSpecification(`OTC_COMISSION_${this.transaction.exchangeAgentOffering.requestedCurrency}`) )
     .subscribe( result => {
@@ -41,6 +42,14 @@ export class ExchangeAgentRequestDetailsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ExchangeAgentRequestDetailsPage');
+  }
+
+  get isFast(){
+    return this.transaction.type == 'FAST';
+  }
+
+  get isSafe(){
+    return this.transaction.type == 'SAFE';
   }
 
   get avatarUrl(){
@@ -54,13 +63,31 @@ export class ExchangeAgentRequestDetailsPage {
     this.loading.show();
     this.transactions.acceptTransaction( this.transaction )
     .subscribe( coudlBeAccepted => {
-      this.loading.hide();
-      this.transactions.setCurrentTransaction(this.transaction)
-      .subscribe()
-      this.navCtrl.push( CommonSelectBankAccountPage,{
-        transaction: this.transaction
-      });
+      this.modals.openModal(this.modalCtrl,AvailableModals.RequestWasAcceptedModal)
+      .then( () => {
+        this.loading.hide();
+        this.askForContinueOrBack();
+      })
     })
+  }
+
+  askForContinueOrBack(){
+    this.modals.openModal(this.modalCtrl,AvailableModals.ContinueTransactionOrBackModal)
+    .then( (selectedOption?: 'CONTINUE' | 'RETURN') => {
+      if( !selectedOption || selectedOption == 'RETURN' ){
+        this.navCtrl.pop();
+      }else{
+        this.continueToNextSteps();
+      }
+    });
+  }
+
+  continueToNextSteps(){
+    this.transactions.setCurrentTransaction(this.transaction)
+    .subscribe()
+    this.navCtrl.push( CommonSelectBankAccountPage,{
+      transaction: this.transaction
+    });
   }
 
   reject(){

@@ -14,7 +14,7 @@
 
 <ion-content padding class="page">
   <current-notification-watcher [navCtrl]="navCtrl"></current-notification-watcher>
-  <back-button [navCtrl]="navCtrl"></back-button>
+  <back-button [navCtrl]="navCtrl" [viewCtrl]="viewCtrl" [popToIndex]=" users.currentUser.isPerson() ? 0 : 1 "></back-button>
   <div class="spacer-20"></div>
   <stepper mode="exchange-agent" [currentStep]="3"></stepper>
   <div class="spacer-20"></div>

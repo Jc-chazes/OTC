@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, ViewController } from 'ionic-angular';
 import { Image } from '../../models/shared/image.model';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SuccessfulTransactionModalComponent } from '../../components/successful-transaction-modal/successful-transaction-modal';
@@ -12,6 +12,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { b64toBlob } from '../../helpers/images.helper';
 import { UsersService } from '../../providers/users.service';
 import { CommonTransactionInProgressPage } from '../common-transaction-in-progress/common-transaction-in-progress';
+import { popToIndex } from '../../helpers/nav-controller.helper';
 
 /**
  * Generated class for the CommonSendVoucherPage page.
@@ -38,7 +39,8 @@ export class CommonSendVoucherPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alerts: AlertUtil,
     public sanitizer: DomSanitizer, private modalCtrl: ModalController, private loading: LoadingUtil,
-    private transactions: TransactionsService, private camera: Camera, private users: UsersService) {
+    private transactions: TransactionsService, private camera: Camera, private users: UsersService,
+    private viewCtrl: ViewController) {
     this.transaction = this.navParams.get('transaction');
     this.voucherFileReader.onload = () => {
       this.voucher.fileUrl = this.voucherFileReader.result as string;
@@ -95,9 +97,13 @@ export class CommonSendVoucherPage {
           // }else{
           //   this.navCtrl.popTo( this.navCtrl.getByIndex(0) );
           // }
-          this.transactions.setTransactionTabRoot( 'TRANSACTION_IN_PROGRESS' );
-          this.navCtrl.setRoot(CommonTransactionInProgressPage);
-          this.navCtrl.popToRoot();
+          if( this.users.currentUser.isPerson() ){
+            this.transactions.setTransactionTabRoot( 'TRANSACTION_IN_PROGRESS' );
+            this.navCtrl.setRoot(CommonTransactionInProgressPage);
+            this.navCtrl.popToRoot();
+          }else{
+            popToIndex(this.navCtrl,this.viewCtrl,1);
+          }
         });
         successfulTransactionModal.present();
       }

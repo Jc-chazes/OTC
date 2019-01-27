@@ -10,7 +10,7 @@ import { Notification } from "../models/notification.model";
 import { Transaction } from "../models/transaction.model";
 import { uniqBy, sortBy } from 'lodash';
 import { NotificationMapper } from "./mappers/notification.mapper";
-import { ModalController, Platform } from "ionic-angular";
+import { ModalController, Platform, Tabs } from "ionic-angular";
 import { Firebase } from "@ionic-native/firebase";
 import { AvailableModals, ModalUtil } from "./utils/modal.util";
 import { LocalNotifications } from "@ionic-native/local-notifications";
@@ -80,7 +80,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
         return toReturn;
     }
 
-    listenToContests(modalCtrl: ModalController){
+    listenToContests(modalCtrl: ModalController, currenTabs?: Tabs){
         try{
             this.firebaseNative.onNotificationOpen().subscribe( (notification) => {
                 // if(notification.tap){
@@ -150,6 +150,22 @@ export class NotificationsService extends BaseService implements CrudService<Not
                         break;
                     case 'REJECTED_BY_EXCHANGE_AGENT':
                         console.log(notification.cancelledBy);
+
+                        var showQuoteAgainModal = () => {
+
+                            this.modals.openModal(modalCtrl,AvailableModals.QuoteAgainModal)
+                            .then( (quoteAgain) => {
+                                // alert(quoteAgain);
+                                // alert(currenTabs? 'Existe currentTabs' : 'No existe currentTabs');
+                                if( quoteAgain ){
+                                    currenTabs.select(0);
+                                }else{
+                                    currenTabs.select(1);
+                                }
+                            });
+
+                        }
+
                         if( this.users.currentUser.isPerson() ){
                             this.modals.openModal(modalCtrl,AvailableModals.RequestWasRejectedModal,{
                                 rejectionReason: notification.rejectionReason,
@@ -161,8 +177,12 @@ export class NotificationsService extends BaseService implements CrudService<Not
                                     .subscribe( transaction => {
                                         this.modals.openModal(modalCtrl,AvailableModals.ScoreYourExperienceModal,{
                                             transaction
+                                        }).then(()=>{
+                                            showQuoteAgainModal();
                                         });
                                     })                                    
+                                }else{
+                                    showQuoteAgainModal();
                                 }
                             })
                         }

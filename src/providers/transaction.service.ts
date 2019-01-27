@@ -23,6 +23,7 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 import { ModalUtil, AvailableModals } from "./utils/modal.util";
 import { Currency } from "../models/currency.model";
 import { AngularFirestore } from "angularfire2/firestore";
+import { User } from "../models/user.model";
 
 @Injectable()
 export class TransactionsService extends BaseService implements CrudService<Transaction>{
@@ -213,6 +214,28 @@ export class TransactionsService extends BaseService implements CrudService<Tran
 
     clearCurrentTransaction(){
         this.users.currentUser.currentTransaction = undefined;
+    }
+
+    getCurrentStepForTransaction( user:User, transaction: Transaction): 'PENDING_TO_ACCEPT' | 'BANK_ACCOUNT_REQUIRED' | 'UPLOAD_PHOTO' | 'PENDING_FROM_OTC' | 'FINISHED' | 'REJECTED'{
+        if( user.isExchangeAgent() ){
+            if( transaction.status == '0' ){
+                return 'REJECTED';
+            }else if( transaction.status == '1' ){
+                return 'FINISHED';
+            }else if( transaction.status == '2' ){
+                return 'PENDING_TO_ACCEPT';
+            }else if( transaction.status == '3' ){
+                if( !transaction.exchangeAgentBankAccount ){
+                    return 'BANK_ACCOUNT_REQUIRED';
+                }else if( !transaction.exchangeAgentTransactionImage ){
+                    return 'UPLOAD_PHOTO';
+                }else{
+                    return 'PENDING_FROM_OTC';
+                }
+            } 
+        }else{
+            throw new Error('Not supported');
+        }
     }
 
 }

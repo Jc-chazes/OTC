@@ -1,4 +1,4 @@
-<div class="waitYourRequestModal flex-col-layout jc-center fill-height">
+<div class="waitYourRequestModal flex-col-layout jc-center fill-height" *ngIf="!isFastRequest">
   <div class="modal-content">
     <p class="text-center">
       <b>Espere un momento, su <br> solicitud está siendo procesada. </b>
@@ -12,6 +12,23 @@
   <div class="flex-row-layout jc-center">
     <button fluid ion-button color="dark" (tap)="viewCtrl.dismiss(false)">
       Entendido
+    </button>
+  </div>
+</div>
+<div class="waitYourRequestModal flex-col-layout jc-center fill-height" *ngIf="isFastRequest">
+  <div class="modal-content">
+    <p class="text-center">
+      <b>Selección<br>exitosa</b>
+    </p>
+    <div class="spacer-10"></div>
+    <div class="text-center">
+      <img src="/assets/imgs/icons/success.png" alt="" width="70">
+    </div>
+    <div class="spacer-10"></div>
+  </div>
+  <div class="flex-row-layout jc-center">
+    <button fluid ion-button color="dark" (tap)="viewCtrl.dismiss()">
+      Ok
     </button>
   </div>
 </div>

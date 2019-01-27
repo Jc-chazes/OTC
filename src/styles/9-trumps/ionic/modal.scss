@@ -42,6 +42,12 @@ ion-modal:not(.termsAndConditionsModal) ion-backdrop{
     }
 }
 
+.continueTransactionOrBackModalComponent{
+    .modal-wrapper{
+        @extend %modal;
+    }
+}
+
 .alertModal{
     .modal-wrapper{
         @extend %modal;
@@ -74,5 +80,12 @@ ion-modal:not(.termsAndConditionsModal) ion-backdrop{
     .modal-wrapper{
         height: 400px !important;
         top: calc( 50% - 200px ) !important;
+    }
+}
+
+.quoteAgainModalComponent{
+    .modal-wrapper{
+        height: 300px !important;
+        top: calc( 50% - 150px ) !important;
     }
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, ViewController } from 'ionic-angular';
 import { UserBankAccount } from '../../models/user-bank-account.model';
 import { Bank } from '../../models/bank.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -37,8 +37,8 @@ export class CommonSelectBankAccountPage {
   acceptTermsAndConditions = false;
   canContinue = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alerts: AlertUtil,
-    private userBankAccounts: UsersBankAccountsService, private loading: LoadingUtil, private users: UsersService,
+  constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, private alerts: AlertUtil,
+    private userBankAccounts: UsersBankAccountsService, private loading: LoadingUtil, public users: UsersService,
     private banks: BanksService, private fb: FormBuilder, private transactions: TransactionsService,
     private modalCtrl: ModalController, private modals: ModalUtil) {
     this.transaction = this.navParams.get('transaction');
@@ -62,16 +62,20 @@ export class CommonSelectBankAccountPage {
     if( this.canContinue ){
       return true;
     }
-    let canLeave = false;
-    if( this.users.currentUser.isPerson() ){
-      canLeave = !this.users.currentUser.person.currentTransaction;
-    }else{
-      canLeave = !this.users.currentUser.exchangeAgent.currentTransaction ;
-    }
-    if( !canLeave ){
+    if( this.users.currentUser.isPerson() && !!this.users.currentUser.person.currentTransaction ){
       this.alerts.show('Tienes una transacción en curso',"OTC");
+      return false;
     }
-    return canLeave;
+    // let canLeave = false;
+    // if( this.users.currentUser.isPerson() ){
+    //   canLeave = !this.users.currentUser.person.currentTransaction;
+    // }else{
+    //   canLeave = !this.users.currentUser.exchangeAgent.currentTransaction ;
+    // }
+    // if( !canLeave ){
+    //   this.alerts.show('Tienes una transacción en curso',"OTC");
+    // }
+    // return canLeave;
   }
 
   ionViewWillEnter(){

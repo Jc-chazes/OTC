@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { NavController, NavParams, ModalController, Tabs } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { CommonMyNotificationsPage } from '../common-my-notifications/common-my-notifications';
@@ -25,7 +25,7 @@ import { ContestsService } from '../../providers/contests.service';
   selector: 'page-person-tabs',
   templateUrl: 'person-tabs.html',
 })
-export class PersonTabsPage {
+export class PersonTabsPage implements OnInit{
 
   tabHome: any = QuotePage;
   tabNotifications: any = CommonMyNotificationsPage;
@@ -37,8 +37,8 @@ export class PersonTabsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl: ModalController,
     private modals: ModalUtil, private notifications: NotificationsService, private users: UsersService, 
     private transactions: TransactionsService, private alerts: AlertUtil, private loading: LoadingUtil, 
-    private contests: ContestsService) {
-    this.notifications.listenToContests( this.modalCtrl );
+    private contests: ContestsService) {    
+
     this.notifications.onTabChangeRequested.subscribe( request => {
       this.tabParams = request.data;
       this.tabRef.select(request.tabIndex)
@@ -51,17 +51,24 @@ export class PersonTabsPage {
         this.tabHome = QuotePage;
       }
     });
-    if( this.users.currentUser.currentTransaction ){
-      if( this.users.currentUser.isPerson() && !!this.users.currentUser.currentTransaction.userTransactionImage ){
+    let { currentTransaction } = this.users.currentUser;
+    if( currentTransaction ){
+      if( this.users.currentUser.isPerson() && !!currentTransaction.userTransactionImage ){
         this.transactions.setTransactionTabRoot('TRANSACTION_IN_PROGRESS');
       }
-      if( this.users.currentUser.isExchangeAgent() && !!this.users.currentUser.currentTransaction.exchangeAgentTransactionImage ){
+      if( this.users.currentUser.isExchangeAgent() && !!currentTransaction.exchangeAgentTransactionImage ){
         this.transactions.setTransactionTabRoot('TRANSACTION_IN_PROGRESS');
       }
-      if( this.users.currentUser.currentTransaction.status == '2' ){
+      if( currentTransaction.type == 'SAFE' && currentTransaction.status == '2' ){
         this.transactions.setTransactionTabRoot('TRANSACTION_IN_PROGRESS');
       }
     }
+  }
+
+  ngOnInit(){
+
+    this.notifications.listenToContests( this.modalCtrl, this.tabRef );
+    
   }
 
   ionViewDidLoad() {

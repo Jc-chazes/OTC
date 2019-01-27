@@ -22,6 +22,7 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { AlertUtil } from './utils/alert.util';
 import { Configuration } from '../settings/configuration.settings';
+import { BackendMessages, Messages } from '../settings/messages.settings';
 
 @Injectable()
 export class AuthProvider {
@@ -92,6 +93,9 @@ export class AuthProvider {
       this.jwt.setToken(resp.jwt);
       return this.populate();
     }).catch( err => {
+      if( err.error && err.error.message == BackendMessages["auth.error.emailAlreadyExists"] ){
+        this.alerts.show( Messages["auth.error.emailAlreadyExists"], 'Registro' );
+      }
       return Observable.of(false);
     });
   }
@@ -107,6 +111,9 @@ export class AuthProvider {
       this.jwt.setToken(resp.jwt);
       return this.populate();
     }).catch( err => {
+      if( err.error && err.error.message == BackendMessages["auth.error.emailAlreadyExists"] ){
+        this.alerts.show( Messages["auth.error.emailAlreadyExists"], 'Registro' );
+      }
       return Observable.of(false);
     });
   }

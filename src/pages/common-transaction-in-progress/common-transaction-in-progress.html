@@ -26,14 +26,14 @@
         </ion-badge>
       </ion-col>
     </ion-row>
-    <ng-container *ngIf="transaction.status == '2'">
+    <ng-container *ngIf="transaction.status == '2' && transaction.type == 'SAFE'">
       <p class="text-center">
         La transacción se encuentra a la <br> 
         espera de aceptación por parte del <br>
         agente de cambio.
       </p>
     </ng-container>
-    <ng-container *ngIf="transaction.status == '3'">
+    <ng-container *ngIf="transaction.status == '3' || (transaction.status == '2' && transaction.type == 'FAST')">
       <p class="text-center">
         Validaremos el proceso, y a la brevedad <br>
         realizaremos la transferencia que <br>

@@ -50,9 +50,9 @@ export class ExchangeAgentTabsPage implements OnInit{
         if( this.users.currentUser.isPerson() && !!this.users.currentUser.currentTransaction.userTransactionImage ){
           this.transactions.setTransactionTabRoot('TRANSACTION_IN_PROGRESS');
         }
-        if( this.users.currentUser.isExchangeAgent() && !!this.users.currentUser.currentTransaction.exchangeAgentTransactionImage ){
-          this.transactions.setTransactionTabRoot('TRANSACTION_IN_PROGRESS');
-        }
+        // if( this.users.currentUser.isExchangeAgent() && !!this.users.currentUser.currentTransaction.exchangeAgentTransactionImage ){
+        //   this.transactions.setTransactionTabRoot('TRANSACTION_IN_PROGRESS');
+        // }
       }
   }
 

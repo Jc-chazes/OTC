@@ -12,6 +12,7 @@ import { RequestWasRejectedModalComponent } from "../../components/request-was-r
 import { ScoreYourExperienceModalComponent } from "../../components/score-your-experience-modal/score-your-experience-modal";
 import { QuoteAgainModalComponent } from "../../components/quote-again-modal/quote-again-modal";
 import { FastSearchModalComponent } from "../../components/fast-search-modal/fast-search-modal";
+import { ContinueTransactionOrBackModalComponent } from "../../components/continue-transaction-or-back-modal/continue-transaction-or-back-modal";
 
 export enum  AvailableModals{
     TermsAndConditions,
@@ -25,7 +26,8 @@ export enum  AvailableModals{
     RequestWasAcceptedModal,
     ScoreYourExperienceModal,
     QuoteAgainModal,
-    FastSearchModal
+    FastSearchModal,
+    ContinueTransactionOrBackModal
 };
 
 @Injectable()
@@ -88,6 +90,10 @@ export class ModalUtil{
             case AvailableModals.FastSearchModal:
                 modalInstance = modalCtrl.create(FastSearchModalComponent,data,
                 Object.assign({ enableBackdropDismiss: false },options,{ cssClass: 'alertModal fastSearchModalComponent' }));
+                break;
+            case AvailableModals.ContinueTransactionOrBackModal:
+                modalInstance = modalCtrl.create(ContinueTransactionOrBackModalComponent,data,
+                Object.assign({},options,{ cssClass: 'alertModal continueTransactionOrBackModalComponent' }));
                 break;
         }
 

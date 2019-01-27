@@ -16,6 +16,7 @@ import { LoadingUtil } from '../../providers/utils/loading.util';
 import { UsersService } from '../../providers/users.service';
 import { CommonTransferToOtcPage } from '../common-transfer-to-otc/common-transfer-to-otc';
 import { CommonSelectBankAccountPage } from '../common-select-bank-account/common-select-bank-account';
+import { AlertUtil } from '../../providers/utils/alert.util';
 
 /**
  * Generated class for the ExchangeAgentMyRequestsPage page.
@@ -36,7 +37,7 @@ export class ExchangeAgentMyRequestsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public sanitizer: DomSanitizer,
     private exchangeAgentOfferings: ExchangeAgentOfferingsService, private transactions: TransactionsService,
     private popoverCtrl: PopoverController, private modalCtrl: ModalController, private loading: LoadingUtil,
-    private users: UsersService) {
+    private users: UsersService, private alerts: AlertUtil) {
     this.exchangeAgentOfferings.getGroupedExchangeAgentOfferings()
     .subscribe( results => {
       this.groupedExchangeList = results;
@@ -59,17 +60,17 @@ export class ExchangeAgentMyRequestsPage {
   ionViewWillEnter(){
     this.refresh();
     let { currentTransaction } = this.users.currentUser;
-    if( currentTransaction ){
-      if( !currentTransaction.exchangeAgentBankAccount ){
-        this.navCtrl.push( CommonSelectBankAccountPage, {
-          transaction: currentTransaction
-        });
-      }else{
-        this.navCtrl.push( CommonTransferToOtcPage, {
-          transaction: currentTransaction
-        });
-      }
-    }
+    // if( currentTransaction ){
+    //   if( !currentTransaction.exchangeAgentBankAccount ){
+    //     this.navCtrl.push( CommonSelectBankAccountPage, {
+    //       transaction: currentTransaction
+    //     });
+    //   }else{
+    //     this.navCtrl.push( CommonTransferToOtcPage, {
+    //       transaction: currentTransaction
+    //     });
+    //   }
+    // }
   }
 
   getAvatarUrl(transaction: Transaction){
@@ -86,9 +87,37 @@ export class ExchangeAgentMyRequestsPage {
     //   })
     //   return;
     // }
-    this.navCtrl.push( ExchangeAgentRequestDetailsPage, { 
-      transaction
-    });
+    if( transaction.status == '2' && transaction.type == 'SAFE' && transaction.isExpired ){
+      this.alerts.show('La solicitud seleccionada ya expiró','Mis solicitudes');;
+      this.refresh();
+      return;
+    }
+    let transactionStep = this.transactions.getCurrentStepForTransaction(this.users.currentUser,transaction);
+    switch (transactionStep){
+      case 'PENDING_TO_ACCEPT':
+        this.navCtrl.push( ExchangeAgentRequestDetailsPage, { 
+          transaction
+        });
+        break;
+      case 'BANK_ACCOUNT_REQUIRED':
+        this.navCtrl.push( CommonSelectBankAccountPage, { 
+          transaction
+        });
+        break;
+      case 'UPLOAD_PHOTO':
+        this.navCtrl.push( CommonTransferToOtcPage, { 
+          transaction
+        });
+        break;
+      case 'PENDING_FROM_OTC':
+        this.alerts.show('Esta solicitud está pendiente de ser validada por OTC','Solicitudes');
+        break;
+      case 'FINISHED':
+      case 'REJECTED':
+        this.alerts.show('Esta solicitud ya no puede ser procesada, actualizamos tus solicitud para que ya no aparezca...','Solicitudes');
+        this.refresh();
+        break;
+    }
   }
 
   openRequestOperations(transaction: Transaction, event){
@@ -107,9 +136,10 @@ export class ExchangeAgentMyRequestsPage {
       if( operation == 'REJECT' ){
         this.onReject(transaction);
       }else if( operation == 'VIEW' ){
-        this.navCtrl.push( ExchangeAgentRequestDetailsPage, { 
-          transaction
-        });
+        // this.navCtrl.push( ExchangeAgentRequestDetailsPage, { 
+        //   transaction
+        // });
+        this.goToRequestDetails(transaction);
       }
     })
   }

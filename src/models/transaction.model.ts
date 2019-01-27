@@ -38,7 +38,12 @@ export class Transaction extends BaseModel<Transaction>{
     limitDate: Date;
 
     amountToDepositToOTC(OTCComission: number){
-        return OTCComission + Number(this.amountToDeposit.toFixed(2))
+        return (Number(OTCComission) + Number(this.amountToDeposit.toFixed(2))).toFixed(2);
+    }
+
+    get isExpired(): boolean{
+        let remainingTime = this.limitDate.getTime() - (new Date()).getTime();
+        return remainingTime < 0;
     }
 
 }
