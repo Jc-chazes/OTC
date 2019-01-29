@@ -127,21 +127,25 @@ export class ExchangeAgentMyRequestsPage {
     //   })
     //   return;
     // }
-    let rejectAcceptPopover = this.popoverCtrl.create(RejectAcceptRequestPopoverComponent);
-    rejectAcceptPopover.present({
-      ev: event
-    });
-    rejectAcceptPopover.onDidDismiss( operation => {
-      if( !operation ) return;
-      if( operation == 'REJECT' ){
-        this.onReject(transaction);
-      }else if( operation == 'VIEW' ){
-        // this.navCtrl.push( ExchangeAgentRequestDetailsPage, { 
-        //   transaction
-        // });
-        this.goToRequestDetails(transaction);
-      }
-    })
+    if( transaction.status == '2' ){
+      let rejectAcceptPopover = this.popoverCtrl.create(RejectAcceptRequestPopoverComponent);
+      rejectAcceptPopover.present({
+        ev: event
+      });
+      rejectAcceptPopover.onDidDismiss( operation => {
+        if( !operation ) return;
+        if( operation == 'REJECT' ){
+          this.onReject(transaction);
+        }else if( operation == 'VIEW' ){
+          // this.navCtrl.push( ExchangeAgentRequestDetailsPage, { 
+          //   transaction
+          // });
+          this.goToRequestDetails(transaction);
+        }
+      });
+    }else{
+      this.goToRequestDetails(transaction);      
+    }
   }
 
   onReject(transaction: Transaction){
@@ -187,6 +191,14 @@ export class ExchangeAgentMyRequestsPage {
 
   showCountdown(transaction: Transaction){
     return transaction.type == 'SAFE' &&  transaction.status == '2' ;
+  }
+
+  showMoreOptions(transaction: Transaction){
+    return transaction.status == '2' && transaction.type == 'SAFE';
+  }
+
+  showFastFlag(transaction: Transaction){
+    return transaction.type == 'FAST';
   }
 
 }

@@ -75,12 +75,14 @@
               {{ transaction.targetCurrency.symbol }} {{ transaction.amount.toFixed(2) }}
             </p>
           </ion-col>
-          <ion-col col-2 class="no-padding pt-5" (tap)="openRequestOperations(transaction,$event)">
-            <p class="text-thin" *ngIf="!showCountdown(transaction); else countdown">Continuar</p>
+          <ion-col col-2 class="no-padding pt-5 flex-col-layout jc-center" (tap)="openRequestOperations(transaction,$event)">
+            <p class="text-thin no-margin" *ngIf="!showCountdown(transaction); else countdown">Continuar</p>
             <ng-template #countdown>
               <p class="text-accent"> <b><countdown [date]="transaction.limitDate" (final)="refresh()"></countdown></b> </p>
-            </ng-template>            
-            <ion-icon ios="ios-more" md="ios-more"></ion-icon>
+            </ng-template>
+            <div class="spacer-5"></div>
+            <ion-icon ios="ios-more" md="ios-more" *ngIf="showMoreOptions(transaction)"></ion-icon>
+            <img src="/assets/imgs/icons/fast_flag.png" alt="" width="50" *ngIf="showFastFlag(transaction)">
           </ion-col>
         </ion-row>
       </div>

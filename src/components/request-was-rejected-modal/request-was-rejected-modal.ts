@@ -24,7 +24,7 @@ export class RequestWasRejectedModalComponent {
       case 'NO_FONDO':
         this.rejectionReasonText = 'No cuenta son saldo suficiente'; break;
       case 'NO_DISPONIBLE':
-        this.rejectionReasonText = 'No cuenta se encuentra disponible'; break;
+        this.rejectionReasonText = 'No se encuentra disponible'; break;
       case 'NO_SE':
         this.rejectionReasonText = 'Razón desconocida'; break;
     }
