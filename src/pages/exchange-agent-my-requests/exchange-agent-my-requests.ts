@@ -45,6 +45,13 @@ export class ExchangeAgentMyRequestsPage {
     });
   }
 
+  doRefresh(refresher) {
+    this.refresh();
+    setTimeout(() => {
+      refresher.complete();
+    }, 1000);
+  }
+
   refresh(){
     this.loading.show();
     this.transactions.find( new MyPendingTransactions() )
