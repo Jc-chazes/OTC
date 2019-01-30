@@ -68,7 +68,11 @@ export class CommonTransferToOtcPage {
     if( this.canContinue ){
       return true;
     }
-    if( this.users.currentUser.isPerson() ){
+    if( 
+      ( this.users.currentUser.isPerson() && !!this.users.currentUser.person.currentTransaction ) ||      
+      ( this.users.currentUser.isExchangeAgent() && !!this.users.currentUser.exchangeAgent.currentTransaction
+      && this.users.currentUser.exchangeAgent.currentTransaction.type == 'FAST' ) 
+    ){
       this.alerts.show('Tienes una transacción en curso',"OTC");
       return false;
     }

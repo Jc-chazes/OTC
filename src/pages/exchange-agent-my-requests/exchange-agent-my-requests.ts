@@ -30,7 +30,8 @@ import { AlertUtil } from '../../providers/utils/alert.util';
   templateUrl: 'exchange-agent-my-requests.html',
 })
 export class ExchangeAgentMyRequestsPage {
-
+  
+  youHaveAPendingTransaction = 'Cuentas con una solicitud de búsqueda rápida pendiente, te dirigimos a ella para que puedas completarla lo más pronto posible';
   groupedExchangeList: ExchangeAgentOfferingGroup[];
   pendingTransactionList: Transaction[];
 
@@ -50,6 +51,13 @@ export class ExchangeAgentMyRequestsPage {
     .subscribe( results => {
       this.loading.hide();
       this.pendingTransactionList = results;
+      let pendingFastTransaction = this.transactions.findActiveFastTypeTransaction( results );
+      if( !!pendingFastTransaction ){
+        this.alerts.show(this.youHaveAPendingTransaction,'Mis solicitudes');
+        return this.navCtrl.push( ExchangeAgentRequestDetailsPage, {
+          transaction: pendingFastTransaction
+        });
+      }
     });
   }
 
@@ -58,19 +66,42 @@ export class ExchangeAgentMyRequestsPage {
   }
 
   ionViewWillEnter(){
-    this.refresh();
     let { currentTransaction } = this.users.currentUser;
-    // if( currentTransaction ){
-    //   if( !currentTransaction.exchangeAgentBankAccount ){
-    //     this.navCtrl.push( CommonSelectBankAccountPage, {
-    //       transaction: currentTransaction
-    //     });
-    //   }else{
-    //     this.navCtrl.push( CommonTransferToOtcPage, {
-    //       transaction: currentTransaction
-    //     });
-    //   }
-    // }
+    if( currentTransaction && currentTransaction.type == 'FAST' ){
+      let currentTransactionStep = this.transactions.getCurrentStepForTransaction(this.users.currentUser,currentTransaction);
+      switch( currentTransactionStep ){
+        case 'PENDING_TO_ACCEPT':
+          this.alerts.show(this.youHaveAPendingTransaction,'Mis solicitudes');
+          return this.navCtrl.push( ExchangeAgentRequestDetailsPage, {
+            transaction: currentTransaction
+          });
+          // break;
+        case 'BANK_ACCOUNT_REQUIRED':
+          this.alerts.show(this.youHaveAPendingTransaction,'Mis solicitudes');
+          return this.navCtrl.push( CommonSelectBankAccountPage, {
+            transaction: currentTransaction
+          });
+          // break;
+        case 'UPLOAD_PHOTO':
+          this.alerts.show(this.youHaveAPendingTransaction,'Mis solicitudes');
+          return this.navCtrl.push( CommonTransferToOtcPage, {
+            transaction: currentTransaction
+          });
+          // break;
+        default:
+          break;
+      }
+      // if( !currentTransaction.exchangeAgentBankAccount ){
+      //   this.navCtrl.push( CommonSelectBankAccountPage, {
+      //     transaction: currentTransaction
+      //   });
+      // }else{
+      //   this.navCtrl.push( CommonTransferToOtcPage, {
+      //     transaction: currentTransaction
+      //   });
+      // }
+    }
+    this.refresh();
   }
 
   getAvatarUrl(transaction: Transaction){

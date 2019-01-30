@@ -48,6 +48,7 @@ export class TransactionsService extends BaseService implements CrudService<Tran
             let params = new HttpParams();
             params = params.append('status_ne','0');
             params = params.append('status_ne','1');
+            params = params.append('_sort','created_at:ASC');
             if( this.users.currentUser.userType == '0' ){
                 params = params.append('person',this.users.currentUser.person.id.toString());
             }else{
@@ -236,6 +237,14 @@ export class TransactionsService extends BaseService implements CrudService<Tran
         }else{
             throw new Error('Not supported');
         }
+    }
+
+    /**
+     * Las transacciones deben estar ordenadas por fecha de creación ascendente
+     * @param transactions 
+     */
+    findActiveFastTypeTransaction( transactions: Transaction[] ){
+        return transactions.find( t => t.status == '2' && t.type == 'FAST' );
     }
 
 }

@@ -77,6 +77,15 @@ export class ExchangueAgentService extends BaseService implements CrudService<Ex
         })
     }
    
-
+    updateCurrentTransaction( exchangeAgentId: number, transactionId: number ): Observable<boolean>{
+        return this.api.post(`/exchangeagents/${exchangeAgentId}`,{
+            currentTransaction: transactionId
+        }).map( resp => {
+            return true;
+        }).catch( err => {
+            console.error(err);
+            return Observable.of(false);
+        })
+    }
 
 }

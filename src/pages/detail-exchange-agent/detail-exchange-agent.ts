@@ -83,22 +83,38 @@ export class DetailExchangeAgentPage {
       if( createdTransaction ){
         this.modals.openModal(this.modalCtrl,AvailableModals.WaitYourRequestModal,{ isFastRequest: this.transaction.type == 'FAST' })
         .then( () => {
-          if( this.transaction.type == 'FAST' ){
-            this.loading.show();
-            this.transactions.findOne( new ByIdSpecification(this.transaction.id) )
-            .subscribe( transaction => {
-              this.loading.hide();
-              this.navCtrl.push(CommonSelectBankAccountPage,{
-                transaction
-              });
-            })
-          }else{
-            this.transactions.setCurrentTransaction(createdTransaction)
-            .subscribe( () => {
+          // if( this.transaction.type == 'FAST' ){
+          //   this.loading.show();
+          //   this.transactions.findOne( new ByIdSpecification(this.transaction.id) )
+          //   .subscribe( transaction => {
+          //     this.loading.hide();
+          //     this.navCtrl.push(CommonSelectBankAccountPage,{
+          //       transaction
+          //     });
+          //   })
+          // }else{
+          //   this.transactions.setCurrentTransaction(createdTransaction)
+          //   .subscribe( () => {
+          //     this.navCtrl.setRoot( CommonTransactionInProgressPage );
+          //     this.navCtrl.popToRoot();
+          //   });
+          // }
+          this.transactions.setCurrentTransaction(createdTransaction)
+          .subscribe( () => {
+            if( this.transaction.type == 'FAST' ){
+              this.loading.show();
+              this.transactions.findOne( new ByIdSpecification( createdTransaction.id) )
+              .subscribe( transaction => {
+                this.loading.hide();
+                this.navCtrl.push(CommonSelectBankAccountPage,{
+                  transaction
+                });
+              })
+            }else{
               this.navCtrl.setRoot( CommonTransactionInProgressPage );
               this.navCtrl.popToRoot();
-            });
-          }
+            }
+          });
         })
       }
     });

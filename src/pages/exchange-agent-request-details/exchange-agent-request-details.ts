@@ -12,6 +12,8 @@ import { LoadingUtil } from '../../providers/utils/loading.util';
 import { TransactionsService } from '../../providers/transaction.service';
 import { CommonSelectBankAccountPage } from '../common-select-bank-account/common-select-bank-account';
 import { ModalUtil, AvailableModals } from '../../providers/utils/modal.util';
+import { ExchangueAgentService } from '../../providers/exchange-agent.service';
+import { Observable } from 'rxjs';
 
 /**
  * Generated class for the ExchangeAgentRequestDetailsPage page.
@@ -31,7 +33,8 @@ export class ExchangeAgentRequestDetailsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private sanitizer: DomSanitizer,
   private constants: ConstantsService, private alerts: AlertUtil, private modalCtrl: ModalController,
-  private loading: LoadingUtil, private transactions: TransactionsService, private modals: ModalUtil) {
+  private loading: LoadingUtil, private transactions: TransactionsService, private modals: ModalUtil,
+  private exchangeAgents: ExchangueAgentService) {
     this.transaction = this.navParams.get('transaction');
     this.constants.findOne( new ConstantByCodeSpecification(`OTC_COMISSION_${this.transaction.exchangeAgentOffering.requestedCurrency}`) )
     .subscribe( result => {
@@ -62,11 +65,24 @@ export class ExchangeAgentRequestDetailsPage {
   continue(){
     this.loading.show();
     this.transactions.acceptTransaction( this.transaction )
+    .flatMap( () => {
+      if( this.transaction.type == 'FAST' ){
+        return this.exchangeAgents.updateCurrentTransaction(
+          this.transaction.exchangeAgent.id,
+          this.transaction.id);
+      }else{
+        return Observable.of(true);
+      }
+    })
     .subscribe( coudlBeAccepted => {
       this.modals.openModal(this.modalCtrl,AvailableModals.RequestWasAcceptedModal)
       .then( () => {
         this.loading.hide();
-        this.askForContinueOrBack();
+        if( this.transaction.type == 'FAST' ){
+          this.continueToNextSteps();
+        }else{
+          this.askForContinueOrBack();
+        }
       })
     })
   }
@@ -83,7 +99,7 @@ export class ExchangeAgentRequestDetailsPage {
   }
 
   continueToNextSteps(){
-    this.transactions.setCurrentTransaction(this.transaction)
+    this.transactions.setCurrentTransaction(this.transaction)    
     .subscribe()
     this.navCtrl.push( CommonSelectBankAccountPage,{
       transaction: this.transaction

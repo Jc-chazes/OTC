@@ -129,12 +129,13 @@ export class NotificationsService extends BaseService implements CrudService<Not
                             this.transactions.findOne( new ByIdSpecification(transactionId) )
                             .subscribe( transaction => {
                                 this.users.currentUser.currentTransaction = transaction;
+                                currenTabs.select(0);
                             })    
                         });                        
                         break;
                     case 'ACCEPTED_BY_EXCHANGE_AGENT':
                         if( this.users.currentUser.isPerson() ){
-                            this.modals.openModal(modalCtrl,AvailableModals.RequestWasAcceptedModal)
+                            this.modals.openModal(modalCtrl,AvailableModals.RequestWasAcceptedModal);
                             // .then( resp => {
                             //     let transactionId = Number(notification.transactionId);
                             //     this.transactions.findOne( new ByIdSpecification(transactionId) )
