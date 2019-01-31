@@ -54,18 +54,21 @@ export class ExchangeAgentMyRequestsPage {
 
   refresh(){
     this.loading.show();
-    this.transactions.find( new MyPendingTransactions() )
-    .subscribe( results => {
-      this.loading.hide();
-      this.pendingTransactionList = results;
-      let pendingFastTransaction = this.transactions.findActiveFastTypeTransaction( results );
-      if( !!pendingFastTransaction ){
-        this.alerts.show(this.youHaveAPendingTransaction,'Mis solicitudes');
-        return this.navCtrl.push( ExchangeAgentRequestDetailsPage, {
-          transaction: pendingFastTransaction
-        });
-      }
-    });
+
+    setTimeout(() => {
+      this.transactions.find( new MyPendingTransactions() )
+      .subscribe( results => {
+        this.loading.hide();
+        this.pendingTransactionList = results;
+        let pendingFastTransaction = this.transactions.findActiveFastTypeTransaction( results );
+        if( !!pendingFastTransaction ){
+          this.alerts.show(this.youHaveAPendingTransaction,'Mis solicitudes');
+          return this.navCtrl.push( ExchangeAgentRequestDetailsPage, {
+            transaction: pendingFastTransaction
+          });
+        }
+      });
+    }, 1000);
   }
 
   ionViewDidLoad() {
