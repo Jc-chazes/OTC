@@ -24,7 +24,7 @@
       </p>
       <div class="spacer-20"></div>
       <div class="flex-row-layout jc-center flex-gap">
-        <a [href]="'whatsapp://send?abid='+phone.content+'&text=Hola!'">
+        <a [href]="'whatsapp://send?abid=+51'+phone.content+'&phone=+51'+phone.content+'&text=Hola'">
           <img src="/assets/imgs/icons/whatsapp.png" alt="" height="35">
         </a>
         <a [href]="'tel:'+phoneForTelHref">
@@ -34,7 +34,7 @@
       <div class="spacer-10"></div>
       <div class="flex-row-layout jc-center">
         <div class="br-5 bk-accent text-center pl-65 pr-65 pt-10 pb-10 text-white btn-number">
-          <a [href]="'whatsapp://send?abid='+phone.content+'&text=Hola!'">
+          <a [href]="'whatsapp://send?abid=+51'+phone.content+'&phone=+51'+phone.content+'&text=Hola'">
             {{ phoneForOrangeBox }}
           </a>
         </div>
