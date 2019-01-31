@@ -42,8 +42,8 @@ export class CommonTransferToOtcPage {
       this.constants.findOne( new ConstantByCodeSpecification(
         `OTC_COMISSION_${this.transaction.exchangeAgentOffering[ this.users.currentUser.userType == '0' ? 'receivedCurrency' : 'requestedCurrency' ]}`)
       ),
-      this.constants.findOne( new ConstantByCodeSpecification(`OTC_RUC`)),
-      this.constants.findOne( new ConstantByCodeSpecification(`OTC_BUSINESS_NAME`)),
+      this.constants.findOne( new ConstantByCodeSpecification(`IOWA_BUSINESS_SAC_RUC`)),
+      this.constants.findOne( new ConstantByCodeSpecification(`OTC_NAME`)),
       this.userBankAccounts.find( new OtcBankAccountsSpecification() )
     )    
     .subscribe( results => {
