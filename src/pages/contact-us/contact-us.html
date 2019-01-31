@@ -33,8 +33,10 @@
       </div>
       <div class="spacer-10"></div>
       <div class="flex-row-layout jc-center">
-        <div class="br-5 bk-accent text-center pl-65 pr-65 pt-10 pb-10 text-white">
-          {{ phoneForOrangeBox }}
+        <div class="br-5 bk-accent text-center pl-65 pr-65 pt-10 pb-10 text-white btn-number">
+          <a [href]="'whatsapp://send?abid='+phone.content+'&text=Hola!'">
+            {{ phoneForOrangeBox }}
+          </a>
         </div>
       </div>
     </div>
