@@ -1,0 +1,7 @@
+<div class="flex-row-layout" *ngIf="score > 0; else noScore">
+  <img *ngFor="let star of stars" alt="" height="16" width="16"
+  [src]=" '/assets/imgs/icons/' + ( star + 1 <= score ? 'star_filled--orange.svg' : 'star_unfilled--orange.svg' )  " >
+</div>
+<ng-template #noScore>
+  Sin calificación aún
+</ng-template>

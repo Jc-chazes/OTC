@@ -24,10 +24,10 @@
       </p>
       <div class="spacer-20"></div>
       <div class="flex-row-layout jc-center flex-gap">
-        <a [href]="'whatsapp://send?abid=+51'+phone.content+'&phone=+51'+phone.content+'&text=Hola'">
+        <a [href]="sanitizer.bypassSecurityTrustUrl('whatsapp://send?abid=+51'+phone.content+'&phone=+51'+phone.content+'&text=Hola')">
           <img src="/assets/imgs/icons/whatsapp.png" alt="" height="35">
         </a>
-        <a [href]="'tel:'+phoneForTelHref">
+        <a [href]="sanitizer.bypassSecurityTrustUrl('tel:'+phoneForTelHref)">
             <img src="/assets/imgs/icons/phone--secondary.png" alt="" height="35">
         </a>
       </div>

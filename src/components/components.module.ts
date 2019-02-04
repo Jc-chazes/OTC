@@ -31,6 +31,7 @@ import { CurrentNotificationWatcherComponent } from './current-notification-watc
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ContinueTransactionOrBackModalComponent } from './continue-transaction-or-back-modal/continue-transaction-or-back-modal';
 import { RequestAcceptedComponent } from './request-accepted/request-accepted';
+import { ScoreComponent } from './score/score';
 
 @NgModule({
 	declarations: [UpdateExchangeReminderComponent,
@@ -61,7 +62,8 @@ import { RequestAcceptedComponent } from './request-accepted/request-accepted';
     FastSearchModalComponent,
     CurrentNotificationWatcherComponent,
     ContinueTransactionOrBackModalComponent,
-    RequestAcceptedComponent],
+    RequestAcceptedComponent,
+    ScoreComponent],
 	imports: [ CommonModule, IonicModule, DirectivesModule, PdfViewerModule ],
 	exports: [UpdateExchangeReminderComponent,
     StepperComponent,
@@ -91,7 +93,8 @@ import { RequestAcceptedComponent } from './request-accepted/request-accepted';
     FastSearchModalComponent,
     CurrentNotificationWatcherComponent,
     ContinueTransactionOrBackModalComponent,
-    RequestAcceptedComponent],
+    RequestAcceptedComponent,
+    ScoreComponent],
     entryComponents: [
         RejectWarningComponent,
         RejectReasonSelectComponent,

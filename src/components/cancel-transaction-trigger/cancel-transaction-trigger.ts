@@ -37,6 +37,15 @@ export class CancelTransactionTriggerComponent implements OnDestroy{
   }
 
   onCancel(){
+    this.alerts.confirm('¿Está seguro de cancelar esta transacción?','Transacciones')
+    .then( confirmed => {
+      if( confirmed ){
+        this.cancelTransaction();
+      }
+    })
+  }
+
+  cancelTransaction(){
     this.loading.show();
     this.transactions.cancelTransaction(
       this.users.currentUser.isPerson() ? 

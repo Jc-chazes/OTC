@@ -29,14 +29,15 @@
         <div>{{detail_exchangue.name}}</div>
         <div>{{detail_exchangue.address}}</div>
         <div>RUC : {{detail_exchangue.documentNumber}}</div>
-        <div  class="detailExchangeAgent__style__stars">
+        <score [score]="transaction.exchangeAgent.score"></score>
+        <!-- <div  class="detailExchangeAgent__style__stars">
           <div *ngFor='let in of counter(detail_exchangue.score)'>
               <img src='assets/imgs/star.png' class="detailExchangeAgent__icon-star"/>
           </div>
           <div *ngFor='let in of counter(5-detail_exchangue.score)' >
               <img src='assets/imgs/star-white.png' class="detailExchangeAgent__icon-star"  />
           </div>
-        </div>
+        </div> -->
       </ion-col>
     </ion-row>
     <div class="spacer-10"></div>

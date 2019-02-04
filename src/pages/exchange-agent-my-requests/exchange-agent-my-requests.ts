@@ -60,6 +60,7 @@ export class ExchangeAgentMyRequestsPage {
       .subscribe( results => {
         this.loading.hide();
         this.pendingTransactionList = results;
+        this.pendingTransactionList = this.pendingTransactionList.filter( t => !t.exchangeAgentTransactionImage );
         let pendingFastTransaction = this.transactions.findActiveFastTypeTransaction( results );
         if( !!pendingFastTransaction ){
           this.alerts.show(this.youHaveAPendingTransaction,'Mis solicitudes');

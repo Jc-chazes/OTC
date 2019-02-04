@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { ConstantsService } from '../../providers/constants.service';
 import { Constant } from '../../models/constant.model';
 import { ConstantByCodeSpecification } from '../../providers/specifications/constant.specification';
+import { DomSanitizer } from '@angular/platform-browser';
 
 /**
  * Generated class for the ContactUsPage page.
@@ -19,7 +20,8 @@ export class ContactUsPage {
 
   phone: Constant;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private constants : ConstantsService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private constants : ConstantsService,
+    public sanitizer: DomSanitizer) {
     this.constants.findOne( new ConstantByCodeSpecification('OTC_CONTACT_PHONE') )
     .subscribe( result => {
       this.phone = result;

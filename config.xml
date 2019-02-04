@@ -125,11 +125,11 @@
         <variable name="DEEPLINK_5_SCHEME" value=" " />
         <variable name="DEEPLINK_5_HOST" value=" " />
     </plugin>
-    <engine name="android" spec="7.1.1" />
-    <engine name="browser" spec="5.0.4" />
     <plugin name="cordova-plugin-ionic" spec="^5.2.10">
         <variable name="APP_ID" value="5197475d" />
         <variable name="CHANNEL_NAME" value="Production" />
         <variable name="UPDATE_METHOD" value="auto" />
     </plugin>
+    <engine name="android" spec="7.1.1" />
+    <engine name="browser" spec="5.0.4" />
 </widget>

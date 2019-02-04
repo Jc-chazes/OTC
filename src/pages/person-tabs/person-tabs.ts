@@ -13,6 +13,10 @@ import { ModalUtil, AvailableModals } from '../../providers/utils/modal.util';
 import { AlertUtil } from '../../providers/utils/alert.util';
 import { LoadingUtil } from '../../providers/utils/loading.util';
 import { ContestsService } from '../../providers/contests.service';
+import { ByIdSpecification } from '../../providers/specifications/base.specification';
+import { Transaction } from '../../models/transaction.model';
+import { Person } from '../../models/person.model';
+import { ExchangeAgent } from '../../models/exchange-agent.model';
 
 /**
  * Generated class for the PersonTabsPage page.
@@ -38,7 +42,12 @@ export class PersonTabsPage implements OnInit{
     private modals: ModalUtil, private notifications: NotificationsService, private users: UsersService, 
     private transactions: TransactionsService, private alerts: AlertUtil, private loading: LoadingUtil, 
     private contests: ContestsService) {    
-
+    // this.modals.openModal(this.modalCtrl,AvailableModals.ScoreYourExperienceModal,{
+    //   transaction: new Transaction({
+    //     person: new Person({id:this.users.currentUser.person.id}),
+    //     exchangeAgent: new ExchangeAgent({id:50})
+    //   })
+    // });
     this.notifications.onTabChangeRequested.subscribe( request => {
       this.tabParams = request.data;
       this.tabRef.select(request.tabIndex)

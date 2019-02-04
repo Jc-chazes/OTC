@@ -34,7 +34,8 @@
           <option class="search-agents__select___option">Por calificacion</option>
           <option class="search-agents__select___option">Por mejor precio</option>
         </select> -->
-        <ion-icon name="arrow-down" md="ios-arrow-down" (tap)="openSearchExchangeAgentMode()"></ion-icon>
+        <!-- <ion-icon name="arrow-down" md="ios-arrow-down" (tap)="openSearchExchangeAgentMode()"></ion-icon> -->
+        <img src="/assets/imgs/icons/filter--orange.png" alt="" width="20">
       </div>
       <div class="spacer-h-15"></div>
       <ion-icon name="refresh" (tap)="refresh()"></ion-icon>
@@ -49,14 +50,15 @@
       <div>
         <span class="text-muted">{{item.type == '0' ? 'Casa de cambio' : 'Cambista'}}:&nbsp;</span>  {{item.name}}
       </div>
-      <div class="exchangue-agents__style__stars flex-row-layout ai-center">
+      <score [score]="item.score"></score>
+      <!-- <div class="exchangue-agents__style__stars flex-row-layout ai-center">
         <div *ngFor='let in of counter(item.score)'>
             <img src='assets/imgs/star.png' class="exchange-agents__icon-star"/>
         </div>
         <div *ngFor='let in of counter(5-item.score)' >
             <img src='assets/imgs/star-white.png' class="exchange-agents__icon-star"  />
         </div>
-      </div>
+      </div> -->
     </ion-col>
     <ion-col col-3 >
         <div class="exchangue-agents__style text-muted"><small>Valor</small></div>
