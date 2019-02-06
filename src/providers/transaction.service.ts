@@ -24,6 +24,8 @@ import { ModalUtil, AvailableModals } from "./utils/modal.util";
 import { Currency } from "../models/currency.model";
 import { AngularFirestore } from "angularfire2/firestore";
 import { User } from "../models/user.model";
+import { ConstantsService } from "./constants.service";
+import { AlertUtil } from "./utils/alert.util";
 
 @Injectable()
 export class TransactionsService extends BaseService implements CrudService<Transaction>{
@@ -33,7 +35,7 @@ export class TransactionsService extends BaseService implements CrudService<Tran
     constructor(api: ApiUtil, private users: UsersService, private currencies: CurrenciesService,
         private http: HttpClient, private firebaseNative: Firebase, private ngZone: NgZone,
         private platform: Platform, private localNotifications: LocalNotifications, private af: AngularFirestore,
-        private modals: ModalUtil){
+        private modals: ModalUtil, private constants: ConstantsService, private alerts: AlertUtil){
         super(api);
         this.mapper = new TransactionMapper(currencies,users);
     }
@@ -245,6 +247,41 @@ export class TransactionsService extends BaseService implements CrudService<Tran
      */
     findActiveFastTypeTransaction( transactions: Transaction[] ){
         return transactions.find( t => t.status == '2' && t.type == 'FAST' );
+    }
+
+    /**
+     * Verifica la hora actual del celular para informar al usuario sobre las transacciones
+     * por la hora
+     */
+    checkForOfficeHours(modalCtrl: ModalController){
+        Observable.forkJoin(
+            this.constants.findOneByCode('HORA_INICIO_JORNADA_TRABAJO_SEMANA'),
+            this.constants.findOneByCode('HORA_FIN_JORNADA_TRABAJO_SEMANA'),
+            this.constants.findOneByCode('HORA_INICIO_JORNADA_TRABAJO_FIN_DE_SEMANA'),
+            this.constants.findOneByCode('HORA_FIN_JORNADA_TRABAJO_FIN_DE_SEMANA')
+        ).subscribe( results => {
+            let nowDate = new Date();
+            let mNowDate = moment(nowDate);
+            let weekStartTime = results[0].content || '08:00';
+            let weekEndTime = results[1].content || '20:00';
+            let weekendStartTime = results[2].content || '08:00';
+            let weekendEndTime = results[3].content || '20:00';
+
+            let mWeekStartDate = moment( moment(nowDate).format("YYYY-MM-DD") + ' ' + weekStartTime + ':00' );
+            let mWeekEndDate = moment( moment(nowDate).format("YYYY-MM-DD") + ' ' + weekEndTime + ':00' );
+            let mWeekendStartDate = moment( moment(nowDate).format("YYYY-MM-DD") + ' ' + weekendStartTime + ':00' );
+            let mWeekendEndDate = moment( moment(nowDate).format("YYYY-MM-DD") + ' ' + weekendEndTime + ':00' );
+        
+            if( [6,0].indexOf(mNowDate.weekday()) >= 0 ){ //Validar si es domingo o sábado
+                if( !mNowDate.isBetween(mWeekendStartDate,mWeekendEndDate) ){
+                    this.modals.openModal(modalCtrl,AvailableModals.OfficeHoursReminderModal);
+                }
+            }else{
+                if( !mNowDate.isBetween(mWeekStartDate,mWeekEndDate) ){
+                    this.modals.openModal(modalCtrl,AvailableModals.OfficeHoursReminderModal);
+                }
+            }
+        })
     }
 
 }

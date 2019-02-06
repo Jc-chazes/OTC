@@ -1,0 +1,31 @@
+<div class="officeHoursReminderModal flex-col-layout jc-center fill-height">
+  <div class="modal-content text-center">
+    <div class="text-center text-accent">
+      <h2><b>Recuerda</b></h2>
+    </div>
+    <p class="text-center">Horario de atención al cliente</p>
+    <p class="text-center text-secondary">
+      <b>Lunes a viernes</b>
+    </p>    
+    <ion-badge color="dark" class="pt-10 pb-10 pl-25 pr-25 bk-secondary">
+      {{ weekStartTime }} - {{ weekEndTime }}
+    </ion-badge>
+    <p class="text-center text-secondary">
+      <b>Sábados</b>
+    </p>    
+    <ion-badge color="dark" class="pt-10 pb-10 pl-25 pr-25 bk-secondary">
+      {{ weekendStartTime }} - {{ weekendEndTime }}
+    </ion-badge>
+    <div class="spacer-10"></div>
+    <p class="text-center p-10 no-margin">
+      Si deseas realizas una nueva transacción, OTC realizará el depósito correspondiente
+      a tu cuenta bancaria en el horario mencioado.
+    </p>
+  </div>
+  <div class="spacer-10"></div>
+  <div class="flex-col-layout ai-center">
+    <button fluid ion-button color="dark" (tap)="viewCtrl.dismiss(true)">
+      Entendido
+    </button>
+  </div>
+</div>

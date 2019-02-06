@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { NavController, NavParams, PopoverController, ModalController } from 'ionic-angular';
 import { ExchangeAgentOfferingsService } from '../../providers/exchange-agent-offerings.service';
 import { ExchangeAgentOffering } from '../../models/exchange-agent-offering.model';
@@ -17,6 +17,8 @@ import { UsersService } from '../../providers/users.service';
 import { CommonTransferToOtcPage } from '../common-transfer-to-otc/common-transfer-to-otc';
 import { CommonSelectBankAccountPage } from '../common-select-bank-account/common-select-bank-account';
 import { AlertUtil } from '../../providers/utils/alert.util';
+import { componentDestroyed } from '../../helpers/observable.helper';
+import { EventsUtil } from '../../providers/utils/events.util';
 
 /**
  * Generated class for the ExchangeAgentMyRequestsPage page.
@@ -29,7 +31,7 @@ import { AlertUtil } from '../../providers/utils/alert.util';
   selector: 'page-exchange-agent-my-requests',
   templateUrl: 'exchange-agent-my-requests.html',
 })
-export class ExchangeAgentMyRequestsPage {
+export class ExchangeAgentMyRequestsPage implements OnDestroy {
   
   youHaveAPendingTransaction = 'Cuentas con una solicitud de búsqueda rápida pendiente, te dirigimos a ella para que puedas completarla lo más pronto posible';
   groupedExchangeList: ExchangeAgentOfferingGroup[];
@@ -38,11 +40,21 @@ export class ExchangeAgentMyRequestsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public sanitizer: DomSanitizer,
     private exchangeAgentOfferings: ExchangeAgentOfferingsService, private transactions: TransactionsService,
     private popoverCtrl: PopoverController, private modalCtrl: ModalController, private loading: LoadingUtil,
-    private users: UsersService, private alerts: AlertUtil) {
+    private users: UsersService, private alerts: AlertUtil, private events: EventsUtil) {
     this.exchangeAgentOfferings.getGroupedExchangeAgentOfferings()
     .subscribe( results => {
       this.groupedExchangeList = results;
     });
+
+    this.events.reloadPendingTransactions
+    .takeUntil( componentDestroyed(this) )
+    .subscribe( () => {
+      this.refresh();
+    });
+  }
+
+  ngOnDestroy(){
+
   }
 
   doRefresh(refresher) {

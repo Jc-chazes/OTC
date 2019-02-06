@@ -32,6 +32,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ContinueTransactionOrBackModalComponent } from './continue-transaction-or-back-modal/continue-transaction-or-back-modal';
 import { RequestAcceptedComponent } from './request-accepted/request-accepted';
 import { ScoreComponent } from './score/score';
+import { OfficeHoursReminderComponent } from './office-hours-reminder/office-hours-reminder';
 
 @NgModule({
 	declarations: [UpdateExchangeReminderComponent,
@@ -63,7 +64,8 @@ import { ScoreComponent } from './score/score';
     CurrentNotificationWatcherComponent,
     ContinueTransactionOrBackModalComponent,
     RequestAcceptedComponent,
-    ScoreComponent],
+    ScoreComponent,
+    OfficeHoursReminderComponent],
 	imports: [ CommonModule, IonicModule, DirectivesModule, PdfViewerModule ],
 	exports: [UpdateExchangeReminderComponent,
     StepperComponent,
@@ -94,7 +96,8 @@ import { ScoreComponent } from './score/score';
     CurrentNotificationWatcherComponent,
     ContinueTransactionOrBackModalComponent,
     RequestAcceptedComponent,
-    ScoreComponent],
+    ScoreComponent,
+    OfficeHoursReminderComponent],
     entryComponents: [
         RejectWarningComponent,
         RejectReasonSelectComponent,
@@ -115,7 +118,8 @@ import { ScoreComponent } from './score/score';
         ScoreYourExperienceModalComponent,
         QuoteAgainModalComponent,
         FastSearchModalComponent,
-        ContinueTransactionOrBackModalComponent
+        ContinueTransactionOrBackModalComponent,
+        OfficeHoursReminderComponent
     ]
 })
 export class ComponentsModule {}

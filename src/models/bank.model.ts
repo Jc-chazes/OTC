@@ -5,5 +5,5 @@ export class Bank extends BaseModel<Bank>{
 
     name: string;
     image: Image;
-
+    accountNumberLength: number;
 }

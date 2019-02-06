@@ -72,6 +72,7 @@ export class PersonTabsPage implements OnInit{
         this.transactions.setTransactionTabRoot('TRANSACTION_IN_PROGRESS');
       }
     }
+    this.transactions.checkForOfficeHours(this.modalCtrl);
   }
 
   ngOnInit(){

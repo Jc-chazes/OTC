@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { ViewController } from 'ionic-angular';
+import { TransactionsService } from '../../providers/transaction.service';
+import { EventsUtil } from '../../providers/utils/events.util';
 
 /**
  * Generated class for the YouHasBeenSelectedModalComponent component.
@@ -15,9 +17,7 @@ export class YouHasBeenSelectedModalComponent {
 
   text: string;
 
-  constructor(public viewCtrl: ViewController) {
-    console.log('Hello YouHasBeenSelectedModalComponent Component');
-    this.text = 'Hello World';
+  constructor(public viewCtrl: ViewController, public events: EventsUtil) {
   }
 
 }

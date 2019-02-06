@@ -24,6 +24,9 @@ export class ConstantsService extends BaseService implements CrudService<Constan
         }
         throw new Error("Method not implemented.");
     }
+    findOneByCode(code: string): Observable<Constant>{
+        return this.findOne( new ConstantByCodeSpecification(code) );
+    }
     add(entity: Constant): Observable<Constant> {
         throw new Error("Method not implemented.");
     }

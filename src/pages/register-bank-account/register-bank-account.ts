@@ -7,6 +7,7 @@ import { Currency } from '../../models/currency.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { AppStateService } from '../../providers/app-state.service';
+import { AlertUtil } from '../../providers/utils/alert.util';
 
 @Component({
   selector: 'page-register-bank-account',
@@ -20,7 +21,8 @@ export class RegisterBankAccountPage {
   userBankAccountFG: FormGroup;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private fb: FormBuilder,
-    private banks: BanksService, private currencies: CurrenciesService, private appState: AppStateService) {
+    private banks: BanksService, private currencies: CurrenciesService, private appState: AppStateService,
+    private alerts: AlertUtil) {
     this.userBankAccountFG = this.fb.group({
       holderName: ['',[Validators.required]],
       accountNumber: ['',[Validators.required]],
@@ -69,6 +71,15 @@ export class RegisterBankAccountPage {
   }
 
   submit(){
+    if( !this.userBankAccountFG.valid ){
+      this.alerts.show('Faltan completar campos','Registro');
+    }
+    const { bank, accountNumber } = this.userBankAccountFG.value;
+    if( accountNumber.length != (bank as Bank).accountNumberLength ){
+      this.alerts.show(`El número de cuenta bancaria ingresado no cumple con los requisitos del banco: ${(bank as Bank).accountNumberLength} dígitos`,
+      'Cuentas bancarias');
+      return;
+    }
     let currenRegisterState = this.appState.currentState.register;
     this.appState.setState({
       register: {

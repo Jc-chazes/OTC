@@ -89,6 +89,7 @@ import { Deeplinks } from '@ionic-native/deeplinks';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 import { RequestResetPasswordPage } from '../pages/request-reset-password/request-reset-password';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { EventsUtil } from '../providers/utils/events.util';
 
 @NgModule({
   declarations: [
@@ -228,7 +229,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     Camera,
     GooglePlus,
     Facebook,
-    Deeplinks
+    Deeplinks,
+    EventsUtil
   ]
 })
 export class AppModule {}

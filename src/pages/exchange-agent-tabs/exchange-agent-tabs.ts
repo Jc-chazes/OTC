@@ -54,6 +54,7 @@ export class ExchangeAgentTabsPage implements OnInit{
         //   this.transactions.setTransactionTabRoot('TRANSACTION_IN_PROGRESS');
         // }
       }
+      this.transactions.checkForOfficeHours(this.modalCtrl);
   }
 
   ionViewDidLoad() {
