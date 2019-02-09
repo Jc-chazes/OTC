@@ -12,114 +12,120 @@
 
 
 <ion-content padding class="page">
-  <back-button [navCtrl]="navCtrl"></back-button>
-  <div class="spacer-30"></div>
-  <stepper mode="exchange-agent" [currentStep]="2"></stepper>
-  <ion-row align-items-center>
-    <ion-col col-2></ion-col>
-    <ion-col col-4>
-      <div class="square w-background-image-top" [style.backgroundImage]="avatarUrl"></div>
-    </ion-col>
-    <ion-col col-6>
-      <p>{{ transaction.person.fullName }}</p>
-      <p>{{ transaction.person.user.email }}</p>
-      <p>{{ transaction.person.birthdate | age }} años</p>
-    </ion-col>
-  </ion-row>
-  <div class="spacer-15"></div>
-  <div class="details__wrapper">
-    <div class="pb-10">
-      <div class="input flex-row-layout text-bold">        
-        <span>Solicitud del servicio:</span>
-        <span class="flex"></span>
-        <span>{{ transaction.exchangeAgentOffering.type == 'V' ? 'Venta' : 'Compra' }}</span>
+  <div class="fill-height flex-col-layout">
+    <div class="flex scrollable no-padding">
+      <back-button [navCtrl]="navCtrl"></back-button>
+      <div class="spacer-30"></div>
+      <stepper mode="exchange-agent" [currentStep]="2"></stepper>
+      <ion-row align-items-center>
+        <ion-col col-2></ion-col>
+        <ion-col col-4>
+          <div class="square w-background-image-top" [style.backgroundImage]="avatarUrl"></div>
+        </ion-col>
+        <ion-col col-6>
+          <p>{{ transaction.person.fullName }}</p>
+          <p>{{ transaction.person.user.email }}</p>
+          <p>{{ transaction.person.birthdate | age }} años</p>
+        </ion-col>
+      </ion-row>
+      <div class="spacer-15"></div>
+      <div class="details__wrapper">
+        <div class="pb-10">
+          <div class="input flex-row-layout text-bold">        
+            <span>Solicitud del servicio:</span>
+            <span class="flex"></span>
+            <span>{{ transaction.exchangeAgentOffering.type == 'V' ? 'Venta' : 'Compra' }}</span>
+          </div>
+        </div>
+        <div class="pb-10">
+          <div class="input flex-row-layout text-bold">
+            <span>Tipo de moneda:</span>
+            <span class="flex"></span>
+            <span>{{ transaction.targetCurrency.name }}</span>
+          </div>
+        </div>
+        <div class="pb-10">
+          <div class="input flex-row-layout text-bold">
+            <span>Valor de tipo de cambio:</span>
+            <span class="flex"></span>
+            <span>{{ transaction.fromCurrency.symbol }}</span>&nbsp;
+            <span>{{ transaction.exchangeAgentOffering.type == 'V' ? 
+              transaction.exchangeAgentOffering.requestedCurrencyAmount : 
+              transaction.exchangeAgentOffering.receivedCurrencyAmount
+            }}</span>
+          </div>
+        </div>
+        <div class="pb-10">
+          <div class="input flex-row-layout text-bold">
+            <span>Monto parcial solicitado:</span>
+            <span class="flex"></span>
+            <span>{{ transaction.targetCurrency.symbol }}</span>&nbsp;
+            <span>{{ transaction.amount.toFixed(2) }}</span>
+          </div>
+        </div>
+        <div class="pb-10">
+          <div class="input flex-row-layout text-bold">
+            <span>Monto parcial a depositar a OTC:</span>
+            <span class="flex"></span>
+            <span>{{ transaction.currencyToDeposit.symbol }}</span>&nbsp;
+            <!-- <span>{{ otcComission.content + transaction.amountToDeposit }}</span> -->
+            <span>{{ transaction.amountToDeposit.toFixed(2) }}</span>
+          </div>
+        </div>
+        <div class="pb-10">
+          <div class="input flex-row-layout text-bold">
+            <span>Cobro por transacción:</span>
+            <span class="flex"></span>
+            <span>{{ transaction.currencyToDeposit.symbol }}</span>&nbsp;
+            <span>{{ otcComission.content }}</span>
+          </div>
+          <span><small>Incluye comisión OTC más IGV</small></span>
+        </div>
+        <div class="pb-10">
+          <div class="input flex-row-layout text-bold">
+            <span>Monto a depositar a OTC:</span>
+            <span class="flex"></span>
+            <span>{{ transaction.currencyToDeposit.symbol }}</span>&nbsp;
+            <!-- <span>{{ otcComission.content + transaction.amountToDeposit }}</span> -->
+            <span>{{ transaction.amountToDepositToOTC(otcComission.content) }}</span>
+          </div>
+        </div>
+        <div class="pb-10">
+          <div class="input flex-row-layout text-bold">
+            <span>Monto a recibir de OTC:</span>
+            <span class="flex"></span>
+            <span>{{ transaction.currencyToReceive.symbol }}</span>&nbsp;
+            <span>{{ transaction.amountToReceive }}</span>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="pb-10">
-      <div class="input flex-row-layout text-bold">
-        <span>Tipo de moneda:</span>
-        <span class="flex"></span>
-        <span>{{ transaction.targetCurrency.name }}</span>
+    <div class="flex-auto no-padding">
+      <div class="spacer-20"></div>
+      <div class="flex-col-layout ai-center">
+        <ng-container *ngIf="isFast">
+          <button fluid ion-button color="secondary" (tap)="continue()">
+            Siguiente
+          </button>
+          <!-- <div class="spacer-10"></div>
+          <button fluid ion-button color="secondary" (tap)="reject()">
+            Rechazar
+          </button> -->
+        </ng-container>
+        <ng-container *ngIf="isSafe">
+          <div class="input flex-row-layout jc-center countdown">
+            <countdown [date]="transaction.limitDate"></countdown>
+          </div>
+          <div class="spacer-10"></div>
+          <button fluid ion-button color="secondary" (tap)="continue()">
+            Aceptar solicitud
+          </button>
+          <div class="spacer-10"></div>
+          <button fluid ion-button color="secondary" (tap)="reject()">
+            Rechazar solicitud
+          </button>
+        </ng-container>
       </div>
     </div>
-    <div class="pb-10">
-      <div class="input flex-row-layout text-bold">
-        <span>Valor de tipo de cambio:</span>
-        <span class="flex"></span>
-        <span>{{ transaction.fromCurrency.symbol }}</span>&nbsp;
-        <span>{{ transaction.exchangeAgentOffering.type == 'V' ? 
-          transaction.exchangeAgentOffering.requestedCurrencyAmount : 
-          transaction.exchangeAgentOffering.receivedCurrencyAmount
-        }}</span>
-      </div>
-    </div>
-    <div class="pb-10">
-      <div class="input flex-row-layout text-bold">
-        <span>Monto parcial solicitado:</span>
-        <span class="flex"></span>
-        <span>{{ transaction.targetCurrency.symbol }}</span>&nbsp;
-        <span>{{ transaction.amount.toFixed(2) }}</span>
-      </div>
-    </div>
-    <div class="pb-10">
-      <div class="input flex-row-layout text-bold">
-        <span>Monto parcial a depositar a OTC:</span>
-        <span class="flex"></span>
-        <span>{{ transaction.currencyToDeposit.symbol }}</span>&nbsp;
-        <!-- <span>{{ otcComission.content + transaction.amountToDeposit }}</span> -->
-        <span>{{ transaction.amountToDeposit.toFixed(2) }}</span>
-      </div>
-    </div>
-    <div class="pb-10">
-      <div class="input flex-row-layout text-bold">
-        <span>Cobro por transacción:</span>
-        <span class="flex"></span>
-        <span>{{ transaction.currencyToDeposit.symbol }}</span>&nbsp;
-        <span>{{ otcComission.content }}</span>
-      </div>
-      <span><small>Incluye comisión OTC más IGV</small></span>
-    </div>
-    <div class="pb-10">
-      <div class="input flex-row-layout text-bold">
-        <span>Monto a depositar a OTC:</span>
-        <span class="flex"></span>
-        <span>{{ transaction.currencyToDeposit.symbol }}</span>&nbsp;
-        <!-- <span>{{ otcComission.content + transaction.amountToDeposit }}</span> -->
-        <span>{{ transaction.amountToDepositToOTC(otcComission.content) }}</span>
-      </div>
-    </div>
-    <div class="pb-10">
-      <div class="input flex-row-layout text-bold">
-        <span>Monto a recibir de OTC:</span>
-        <span class="flex"></span>
-        <span>{{ transaction.currencyToReceive.symbol }}</span>&nbsp;
-        <span>{{ transaction.amountToReceive }}</span>
-      </div>
-    </div>
-  </div>
-  <div class="spacer-20"></div>
-  <div class="flex-col-layout ai-center">
-    <ng-container *ngIf="isFast">
-      <button fluid ion-button color="secondary" (tap)="continue()">
-        Siguiente
-      </button>
-      <!-- <div class="spacer-10"></div>
-      <button fluid ion-button color="secondary" (tap)="reject()">
-        Rechazar
-      </button> -->
-    </ng-container>
-    <ng-container *ngIf="isSafe">
-      <div class="input flex-row-layout jc-center countdown">
-        <countdown [date]="transaction.limitDate"></countdown>
-      </div>
-      <div class="spacer-10"></div>
-      <button fluid ion-button color="secondary" (tap)="continue()">
-        Aceptar solicitud
-      </button>
-      <div class="spacer-10"></div>
-      <button fluid ion-button color="secondary" (tap)="reject()">
-        Rechazar solicitud
-      </button>
-    </ng-container>
   </div>
 </ion-content>
