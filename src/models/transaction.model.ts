@@ -21,6 +21,7 @@ export class Transaction extends BaseModel<Transaction>{
     type: 'SAFE' | 'FAST';
     personBankAccount: UserBankAccount;
     exchangeAgentBankAccount: UserBankAccount;
+    personaQuiereVoucherDelTipo: 'NINGUNO' | 'BOLETA' | 'FACTURA' = 'NINGUNO';
 
     fromCurrency: Currency;
     targetCurrency: Currency;

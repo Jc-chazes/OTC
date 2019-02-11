@@ -168,6 +168,11 @@ export class TransactionsService extends BaseService implements CrudService<Tran
         }else{
             formData.append('field','exchangeAgentTransactionImage');
         }
+        this.api.put(`/transactions/${transaction.id}`,{
+            personaQuiereVoucherDelTipo: transaction.personaQuiereVoucherDelTipo
+        }).subscribe(()=>{
+            console.log('Se cambió el tipo de quieroVucher');
+        });
         return this.api.post('/upload',formData)
         .map( resp => {
             return true;

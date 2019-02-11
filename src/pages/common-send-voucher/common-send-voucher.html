@@ -40,6 +40,22 @@
         *ngIf="!!voucher.fileUrl"></div>
       </ion-col>
     </ion-row>
+    <div class="spacer-20"></div>
+    <div class="flex-row-layout jc-center ai-center pos-relative">
+      <span><b>Deseo:</b>&nbsp;&nbsp;&nbsp;</span>
+      <ion-select [(ngModel)]="transaction.personaQuiereVoucherDelTipo" class="input fill-width"
+      [selectOptions]="{ title: 'Deseo...' }">
+        <ion-option value="NINGUNO">
+          Ninguno
+        </ion-option>
+        <ion-option value="FACTURA">
+          Factura
+        </ion-option>
+        <ion-option value="BOLETA">
+          Boleta
+        </ion-option>
+      </ion-select>
+    </div>
     <div class="spacer-30"></div>
     <div class="text-center">
       <button fluid ion-button color="secondary" (tap)="onSend()">
