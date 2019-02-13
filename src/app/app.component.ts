@@ -16,6 +16,8 @@ import { StorageUtil, StorageKeys } from '../providers/utils/storage.util';
 import { SliderPage } from '../pages/slider/slider';
 import { Deeplinks, DeeplinkMatch } from '@ionic-native/deeplinks';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
+import { AlertUtil } from '../providers/utils/alert.util';
+import { LoadingUtil } from '../providers/utils/loading.util';
 
 @Component({
   templateUrl: 'app.html'
@@ -25,9 +27,9 @@ export class MyApp {
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
     private auth: AuthProvider, private users: UsersService, private currencies: CurrenciesService,
-    private storage: StorageUtil, private deeplinks: Deeplinks, private app: App) {
+    private storage: StorageUtil, private deeplinks: Deeplinks, private app: App, private loading: LoadingUtil) {
     let sliderLoaded = localStorage.getItem(StorageKeys.SLIDER_HAS_BEEN_SHOWED);
-    
+    this.loading.show();
     Observable.fromPromise( platform.ready() )
     .flatMap( () => {
       return this.currencies.find()
@@ -59,6 +61,7 @@ export class MyApp {
       this.listenToDeepLinks();
       statusBar.styleDefault();
       splashScreen.hide();
+      this.loading.hide();
     });
   }
 

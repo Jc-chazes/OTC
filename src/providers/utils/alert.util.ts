@@ -16,6 +16,12 @@ export class AlertUtil{
             buttons: buttons
         });
         alert.present();
+        return new Promise((resolve,reject)=>{
+            alert.onDidDismiss(()=>{
+                console.log('Didmiss of alert');
+                resolve();
+            })
+        });
     }
 
     confirm(message: string, title: string): Promise<boolean>{

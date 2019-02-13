@@ -83,30 +83,33 @@ export class CommonSendVoucherPage {
     
     this.transactions.uploadVoucher( this.transaction, this.voucher )
     .subscribe( couldUpload => {
-      this.loading.hide();
-      if( couldUpload ){
-        let successfulTransactionModal = this.modalCtrl.create(SuccessfulTransactionModalComponent,{
-          transaction: this.transaction
-        },{
-          cssClass: 'alertModal successfulTransactionModal',
-          enableBackdropDismiss: false
-        });
-        successfulTransactionModal.onDidDismiss( exit => {
-          // if( this.users.currentUser.isPerson() ){
-          //   this.navCtrl.popTo( this.navCtrl.getByIndex(0) );
-          // }else{
-          //   this.navCtrl.popTo( this.navCtrl.getByIndex(0) );
-          // }
-          if( this.users.currentUser.isPerson() ){
-            this.transactions.setTransactionTabRoot( 'TRANSACTION_IN_PROGRESS' );
-            this.navCtrl.setRoot(CommonTransactionInProgressPage);
-            this.navCtrl.popToRoot();
-          }else{
-            popToIndex(this.navCtrl,this.viewCtrl,1);
-          }
-        });
-        successfulTransactionModal.present();
-      }
+      setTimeout(()=>{
+        this.loading.hide();
+        if( couldUpload ){
+          let successfulTransactionModal = this.modalCtrl.create(SuccessfulTransactionModalComponent,{
+            transaction: this.transaction
+          },{
+            cssClass: 'alertModal successfulTransactionModal',
+            enableBackdropDismiss: false
+          });
+          successfulTransactionModal.onDidDismiss( exit => {
+            // if( this.users.currentUser.isPerson() ){
+            //   this.navCtrl.popTo( this.navCtrl.getByIndex(0) );
+            // }else{
+            //   this.navCtrl.popTo( this.navCtrl.getByIndex(0) );
+            // }
+            if( this.users.currentUser.isPerson() ){
+              this.transactions.setTransactionTabRoot( 'TRANSACTION_IN_PROGRESS' );
+              this.navCtrl.setRoot(CommonTransactionInProgressPage);
+              this.navCtrl.popToRoot();
+            }else{
+              this.transactions.clearCurrentTransaction();
+              popToIndex(this.navCtrl,this.viewCtrl,1);
+            }
+          });
+          successfulTransactionModal.present();
+        }
+      },300);
     })
   }
 

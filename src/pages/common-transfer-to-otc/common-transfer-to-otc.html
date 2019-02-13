@@ -12,9 +12,9 @@
 </ion-header>
 
 
-<ion-content class="page">
+<ion-content class="page commonTransferToOTC">
   <div class="fill-height flex-col-layout">
-    <div class="flex scrollable no-padding">
+    <div class="flex scrollable no-padding" #contentToScroll>
       <current-notification-watcher [navCtrl]="navCtrl"></current-notification-watcher>
       <back-button [navCtrl]="navCtrl"></back-button>
       <div padding>
@@ -96,8 +96,10 @@
       </div>
     </div>
     <div class="flex-auto no-padding">
-      <div class="spacer-30"></div>
-      <div class="flex-row-layout jc-center" padding>
+      <div class="spacer-15"></div>
+      <div class="flex-col-layout ai-center" padding>
+        <div class="arrow-down" (tap)="scrollToBottom()"></div>
+        <br>
         <button fluid ion-button color="secondary" (tap)="continue()">
           Siguiente
         </button>

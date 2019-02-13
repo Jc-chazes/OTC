@@ -30,6 +30,7 @@ export class ExchangeAgentRequestDetailsPage {
 
   transaction: Transaction;
   otcComission: Constant = new Constant({ content: 0 });
+  accepted = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private sanitizer: DomSanitizer,
   private constants: ConstantsService, private alerts: AlertUtil, private modalCtrl: ModalController,
@@ -99,6 +100,7 @@ export class ExchangeAgentRequestDetailsPage {
   }
 
   continueToNextSteps(){
+    this.accepted = true;
     this.transactions.setCurrentTransaction(this.transaction)    
     .subscribe()
     this.navCtrl.push( CommonSelectBankAccountPage,{
@@ -138,4 +140,15 @@ export class ExchangeAgentRequestDetailsPage {
     });  
   }
 
+  timeHasEnded(){
+    if( this.accepted ) return;
+    this.alerts.show('Lo sentimos, esta transacción ya no es válida. Lo redirigiremos a la lista de sus solicitudes','Mis solicitudes')
+    .then( () => {
+      this.loading.show();
+      setTimeout(()=>{
+        this.loading.hide();
+        this.navCtrl.pop();
+      },300)
+    });
+  }
 }

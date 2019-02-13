@@ -95,7 +95,7 @@
             <span>Monto a recibir de OTC:</span>
             <span class="flex"></span>
             <span>{{ transaction.currencyToReceive.symbol }}</span>&nbsp;
-            <span>{{ transaction.amountToReceive }}</span>
+            <span>{{ (transaction.amountToReceive||0).toFixed(2) }}</span>
           </div>
         </div>
       </div>
@@ -114,7 +114,7 @@
         </ng-container>
         <ng-container *ngIf="isSafe">
           <div class="input flex-row-layout jc-center countdown">
-            <countdown [date]="transaction.limitDate"></countdown>
+            <countdown [date]="transaction.limitDate" (final)="timeHasEnded()"></countdown>
           </div>
           <div class="spacer-10"></div>
           <button fluid ion-button color="secondary" (tap)="continue()">

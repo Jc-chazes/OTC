@@ -1,3 +1,5 @@
+@import "../../styles/1-settings/index";
+
 page-common-transfer-to-otc {
     .commonTransferToOTC{
         &__container{
@@ -12,6 +14,14 @@ page-common-transfer-to-otc {
                     height: 30px;
                 }
             }
+        }
+        .arrow-down{
+            $arrow-size: 12px;
+            width: 0; 
+            height: 0; 
+            border-left: $arrow-size solid transparent;
+            border-right: $arrow-size solid transparent;
+            border-top: $arrow-size solid $accent-color;
         }
     }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { Transaction } from '../../models/transaction.model';
 import { Constant } from '../../models/constant.model';
@@ -33,6 +33,7 @@ export class CommonTransferToOtcPage {
   otcBankAccountList: UserBankAccount[];
   selectedOtcBankAccount: UserBankAccount;
   canContinue = false;
+  @ViewChild('contentToScroll') contentToScroll: ElementRef;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private users: UsersService,
     private constants: ConstantsService, private userBankAccounts : UsersBankAccountsService,
@@ -110,4 +111,8 @@ export class CommonTransferToOtcPage {
     this.navCtrl.popToRoot();
   }
 
+  scrollToBottom(){
+    let element = this.contentToScroll.nativeElement;
+    element.scrollTop = element.scrollHeight - element.clientHeight;
+  }
 }
