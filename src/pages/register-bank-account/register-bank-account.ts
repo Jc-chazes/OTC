@@ -75,11 +75,11 @@ export class RegisterBankAccountPage {
       this.alerts.show('Faltan completar campos','Registro');
     }
     const { bank, accountNumber } = this.userBankAccountFG.value;
-    if( accountNumber.length != (bank as Bank).accountNumberLength ){
-      this.alerts.show(`El número de cuenta bancaria ingresado no cumple con los requisitos del banco: ${(bank as Bank).accountNumberLength} dígitos`,
-      'Cuentas bancarias');
-      return;
-    }
+    // if( accountNumber.length != (bank as Bank).accountNumberLength ){
+    //   this.alerts.show(`El número de cuenta bancaria ingresado no cumple con los requisitos del banco: ${(bank as Bank).accountNumberLength} dígitos`,
+    //   'Cuentas bancarias');
+    //   return;
+    // }
     let currenRegisterState = this.appState.currentState.register;
     this.appState.setState({
       register: {

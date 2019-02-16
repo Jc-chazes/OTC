@@ -131,11 +131,11 @@ export class CommonSelectBankAccountPage {
     if( this.mode == 'NEW' ){
       if( this.userBankAccountFG.valid ){
         const { bank, accountNumber } = this.userBankAccountFG.value;
-        if( accountNumber.length != (bank as Bank).accountNumberLength ){
-          this.alerts.show(`El número de cuenta bancaria ingresado no cumple con los requisitos del banco: ${(bank as Bank).accountNumberLength} dígitos`,
-          'Cuentas bancarias');
-          return;
-        }
+        // if( accountNumber.length != (bank as Bank).accountNumberLength ){
+        //   this.alerts.show(`El número de cuenta bancaria ingresado no cumple con los requisitos del banco: ${(bank as Bank).accountNumberLength} dígitos`,
+        //   'Cuentas bancarias');
+        //   return;
+        // }
         let toCreateBankAccount = this.userBankAccountFG.value as UserBankAccount;
         if( ( this.users.currentUser.userType == '0' && toCreateBankAccount.currency.code != this.transaction.exchangeAgentOffering.requestedCurrency )
          || ( this.users.currentUser.userType == '1' && toCreateBankAccount.currency.code != this.transaction.exchangeAgentOffering.receivedCurrency ) ){

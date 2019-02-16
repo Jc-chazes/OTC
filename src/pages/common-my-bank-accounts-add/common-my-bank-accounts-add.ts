@@ -40,11 +40,11 @@ export class CommonMyBankAccountsAddPage {
   submit(){
     if( this.userBankAccountFG.valid ){
       const { bank, accountNumber } = this.userBankAccountFG.value;
-      if( accountNumber.length != (bank as Bank).accountNumberLength ){
-        this.alerts.show(`El número de cuenta bancaria ingresado no cumple con los requisitos del banco: ${(bank as Bank).accountNumberLength} dígitos`,
-        'Cuentas bancarias');
-        return;
-      }
+      // if( accountNumber.length != (bank as Bank).accountNumberLength ){
+      //   this.alerts.show(`El número de cuenta bancaria ingresado no cumple con los requisitos del banco: ${(bank as Bank).accountNumberLength} dígitos`,
+      //   'Cuentas bancarias');
+      //   return;
+      // }
       this.loading.show();
       let toCreateBankAccount = this.userBankAccountFG.value as UserBankAccount;
       this.userBankAccounts.add( toCreateBankAccount )
