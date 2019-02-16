@@ -39,7 +39,7 @@ export class CommonSendVoucherPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alerts: AlertUtil,
     public sanitizer: DomSanitizer, private modalCtrl: ModalController, private loading: LoadingUtil,
-    private transactions: TransactionsService, private camera: Camera, private users: UsersService,
+    private transactions: TransactionsService, private camera: Camera, public users: UsersService,
     private viewCtrl: ViewController) {
     this.transaction = this.navParams.get('transaction');
     this.voucherFileReader.onload = () => {
