@@ -186,7 +186,8 @@ export class AuthProvider {
       }).catch( err => {
         // this.alerts.show('No se pudo realizar el login con Facebook, por favor inténtelo más tarde ','Error login');
         // alert(JSON.stringify(err));     
-        Raven.captureException(err);   
+        Raven.captureException(err);
+        this.facebook.logout();
         return Observable.of({ couldLogin: false });
       });
     })
@@ -197,6 +198,7 @@ export class AuthProvider {
       }
       // alert(JSON.stringify(err)); 
       Raven.captureException(err); 
+      this.facebook.logout();
       return Observable.of({ couldLogin: false });
     });
   }
