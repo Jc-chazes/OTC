@@ -20,7 +20,7 @@
       <div class="viewProfile__avatar w-background-image-top" [style.backgroundImage]="avatarUrl"
       [ngClass]="{ 'empty': !photo.fileUrl }" (tap)="photoUpload.click()">
         <img src="/assets/imgs/icons/profile_photo_add.png" alt="" class="viewProfile__avatar__add">
-        <input type="file" class="hide" #photoUpload (change)="onChangePhoto($event)">
+        <input type="file" class="hide" #photoUpload (change)="onChangePhoto($event)" accept="image/*" >
       </div>
       <div class="spacer-30"></div>
       <div class="text-center">

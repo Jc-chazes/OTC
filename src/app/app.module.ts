@@ -91,6 +91,19 @@ import { RequestResetPasswordPage } from '../pages/request-reset-password/reques
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { EventsUtil } from '../providers/utils/events.util';
 
+// import * as Sentry from 'sentry-cordova';
+// Sentry.init({ dsn: 'https://e215c711d63840b48d4c2b91894dda8d@sentry.io/1395719' });
+// class SentryIonicErrorHandler extends IonicErrorHandler {
+//   handleError(error) {
+//     super.handleError(error);
+//     try {
+//       Sentry.captureException(error.originalError || error);
+//     } catch (e) {
+//       console.error(e);
+//     }
+//   }
+// }
+
 @NgModule({
   declarations: [
     MyApp,
@@ -201,6 +214,7 @@ import { EventsUtil } from '../providers/utils/events.util';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    // {provide: ErrorHandler, useClass: SentryIonicErrorHandler},
     AppStateService,
     StorageUtil,
     JwtUtil,

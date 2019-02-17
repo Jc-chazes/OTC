@@ -65,6 +65,7 @@
     "ng2-pdf-viewer": "^5.2.3",
     "node-sass": "^4.11.0",
     "rxjs": "5.5.11",
+    "sentry-cordova": "^0.13.1",
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.26"
   },
@@ -130,12 +131,16 @@
         "UPDATE_API": "https://api.ionicjs.com",
         "MAX_STORE": "2",
         "MIN_BACKGROUND_DURATION": "30"
-      }
+      },
+      "sentry-cordova": {}
     },
     "platforms": [
       "android",
       "browser",
       "ios"
     ]
+  },
+  "config": {
+    "ionic_generate_source_map": "true"
   }
 }

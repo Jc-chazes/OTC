@@ -80,6 +80,7 @@ ion-modal:not(.termsAndConditionsModal) ion-backdrop{
     .modal-wrapper{
         height: 400px !important;
         top: calc( 50% - 200px ) !important;
+        background-position: left bottom 1px, right 1px;
     }
 }
 
