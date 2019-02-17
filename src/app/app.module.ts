@@ -91,6 +91,7 @@ import { RequestResetPasswordPage } from '../pages/request-reset-password/reques
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { EventsUtil } from '../providers/utils/events.util';
 
+/*Con cordova falla la instalación en iOS*/
 // import * as Sentry from 'sentry-cordova';
 // Sentry.init({ dsn: 'https://e215c711d63840b48d4c2b91894dda8d@sentry.io/1395719' });
 // class SentryIonicErrorHandler extends IonicErrorHandler {
@@ -103,6 +104,19 @@ import { EventsUtil } from '../providers/utils/events.util';
 //     }
 //   }
 // }
+
+/*Con Angular*/
+import * as Raven from 'raven-js';
+Raven
+  .config('https://e215c711d63840b48d4c2b91894dda8d@sentry.io/1395719')
+  .install();
+
+export class RavenErrorHandler extends IonicErrorHandler implements ErrorHandler {
+  handleError(err:any) : void {
+    Raven.captureException(err);
+    super.handleError(err);
+  }
+}
 
 @NgModule({
   declarations: [
@@ -213,8 +227,9 @@ import { EventsUtil } from '../providers/utils/events.util';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    // {provide: ErrorHandler, useClass: SentryIonicErrorHandler},
+    // {provide: ErrorHandler, useClass: IonicErrorHandler},
+    // {provide: ErrorHandler, useClass: SentryIonicErrorHandler}, //Cordova
+    {provide: ErrorHandler, useClass: RavenErrorHandler}, //Angular
     AppStateService,
     StorageUtil,
     JwtUtil,
