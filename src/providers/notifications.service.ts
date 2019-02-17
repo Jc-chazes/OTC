@@ -100,7 +100,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
                 }
         
                 this.localNotifications.schedule({
-                    title: messageTitle,
+                    title: messageTitle || 'OTC',
                     text: messageText,
                     color: '#23c7b1',
                     smallIcon: 'res://notification_icon.png',
