@@ -31,6 +31,10 @@ export class MyApp {
     let sliderLoaded = localStorage.getItem(StorageKeys.SLIDER_HAS_BEEN_SHOWED);
     this.loading.show();
     Observable.fromPromise( platform.ready() )
+    .do( () => {
+      statusBar.styleDefault();
+      splashScreen.hide();
+    })
     .flatMap( () => {
       return this.currencies.find()
       .flatMap( (_noop) => {
@@ -59,8 +63,8 @@ export class MyApp {
     })
     .subscribe( () => {
       this.listenToDeepLinks();
-      statusBar.styleDefault();
-      splashScreen.hide();
+      // statusBar.styleDefault();
+      // splashScreen.hide();
       this.loading.hide();
     });
   }
