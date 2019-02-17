@@ -30,7 +30,16 @@ export class MyApp {
     private storage: StorageUtil, private deeplinks: Deeplinks, private app: App, private loading: LoadingUtil) {
     let sliderLoaded = localStorage.getItem(StorageKeys.SLIDER_HAS_BEEN_SHOWED);
     this.loading.show();
-    Observable.fromPromise( platform.ready() )
+    Observable.fromPromise( 
+      platform.ready()
+      .then( () => {
+        alert('Plataforma lista');
+        return Promise.resolve();
+      }).catch( (err)=>{
+        alert(JSON.stringify(err));
+        return Promise.reject(err);
+      })
+    )
     .do( () => {
       statusBar.styleDefault();
       splashScreen.hide();
@@ -60,6 +69,10 @@ export class MyApp {
         alert('Error cargando aplicación:'+JSON.stringify(err));
         return null;
       })
+    })
+    .catch( err => {
+      alert('Error cargando aplicación:'+JSON.stringify(err));
+      return null;
     })
     .subscribe( () => {
       this.listenToDeepLinks();
