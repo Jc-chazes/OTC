@@ -23,6 +23,7 @@ import { GooglePlus } from '@ionic-native/google-plus';
 import { AlertUtil } from './utils/alert.util';
 import { Configuration } from '../settings/configuration.settings';
 import { BackendMessages, Messages } from '../settings/messages.settings';
+import * as Raven from 'raven-js';
 
 @Injectable()
 export class AuthProvider {
@@ -153,12 +154,14 @@ export class AuthProvider {
       }).catch( err => {
         // this.alerts.show('No se pudo realizar el login con Google, por favor inténtelo más tarde ','Error login');
         // alert(JSON.stringify(err));
+        Raven.captureException(err);
         return Observable.of({ couldLogin: false });
       });
     })
     .catch( err => {
       // this.alerts.show('No se pudo realizar el login con Google, por favor inténtelo más tarde ','Error login');
       // alert(JSON.stringify(err));
+      Raven.captureException(err);
       return Observable.of({ couldLogin: false });
     });
   }
@@ -182,7 +185,8 @@ export class AuthProvider {
         }          
       }).catch( err => {
         // this.alerts.show('No se pudo realizar el login con Facebook, por favor inténtelo más tarde ','Error login');
-        // alert(JSON.stringify(err));        
+        // alert(JSON.stringify(err));     
+        Raven.captureException(err);   
         return Observable.of({ couldLogin: false });
       });
     })
@@ -191,7 +195,8 @@ export class AuthProvider {
       if( err.errorCode ){
         return Observable.of({ couldLogin: false, canceled: true });
       }
-      // alert(JSON.stringify(err));  
+      // alert(JSON.stringify(err)); 
+      Raven.captureException(err); 
       return Observable.of({ couldLogin: false });
     });
   }

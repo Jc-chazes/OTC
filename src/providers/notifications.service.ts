@@ -10,7 +10,7 @@ import { Notification } from "../models/notification.model";
 import { Transaction } from "../models/transaction.model";
 import { uniqBy, sortBy } from 'lodash';
 import { NotificationMapper } from "./mappers/notification.mapper";
-import { ModalController, Platform, Tabs } from "ionic-angular";
+import { ModalController, Platform, Tabs, ToastController } from "ionic-angular";
 import { Firebase } from "@ionic-native/firebase";
 import { AvailableModals, ModalUtil } from "./utils/modal.util";
 import { LocalNotifications } from "@ionic-native/local-notifications";
@@ -24,7 +24,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
 
     constructor(api: ApiUtil, private users: UsersService, private firebaseNative: Firebase,
     private platform: Platform, private modals: ModalUtil, private localNotifications: LocalNotifications,
-    private transactions: TransactionsService){
+    private transactions: TransactionsService, private toast: ToastController){
         super(api);
     }
 
@@ -98,13 +98,16 @@ export class NotificationsService extends BaseService implements CrudService<Not
                 if (this.platform.is('ios')) {
                     messageText = notification.aps.alert;
                 }
+
+                this.toast.create({ message: 'Una notificación ha llegado!' }).present();
         
                 this.localNotifications.schedule({
                     title: messageTitle || 'OTC',
                     text: messageText,
                     color: '#23c7b1',
                     smallIcon: 'res://notification_icon.png',
-                    icon:'file://assets/images/icon.png'
+                    icon:'file://assets/images/icon.png',
+                    foreground: true
                 });
 
                 switch(notification.type){
