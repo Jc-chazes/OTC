@@ -58,6 +58,7 @@ export class ExchangeAgentTabsPage implements OnInit{
   }
 
   ionViewDidLoad() {
+    alert("ionViewDidLoad PersonTabsPage")
     console.log('ionViewDidLoad PersonTabsPage');
   }
 
