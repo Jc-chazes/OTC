@@ -81,7 +81,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
     }
 
     listenToContests(modalCtrl: ModalController, currenTabs?: Tabs){
-        (window as any).FirebasePlugin.onNotificationOpen(function(notification) {
+        /*(window as any).FirebasePlugin.onNotificationOpen(function(notification) {
             alert(JSON.stringify(notification));
         }, function(error) {
             alert(JSON.stringify(error));
@@ -91,7 +91,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
             alert("Token on refresh"+token);
         }, e => {
             alert(JSON.stringify(e));
-        });
+        });*/
         try{
             this.firebaseNative.onNotificationOpen().subscribe( (notification) => {
                 if(notification.tap 
@@ -111,7 +111,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
                 if (this.platform.is('ios')) {
                     messageText = notification.aps.alert.title;
                     messageTitle = notification.aps.alert.body;
-                    alert(JSON.stringify(notification));
+                    //alert(JSON.stringify(notification));
                 }
 
                 this.toast.create({ message: 'Una notificación ha llegado!', duration: 3000 }).present();

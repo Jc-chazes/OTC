@@ -33,10 +33,10 @@ export class MyApp {
     Observable.fromPromise( 
       platform.ready()
       .then( () => {
-        alert('Plataforma lista');
+        //__alert('Plataforma lista');
         return Promise.resolve();
       }).catch( (err)=>{
-        alert(JSON.stringify(err));
+        //__alert(JSON.stringify(err));
         return Promise.reject(err);
       })
     )
@@ -45,13 +45,13 @@ export class MyApp {
       splashScreen.hide();
     })
     .flatMap( () => {
-      alert('currencies will be loaded');
+      //__alert('currencies will be loaded');
       return this.currencies.find()
       .flatMap( (_noop) => {
-        alert('populate will be loaded');
+        //__alert('populate will be loaded');
         return this.auth.populate()
         .map( couldPopulate => {
-          alert('rootPage will be setted');
+          //__alert('rootPage will be setted');
           if( !sliderLoaded ){
             localStorage.setItem(StorageKeys.SLIDER_HAS_BEEN_SHOWED,'{ loaded: true }'); 
             this.rootPage = SliderPage
@@ -69,12 +69,12 @@ export class MyApp {
         });
       })
       .catch( err => {
-        alert('Error cargando aplicación:'+JSON.stringify(err));
+        //__alert('Error cargando aplicación:'+JSON.stringify(err));
         return null;
       })
     })
     .catch( err => {
-      alert('Error cargando aplicación:'+JSON.stringify(err));
+      //__alert('Error cargando aplicación:'+JSON.stringify(err));
       return null;
     })
     .subscribe( () => {
