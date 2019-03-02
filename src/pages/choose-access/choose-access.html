@@ -3,19 +3,54 @@
     <div class="text-center">
       <img src="/assets/imgs/logo.png" alt="" width="150">
     </div>
-    <div class="spacer-100"></div>
-    <div class="providers flex-row-layout ai-center jc-center fill-width" *ngIf="appState.currentState.global.userType == '0'">
-        <span (tap)="loginWithGoogle()">
-          <img src="/assets/imgs/icons/gmail.png" alt="" height="25">
+   
+    <div  class="providers flex-row-layout ai-center jc-center fill-width" 
+          *ngIf="appState.currentState.global.userType == '0'">
+        <span (tap)="loginWithFacebook()">
+          <img src="/assets/imgs/icons/facebook.png" alt="" height="40" width="40">
         </span>
         <div class="spacer-h-25"></div>
-        <span (tap)="loginWithFacebook()">
-          <img src="/assets/imgs/icons/facebook.png" alt="" height="25">
+        <span (tap)="loginWithGoogle()">
+          <img src="/assets/imgs/icons/gmail.png" alt="" height="32" width="40">
         </span>
     </div>
-    <div class="spacer-20"></div>
-    <button ion-button color="primary" fluid (tap)='registerUser()' class='login__registrerUser'>Crear Cuenta</button>  
-    <div class="spacer-20"></div>
-    <button ion-button color="primary" fluid (tap)='login()' class='login__singUp'>Iniciar Sesión</button>
+
+    <div class="spacer-30"></div>
+    <div class="box-inputs" *ngIf="user">
+      <div>
+        <input type="email" 
+               class="fill-width"   
+               [(ngModel)]="user.email"
+               placeholder="Correo electrónico">
+      </div>
+      <div class="spacer-20"></div>
+      <div class="login__password pos-relative">
+          <input [type]="showPassword ? 'text' : 'password'" 
+                 class="fill-width" 
+                 [(ngModel)]="user.password"
+                 placeholder="Contraseña">
+          <div class="login__password__toggler" 
+               (tap)="showPassword = !showPassword">
+              <ion-icon [name]="showPassword ? 'eye' : 'eye-off' " color="dark"></ion-icon>
+          </div>
+      </div>
+      <div class="spacer-10"></div>
+      <div class="box-forgot-password">
+        <a class="text-white" (tap)="forgotPassword($event)">Olvidé contraseña</a>
+      </div> 
+    </div>
+    
+    <div class="spacer-40"></div>
+    <button fluid 
+            (tap)='login()' 
+            class='login__singUp'>Iniciar Sesión</button>
+    <div class="spacer-10"></div>
+    <span>o</span>
+    <button fluid 
+            (tap)='registerUser()' 
+            class='login__registrerUser'>
+          <span>Crear Cuenta</span>
+    </button>  
+    
   </div>      
 </ion-content>
