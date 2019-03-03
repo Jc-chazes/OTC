@@ -7,20 +7,36 @@ page-choose-profile {
     .chooseLogin__text{
         margin-bottom: 15px;
     }
-    button{
-        border: 2px solid #FFF;
-        color: #FFF;
-        background-color: transparent;
-        outline: none;
-        width: 250px !important;
-        padding: 5px 10px;
-        font-weight: bold;
-        height: auto !important;
-        &.active{
-            color: $primary-color;
-            background-color: #FFF;
+
+    .box_buttons{
+        .box_option{
+            display: inline-block;
+            margin: 0 10px;
+            vertical-align: top;
+
+            .button_image{
+                border: 3px solid white;
+                border-radius: 50px;
+                width: 100px;
+                height: 100px;
+                background-position: center;
+                background-size: contain;
+            }
+
+            .btn_client{
+                background-image: url('/assets/imgs/placeholder-person.jpg');
+            }
+
+            .btn_noclient{
+                background-image: url('/assets/imgs/placeholder-person.jpg');
+            }
+
+            div{
+                text-align: center;
+            }
         }
     }
+
     .chooseLogin__checkLogin{
         border-radius: 5px;
         background-color: transparent;

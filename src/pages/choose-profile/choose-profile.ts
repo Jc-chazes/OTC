@@ -29,19 +29,8 @@ export class ChooseProfilePage {
     
   }
 
-  registerClient(){
-    this.userType='0';
-  }
-
-  registerHouseChangue(){
-    this.userType='1';
-  }
-
-  ready(){
-    if( !this.userType ){
-      this.alert.show('Seleccione un perfil','OTC');
-      return;
-    }
+  ready(userType: string){
+    this.userType = userType;
     this.auth.setAppUserType(this.userType);
     this.nav.push(ChooseAccessPage)
   }
