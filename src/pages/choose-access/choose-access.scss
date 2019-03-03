@@ -2,18 +2,58 @@
 
 page-choose-access {
     font-size: 1.5rem;
-    button{
-        border: 2px solid $primary-color;
+
+    /* button{
         color: #FFF;
-        background-color: $primary-color;
         outline: none;
         width: 250px !important;
         padding: 5px !important;
         font-weight: bold;
         height: auto !important;
-    }
+    } */
+
     .providers{
         padding: 15px 0;
         background-color: rgba(#FFF,.4);
+    }
+
+    .box-inputs{
+        width: 80%;
+
+        .box-forgot-password{
+            font-weight: bold;
+        }
+    }
+
+    .login {
+        &__password{
+            &__toggler{
+                position: absolute;
+                right: 10px;
+                top: 2px;
+                
+                ion-icon{
+                    font-size: 20px;
+                    vertical-align: -webkit-baseline-middle;
+                }
+            }
+        }
+    } 
+
+    .login__singUp, .login__registrerUser{
+        color: #FFF;
+        outline: none;
+        font-weight: bold;
+    }
+
+    .login__singUp{
+        background-color: $accent-color;
+    }
+
+    .login__registrerUser{
+        background-color: transparent;
+        span{
+            text-decoration: underline;
+        }
     }
 }

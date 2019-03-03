@@ -16,13 +16,6 @@ import { ExchangeAgentTabsPage } from '../exchange-agent-tabs/exchange-agent-tab
 import { LoadingUtil } from '../../providers/utils/loading.util';
 import moment from 'moment';
 
-/**
- * Generated class for the CommonRegisterAccountPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @Component({
   selector: 'page-common-register-account',
   templateUrl: 'common-register-account.html',
@@ -101,8 +94,17 @@ export class CommonRegisterAccountPage {
     })
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad() {}
+
+  validatePassword(){
+    var regex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{6,12}$/;
+    var password = this.profileFG.value.user.password;
+    var isValid = (regex.test(password));
     
+    if (isValid)
+      this.createAccount();
+    else 
+      this.alerts.show('Tiene que tener entre 6 y 12 caractares, una letra mayúscula y un numero.', 'Contraseña inválida');
   }
 
   createAccount(){
