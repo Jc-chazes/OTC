@@ -94,11 +94,11 @@ export class NotificationsService extends BaseService implements CrudService<Not
         });*/
         try{
             this.firebaseNative.onNotificationOpen().subscribe( (notification) => {
-                if(notification.tap 
-                    // && !this.platform.is('ios') 
-                ){
-                    return ;
-                }
+                // if(notification.tap 
+                //     // && !this.platform.is('ios') 
+                // ){
+                //     return ;
+                // }
         
                 let messageText: string;
                 let messageTitle: string;
@@ -115,15 +115,17 @@ export class NotificationsService extends BaseService implements CrudService<Not
                 }
 
                 this.toast.create({ message: 'Una notificación ha llegado!', duration: 3000 }).present();
-        
-                this.localNotifications.schedule({
-                    title: messageTitle || 'OTC',
-                    text: messageText,
-                    color: '#23c7b1',
-                    smallIcon: 'res://notification_icon.png',
-                    icon:'file://assets/images/icon.png',
-                    foreground: true
-                });
+
+                if( notification.tap ){
+                    this.localNotifications.schedule({
+                        title: messageTitle || 'OTC',
+                        text: messageText,
+                        color: '#23c7b1',
+                        smallIcon: 'res://notification_icon.png',
+                        icon:'file://assets/images/icon.png',
+                        foreground: true
+                    });
+                }     
 
                 switch(notification.type){
                     case 'NEW_CONTEST':
@@ -153,7 +155,10 @@ export class NotificationsService extends BaseService implements CrudService<Not
                         break;
                     case 'ACCEPTED_BY_EXCHANGE_AGENT':
                         if( this.users.currentUser.isPerson() ){
-                            this.modals.openModal(modalCtrl,AvailableModals.RequestWasAcceptedModal);
+                            this.modals.openModal(modalCtrl,AvailableModals.RequestWasAcceptedModal)
+                            .then(()=>{
+                                currenTabs.select(1);
+                            });
                             // .then( resp => {
                             //     let transactionId = Number(notification.transactionId);
                             //     this.transactions.findOne( new ByIdSpecification(transactionId) )
@@ -213,6 +218,9 @@ export class NotificationsService extends BaseService implements CrudService<Not
                                 rejectionReason: notification.rejectionReason,
                                 cancelledBy: 'PERSON'
                             })
+                            .then(()=>{
+                                currenTabs.select(1);
+                            });
                         }
                         break;
                 }

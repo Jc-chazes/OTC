@@ -175,6 +175,7 @@ export class TransactionsService extends BaseService implements CrudService<Tran
                 console.log('Se cambió el tipo de quieroVucher');
             });
         }
+        this.api.post(`/transactions/${transaction.id}/notificate-voucher-uploaded`).subscribe();//Indicando al dashboard que envíe el correo de voucher cargado
         return this.api.post('/upload',formData)
         .map( resp => {
             return true;
