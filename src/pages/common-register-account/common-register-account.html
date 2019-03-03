@@ -1,137 +1,143 @@
 <ion-content padding class="page page--money-4">
-  <back-button [navCtrl]="navCtrl"></back-button>
-  <div class="spacer-30"></div>
-  <form class="registerAccount" [formGroup]="profileFG" (submit)="validatePassword()">
-    <h1 class="text-center">Crear cuenta</h1>
-    <h5 class="text-center">Ingrese sus datos personales</h5>
-    <ion-grid radio-group formControlName="type" *ngIf="userType == '1'">
-      <ion-row justify-content-around>
-        <ion-col col-auto>
-          <ion-row align-items-center>
+  <div class="fill-height flex-col-layout">
+    <div class="flex scrollable no-padding">
+      <back-button [navCtrl]="navCtrl"></back-button>
+      <div class="spacer-30"></div>
+      <form class="registerAccount" [formGroup]="profileFG">
+        <h1 class="text-center">Crear cuenta</h1>
+        <h5 class="text-center">Ingrese sus datos personales</h5>
+        <ion-grid radio-group formControlName="type" *ngIf="userType == '1'">
+          <ion-row justify-content-around>
             <ion-col col-auto>
-              <div #casaCambioRadio>
-                <ion-radio mode="md" color="secondary" [value]="'0'"></ion-radio>
-              </div>
+              <ion-row align-items-center>
+                <ion-col col-auto>
+                  <div #casaCambioRadio>
+                    <ion-radio mode="md" color="secondary" [value]="'0'"></ion-radio>
+                  </div>
+                </ion-col>
+                <ion-col col-auto (tap)="profileFG.patchValue({ type: '0' })">
+                  Casa de <br> cambio
+                </ion-col>
+              </ion-row>        
             </ion-col>
-            <ion-col col-auto (tap)="profileFG.patchValue({ type: '0' })">
-              Casa de <br> cambio
-            </ion-col>
-          </ion-row>        
-        </ion-col>
-        <ion-col col-auto>
-          <ion-row align-items-center>
             <ion-col col-auto>
-              <div #cambistaRadio>
-                <ion-radio mode="md" color="secondary" [value]="'1'"></ion-radio>
-              </div>
+              <ion-row align-items-center>
+                <ion-col col-auto>
+                  <div #cambistaRadio>
+                    <ion-radio mode="md" color="secondary" [value]="'1'"></ion-radio>
+                  </div>
+                </ion-col>
+                <ion-col col-auto (tap)="profileFG.patchValue({ type: '1' })">
+                  Cambista
+                </ion-col>
+              </ion-row>        
             </ion-col>
-            <ion-col col-auto (tap)="profileFG.patchValue({ type: '1' })">
-              Cambista
-            </ion-col>
-          </ion-row>        
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    <ion-grid radio-group formControlName="type" *ngIf="userType == '0'">
-      <ion-row justify-content-around>
-        <ion-col col-auto>
-          <ion-row align-items-center>
+          </ion-row>
+        </ion-grid>
+        <ion-grid radio-group formControlName="type" *ngIf="userType == '0'">
+          <ion-row justify-content-around>
             <ion-col col-auto>
-              <div #casaCambioRadio>
-                <ion-radio mode="md" color="secondary" [value]="'0'"></ion-radio>
-              </div>
+              <ion-row align-items-center>
+                <ion-col col-auto>
+                  <div #casaCambioRadio>
+                    <ion-radio mode="md" color="secondary" [value]="'0'"></ion-radio>
+                  </div>
+                </ion-col>
+                <ion-col col-auto (tap)="profileFG.patchValue({ type: '0' })">
+                  Persona <br> natural
+                </ion-col>
+              </ion-row>        
             </ion-col>
-            <ion-col col-auto (tap)="profileFG.patchValue({ type: '0' })">
-              Persona <br> natural
-            </ion-col>
-          </ion-row>        
-        </ion-col>
-        <ion-col col-auto>
-          <ion-row align-items-center>
             <ion-col col-auto>
-              <div #cambistaRadio>
-                <ion-radio mode="md" color="secondary" [value]="'1'"></ion-radio>
-              </div>
+              <ion-row align-items-center>
+                <ion-col col-auto>
+                  <div #cambistaRadio>
+                    <ion-radio mode="md" color="secondary" [value]="'1'"></ion-radio>
+                  </div>
+                </ion-col>
+                <ion-col col-auto (tap)="profileFG.patchValue({ type: '1' })">
+                  Persona <br> jurídica
+                </ion-col>
+              </ion-row>        
             </ion-col>
-            <ion-col col-auto (tap)="profileFG.patchValue({ type: '1' })">
-              Persona <br> jurídica
-            </ion-col>
-          </ion-row>        
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    <div>
-      <div class="p-5" *ngIf="isExchangeAgent">
-        <div class="form-input required">
-          <input type="text" class="fill-width" placeholder="Nombre / Razón social" formControlName="name">
-        </div>          
-      </div>
-      <div class="p-5" *ngIf="isPerson && profileFG.value.type == '0'">
-        <div class="form-input required"><input type="text" class="fill-width" placeholder="Nombres" formControlName="firstName"></div>
-      </div>
-      <div class="p-5" *ngIf="isPerson && profileFG.value.type == '0'">
-        <div class="form-input required"><input type="text" class="fill-width" placeholder="Apellidos" formControlName="lastName"></div></div>
-      <div class="p-5" *ngIf="isPerson && profileFG.value.type == '1'">
-        <div class="form-input required"><input type="text" class="fill-width" placeholder="Razón social" formControlName="businessName"></div></div>
-      <div class="p-5" *ngIf="isPerson && profileFG.value.type == '1'">
-        <div class="form-input required"><input type="number" class="fill-width" placeholder="Ruc" formControlName="ruc"></div></div>
-      <div class="p-5" *ngIf="isExchangeAgent">
-        <div class="form-input required"><input type="number" class="fill-width" placeholder="Dni / Ruc" formControlName="documentNumber"></div></div>
-      <ng-container *ngIf=" (isExchangeAgent && profileFG.value.type == '1') || (isPerson && profileFG.value.type == '0') ">
-        <div class="p-5 pos-relative">
-          <div class="form-input required">
-            <input type="text" class="fill-width" placeholder="Fecha de nacimiento" formControlName="formatBirthdate" readonly>
+          </ion-row>
+        </ion-grid>
+        <div>
+          <div class="p-5" *ngIf="isExchangeAgent">
+            <div class="form-input required">
+              <input type="text" class="fill-width" placeholder="Nombre / Razón social" formControlName="name">
+            </div>          
           </div>
-          <ion-datetime class="opacity-0" displayFormat="DD/MM/YYYY" formControlName="birthdate"
-          pickerFormat="DD MM YYYY"></ion-datetime>
-        </div>
-      </ng-container>
-      <div class="p-5" *ngIf="isPerson && profileFG.value.type == '0'">
-        <div class="form-input required"><input type="number" class="fill-width" placeholder="Dni / Carné de extranjería" formControlName="documentNumber"></div></div>
-      <div class="p-5" *ngIf="isExchangeAgent">
-        <div class="form-input required"><input type="text" class="fill-width" placeholder="Dirección" formControlName="address"></div></div>
-      <div class="p-5" *ngIf="isExchangeAgent">
-        <div class="form-input required"><input type="number" class="fill-width" placeholder="Teléfono / celular" formControlName="phone"></div></div>
-      <div class="p-5" *ngIf="isPerson">
-        <div class="form-input required"><input type="number" class="fill-width" placeholder="Celular" formControlName="cellphone"></div></div>
-      <div class="p-5" *ngIf="isExchangeAgent">
-        <input type="text" class="fill-width" placeholder="Número de registro de la SBS" formControlName="sbsRegisterNumber">
-      </div>
-      <ng-container formGroupName="user">
-          <div class="p-5">
-            <div class="form-input required"><input type="text" class="fill-width" placeholder="Correo electrónico" 
-            formControlName="email" [readonly]="!!this.navParams.get('email')"></div></div>
-          <div class="p-5 login__password" *ngIf="!this.navParams.get('email')">
-            <div class="form-input pos-relative">
-              <input [type]=" showPassword ?  'text' : 'password'" class="fill-width" placeholder="Contraseña" formControlName="password">
-              <div class="login__password__toggler" (tap)="showPassword = !showPassword">
-                  <ion-icon [name]="showPassword ? 'eye' : 'eye-off' " color="dark"></ion-icon>
+          <div class="p-5" *ngIf="isPerson && profileFG.value.type == '0'">
+            <div class="form-input required"><input type="text" class="fill-width" placeholder="Nombres" formControlName="firstName"></div>
+          </div>
+          <div class="p-5" *ngIf="isPerson && profileFG.value.type == '0'">
+            <div class="form-input required"><input type="text" class="fill-width" placeholder="Apellidos" formControlName="lastName"></div></div>
+          <div class="p-5" *ngIf="isPerson && profileFG.value.type == '1'">
+            <div class="form-input required"><input type="text" class="fill-width" placeholder="Razón social" formControlName="businessName"></div></div>
+          <div class="p-5" *ngIf="isPerson && profileFG.value.type == '1'">
+            <div class="form-input required"><input type="number" class="fill-width" placeholder="Ruc" formControlName="ruc"></div></div>
+          <div class="p-5" *ngIf="isExchangeAgent">
+            <div class="form-input required"><input type="number" class="fill-width" placeholder="Dni / Ruc" formControlName="documentNumber"></div></div>
+          <ng-container *ngIf=" (isExchangeAgent && profileFG.value.type == '1') || (isPerson && profileFG.value.type == '0') ">
+            <div class="p-5 pos-relative">
+              <div class="form-input required">
+                <input type="text" class="fill-width" placeholder="Fecha de nacimiento" formControlName="formatBirthdate" readonly>
               </div>
+              <ion-datetime class="opacity-0" displayFormat="DD/MM/YYYY" formControlName="birthdate"
+              pickerFormat="DD MM YYYY"></ion-datetime>
             </div>
+          </ng-container>
+          <div class="p-5" *ngIf="isPerson && profileFG.value.type == '0'">
+            <div class="form-input required"><input type="number" class="fill-width" placeholder="Dni / Carné de extranjería" formControlName="documentNumber"></div></div>
+          <div class="p-5" *ngIf="isExchangeAgent">
+            <div class="form-input required"><input type="text" class="fill-width" placeholder="Dirección" formControlName="address"></div></div>
+          <div class="p-5" *ngIf="isExchangeAgent">
+            <div class="form-input required"><input type="number" class="fill-width" placeholder="Teléfono / celular" formControlName="phone"></div></div>
+          <div class="p-5" *ngIf="isPerson">
+            <div class="form-input required"><input type="number" class="fill-width" placeholder="Celular" formControlName="cellphone"></div></div>
+          <div class="p-5" *ngIf="isExchangeAgent">
+            <input type="text" class="fill-width" placeholder="Número de registro de la SBS" formControlName="sbsRegisterNumber">
           </div>
-      </ng-container>
-    </div>
-    <div class="p-5">
-      <a href="" class="text-white" (tap)="$event.stopPropagation;onAddBankAccount()">Agregar cuenta bancaria</a>
-    </div>
-    <div>
-      <ion-row justify-content-around radio-group formControlName="acceptTermsAndConditions">
-        <ion-col col-auto>
-          <ion-row align-items-center>
+          <ng-container formGroupName="user">
+              <div class="p-5">
+                <div class="form-input required"><input type="text" class="fill-width" placeholder="Correo electrónico" 
+                formControlName="email" [readonly]="!!this.navParams.get('email')"></div></div>
+              <div class="p-5 login__password" *ngIf="!this.navParams.get('email')">
+                <div class="form-input pos-relative">
+                  <input [type]=" showPassword ?  'text' : 'password'" class="fill-width" placeholder="Contraseña" formControlName="password">
+                  <div class="login__password__toggler" (tap)="showPassword = !showPassword">
+                      <ion-icon [name]="showPassword ? 'eye' : 'eye-off' " color="dark"></ion-icon>
+                  </div>
+                </div>
+              </div>
+          </ng-container>
+        </div>
+        <div class="p-5">
+          <a href="" class="text-white" (tap)="$event.stopPropagation;onAddBankAccount()">Agregar cuenta bancaria</a>
+        </div>
+        <div>
+          <ion-row justify-content-around radio-group formControlName="acceptTermsAndConditions">
             <ion-col col-auto>
-              <ion-radio mode="md" color="secondary" [value]="true" [checked]="profileFG.value.acceptTermsAndConditions"></ion-radio>
+              <ion-row align-items-center>
+                <ion-col col-auto>
+                  <ion-radio mode="md" color="secondary" [value]="true" [checked]="profileFG.value.acceptTermsAndConditions"></ion-radio>
+                </ion-col>
+                <ion-col col-auto>
+                  <a href="" class="text-accent" (tap)="openTermsAndConditions($event)">Aceptar los términos y condiciones</a>
+                </ion-col>
+              </ion-row>        
             </ion-col>
-            <ion-col col-auto>
-              <a href="" class="text-accent" (tap)="openTermsAndConditions($event)">Aceptar los términos y condiciones</a>
-            </ion-col>
-          </ion-row>        
-        </ion-col>
+          </ion-row>
+        </div>
+      </form>
+    </div>
+    <div class="flex-auto no-padding">
+      <ion-row justify-content-center>
+        <button fluid ion-button color="secondary" (tap)="validatePassword()">
+          Crear cuenta
+        </button>
       </ion-row>
     </div>
-    <ion-row justify-content-center>
-      <button fluid ion-button color="secondary">
-        Crear cuenta
-      </button>
-    </ion-row>
-  </form>
+  </div>
 </ion-content>
