@@ -113,9 +113,9 @@ export class QuotePage implements OnInit {
     // }else if(this.selectedCurrency === 2){
     //   this.text_money = "$"
     // }
-
-    if( !this.cant  ){
-      this.alerts.show('Ingrese el monto','Cotiza');
+    console.log(this.cant);
+    if( !this.cant || this.cant > 10000 ){
+      this.alerts.show('Monto inválido','Cotiza');
       return;
     }
 

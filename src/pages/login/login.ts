@@ -53,7 +53,7 @@ export class Login implements OnInit {
           }
           this.app.getRootNav().setRoot(tabs);
         }else{
-          this.alerts.show('Credenciales inválidas','Login');
+          //this.alerts.show('Credenciales inválidas','Login');
         }
       })
     }

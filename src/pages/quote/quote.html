@@ -54,7 +54,7 @@
             </ion-select>              
           </ion-col>
           <ion-col col-auto>
-            <input class='quote__cant-currency' type="number" [(ngModel)]="cant">
+            <input class='quote__cant-currency' type="text" [(ngModel)]="cant" numberFormatter >
           </ion-col>
         </ion-row>      
       </div>
@@ -71,7 +71,7 @@
       </div>
       <div class="spacer-25"></div>
       <div class='text-amount text-center'>
-        Se aceptan montos como tope maximo $10 000  o <br> el equivalente en soles de lo contrario, haga más <br> transacciones.
+        Se aceptan montos como tope maximo ${{ 10000 | number }} o <br> el equivalente en soles de lo contrario, haga más <br> transacciones.
       </div>
       <div class="spacer-30"></div>
     </div>
