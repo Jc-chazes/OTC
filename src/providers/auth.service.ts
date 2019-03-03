@@ -124,10 +124,17 @@ export class AuthProvider {
       identifier: user.email,
       password: user.password
     },{},false)
+    .catch( err => {
+      let errorMessage = err.error.message;
+      Raven.captureException(err);
+      this.alerts.show(errorMessage,'Login');
+      return Observable.of(false);
+    })
     .flatMap( resp => {
       this.jwt.setToken(resp.jwt);
       return this.populate(user.userType);
     }).catch( err => {
+      Raven.captureException(err);
       return Observable.of(false);
     });
   }

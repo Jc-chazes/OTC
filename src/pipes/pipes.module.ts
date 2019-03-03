@@ -1,8 +1,12 @@
 import { NgModule } from '@angular/core';
 import { AgePipe } from './age/age';
+import { NumberPipe } from './numeric/number.pipe';
 @NgModule({
-	declarations: [AgePipe],
+	declarations: [AgePipe,NumberPipe],
 	imports: [],
-	exports: [AgePipe]
+	providers: [
+		NumberPipe
+	],
+	exports: [AgePipe, NumberPipe]
 })
 export class PipesModule {}
