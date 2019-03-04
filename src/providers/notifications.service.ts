@@ -116,7 +116,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
 
                 this.toast.create({ message: 'Una notificación ha llegado!', duration: 3000 }).present();
 
-                if( notification.tap ){
+                if( !notification.tap ){
                     this.localNotifications.schedule({
                         title: messageTitle || 'OTC',
                         text: messageText,
