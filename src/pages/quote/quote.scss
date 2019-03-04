@@ -22,6 +22,13 @@ page-quote {
         .box_option{
             padding: 10px 20px;
             display: inline-block;
+
+            .box_symbol{
+                width: 44px;
+                height: 31px;
+                text-align: center;
+                padding-top: 7px;
+            }
         }
 
         .right_line{

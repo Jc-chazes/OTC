@@ -37,7 +37,9 @@
                   </ion-select>
                 </ion-col>
                 <ion-col col-auto>
-                  <div class="box_flag flag_usa"></div>
+                  <div [ngClass]="{'box_flag': true,
+                                  'flag_peru': selectedCurrency.symbol == 'S/.',
+                                  'flag_usa': selectedCurrency.symbol == '$'}"></div>
                 </ion-col>
               </ion-row>
               <ion-row justify-content-center>
@@ -49,14 +51,15 @@
             <div class="box_option">
               <ion-row justify-content-center align-items-center>
                 <ion-col col-auto>
-                  <ion-select [(ngModel)]="selectedCurrency" class="input fill-width" [selectOptions]="{ title: 'Monedas disponibles' }">
-                    <ion-option [value]="currency" *ngFor="let currency of currencyList">
-                      {{ currency.symbol }}
-                    </ion-option>
-                  </ion-select>
+                  <div class="box_symbol">
+                    <span *ngIf="selectedCurrency.symbol == 'S/.'">$</span>
+                    <span *ngIf="selectedCurrency.symbol == '$'">S/.</span>
+                  </div>
                 </ion-col>
                 <ion-col col-auto>
-                  <div class="box_flag flag_peru"></div>
+                  <div [ngClass]="{'box_flag': true,
+                                  'flag_peru': selectedCurrency.symbol != 'S/.',
+                                  'flag_usa': selectedCurrency.symbol != '$'}"></div>
                 </ion-col>
               </ion-row>
               <ion-row justify-content-center>

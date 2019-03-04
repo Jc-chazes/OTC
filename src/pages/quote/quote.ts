@@ -34,7 +34,7 @@ export class QuotePage implements OnInit {
     private modalCtrl: ModalController, private contests: ContestsService) {
     this.checkButton = 0;
     this.currencies.find().subscribe( results => {
-      this.currencyList = results.filter( c => c.code != 'PEN' );
+      this.currencyList = results;
       this.selectedCurrency = this.currencyList[0];
     })
   }
@@ -115,7 +115,7 @@ export class QuotePage implements OnInit {
       price :{ 
         currency : this.selectedCurrency,
         cant : Number(this.cant),
-        text_buy : this.checkButton == 0 ? ' Compra' : 'Venta',//this.text_buy,
+        text_buy : this.checkButton == 0 ? ' Compra' : 'Venta',
         text_money : this.selectedCurrency.symbol
       }
     })
