@@ -16,8 +16,9 @@
 <ion-content padding class="page">
   <back-button [navCtrl]="navCtrl"></back-button>
   <form [formGroup]="userBankAccountFG" (submit)="submit()">
-    <h4 class="text-center">Ingrese su número de cuenta bancaria</h4>
-    <div class="spacer-50"></div>
+    <div class="box-title">
+      <h5 class="text-center">Ingrese su número de cuenta bancaria</h5>
+    </div>    
     <ion-grid>
       <ion-row align-items-center>
         <ion-col col-4>
@@ -41,6 +42,7 @@
           </div>
         </ion-col>
       </ion-row>
+      <div class="spacer-10"></div>
       <ion-row align-items-center>
         <ion-col col-4>
           <div class="text-center">
@@ -51,6 +53,7 @@
           <input type="text" class="fill-width" formControlName="holderName">
         </ion-col>
       </ion-row>
+      <div class="spacer-10"></div>
       <ion-row align-items-center>
         <ion-col col-4>
           <div class="text-center">
@@ -61,6 +64,7 @@
           <input type="text" class="fill-width" formControlName="accountNumber">
         </ion-col>
       </ion-row>
+      <div class="spacer-10"></div>
       <ion-row align-items-center>
         <ion-col col-4>
           <div class="text-center">
@@ -77,6 +81,7 @@
           </ion-row>
         </ion-col>
       </ion-row>
+      <div class="spacer-10"></div>
       <ion-row align-items-center>
         <ion-col col-4>
           <div class="text-center">

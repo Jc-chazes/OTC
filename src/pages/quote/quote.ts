@@ -34,7 +34,7 @@ export class QuotePage implements OnInit {
     private modalCtrl: ModalController, private contests: ContestsService) {
     this.checkButton = 0;
     this.currencies.find().subscribe( results => {
-      this.currencyList = results.filter( c => c.code != 'PEN' );
+      this.currencyList = results;
       this.selectedCurrency = this.currencyList[0];
     })
   }
@@ -103,16 +103,8 @@ export class QuotePage implements OnInit {
   }
 
   nextPage(){
-    // if(this.checkButton===0){
-    //   this.text_buy ='Comprar';     
-    // }else if(this.checkButton===1){
-    //   this.text_buy = 'Vender';
-    // }
-    // if(this.selectedCurrency === 1){
-    //   this.text_money = "S"
-    // }else if(this.selectedCurrency === 2){
-    //   this.text_money = "$"
-    // }
+    this.checkButton = 1;
+
     console.log(this.cant);
     if( !this.cant || this.cant > 10000 ){
       this.alerts.show('Monto inválido','Cotiza');
@@ -123,7 +115,7 @@ export class QuotePage implements OnInit {
       price :{ 
         currency : this.selectedCurrency,
         cant : Number(this.cant),
-        text_buy : this.checkButton == 0 ? ' Compra' : 'Venta',//this.text_buy,
+        text_buy : this.checkButton == 0 ? ' Compra' : 'Venta',
         text_money : this.selectedCurrency.symbol
       }
     })

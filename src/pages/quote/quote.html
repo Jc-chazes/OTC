@@ -1,17 +1,91 @@
 <ion-header profile-background-color>
-
   <ion-navbar>
-      <div class="flex-row-layout ai-center">
-        <ion-title>Inicio</ion-title>
-        <span class="flex"></span>
-        <ion-title class="brand">OTC</ion-title>
-      </div>
+    <div class="flex-row-layout ai-center">
+      <ion-title>Inicio</ion-title>
+      <span class="flex"></span>
+      <ion-title class="brand">OTC</ion-title>
+    </div>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding class='page'>
+  <div>
+    <div>
+      <stepper [currentStep]="1"></stepper>
+      <div>
+        <div class='wapper_quote'>La forma mas segura de comprar y vender su dinero</div>
+        <div>
+          <div class='text-center text-muted'>Cotiza</div>
+          <div class="spacer-20"></div>
+          <div class="sections_container">
+            <div class="box_option right_line">
+              <span>Tengo</span>
+            </div>
+            <div class="box_option">
+              <span>Quiero</span>
+            </div>
+          </div>
+          <div class="spacer-20"></div>
+          <div class="sections_container">
+            <div class="box_option right_line">
+              <ion-row justify-content-center align-items-center>
+                <ion-col col-auto>
+                  <ion-select [(ngModel)]="selectedCurrency" class="input fill-width" [selectOptions]="{ title: 'Monedas disponibles' }">
+                    <ion-option [value]="currency" *ngFor="let currency of currencyList">
+                      {{ currency.symbol }}
+                    </ion-option>
+                  </ion-select>
+                </ion-col>
+                <ion-col col-auto>
+                  <div [ngClass]="{'box_flag': true,
+                                  'flag_peru': selectedCurrency.symbol == 'S/.',
+                                  'flag_usa': selectedCurrency.symbol == '$'}"></div>
+                </ion-col>
+              </ion-row>
+              <ion-row justify-content-center>
+                <ion-col col-auto>
+                  <input class='input_currency' type="text" [(ngModel)]="cant" numberFormatter >
+                </ion-col>
+              </ion-row>
+            </div>
+            <div class="box_option">
+              <ion-row justify-content-center align-items-center>
+                <ion-col col-auto>
+                  <div class="box_symbol">
+                    <span *ngIf="selectedCurrency.symbol == 'S/.'">$</span>
+                    <span *ngIf="selectedCurrency.symbol == '$'">S/.</span>
+                  </div>
+                </ion-col>
+                <ion-col col-auto>
+                  <div [ngClass]="{'box_flag': true,
+                                  'flag_peru': selectedCurrency.symbol != 'S/.',
+                                  'flag_usa': selectedCurrency.symbol != '$'}"></div>
+                </ion-col>
+              </ion-row>
+              <ion-row justify-content-center>
+                <ion-col col-auto>
+                  <button class="btn_next" (tap)='nextPage()'>
+                    <span>Siguiente</span>
+                  </button>
+                </ion-col>
+              </ion-row>
+            </div>
+            <div class="button_exchange"></div>
+          </div>
+        </div>      
+      </div>
+      <div class="spacer-25"></div>
+      <div class="spacer-25"></div>
+      <div class='text-amount text-center'>
+        Se aceptan montos como tope maximo ${{ 10000 | number }} o <br> el equivalente en soles de lo contrario, haga más <br> transacciones.
+      </div>
+      <div class="spacer-30"></div>
+    </div>
+  </div>
+</ion-content>
+
+
+<!-- <ion-content padding class='page'>
   <div>
     <div class="">
       <stepper [currentStep]="1"></stepper>
@@ -38,12 +112,6 @@
         <div class="spacer-30"></div>
         <div class='text-center text-muted'>¿Qué cantidad?</div>
         <div class="spacer-10"></div>
-        <!-- <div class='quote__select'>          
-          <select class='button-select' [(ngModel)]="selectCurrency" (change)="onHandle($event.target.value)">
-            <option value="1">S</option>
-            <option value="2">$</option>
-          </select>          
-        </div> -->
         <ion-row justify-content-center>
           <ion-col col-auto>
             <ion-select [(ngModel)]="selectedCurrency" class="input fill-width"
@@ -79,4 +147,4 @@
       <button fluid ion-button color="secondary" (tap)='nextPage()'>Siguiente</button>
     </div>
   </div>
-</ion-content>
+</ion-content> -->
