@@ -103,16 +103,8 @@ export class QuotePage implements OnInit {
   }
 
   nextPage(){
-    // if(this.checkButton===0){
-    //   this.text_buy ='Comprar';     
-    // }else if(this.checkButton===1){
-    //   this.text_buy = 'Vender';
-    // }
-    // if(this.selectedCurrency === 1){
-    //   this.text_money = "S"
-    // }else if(this.selectedCurrency === 2){
-    //   this.text_money = "$"
-    // }
+    this.checkButton = 1;
+
     console.log(this.cant);
     if( !this.cant || this.cant > 10000 ){
       this.alerts.show('Monto inválido','Cotiza');
