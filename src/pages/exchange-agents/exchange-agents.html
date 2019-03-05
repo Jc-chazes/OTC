@@ -18,13 +18,26 @@
   <ion-grid padding *ngIf="!contest">
     <ion-grid class='wapper-text-data'>
       <ion-row>
-        <ion-col col6><div class="exchange-agents__text text-muted">Cantidad solcitada:</div></ion-col>
+        <ion-col col6><div class="exchange-agents__text text-muted">
+          <span *ngIf="data_price.text_buy == 'Compra'">Quiero: </span>
+          <span *ngIf="data_price.text_buy == 'Venta'">Tengo: </span>
+        </div></ion-col>
         <!-- <ion-col col6><div class='exchange-agents__data'>{{data_price.text_money}}{{data_price.cant}}</div></ion-col> -->
-        <ion-col col6><div class='exchange-agents__data'>{{receivedCurrency.symbol}}{{data_price.cant}}</div></ion-col>
+        <ion-col col6><div class='exchange-agents__data'>
+          <span *ngIf="data_price.text_buy == 'Compra'">{{requestedCurrency.symbol}}</span>
+          <span *ngIf="data_price.text_buy == 'Venta'">{{receivedCurrency.symbol}}</span>
+          <span>{{data_price.cant}}</span>
+        </div></ion-col>
       </ion-row>
       <ion-row>
-        <ion-col col6><div class='exchange-agents__text2 text-muted'>Tipo:</div></ion-col>
-        <ion-col col6><div class='exchange-agents__data'>{{data_price.text_buy}}</div></ion-col>
+        <ion-col col6><div class='exchange-agents__text text-muted'>
+          <span *ngIf="data_price.text_buy != 'Compra'">Quiero: </span>
+          <span *ngIf="data_price.text_buy != 'Venta'">Tengo: </span>
+        </div></ion-col>
+        <ion-col col6><div class='exchange-agents__data'>
+          <span *ngIf="data_price.text_buy == 'Compra'">{{receivedCurrency.symbol}}</span>
+          <span *ngIf="data_price.text_buy == 'Venta'">{{requestedCurrency.symbol}}</span>
+        </div></ion-col>
       </ion-row>
     </ion-grid>
     <div class="flex-row-layout ai-center">

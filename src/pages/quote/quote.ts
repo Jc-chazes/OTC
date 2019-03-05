@@ -169,7 +169,7 @@ export class QuotePage implements OnInit {
         receivedCurrency: receivedCurrency,
         requestedCurrency: requestedCurrency,
         cant : Number(this.cant),
-        text_buy : operation == 'C' ? ' Compra' : 'Venta',
+        text_buy : operation == 'C' ? 'Compra' : 'Venta',
         text_money : this.selectedCurrencyLeft.symbol
       }
     })
