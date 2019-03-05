@@ -31,6 +31,7 @@ import { AlertUtil } from "./utils/alert.util";
 export class TransactionsService extends BaseService implements CrudService<Transaction>{
 
     mapper: TransactionMapper;
+    updateTransactions = new EventEmitter<any>();
 
     constructor(api: ApiUtil, private users: UsersService, private currencies: CurrenciesService,
         private http: HttpClient, private firebaseNative: Firebase, private ngZone: NgZone,

@@ -40,17 +40,19 @@
       </div> 
     </div>
     
-    <div class="spacer-40"></div>
-    <button fluid 
-            (tap)='login()' 
-            class='login__singUp'>Iniciar Sesión</button>
-    <div class="spacer-10"></div>
-    <span>o</span>
-    <button fluid 
-            (tap)='registerUser()' 
-            class='login__registrerUser'>
-          <span>Crear Cuenta</span>
-    </button>  
+    <div class="box_buttons">
+      <button fluid 
+              (tap)='login()' 
+              class='login__singUp'>Iniciar Sesión</button>
+      <div class="spacer-10"></div>
+      <span>o</span>
+      <div class="spacer-5"></div>
+      <button fluid 
+              (tap)='registerUser()' 
+              class='login__registrerUser'>
+            <span>Crear Cuenta</span>
+      </button> 
+    </div> 
     
   </div>      
 </ion-content>

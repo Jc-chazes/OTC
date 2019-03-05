@@ -15,6 +15,7 @@ import { Firebase } from "@ionic-native/firebase";
 import { AvailableModals, ModalUtil } from "./utils/modal.util";
 import { LocalNotifications } from "@ionic-native/local-notifications";
 import { TransactionsService } from "./transaction.service";
+import { EventsUtil } from "./utils/events.util";
 
 @Injectable()
 export class NotificationsService extends BaseService implements CrudService<Notification>{
@@ -24,7 +25,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
 
     constructor(api: ApiUtil, private users: UsersService, private firebaseNative: Firebase,
     private platform: Platform, private modals: ModalUtil, private localNotifications: LocalNotifications,
-    private transactions: TransactionsService, private toast: ToastController){
+    private transactions: TransactionsService, private toast: ToastController, private events: EventsUtil){
         super(api);
     }
 
@@ -171,6 +172,9 @@ export class NotificationsService extends BaseService implements CrudService<Not
                             //     })
                             // })                            
                         }
+                        break;
+                    case 'NEW_PENDING_TRANSACTION':
+                        this.events.reloadPendingTransactions.emit();
                         break;
                     case 'REJECTED_BY_EXCHANGE_AGENT':
                         console.log(notification.cancelledBy);

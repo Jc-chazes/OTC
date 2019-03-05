@@ -35,7 +35,9 @@ export class ExchangeAgentsPage {
   data_price :any;
   exchange_agent:any
 
-  currency: Currency;  
+  currency: Currency;
+  receivedCurrency: Currency;
+  requestedCurrency: Currency;
   operation: 'C' | 'V';
   sortBy: string;
   amount: number;
@@ -50,6 +52,8 @@ export class ExchangeAgentsPage {
   private contests: ContestsService) {
     this.transactionMapper = new TransactionMapper(currencies,users);
     this.currency = this.navParams.get('currency');
+    this.receivedCurrency = this.navParams.get('receivedCurrency');
+    this.requestedCurrency = this.navParams.get('requestedCurrency');
     this.operation = this.navParams.get('operation');
     this.amount = this.navParams.get('amount');
     this.contest = this.navParams.get('contest');
@@ -138,7 +142,7 @@ export class ExchangeAgentsPage {
   refresh(){
     this.loading.show();
     this.exchangeAgents.search(
-      new SearchExchangeAgentSpecification(this.searchControl.value,'SAFE',this.operation,this.currency,this.sortBy)
+      new SearchExchangeAgentSpecification(this.searchControl.value,'SAFE',this.operation,this.requestedCurrency,this.receivedCurrency,this.sortBy)
     ).subscribe( (results: ExchangeAgent[]) => {
       this.loading.hide();      
       this.exchangeAgentList = results.filter( ea => ea.exchangeAgentOfferings.length > 0 );

@@ -42,7 +42,9 @@ export class ExchangueAgentService extends BaseService implements CrudService<Ex
         }
         params = params.append('operation',specification.operation);
         params = params.append('logged','true');
-        params = params.append(specification.operation == 'V' ? 'receivedCurrency' : 'requestedCurrency',specification.targetCurrency.code);
+        // params = params.append(specification.operation == 'V' ? 'receivedCurrency' : 'requestedCurrency',specification.requestedCurrency.code);
+        params = params.append('receivedCurrency',specification.receivedCurrency.code);
+        params = params.append('requestedCurrency',specification.requestedCurrency.code);
         if( specification.searchMode == 'FAST' ){
             params = params.append('fast','1');
             params = params.append('amount',specification.amount.toString());

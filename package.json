@@ -38,6 +38,7 @@
     "cordova-android-firebase-gradle-release": "^1.0.5",
     "cordova-android-play-services-gradle-release": "^1.4.6",
     "cordova-browser": "5.0.4",
+    "cordova-custom-config": "^5.0.3",
     "cordova-device-accounts": "^1.0.0",
     "cordova-ios": "4.5.5",
     "cordova-plugin-advanced-http": "^2.0.4",
@@ -131,7 +132,8 @@
         "UPDATE_API": "https://api.ionicjs.com",
         "MAX_STORE": "2",
         "MIN_BACKGROUND_DURATION": "30"
-      }
+      },
+      "cordova-custom-config": {}
     },
     "platforms": [
       "browser",
