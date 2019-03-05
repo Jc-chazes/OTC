@@ -15,6 +15,8 @@ import { ModalUtil, AvailableModals } from '../../providers/utils/modal.util';
 import { ContestsService } from '../../providers/contests.service';
 import { ByIdSpecification } from '../../providers/specifications/base.specification';
 import { Contest } from '../../models/contest.model';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ConstantsService } from '../../providers/constants.service';
 
 @Component({
   selector: 'page-quote',
@@ -22,21 +24,45 @@ import { Contest } from '../../models/contest.model';
 })
 export class QuotePage implements OnInit {
   checkButton:number;
-  selectedCurrency: Currency;
+  selectedCurrencyLeft: Currency;
+  selectedCurrencyRight: Currency;
   cant : number;
   text_buy : string;
   text_money:string
   currencyList: Currency[];
+  availableCurrencyCodesToRequest: string[] = [];
+  availableCurrencyCodesToReceive: string[] = [];
+  sellAvailableTransformations: string[] = [];
+  buyAvailableTransformacions: string[] = [];
+  operation = 'C';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alerts: AlertUtil
     , private currencies: CurrenciesService, public appState : AppStateService
     , private dataService : DataService, private users: UsersService, private modals: ModalUtil,
-    private modalCtrl: ModalController, private contests: ContestsService) {
+    private modalCtrl: ModalController, private contests: ContestsService,
+    public sanitizer: DomSanitizer, private constants: ConstantsService) {
     this.checkButton = 0;
     this.currencies.find().subscribe( results => {
       this.currencyList = results;
-      this.selectedCurrency = this.currencyList[0];
-    })
+      this.selectedCurrencyLeft = this.currencyList.find( c => c.code == 'USD' );
+      this.selectedCurrencyRight = this.currencyList.find( c => c.code == 'PEN' );
+    });
+    this.constants.findOneByCode('COTIZAR_QUIERO_MONEDAS_DISPONIBLES')
+    .subscribe( result => {
+      this.availableCurrencyCodesToRequest = result.content.split(',');
+    });
+    this.constants.findOneByCode('COTIZAR_TENGO_MONEDAS_DISPONIBLES')
+    .subscribe( result => {
+      this.availableCurrencyCodesToReceive = result.content.split(',');
+    });
+    this.constants.findOneByCode('COTIZAR_VENTA_TRANSFORMACION')
+    .subscribe( result => {
+      this.sellAvailableTransformations = result.content.split(',');
+    });
+    this.constants.findOneByCode('COTIZAR_COMPRA_TRANSFORMACION')
+    .subscribe( result => {
+      this.buyAvailableTransformacions = result.content.split(',');
+    });
   }
 
   ionViewDidLoad() {
@@ -99,31 +125,102 @@ export class QuotePage implements OnInit {
   }
 
   onHandle(event){
-    this.selectedCurrency = event
+    this.selectedCurrencyLeft = event
   }
 
   nextPage(){
     this.checkButton = 1;
 
-    console.log(this.cant);
+    // console.log(this.cant);
     if( !this.cant || this.cant > 10000 ){
+      window.navigator.vibrate(200);
       this.alerts.show('Monto inválido','Cotiza');
+      return;
+    }
+
+    let receivedCurrency = this.operation == 'C' ? this.selectedCurrencyRight : this.selectedCurrencyLeft;
+    let requestedCurrency = this.operation == 'C' ? this.selectedCurrencyLeft : this.selectedCurrencyRight;
+
+    if( this.availableCurrencyCodesToRequest.indexOf(requestedCurrency.code) < 0 ){
+      this.alerts.show('La moneda que usted quiere recibir no se encuentra habilitada','Cotiza');
+      return;
+    }
+
+    if( this.availableCurrencyCodesToReceive.indexOf(receivedCurrency.code) < 0 ){
+      this.alerts.show('La moneda que usted tiene no se encuentra habilitada','Cotiza');
+      return;
+    }
+
+    if( this.selectedCurrencyLeft.code == this.selectedCurrencyRight.code ){
+      this.alerts.show('Las monedas deben ser diferentes','Cotiza');
+      return;
+    }
+
+    let operation = this.operation;//this.getOperation();
+
+    if( /*!operation*/ !this.validateTransformation(receivedCurrency,requestedCurrency) ){
+      this.alerts.show('El cambio que usted desea realizar no es válido','Cotiza');
       return;
     }
 
     this.appState.setState({
       price :{ 
-        currency : this.selectedCurrency,
+        currency : receivedCurrency,
+        receivedCurrency: receivedCurrency,
+        requestedCurrency: requestedCurrency,
         cant : Number(this.cant),
-        text_buy : this.checkButton == 0 ? ' Compra' : 'Venta',
-        text_money : this.selectedCurrency.symbol
+        text_buy : operation == 'C' ? ' Compra' : 'Venta',
+        text_money : this.selectedCurrencyLeft.symbol
       }
     })
   
     this.navCtrl.push(PersonSelectSearchModePage,{
-      operation: this.checkButton == 0 ? 'C' : 'V',
-      currency: this.selectedCurrency,
+      operation: operation,
+      currency: receivedCurrency,
+      receivedCurrency: receivedCurrency,
+      requestedCurrency: requestedCurrency,
       amount : this.cant
     });
+  }
+
+  getCurrencyCountryFlag(currency: Currency){
+    if(currency.image){
+      return this.sanitizer.bypassSecurityTrustStyle(`url('${currency.image.fileUrl}')`);
+    }else{
+      return null;
+    }
+  }
+
+  onChangeCurrencies(){
+    let aux = this.selectedCurrencyLeft;
+    this.selectedCurrencyLeft = this.selectedCurrencyRight;
+    this.selectedCurrencyRight = aux;
+  }
+  
+  onChangeQuieroTengo(){
+    this.operation = this.operation == 'V' ? 'C' : 'V';
+  }
+
+  getOperation(): 'V' | 'C' {
+    let currentTransformation = this.selectedCurrencyLeft.code + '->' + this.selectedCurrencyRight.code;
+    if( this.sellAvailableTransformations.indexOf(currentTransformation) >= 0 ){
+      return 'V';
+    }
+    if( this.buyAvailableTransformacions.indexOf(currentTransformation) >= 0 ){
+      return 'C';
+    }
+    return null;
+  }
+
+  validateTransformation(receivedCurrency,requestedCurrency){
+    let currentTransformation = receivedCurrency.code + '->' + requestedCurrency.code;
+    console.log(this.operation + ': ' +currentTransformation);
+    if( 
+        this.operation == 'V' && !(this.sellAvailableTransformations.indexOf(currentTransformation) >= 0)  ||
+        this.operation == 'C' && !(this.buyAvailableTransformacions.indexOf(currentTransformation) >= 0)
+    ){
+      return false;
+    }
+    return true;
   }
 }

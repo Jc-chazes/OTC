@@ -55,7 +55,7 @@ export class ContestsService extends BaseService implements CrudService<Contest>
     }
 
     createContest(contest: { currency: Currency, amount: number, operation: 'V' | 'C' }): Observable<{id:number}>{
-        return this.exchangeAgents.search( new SearchExchangeAgentSpecification('','FAST',contest.operation,contest.currency,'precio',contest.amount) )
+        return this.exchangeAgents.search( new SearchExchangeAgentSpecification('','FAST',contest.operation,contest.currency,null,'precio',contest.amount) )
         .map( (resp: {id:number}) => {
             return resp;
         })

@@ -7,7 +7,7 @@ export class ExchangeAgentSpecification extends BaseSpecification{
 
 export class SearchExchangeAgentSpecification extends ExchangeAgentSpecification{
     constructor(public query:string, public searchMode: 'FAST' | 'SAFE', public operation: 'V' | 'C', 
-    public targetCurrency: Currency, public sortBy?: string, public amount?: number){
+    public requestedCurrency: Currency, public receivedCurrency: Currency, public sortBy?: string, public amount?: number){
         super();
     }
 }
