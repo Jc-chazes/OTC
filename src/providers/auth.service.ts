@@ -131,6 +131,9 @@ export class AuthProvider {
       return Observable.of(false);
     })
     .flatMap( resp => {
+      if( !resp ){
+        return Observable.of(false);  
+      }
       this.jwt.setToken(resp.jwt);
       return this.populate(user.userType);
     }).catch( err => {
