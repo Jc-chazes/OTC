@@ -34,7 +34,7 @@
       <div class="spacer-10"></div>
       <div class="flex-row-layout jc-center">
         <div class="br-5 bk-accent text-center pl-65 pr-65 pt-10 pb-10 text-white btn-number">
-          <a [href]="'whatsapp://send?abid=+51'+phone.content+'&phone=+51'+phone.content+'&text=Hola'">
+          <a [href]="sanitizer.bypassSecurityTrustUrl('https://wa.me/+51'+phone.content+'/?text=Hola')">
             {{ phoneForOrangeBox }}
           </a>
         </div>
