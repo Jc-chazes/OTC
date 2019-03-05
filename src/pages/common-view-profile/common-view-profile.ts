@@ -31,6 +31,7 @@ export class CommonViewProfilePage {
   photo: Image;
   profileType: string;
   currentUser: User;
+  editPhone: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private users: UsersService,
     private sanitizer: DomSanitizer, private loading: LoadingUtil, private alerts: AlertUtil, private auth: AuthProvider) {
@@ -84,6 +85,11 @@ export class CommonViewProfilePage {
         }
       })
     }
+  }
+
+  updatePhone(){
+    // connect with back end
+    this.editPhone = false;
   }
 
   goToMyBankAccounts(){

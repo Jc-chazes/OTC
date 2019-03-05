@@ -24,4 +24,31 @@ page-common-view-profile {
             }
         }
     }
+
+    .box_label{
+        display: inline-block;
+        width: 80%;
+    }
+
+    .box_input{
+        padding-left: 0;
+        padding-top: 0;
+        width: 80%;
+    }
+
+    .box_icon{
+        background-size: cover;
+        width: 15px;
+        height: 15px;
+        display: inline-block;
+        vertical-align: sub;
+    }
+
+    .box_save{
+        background-image: url('../../assets/imgs/save.png');
+    }
+
+    .box_pencil{
+        background-image: url('../../assets/imgs/edit.png');
+    }
 }
