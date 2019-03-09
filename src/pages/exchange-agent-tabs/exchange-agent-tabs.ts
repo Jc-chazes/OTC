@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams, ModalController } from 'ionic-angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NavController, NavParams, ModalController, Tabs } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { ExchangeAgentMyOfferingsPage } from '../exchange-agent-my-offerings/exchange-agent-my-offerings';
 import { CommonMyNotificationsPage } from '../common-my-notifications/common-my-notifications';
@@ -29,11 +29,11 @@ export class ExchangeAgentTabsPage implements OnInit{
   tabNotifications:any = CommonMyNotificationsPage;
   tabHistorial:any = CommonMyTransactionsPage;
   tabProfile:any = CommonMyProfilePage;
+  @ViewChild('exchangeTabs') tabRef: Tabs;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private notifications: NotificationsService,
+  constructor(public navCtrl: NavController, public navParams: NavParams, public notifications: NotificationsService,
     private modalCtrl: ModalController, private transactions: TransactionsService, private users: UsersService,
     private modals: ModalUtil) {
-      this.notifications.listenToContests( this.modalCtrl );
       // this.notifications.onTabChangeRequested.subscribe( request => {
       //   this.tabParams = request.data;
       //   this.tabRef.select(request.tabIndex)
@@ -63,6 +63,7 @@ export class ExchangeAgentTabsPage implements OnInit{
   }
 
   ngOnInit(){
+    this.notifications.listenToContests( this.modalCtrl, this.tabRef );
     // alert( JSON.stringify(this.modalCtrl) );
     // this.notifications.listenToContests(this.modalCtrl);
   }

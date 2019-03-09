@@ -31,6 +31,7 @@ export class CommonMyNotificationsPage {
   }
 
   ionViewWillEnter(){
+    this.notifications.clearPendingTransactionsCounter();
     this.loading.show();
     this.notifications.find( new MyNotificationsSpecification() )
     .subscribe( results => {

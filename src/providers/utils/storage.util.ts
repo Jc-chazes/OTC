@@ -33,5 +33,6 @@ export class StorageUtil{
 
 export class StorageKeys{
     public static TOKEN: string = "token_system_fitco";
-    public static SLIDER_HAS_BEEN_SHOWED: string = "SLIDER_HAS_BEEN_SHOWED"
+    public static SLIDER_HAS_BEEN_SHOWED: string = "SLIDER_HAS_BEEN_SHOWED";
+    public static PENDING_TRANSACTIONS_COUNTER: string = "PENDING_TRANSACTIONS_COUNTER";
 }

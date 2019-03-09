@@ -5,7 +5,7 @@
         <ion-title>Inicio</ion-title>
         <span class="flex"></span>
         <ion-title class="brand">OTC</ion-title>
-        <cancel-transaction-trigger (cancel)="onCancel()"></cancel-transaction-trigger>
+        <cancel-transaction-trigger (cancel)="onCancel()" [transaction]="transaction"></cancel-transaction-trigger>
       </div>
   </ion-navbar>
 

@@ -19,7 +19,7 @@ import { AuthProvider } from '../../providers/auth.service';
 })
 export class CurrentNotificationWatcherComponent implements OnInit, OnDestroy {
 
-  transaction: Transaction;
+  @Input() transaction: Transaction;
   @Input() navCtrl: NavController;
 
   constructor(private users: UsersService, private transactions: TransactionsService,
@@ -29,7 +29,7 @@ export class CurrentNotificationWatcherComponent implements OnInit, OnDestroy {
 
   ngOnInit(){
     this.auth.populate().subscribe( () => {
-      this.transaction = this.users.currentUser.currentTransaction;
+      this.transaction = this.transaction || this.users.currentUser.currentTransaction;
       this.transactions.transactionChange(this.transaction)
       .takeUntil( componentDestroyed(this) )
       .flatMap( tx => this.transactions.findOne(new ByIdSpecification(tx.id))  )

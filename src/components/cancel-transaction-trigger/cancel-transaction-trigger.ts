@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
 import { UsersService } from '../../providers/users.service';
 import { TransactionsService } from '../../providers/transaction.service';
 import { LoadingController } from 'ionic-angular';
@@ -6,6 +6,7 @@ import { LoadingUtil } from '../../providers/utils/loading.util';
 import { AlertUtil } from '../../providers/utils/alert.util';
 import { AuthProvider } from '../../providers/auth.service';
 import { componentDestroyed } from '../../helpers/observable.helper';
+import { Transaction } from '../../models/transaction.model';
 
 /**
  * Generated class for the CancelTransactionTriggerComponent component.
@@ -21,6 +22,7 @@ export class CancelTransactionTriggerComponent implements OnDestroy{
 
   show = false;
   @Output() cancel: EventEmitter<any> = new EventEmitter();
+  @Input() transaction: Transaction;
 
   constructor(private users: UsersService, private transactions: TransactionsService, private loading: LoadingUtil,
     private alerts: AlertUtil, private auth: AuthProvider) {
@@ -50,7 +52,7 @@ export class CancelTransactionTriggerComponent implements OnDestroy{
     this.transactions.cancelTransaction(
       this.users.currentUser.isPerson() ? 
         this.users.currentUser.person.currentTransaction :
-        this.users.currentUser.exchangeAgent.currentTransaction 
+        this.transaction//this.users.currentUser.exchangeAgent.currentTransaction 
     , this.users.currentUser.isPerson() ? 'PERSON' : 'EXCHANGE_AGENT' )
     .subscribe( couldCancel => {
       if( couldCancel ){

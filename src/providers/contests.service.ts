@@ -54,8 +54,8 @@ export class ContestsService extends BaseService implements CrudService<Contest>
         throw new Error("Method not implemented.");
     }
 
-    createContest(contest: { currency: Currency, amount: number, operation: 'V' | 'C' }): Observable<{id:number}>{
-        return this.exchangeAgents.search( new SearchExchangeAgentSpecification('','FAST',contest.operation,contest.currency,null,'precio',contest.amount) )
+    createContest(contest: { receivedCurrency: Currency, requestedCurrency: Currency, amount: number, operation: 'V' | 'C' }): Observable<{id:number}>{
+        return this.exchangeAgents.search( new SearchExchangeAgentSpecification('','FAST',contest.operation,contest.requestedCurrency,contest.receivedCurrency,'precio',contest.amount) )
         .map( (resp: {id:number}) => {
             return resp;
         })

@@ -42,27 +42,34 @@ export class PersonSelectSearchModePage {
       this.loading.show();
       this.contests.createContest({ 
         amount: this.navParams.get('amount'),
-        currency: this.navParams.get('currency'),
+        receivedCurrency: this.navParams.get('receivedCurrency'),
+        requestedCurrency: this.navParams.get('requestedCurrency'),
         operation: this.navParams.get('operation')
       }).subscribe( createdContest => {
         this.loading.hide();
         this.modals.openModal(this.modalCtrl,AvailableModals.FastSearchModal,{ contest: { id: createdContest.id } })
-        .then( (contestFromModal: Contest) => {
-          if( contestFromModal ){
+        .then( (result: {contest: Contest,success: boolean}) => {
+          console.log(result.contest);
+          if( result.success ){
             this.contests.findOne( new ByIdSpecification(createdContest.id) )
-            .subscribe( result => {
+            .subscribe( contestById => {
               if(result){
-                this.users.currentUser.person.currentContest = result;
+                this.users.currentUser.person.currentContest = contestById;
                 this.navCtrl.push(ExchangeAgentsPage,{
-                  operation: result.operationType,
-                  currency: result.targetCurrency,
-                  amount: result.amount,
-                  contest: result
+                  // operation: contestById.operationType,
+                  // currency: contestById.targetCurrency,
+                  // amount: contestById.amount,
+                  ...this.navParams.data,
+                  contest: contestById
                 });
               }else{
                 this.alerts.show('Lo sentimos, al parecer no hubo ningún agente de cambio disponible.','OTC Búsqueda rápida');
+                this.contests.cancelContest( result.contest.id ).subscribe();
               }
             })
+          }else{
+            this.alerts.show('Lo sentimos, al parecer no hubo ningún agente de cambio disponible.','OTC Búsqueda rápida');
+            this.contests.cancelContest( result.contest.id ).subscribe();
           }
         });
       })
