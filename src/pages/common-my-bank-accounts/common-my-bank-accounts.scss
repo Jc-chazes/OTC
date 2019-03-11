@@ -1,18 +1,36 @@
 page-common-my-bank-accounts {
     .myBankAccounts{
         &__bankAccount{
-            padding: 4px 15px;
-            border-left: 4px solid #FFF;
-            border-bottom: 1px solid rgba(#000,0.2);
-            line-height: 1.5;
+            &__bordered{
+                padding: 4px 15px;
+                border-left: 4px solid #FFF;
+                border-bottom: 1px solid rgba(#000,0.2);
+                line-height: 1.5;
+            }
             &:nth-child(3n+1){
-                border-left-color: $primary-color;
+                .myBankAccounts__bankAccount__bordered{
+                    border-left-color: $primary-color;
+                }
             }
             &:nth-child(3n+2){
-                border-left-color: $accent-color;                        
+                .myBankAccounts__bankAccount__bordered{
+                    border-left-color: $accent-color;                        
+                }
             }
             &:nth-child(3n){
-                border-left-color: $secondary-color;                        
+                .myBankAccounts__bankAccount__bordered{
+                    border-left-color: $secondary-color;                        
+                }
+            }
+            &__bank{
+                padding: 3px 20px;
+                border-radius: 5px;
+                background-color: #FFF;
+                width: fit-content;
+                img{
+                    height: 20px;
+                }
+                margin: 15px 14px 10px;
             }
         }
     }

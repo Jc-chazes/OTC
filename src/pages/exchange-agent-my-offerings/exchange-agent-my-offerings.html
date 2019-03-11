@@ -27,8 +27,12 @@
               </ion-col>
             </ion-row>
             <ion-row>
-              <ion-col col-4>
-                <input type="text" class="fill-widht" readonly [value]="group.currency.name">
+              <ion-col col-12>
+                <div class="flex-row-layout ai-center">
+                  <input type="text" class="fill-widht" readonly [value]="group.currency.name">
+                  <div class="spacer-h-25"></div>
+                  <div class="box_flag" [style.backgroundImage]="getCurrencyCountryFlag(group.currency)"></div>
+                </div>
               </ion-col>
             </ion-row>
             <div class="spacer-30"></div>

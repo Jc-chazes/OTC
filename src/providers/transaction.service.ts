@@ -169,13 +169,27 @@ export class TransactionsService extends BaseService implements CrudService<Tran
         }else{
             formData.append('field','exchangeAgentTransactionImage');
         }
-        if( this.users.currentUser.isPerson() ){
+        let voucherDelTipoCampoNombre = this.users.currentUser.isPerson() ? 'personaQuiereVoucherDelTipo' : 'agenteDeCambioQuiereVoucherDelTipo';
+        let additionalInfo = {};
+        if( this.users.currentUser.isExchangeAgent() ){
+            additionalInfo = {
+                agenteDeCambioNombre: transaction.agenteDeCambioNombre,
+                agenteDeCambioDocumento: transaction.agenteDeCambioDocumento
+            }
+        }else{
+            additionalInfo = {
+                personaNombre: transaction.personaNombre,
+                personaDocumento: transaction.personaDocumento
+            }
+        }
+        // if( this.users.currentUser.isPerson() ){
             this.api.put(`/transactions/${transaction.id}`,{
-                personaQuiereVoucherDelTipo: transaction.personaQuiereVoucherDelTipo
+                [voucherDelTipoCampoNombre]: transaction[voucherDelTipoCampoNombre],//.personaQuiereVoucherDelTipo
+                ...additionalInfo
             }).subscribe(()=>{
                 console.log('Se cambió el tipo de quieroVucher');
             });
-        }        
+        // }        
         return this.api.post('/upload',formData)
         .map( resp => {
             this.api.post(`/transactions/${transaction.id}/notificate-voucher-uploaded`, {

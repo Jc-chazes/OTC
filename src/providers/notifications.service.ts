@@ -1,7 +1,7 @@
 import { BaseService } from "./base/base.service";
 import { CrudService } from "./contracts/crud.service";
 import { BaseSpecification, ByIdSpecification } from './specifications/base.specification';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Injectable, EventEmitter } from "@angular/core";
 import { MyNotificationsSpecification } from "./specifications/notification.specification";
 import { ApiUtil } from "./utils/api.util";
@@ -16,17 +16,33 @@ import { AvailableModals, ModalUtil } from "./utils/modal.util";
 import { LocalNotifications } from "@ionic-native/local-notifications";
 import { TransactionsService } from "./transaction.service";
 import { EventsUtil } from "./utils/events.util";
+import { StorageUtil, StorageKeys } from "./utils/storage.util";
 
 @Injectable()
 export class NotificationsService extends BaseService implements CrudService<Notification>{
 
     mapper = new NotificationMapper();
     onTabChangeRequested = new EventEmitter<{data: any, tabIndex: number, type: string}>();
+    pendingTransactionsCounter: BehaviorSubject<number>;
 
     constructor(api: ApiUtil, private users: UsersService, private firebaseNative: Firebase,
     private platform: Platform, private modals: ModalUtil, private localNotifications: LocalNotifications,
-    private transactions: TransactionsService, private toast: ToastController, private events: EventsUtil){
+    private transactions: TransactionsService, private toast: ToastController, private events: EventsUtil,
+    private storage: StorageUtil){
         super(api);
+        this.pendingTransactionsCounter = new BehaviorSubject<number>( Number(storage.load(StorageKeys.PENDING_TRANSACTIONS_COUNTER)) );
+    }
+
+    clearPendingTransactionsCounter(){
+        this.storage.remove( StorageKeys.PENDING_TRANSACTIONS_COUNTER );
+        this.pendingTransactionsCounter.next(null);
+    }
+
+    incrementPendingTransactionsCounter(){
+        let currentCounter = this.pendingTransactionsCounter.value;
+        let newCounter = currentCounter + 1;
+        this.pendingTransactionsCounter.next(newCounter);
+        this.storage.save(StorageKeys.PENDING_TRANSACTIONS_COUNTER,String(newCounter));
     }
 
     find(specification?: BaseSpecification): Observable<Notification[]> {
@@ -81,7 +97,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
         return toReturn;
     }
 
-    listenToContests(modalCtrl: ModalController, currenTabs?: Tabs){
+    listenToContests(modalCtrl: ModalController, currentTabs?: Tabs){
         /*(window as any).FirebasePlugin.onNotificationOpen(function(notification) {
             alert(JSON.stringify(notification));
         }, function(error) {
@@ -115,7 +131,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
                     //alert(JSON.stringify(notification));
                 }
 
-                this.toast.create({ message: 'Una notificación ha llegado!', duration: 3000 }).present();
+                // this.toast.create({ message: 'Una notificación ha llegado!', duration: 3000 }).present();
 
                 if( !notification.tap ){
                     this.localNotifications.schedule({
@@ -127,6 +143,8 @@ export class NotificationsService extends BaseService implements CrudService<Not
                         foreground: true
                     });
                 }     
+
+                // alert(notification.type);
 
                 switch(notification.type){
                     case 'NEW_CONTEST':
@@ -150,7 +168,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
                             this.transactions.findOne( new ByIdSpecification(transactionId) )
                             .subscribe( transaction => {
                                 this.users.currentUser.currentTransaction = transaction;
-                                currenTabs.select(0);
+                                currentTabs.select(0);
                             })    
                         });                        
                         break;
@@ -158,7 +176,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
                         if( this.users.currentUser.isPerson() ){
                             this.modals.openModal(modalCtrl,AvailableModals.RequestWasAcceptedModal)
                             .then(()=>{
-                                currenTabs.select(1);
+                                currentTabs.select(1);
                             });
                             // .then( resp => {
                             //     let transactionId = Number(notification.transactionId);
@@ -175,6 +193,8 @@ export class NotificationsService extends BaseService implements CrudService<Not
                         break;
                     case 'NEW_PENDING_TRANSACTION':
                         this.events.reloadPendingTransactions.emit();
+                        this.incrementPendingTransactionsCounter();
+                        currentTabs.select(1);
                         break;
                     case 'REJECTED_BY_EXCHANGE_AGENT':
                         console.log(notification.cancelledBy);
@@ -186,9 +206,9 @@ export class NotificationsService extends BaseService implements CrudService<Not
                                 // alert(quoteAgain);
                                 // alert(currenTabs? 'Existe currentTabs' : 'No existe currentTabs');
                                 if( quoteAgain ){
-                                    currenTabs.select(0);
+                                    currentTabs.select(0);
                                 }else{
-                                    currenTabs.select(1);
+                                    currentTabs.select(1);
                                 }
                             });
 
@@ -223,7 +243,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
                                 cancelledBy: 'PERSON'
                             })
                             .then(()=>{
-                                currenTabs.select(1);
+                                currentTabs.select(1);
                             });
                         }
                         break;

@@ -11,6 +11,7 @@ import { AlertUtil } from '../../providers/utils/alert.util';
 import { ExchangeAgentMyRequestsPage } from '../exchange-agent-my-requests/exchange-agent-my-requests';
 import { ExchangeAgentOfferingGroup } from '../../models/exchang-agent-offering-group.model';
 import { ModalUtil, AvailableModals } from '../../providers/utils/modal.util';
+import { DomSanitizer } from '@angular/platform-browser';
 
 /**
  * Generated class for the ExchangeAgentMyOfferingsPage page.
@@ -30,7 +31,8 @@ export class ExchangeAgentMyOfferingsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController,
   private loading: LoadingUtil, private alert: AlertUtil, private modalCtrl: ModalController, private modals: ModalUtil,
-  private currencies: CurrenciesService, private exchangeAgentOfferings: ExchangeAgentOfferingsService) {
+  private currencies: CurrenciesService, private exchangeAgentOfferings: ExchangeAgentOfferingsService,
+  private sanitizer: DomSanitizer) {
     this.exchangeAgentOfferings.getGroupedExchangeAgentOfferings()
     .subscribe( results => {
       this.groupedExchangeAgentOfferingList = results;
@@ -65,6 +67,14 @@ export class ExchangeAgentMyOfferingsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ExchangeAgentTabsHomePage');
+  }
+
+  getCurrencyCountryFlag(currency: Currency){
+    if(currency.image){
+      return this.sanitizer.bypassSecurityTrustStyle(`url('${currency.image.fileUrl}')`);
+    }else{
+      return null;
+    }
   }
 
 }

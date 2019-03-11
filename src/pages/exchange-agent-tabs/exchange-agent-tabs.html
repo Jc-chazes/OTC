@@ -1,6 +1,6 @@
-<ion-tabs #tabs>
+<ion-tabs #exchangeTabs>
   <ion-tab [root]="tabHome" tabIcon="home"></ion-tab>
-  <ion-tab [root]="tabNotifications" tabIcon="notifications"></ion-tab>
+  <ion-tab [root]="tabNotifications" tabIcon="notifications" [tabBadge]="notifications.pendingTransactionsCounter | async"></ion-tab>
   <ion-tab [root]="tabHistorial" tabIcon="timer"></ion-tab>
   <ion-tab [root]="tabProfile" tabIcon="person"></ion-tab>
 </ion-tabs>
