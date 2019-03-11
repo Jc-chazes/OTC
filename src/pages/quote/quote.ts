@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { AppStateService } from '../../providers/app-state.service';
 import { ExchangeAgentsPage } from '../exchange-agents/exchange-agents';
 import { DataService } from '../../providers/data.service';
 import { Currency } from '../../models/currency.model';
 import { CurrenciesService } from '../../providers/currencies.service';
 import { AlertUtil } from '../../providers/utils/alert.util';
-import { isString } from 'lodash';
 import { PersonSelectSearchModePage } from '../person-select-search-mode/person-select-search-mode';
 import { UsersService } from '../../providers/users.service';
 import { CommonSelectBankAccountPage } from '../common-select-bank-account/common-select-bank-account';
@@ -17,6 +16,7 @@ import { ByIdSpecification } from '../../providers/specifications/base.specifica
 import { Contest } from '../../models/contest.model';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ConstantsService } from '../../providers/constants.service';
+import { NumberPipe } from '../../pipes/numeric/number.pipe';
 
 @Component({
   selector: 'page-quote',
@@ -35,12 +35,13 @@ export class QuotePage implements OnInit {
   sellAvailableTransformations: string[] = [];
   buyAvailableTransformacions: string[] = [];
   operation = 'C';
+  cantInput : any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alerts: AlertUtil
     , private currencies: CurrenciesService, public appState : AppStateService
     , private dataService : DataService, private users: UsersService, private modals: ModalUtil,
     private modalCtrl: ModalController, private contests: ContestsService,
-    public sanitizer: DomSanitizer, private constants: ConstantsService) {
+    public sanitizer: DomSanitizer, private constants: ConstantsService, private numberPipe: NumberPipe) {
     this.checkButton = 0;
     this.currencies.find().subscribe( results => {
       this.currencyList = results;
@@ -222,5 +223,11 @@ export class QuotePage implements OnInit {
       return false;
     }
     return true;
+  }
+
+  modelChange(cant: string): void {
+    var cantWithSpaces =  this.numberPipe.transform(cant);
+    this.cantInput = cantWithSpaces;
+    this.cant = Number(this.numberPipe.parse(cantWithSpaces));
   }
 }
