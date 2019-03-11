@@ -10,7 +10,11 @@
   
 </ion-header>
 
-<ion-content class='page'>  
+<ion-content class='page background-color-inherit'>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <div class="spacer-30"></div>
   <back-button [navCtrl]="navCtrl"></back-button>
   <stepper [currentStep]="2"></stepper>

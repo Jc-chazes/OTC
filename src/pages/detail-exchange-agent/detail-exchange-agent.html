@@ -38,7 +38,7 @@
           <div class="details__wrapper">
             <div class="pb-10">
               <div class="input flex-row-layout text-bold">        
-                <span>Servicio:</span>
+                <span>Detalle de la solicitud Servicio:</span>
                 <span class="flex"></span>
                 <span>{{ transaction.exchangeAgentOffering.type == 'V' ? 'Venta' : 'Compra' }}</span>
               </div>
@@ -89,7 +89,7 @@
             </div>
             <div class="pb-10">
               <div class="input flex-row-layout text-bold">
-                <span>Monto a depositar a OTC:</span>
+                <span>Monto Total a depositar a OTC:</span>
                 <span class="flex"></span>
                 <span>{{ transaction.currencyToDeposit.symbol }}</span>&nbsp;
                 <!-- <span>{{ otcComission.content + transaction.amountToDeposit }}</span> -->
@@ -98,7 +98,7 @@
             </div>
             <div class="pb-10">
               <div class="input flex-row-layout text-bold">
-                <span>Monto a recibir de OTC:</span>
+                <span>Monto Total a recibir de OTC:</span>
                 <span class="flex"></span>
                 <span>{{ transaction.currencyToReceive.symbol }}</span>&nbsp;
                 <span>{{ transaction.amountToReceive }}</span>

@@ -104,23 +104,21 @@ export class ExchangeAgentsPage {
   ionViewWillLoad(){
     this.exchange_agent=this.dataService.exchange_agents
   }
+  
   onSearchInput(){
-  this.searching = true;
-    }
-
-  setFilteredItems() {
-      this.exchangeAgentList = this.filterItems(this.searchTerm);
-    
+    this.searching = true;
   }
 
-  
+  setFilteredItems() {
+    this.exchangeAgentList = this.filterItems(this.searchTerm);
+  }
 
   filterItems(searchTerm){
     return this.exchange_agent.filter((item) => {
         return item.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 ;
     });    
+  }
 
-}
   public detailExchangeAgent(exchangeAgent :ExchangeAgent){
     this.appService.setState({detail_exchangue:exchangeAgent})
     this.canContinue = true;
@@ -151,6 +149,13 @@ export class ExchangeAgentsPage {
         this.exchangeAgentList = this.exchangeAgentList.filter( ea => contestParticipantsIds.indexOf(ea.id) >= 0 );
       }
     })
+  }
+
+  doRefresh(refresher: any) {
+    this.refresh();
+    setTimeout(() => {
+      refresher.complete();
+    }, 1000);
   }
 
   openSearchExchangeAgentMode(){

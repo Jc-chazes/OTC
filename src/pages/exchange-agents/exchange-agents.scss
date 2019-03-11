@@ -1,6 +1,11 @@
 @import "../../styles/1-settings/index";
 
 page-exchange-agents {
+  
+  .background-color-inherit{
+    background-color: inherit;
+  }
+
   .search-agents{
     display: flex;
     // width: 300px;
