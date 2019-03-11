@@ -5,6 +5,7 @@ import { Transaction } from '../../models/transaction.model';
 import moment from 'moment';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LoadingUtil } from '../../providers/utils/loading.util';
+import { UsersService } from '../../providers/users.service';
 
 /**
  * Generated class for the CommonMyTransactionsPage page.
@@ -20,13 +21,15 @@ import { LoadingUtil } from '../../providers/utils/loading.util';
 export class CommonMyTransactionsPage {
 
   transactionsPerMonth: { month: string, transactions: Transaction[] }[];
+  isPerson: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private transactions: TransactionsService,
-    private sanitizer: DomSanitizer, private loading: LoadingUtil) {
+    private sanitizer: DomSanitizer, private loading: LoadingUtil, private userService: UsersService) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CommonMyTransactionsPage');
+    this.isPerson = this.userService.currentUser.isPerson();
   }
 
   ionViewWillEnter(){
@@ -36,7 +39,7 @@ export class CommonMyTransactionsPage {
       this.transactionsPerMonth = this.transactions.groupByMonth(results).map( group => ({
         month: `${moment.months()[group.period.month-1]} - ${group.period.year}`,
         transactions: group.transactions
-      }))
+      }));
       this.loading.hide();
     })
   }

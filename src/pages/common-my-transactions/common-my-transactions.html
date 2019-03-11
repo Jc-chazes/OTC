@@ -37,7 +37,12 @@
             <ion-col col-10>
               <ion-row>
                 <ion-col col-6 class="text-thin">
-                  <span>Cliente:</span>&nbsp;<b>{{ tx.person.fullName }}</b>
+                  <span *ngIf="!isPerson">
+                    <span>Cliente:</span>&nbsp;<b>{{ tx.person.fullName }}</b>
+                  </span>
+                  <span *ngIf="isPerson">
+                    <span>Casa de cambio:</span>&nbsp;<b>{{ tx.exchangeAgent.name }}</b>
+                  </span>
                 </ion-col>
                 <ion-col col-6>
                   <span>Cantidad:</span>&nbsp;<b>{{ tx.targetCurrency.symbol }} {{ tx.amount.toFixed(2) }}</b>
@@ -59,9 +64,15 @@
                   <span>Tipo de moneda:</span>&nbsp;<b>{{ tx.targetCurrency.name }}</b>
                 </ion-col>
                 <ion-col col-6>
-                  <span>Fecha:</span>&nbsp;<b>{{ tx.created_at | date: 'hh:mm aaa / dd-MM' }}</b>
+                  <span>Fecha:</span>&nbsp;<b>{{ tx.created_at | date: 'dd-MM' }}</b>
                 </ion-col>
               </ion-row>
+              <ion-row>
+                  <ion-col col-6></ion-col>
+                  <ion-col col-6>
+                    <span>Hora:</span>&nbsp;<b>{{ tx.created_at | date: 'hh:mm aaa' }}</b>
+                  </ion-col>
+                </ion-row>
             </ion-col>
           </ion-row>
         </div>
