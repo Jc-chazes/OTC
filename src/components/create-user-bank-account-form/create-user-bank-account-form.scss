@@ -1,3 +1,5 @@
+@import "../../styles/1-settings/index.scss";
+
 create-user-bank-account-form {
     .bank{
         position: absolute;
@@ -30,7 +32,7 @@ create-user-bank-account-form {
         &__item{
             padding: 8px;
             &.active{
-                background-color: #5b5a5f;
+                background-color: $accent-color;
                 color: #FFF;
             }
         }
