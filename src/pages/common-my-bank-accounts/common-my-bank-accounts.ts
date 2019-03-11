@@ -5,6 +5,8 @@ import { UserBankAccount } from '../../models/user-bank-account.model';
 import { MyBankAccountsSpecification } from '../../providers/specifications/user-bank-account.specification';
 import { CommonMyBankAccountsAddPage } from '../common-my-bank-accounts-add/common-my-bank-accounts-add';
 import { LoadingUtil } from '../../providers/utils/loading.util';
+import { DomSanitizer } from '@angular/platform-browser';
+import { getImageUrl } from '../../helpers/images.helper';
 
 /**
  * Generated class for the CommonMyBankAccountsPage page.
@@ -21,7 +23,7 @@ export class CommonMyBankAccountsPage {
 
   bankAccountList: UserBankAccount[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
+  constructor(public navCtrl: NavController, public navParams: NavParams, private sanitizer: DomSanitizer,
     private userBankAccounts: UsersBankAccountsService, private loading: LoadingUtil) {
   }
 
@@ -60,6 +62,13 @@ export class CommonMyBankAccountsPage {
       this.refresh();
       this.loading.hide();
     })
+  }
+
+  getBackgroundImage(bankAccount: UserBankAccount){
+    if( !bankAccount.bank.image ){
+      return null;
+    }
+    return this.sanitizer.bypassSecurityTrustUrl(bankAccount.bank.image.fileUrl);
   }
 
 }

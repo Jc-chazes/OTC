@@ -21,32 +21,37 @@
   <back-button [navCtrl]="navCtrl"></back-button>
   <div class="spacer-40"></div>
   <div class="myBankAccounts">
-    <div class="myBankAccounts__bankAccount text-thin" *ngFor="let bankAccount of bankAccountList">
-      <ion-row>
-        <ion-col>
-          <div>
-            <span><span class="text-muted">Entidad bancaria:</span>  <b>{{bankAccount.bank.name}}</b></span>
-          </div>
-          <div>
-            <span><span class="text-muted">Titular:</span> <b>{{bankAccount.holderName}}</b></span>
-          </div>
-          <div>
-            <span><span class="text-muted">Número de cuenta:</span> <b>{{bankAccount.accountNumber}}</b></span>
-          </div>
-          <div>
-            <span><span class="text-muted">Tipo de cuenta (moneda):</span> <b>{{bankAccount.currency.name}}</b></span>
-          </div>
-        </ion-col>
-        <ion-col col-1>
-          <div class="fill-height flex-col-layout jc-center">
-            <img [src]="'/assets/imgs/icons/' + ( bankAccount.selected ? 'active.png' : 'inactive.png' ) " alt=""
-            (tap)="activeBankAccount(bankAccount)">
-            <div class="spacer-20"></div>
-            <img src="/assets/imgs/icons/delete.png" alt="" (tap)="deleteBankAccount(bankAccount)">            
-          </div>
-        </ion-col>
-      </ion-row>
-    </div>
+    <ng-container *ngFor="let bankAccount of bankAccountList">
+      <div class="myBankAccounts__bankAccount text-thin">
+        <div class="myBankAccounts__bankAccount__bank">
+          <img [src]="getBackgroundImage(bankAccount)" alt="">
+        </div>
+        <ion-row class="myBankAccounts__bankAccount__bordered">
+          <ion-col>
+            <!-- <div>
+              <span><span class="text-muted">Entidad bancaria:</span>  <b>{{bankAccount.bank.name}}</b></span>
+            </div> -->
+            <div>
+              <span><span class="text-muted">Titular:</span> <b>{{bankAccount.holderName}}</b></span>
+            </div>
+            <div>
+              <span><span class="text-muted">Número de cuenta:</span> <b>{{bankAccount.accountNumber}}</b></span>
+            </div>
+            <div>
+              <span><span class="text-muted">Tipo de cuenta (moneda):</span> <b>{{bankAccount.currency.name}}</b></span>
+            </div>
+          </ion-col>
+          <ion-col col-1>
+            <div class="fill-height flex-col-layout jc-center">
+              <img [src]="'/assets/imgs/icons/' + ( bankAccount.selected ? 'active.png' : 'inactive.png' ) " alt=""
+              (tap)="activeBankAccount(bankAccount)">
+              <div class="spacer-20"></div>
+              <img src="/assets/imgs/icons/delete.png" alt="" (tap)="deleteBankAccount(bankAccount)">            
+            </div>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ng-container>
   </div>
   <div class="flex-row-layout" padding (tap)="goToAddBankAccount()">
     <span class="flex"></span>

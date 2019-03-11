@@ -22,6 +22,7 @@ export class Transaction extends BaseModel<Transaction>{
     personBankAccount: UserBankAccount;
     exchangeAgentBankAccount: UserBankAccount;
     personaQuiereVoucherDelTipo: 'NINGUNO' | 'BOLETA' | 'FACTURA' = 'NINGUNO';
+    agenteDeCambioQuiereVoucherDelTipo: 'NINGUNO' | 'BOLETA' | 'FACTURA' = 'NINGUNO';
 
     fromCurrency: Currency;
     targetCurrency: Currency;
@@ -37,6 +38,11 @@ export class Transaction extends BaseModel<Transaction>{
     notifications: Notification[];
 
     limitDate: Date;
+
+    agenteDeCambioDocumento: string;
+    agenteDeCambioNombre: string;
+    personaDocumento: string;
+    personaNombre: string;
 
     amountToDepositToOTC(OTCComission: number){
         return (Number(OTCComission) + Number(this.amountToDeposit.toFixed(2))).toFixed(2);

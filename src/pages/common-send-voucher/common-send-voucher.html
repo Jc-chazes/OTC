@@ -12,57 +12,128 @@
 
 
 <ion-content padding class="page">
-  <current-notification-watcher [navCtrl]="navCtrl" [transaction]="transaction"></current-notification-watcher>
-  <div class="sendVoucher">
-    <div class="spacer-30"></div>
-    <stepper mode="exchange-agent" [currentStep]="5"></stepper>
-  </div>
-  <div class="page-content-container">
-    <p class="text-center">
-      Elija o tome una foto del voucher para la constancia <br>
-      del pago o depósito realizado
-    </p>
-    <div class="spacer-30"></div>    
-    <div class="flex-col-layout ai-center">
-      <button fluid ion-button color="secondary" (tap)="voucherFile.click()">
-        <ion-icon ios="ios-add-circle-outline" md="ios-add-circle-outline" class="text-white"></ion-icon>&nbsp;&nbsp;&nbsp;Añadir foto
-      </button>
-      <div class="spacer-10"></div>
-      <button fluid ion-button color="secondary" (tap)="voucherTakePhoto()">
-        <ion-icon ios="ios-camera-outline" md="ios-camera-outline" class="text-white"></ion-icon>&nbsp;&nbsp;&nbsp;Tomar foto
-      </button>
-    </div>
-    <div class="spacer-30"></div>
-    <ion-row justify-content-center>
-      <ion-col col-10>
-        <div class="square sendVoucher__preview w-background-image"
-        [style.backgroundImage]="sanitizer.bypassSecurityTrustStyle('url('+voucher.fileUrl+')')"
-        *ngIf="!!voucher.fileUrl"></div>
-      </ion-col>
-    </ion-row>
-    <ng-container *ngIf="users.currentUser.isPerson()">
-      <div class="spacer-20"></div>
-      <div class="flex-row-layout jc-center ai-center pos-relative">
-        <span><b>Deseo:</b>&nbsp;&nbsp;&nbsp;</span>
-        <ion-select [(ngModel)]="transaction.personaQuiereVoucherDelTipo" class="input fill-width"
-        [selectOptions]="{ title: 'Deseo...' }">
-          <!-- <ion-option value="NINGUNO">
-            Ninguno
-          </ion-option> -->
-          <ion-option value="FACTURA">
-            Factura
-          </ion-option>
-          <ion-option value="BOLETA">
-            Boleta
-          </ion-option>
-        </ion-select>
+  <div class="fill-height flex-col-layout">
+    <div class="flex scrollable no-padding">
+      <current-notification-watcher [navCtrl]="navCtrl" [transaction]="transaction"></current-notification-watcher>
+      <div class="sendVoucher">
+        <div class="spacer-30"></div>
+        <stepper mode="exchange-agent" [currentStep]="5"></stepper>
       </div>
-    </ng-container>
-    <div class="spacer-30"></div>
-    <div class="text-center">
-      <button fluid ion-button color="secondary" (tap)="onSend()">
-        Enviar
-      </button>
+      <div class="page-content-container">
+        <p class="text-center">
+          Elija o tome una foto del voucher para la constancia <br>
+          del pago o depósito realizado
+        </p>
+        <div class="spacer-30"></div>    
+        <div class="flex-col-layout ai-center">
+          <button fluid ion-button color="secondary" (tap)="voucherFile.click()">
+            <ion-icon ios="ios-add-circle-outline" md="ios-add-circle-outline" class="text-white"></ion-icon>&nbsp;&nbsp;&nbsp;Añadir foto
+          </button>
+          <div class="spacer-10"></div>
+          <button fluid ion-button color="secondary" (tap)="voucherTakePhoto()">
+            <ion-icon ios="ios-camera-outline" md="ios-camera-outline" class="text-white"></ion-icon>&nbsp;&nbsp;&nbsp;Tomar foto
+          </button>
+        </div>
+        <div class="spacer-30"></div>
+        <ion-row justify-content-center>
+          <ion-col col-10>
+            <div class="square sendVoucher__preview w-background-image"
+            [style.backgroundImage]="sanitizer.bypassSecurityTrustStyle('url('+voucher.fileUrl+')')"
+            *ngIf="!!voucher.fileUrl"></div>
+          </ion-col>
+        </ion-row>
+        <ng-container>
+          <div class="spacer-20"></div>
+          <div *ngIf="users.currentUser.isPerson()">
+            <div class="mb-15 pos-relative">
+              <ion-row align-items-center>
+                <ion-col col-6 class="text-center">
+                  Deseo:
+                </ion-col>
+                <ion-col col-6>
+                  <ion-select [(ngModel)]="transaction.personaQuiereVoucherDelTipo" class="input fill-width"
+                  [selectOptions]="{ title: 'Deseo...' }">
+                    <ion-option value="FACTURA">
+                      Factura
+                    </ion-option>
+                    <ion-option value="BOLETA">
+                      Boleta
+                    </ion-option>
+                  </ion-select>
+                </ion-col>
+              </ion-row>
+            </div>
+            <div class="mb-15">
+              <ion-row align-items-center>
+                <ion-col col-6 class="text-center">
+                  DNI / RUC:
+                </ion-col>
+                <ion-col col-6>
+                  <input type="number" class="fill-width" [value]="transaction.personaDocumento">
+                </ion-col>
+              </ion-row>
+            </div>
+            <div class="mb-15">
+              <ion-row align-items-center>
+                <ion-col col-6 class="text-center">
+                  Nombre / Razón social:
+                </ion-col>
+                <ion-col col-6>
+                    <input type="number" class="fill-width" [value]="transaction.personaNombre">
+                </ion-col>
+              </ion-row>
+            </div>
+          </div>
+          <div *ngIf="users.currentUser.isExchangeAgent()">
+            <div class="mb-15 pos-relative">
+              <ion-row align-items-center>
+                <ion-col col-6 class="text-center">
+                  Deseo:
+                </ion-col>
+                <ion-col col-6>
+                  <ion-select [(ngModel)]="transaction.agenteDeCambioQuiereVoucherDelTipo" class="input fill-width"
+                  [selectOptions]="{ title: 'Deseo...' }">
+                    <ion-option value="FACTURA">
+                      Factura
+                    </ion-option>
+                    <ion-option value="BOLETA">
+                      Boleta
+                    </ion-option>
+                  </ion-select>
+                </ion-col>
+              </ion-row>
+            </div>
+            <div class="mb-15">
+              <ion-row align-items-center>
+                <ion-col col-6 class="text-center">
+                  DNI / RUC:
+                </ion-col>
+                <ion-col col-6>
+                  <input type="number" class="fill-width" [value]="transaction.agenteDeCambioDocumento">
+                </ion-col>
+              </ion-row>
+            </div>
+            <div class="mb-15">
+              <ion-row align-items-center>
+                <ion-col col-6 class="text-center">
+                  Nombre / Razón social:
+                </ion-col>
+                <ion-col col-6>
+                    <input type="number" class="fill-width" [value]="transaction.agenteDeCambioNombre">
+                </ion-col>
+              </ion-row>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="flex-auto no-padding">
+      <div class="spacer-30"></div>
+      <div class="text-center">
+        <button fluid ion-button color="secondary" (tap)="onSend()">
+          Enviar
+        </button>
+      </div>
     </div>
   </div>
   <input type="file" class="hide" #voucherFile (change)="voucherFileChange($event)" accept="image/*" >

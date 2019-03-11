@@ -10,5 +10,6 @@ page-common-send-voucher {
     ion-select{
         height: 31px;
         padding: 8px !important;
+        max-width: unset !important;
     }
 }
