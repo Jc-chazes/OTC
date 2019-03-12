@@ -38,7 +38,7 @@
           <div class="details__wrapper">
             <div class="pb-10">
               <div class="input flex-row-layout text-bold">        
-                <span>Detalle de la solicitud Servicio:</span>
+                <span>Servicio:</span>
                 <span class="flex"></span>
                 <span>{{ transaction.exchangeAgentOffering.type == 'V' ? 'Venta' : 'Compra' }}</span>
               </div>
@@ -55,7 +55,7 @@
                 <span>Monto solicitado:</span>
                 <span class="flex"></span>
                 <span>{{ transaction.targetCurrency.symbol }}</span>&nbsp;
-                <span>{{ transaction.amount }}</span>
+                <span>{{ transactionAmount }}</span>
               </div>
             </div>
             <div class="pb-10">
@@ -75,7 +75,7 @@
                 <span class="flex"></span>
                 <span>{{ transaction.currencyToDeposit.symbol }}</span>&nbsp;
                 <!-- <span>{{ otcComission.content + transaction.amountToDeposit }}</span> -->
-                <span>{{ transaction.amountToDeposit.toFixed(2) }}</span>
+                <span>{{ transactionAmountToDeposit }}</span>
               </div>
             </div>
             <div class="pb-10">
@@ -89,19 +89,19 @@
             </div>
             <div class="pb-10">
               <div class="input flex-row-layout text-bold">
-                <span>Monto Total a depositar a OTC:</span>
+                <span>Monto total a depositar a OTC:</span>
                 <span class="flex"></span>
                 <span>{{ transaction.currencyToDeposit.symbol }}</span>&nbsp;
                 <!-- <span>{{ otcComission.content + transaction.amountToDeposit }}</span> -->
-                <span>{{ transaction.amountToDepositToOTC(otcComission.content) }}</span>
+                <span>{{ transactionAmountToDepositToOTC }}</span>
               </div>
             </div>
             <div class="pb-10">
               <div class="input flex-row-layout text-bold">
-                <span>Monto Total a recibir de OTC:</span>
+                <span>Monto total a recibir de OTC:</span>
                 <span class="flex"></span>
                 <span>{{ transaction.currencyToReceive.symbol }}</span>&nbsp;
-                <span>{{ transaction.amountToReceive }}</span>
+                <span>{{ transactionAmountToReceive }}</span>
               </div>
             </div>
           </div>

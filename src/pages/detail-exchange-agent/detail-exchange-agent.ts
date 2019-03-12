@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { AppStateService } from '../../providers/app-state.service';
 import { ModifyAccountBankPage } from '../modify-account-bank/modify-account-bank';
 import { ExchangeAgent } from '../../models/exchange-agent.model';
@@ -12,13 +12,13 @@ import { CommonSelectBankAccountPage } from '../common-select-bank-account/commo
 import { TransactionsService } from '../../providers/transaction.service';
 import { ModalUtil, AvailableModals } from '../../providers/utils/modal.util';
 import { LoadingUtil } from '../../providers/utils/loading.util';
-import { QuotePage } from '../quote/quote';
 import { CommonTransactionInProgressPage } from '../common-transaction-in-progress/common-transaction-in-progress';
 import { Contest } from '../../models/contest.model';
 import { Observable } from 'rxjs';
 import { ContestsService } from '../../providers/contests.service';
 import { UsersService } from '../../providers/users.service';
 import { ByIdSpecification } from '../../providers/specifications/base.specification';
+import { NumberPipe } from '../../pipes/numeric/number.pipe';
 
 
 @Component({
@@ -36,7 +36,7 @@ export class DetailExchangeAgentPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,public appService : AppStateService,
   private sanitizer: DomSanitizer, private constants: ConstantsService, private transactions: TransactionsService,
   private modals: ModalUtil, private modalCtrl: ModalController, private loading: LoadingUtil,
-  private contests: ContestsService, private users: UsersService) {
+  private contests: ContestsService, private users: UsersService, private numberPipe: NumberPipe) {
     this.transaction = this.navParams.get('transaction');
     this.contest = this.navParams.get('contest');
     this.appService.onStateChange.subscribe(res=>{
@@ -132,5 +132,21 @@ export class DetailExchangeAgentPage {
     //     })
     //   }
     // })
+  }
+
+  get transactionAmount(){
+    return this.numberPipe.transform(this.transaction.amount.toFixed(2));
+  }
+
+  get transactionAmountToDeposit(){
+    return this.numberPipe.transform(this.transaction.amountToDeposit.toFixed(2));
+  }
+
+  get transactionAmountToDepositToOTC(){
+    return this.numberPipe.transform(this.transaction.amountToDepositToOTC(this.otcComission.content));
+  }
+
+  get transactionAmountToReceive(){
+    return this.numberPipe.transform(this.transaction.amountToReceive.toFixed(2));
   }
 }
