@@ -19,3 +19,9 @@ export class UserBankAccount extends BaseModel<UserBankAccount>{
         return BankAccountTypes.find( t => t.code == this.accountType ).text;
     }
 }
+
+export class OtcBankAccount extends UserBankAccount{
+
+    informacionAdicional: string;
+
+}

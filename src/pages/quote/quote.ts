@@ -86,7 +86,8 @@ export class QuotePage implements OnInit {
       if( !currentTransaction.personBankAccount ){
         this.navCtrl.push(CommonSelectBankAccountPage,{ transaction: currentTransaction });
       }else{
-        this.navCtrl.push(CommonTransferToOtcPage,{ transaction: currentTransaction });
+        // this.navCtrl.push(CommonTransferToOtcPage,{ transaction: currentTransaction });
+        this.navCtrl.push(CommonSelectBankAccountPage,{ transaction: currentTransaction, next: true });
       }
     }
     if( this.users.currentUser.isPerson() ){
