@@ -73,7 +73,7 @@
             <ion-col col-5 class="text-muted">Apelativo de cuenta</ion-col>
             <ion-col col-7>
               <ion-select [(ngModel)]="selectedUserBankAccount" class="input fill-width"
-              [selectOptions]="{ title: 'Cuentas disponibles' }">
+              [selectOptions]="{ title: 'Cuentas disponibles' }" [compareWith]="compareFn">
                 <ion-option [value]="bankAccount" *ngFor="let bankAccount of userBankAccountList">
                   {{ bankAccount.apellative }}
                 </ion-option>

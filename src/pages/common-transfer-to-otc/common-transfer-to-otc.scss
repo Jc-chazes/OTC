@@ -15,6 +15,21 @@ page-common-transfer-to-otc {
                 }
             }
         }
+        .prev__bank, .next__bank{
+            height: 80%;
+            position: absolute;
+            top: 10%;
+            z-index: 2;
+            img{
+                height: 100%;
+            }
+        }
+        .prev__bank{
+            left: 0;
+        }
+        .next__bank{
+            right: 0;
+        }
         .arrow-down{
             $arrow-size: 12px;
             width: 0; 
@@ -22,6 +37,14 @@ page-common-transfer-to-otc {
             border-left: $arrow-size solid transparent;
             border-right: $arrow-size solid transparent;
             border-top: $arrow-size solid $accent-color;
+        }
+        .arrow-top{
+            $arrow-size: 12px;
+            width: 0; 
+            height: 0; 
+            border-left: $arrow-size solid transparent;
+            border-right: $arrow-size solid transparent;
+            border-bottom: $arrow-size solid $accent-color;
         }
     }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams, ModalController, ViewController } from 'ionic-angular';
 import { UserBankAccount } from '../../models/user-bank-account.model';
 import { Bank } from '../../models/bank.model';
@@ -13,6 +13,7 @@ import { TransactionsService } from '../../providers/transaction.service';
 import { AlertUtil } from '../../providers/utils/alert.util';
 import { UsersService } from '../../providers/users.service';
 import { ModalUtil, AvailableModals } from '../../providers/utils/modal.util';
+import { Subject } from 'rxjs';
 
 /**
  * Generated class for the CommonSelectBankAccountPage page.
@@ -25,7 +26,7 @@ import { ModalUtil, AvailableModals } from '../../providers/utils/modal.util';
   selector: 'page-common-select-bank-account',
   templateUrl: 'common-select-bank-account.html',
 })
-export class CommonSelectBankAccountPage {
+export class CommonSelectBankAccountPage implements OnInit {
 
   mode: 'NEW' | 'SELECT' = 'NEW';
   userBankAccountList: UserBankAccount[] = [];
@@ -36,6 +37,7 @@ export class CommonSelectBankAccountPage {
   transaction: Transaction;
   acceptTermsAndConditions = false;
   canContinue = false;
+  continue = new Subject();
 
   constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, private alerts: AlertUtil,
     private userBankAccounts: UsersBankAccountsService, private loading: LoadingUtil, public users: UsersService,
@@ -56,10 +58,18 @@ export class CommonSelectBankAccountPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CommonSelectBankAccountPage');
+    this.continue
+    .first()
+    .subscribe(()=>{
+      if( this.navParams.get('next') ){
+        this.goToOTCBankAccounts( this.transaction.personBankAccount );
+      }
+    })
   }
 
   ionViewCanLeave(){
     if( this.canContinue ){
+      this.canContinue = false;
       return true;
     }
     if( 
@@ -94,11 +104,26 @@ export class CommonSelectBankAccountPage {
       if( this.userBankAccountList.length <= 0 ){
         this.mode = 'NEW';
       }else{
-        this.mode = 'SELECT'
+        this.mode = 'SELECT';
         this.selectedUserBankAccount = this.userBankAccountList[0];
       }
+      
       this.loading.hide();
-    })    
+      
+      if( this.users.currentUser.isPerson() && !!this.transaction.personBankAccount ){
+        this.userBankAccountFG.patchValue({
+          ...this.transaction.personBankAccount
+        });
+        this.acceptTermsAndConditions = true;
+        this.mode = 'SELECT';
+        this.selectedUserBankAccount = this.userBankAccountList.find( ba => ba.apellative == this.transaction.personBankAccount.apellative );
+        this.continue.next();
+      }
+    });
+  }
+
+  ngOnInit(){
+    
   }
 
   onPreviousBank(){
@@ -180,6 +205,10 @@ export class CommonSelectBankAccountPage {
 
   onCancel(){
     this.navCtrl.popToRoot();    
+  }
+
+  compareFn(ba1: UserBankAccount, ba2: UserBankAccount): boolean {
+    return ba1 && ba2 ? ba1.id === ba2.id : ba1 === ba2;
   }
 
 }

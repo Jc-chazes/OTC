@@ -28,7 +28,7 @@
           <ion-col col-auto>
             <p class="text-muted">Monto a <br> depositar</p>
           </ion-col>
-          <ion-col col-3>
+          <ion-col col-5>
             <input class="text-center fill-width" type="text" readonly 
             [value]=" transaction.currencyToDeposit.symbol + ' ' + ( otcComission.content + transaction.amountToDeposit ) ">
           </ion-col>
@@ -57,10 +57,23 @@
       </div>
       <p padding class="pb-0 pt-0">Nuestras cuentas:</p>
       <div class="commonTransferToOTC__banks">
-        <div class="flex-row-layout ai-center">
-          <div class="commonTransferToOTC__banks__item flex text-center" *ngFor="let bankAccount of otcBankAccountList"
+        <div class="pos-relative">
+          <!-- <div class="commonTransferToOTC__banks__item flex text-center" *ngFor="let bankAccount of otcBankAccountList"
           (tap)="selectedOtcBankAccount = bankAccount">
             <img [src]="bankAccount.bank.image.fileUrl" alt="">
+          </div> -->
+          <ion-slides (ionSlideDidChange)="otcBankAccountChanged()">
+            <ion-slide *ngFor="let bankAccount of otcBankAccountList" >
+              <div class="commonTransferToOTC__banks__item flex text-center">
+                <img [src]="bankAccount.bank.image.fileUrl" alt="">                
+              </div>
+            </ion-slide>
+          </ion-slides>
+          <div class="prev__bank" (tap)="slides.slidePrev()" *ngIf="!slides.isBeginning()">
+            <img src="/assets/imgs/icons/arrow_left.svg" alt="">
+          </div>
+          <div class="next__bank" (tap)="slides.slideNext()" *ngIf="!slides.isEnd()">
+            <img src="/assets/imgs/icons/arrow_right.svg" alt="">
           </div>
         </div>
       </div>
@@ -93,13 +106,20 @@
             </div>
           </ion-col>
         </ion-row>
+        <br>
+        <ion-row class="flex-row-layout jc-center">
+          <div [ngClass]="{ 'arrow-down': !showAdditionalInfo, 'arrow-top': showAdditionalInfo }" (tap)="toggleAditionalInfo()"></div>
+        </ion-row>
+        <ion-row padding *ngIf="showAdditionalInfo">
+          <div [innerHTML]="selectedOtcBankAccount.informacionAdicional" style="white-space: pre;"></div>
+        </ion-row>
       </div>
     </div>
     <div class="flex-auto no-padding">
       <div class="spacer-15"></div>
       <div class="flex-col-layout ai-center" padding>
-        <div class="arrow-down" (tap)="scrollToBottom()"></div>
-        <br>
+        <!-- <div class="arrow-down" (tap)="scrollToBottom()"></div> -->
+        <!-- <br> -->
         <button fluid ion-button color="secondary" (tap)="continue()">
           Siguiente
         </button>
