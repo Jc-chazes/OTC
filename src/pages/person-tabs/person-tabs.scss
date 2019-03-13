@@ -1,5 +1,23 @@
 @import "../../styles/1-settings/index.scss";
 
+body.keyboard-is-open {
+    div.tabbar.show-tabbar {
+        display: none;
+    }
+}
+
+body.keyboard-is-open .scroll-content {
+    margin-bottom: 0 !important;
+}
+
+body.keyboard-is-open ion-tabbar {
+    display: none;
+}
+  
+body.keyboard-is-open scroll-content {
+    margin-bottom: 0 !important;
+}
+
 page-person-tabs {
     .tabbar{
         background: $primary-color !important;

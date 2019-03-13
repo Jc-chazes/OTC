@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { NavController, NavParams, ModalController, Tabs } from 'ionic-angular';
+import { NavController, NavParams, ModalController, Tabs, Platform } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { CommonMyNotificationsPage } from '../common-my-notifications/common-my-notifications';
 import { CommonMyTransactionsPage } from '../common-my-transactions/common-my-transactions';
@@ -17,6 +17,7 @@ import { ByIdSpecification } from '../../providers/specifications/base.specifica
 import { Transaction } from '../../models/transaction.model';
 import { Person } from '../../models/person.model';
 import { ExchangeAgent } from '../../models/exchange-agent.model';
+import { Keyboard } from "@ionic-native/keyboard";
 
 /**
  * Generated class for the PersonTabsPage page.
@@ -41,7 +42,7 @@ export class PersonTabsPage implements OnInit{
   constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl: ModalController,
     private modals: ModalUtil, private notifications: NotificationsService, private users: UsersService, 
     private transactions: TransactionsService, private alerts: AlertUtil, private loading: LoadingUtil, 
-    private contests: ContestsService) {    
+    private contests: ContestsService,public platform: Platform, public keyboard: Keyboard) {    
     // this.modals.openModal(this.modalCtrl,AvailableModals.ScoreYourExperienceModal,{
     //   transaction: new Transaction({
     //     person: new Person({id:this.users.currentUser.person.id}),
@@ -73,12 +74,20 @@ export class PersonTabsPage implements OnInit{
       }
     }
     this.transactions.checkForOfficeHours(this.modalCtrl);
+
+    this.platform.ready().then(() => {
+      this.keyboard.onKeyboardShow().subscribe(() => {
+        document.body.classList.add('keyboard-is-open');
+      });
+  
+      this.keyboard.onKeyboardHide().subscribe(() => {
+        document.body.classList.remove('keyboard-is-open');
+      });
+  });
   }
 
   ngOnInit(){
-
     this.notifications.listenToContests( this.modalCtrl, this.tabRef );
-    
   }
 
   ionViewDidLoad() {

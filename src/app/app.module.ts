@@ -60,6 +60,7 @@ import { CommonMyBankAccountsAddPage } from '../pages/common-my-bank-accounts-ad
 import { PersonNearExchangeAgentsPage } from '../pages/person-near-exchange-agents/person-near-exchange-agents';
 import { NotificationsService } from '../providers/notifications.service';
 import { Camera } from '@ionic-native/camera';
+import { Keyboard } from '@ionic-native/keyboard';
 
 import moment from 'moment';
 moment.locale('es');
@@ -107,6 +108,7 @@ import { EventsUtil } from '../providers/utils/events.util';
 
 /*Con Angular*/
 import * as Raven from 'raven-js';
+
 Raven
   .config('https://e215c711d63840b48d4c2b91894dda8d@sentry.io/1395719')
   .install();
@@ -259,7 +261,8 @@ export class RavenErrorHandler extends IonicErrorHandler implements ErrorHandler
     GooglePlus,
     Facebook,
     Deeplinks,
-    EventsUtil
+    EventsUtil,
+    Keyboard
   ]
 })
 export class AppModule {}
