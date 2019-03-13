@@ -122,6 +122,8 @@ export class CommonTransferToOtcPage {
 
   otcBankAccountChanged(){
     let currentIndex = this.slides.getActiveIndex();
+    if( currentIndex >= this.otcBankAccountList.length ) currentIndex = this.otcBankAccountList.length -1 ;
+    if( currentIndex < 0 ) currentIndex = 0;
     this.selectedOtcBankAccount = this.otcBankAccountList[currentIndex] as OtcBankAccount;
   }
 
