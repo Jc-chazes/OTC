@@ -110,9 +110,13 @@
         <ion-row class="flex-row-layout jc-center">
           <div [ngClass]="{ 'arrow-down': !showAdditionalInfo, 'arrow-top': showAdditionalInfo }" (tap)="toggleAditionalInfo()"></div>
         </ion-row>
-        <ion-row padding *ngIf="showAdditionalInfo">
-          <div [innerHTML]="selectedOtcBankAccount.informacionAdicional" style="white-space: pre;"></div>
-        </ion-row>
+        <ng-container *ngIf="showAdditionalInfo">
+          <br>
+          <h4 class="text-accent"><b>{{ selectedOtcBankAccount.bank.name }}</b></h4>
+          <ion-row>
+            <div [innerHTML]="selectedOtcBankAccount.informacionAdicional" style="white-space: pre; font-weight: bold; line-height: 1.5;"></div>
+          </ion-row>
+        </ng-container>
       </div>
     </div>
     <div class="flex-auto no-padding">

@@ -62,7 +62,9 @@ export class CommonSelectBankAccountPage implements OnInit {
     .first()
     .subscribe(()=>{
       if( this.navParams.get('next') ){
-        this.goToOTCBankAccounts( this.transaction.personBankAccount );
+        this.goToOTCBankAccounts( this.users.currentUser.isPerson() ? 
+          this.transaction.personBankAccount :
+          this.transaction.exchangeAgentBankAccount );
       }
     })
   }
@@ -110,13 +112,15 @@ export class CommonSelectBankAccountPage implements OnInit {
       
       this.loading.hide();
       
-      if( this.users.currentUser.isPerson() && !!this.transaction.personBankAccount ){
+      if( ( this.users.currentUser.isPerson() && !!this.transaction.personBankAccount )
+      || ( this.users.currentUser.isExchangeAgent() && !!this.transaction.exchangeAgentBankAccount ) ){
+        let assignedBankAccount = this.users.currentUser.isPerson() ? this.transaction.personBankAccount : this.transaction.exchangeAgentBankAccount;
         this.userBankAccountFG.patchValue({
-          ...this.transaction.personBankAccount
+          ...assignedBankAccount
         });
         this.acceptTermsAndConditions = true;
         this.mode = 'SELECT';
-        this.selectedUserBankAccount = this.userBankAccountList.find( ba => ba.apellative == this.transaction.personBankAccount.apellative );
+        this.selectedUserBankAccount = this.userBankAccountList.find( ba => ba.apellative == assignedBankAccount.apellative );
         this.continue.next();
       }
     });

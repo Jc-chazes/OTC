@@ -159,8 +159,12 @@ export class ExchangeAgentMyRequestsPage implements OnDestroy {
         });
         break;
       case 'UPLOAD_PHOTO':
-        this.navCtrl.push( CommonTransferToOtcPage, { 
-          transaction
+        // this.navCtrl.push( CommonTransferToOtcPage, { 
+        //   transaction
+        // });
+        this.navCtrl.push( CommonSelectBankAccountPage, { 
+          transaction,
+          next: true
         });
         break;
       case 'PENDING_FROM_OTC':
