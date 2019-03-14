@@ -124,7 +124,12 @@
         "DEEPLINK_5_SCHEME": " ",
         "DEEPLINK_5_HOST": " "
       },
-      "cordova-custom-config": {}
+      "cordova-custom-config": {},
+      "cordova-plugin-ionic": {
+        "APP_ID": "5197475d",
+        "CHANNEL_NAME": "Production",
+        "UPDATE_METHOD": "auto"
+      }
     },
     "platforms": [
       "browser",
