@@ -1,3 +1,11 @@
-page-exchange-agent-tabs {
-
+body.keyboard-is-open {
+    div.tabbar.show-tabbar {
+        display: none;
+    }
 }
+
+body.keyboard-is-open .scroll-content {
+    margin-bottom: 0 !important;
+}
+
+page-exchange-agent-tabs {}

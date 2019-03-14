@@ -27,10 +27,12 @@ export class PersonSelectSearchModePage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private alerts: AlertUtil, private contests: ContestsService, private loading: LoadingUtil,
     private modals: ModalUtil, private modalCtrl: ModalController, private users: UsersService) {
+      document.body.classList.remove('keyboard-is-open');
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PersonSelectSearchModePage');
+    document.body.classList.remove('keyboard-is-open');
   }
 
   continue(){

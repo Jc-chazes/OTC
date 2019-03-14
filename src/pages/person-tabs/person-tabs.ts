@@ -42,7 +42,7 @@ export class PersonTabsPage implements OnInit{
   constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl: ModalController,
     private modals: ModalUtil, private notifications: NotificationsService, private users: UsersService, 
     private transactions: TransactionsService, private alerts: AlertUtil, private loading: LoadingUtil, 
-    private contests: ContestsService,public platform: Platform, public keyboard: Keyboard) {    
+    private contests: ContestsService, public platform: Platform, public keyboard: Keyboard) {    
     // this.modals.openModal(this.modalCtrl,AvailableModals.ScoreYourExperienceModal,{
     //   transaction: new Transaction({
     //     person: new Person({id:this.users.currentUser.person.id}),
@@ -83,7 +83,7 @@ export class PersonTabsPage implements OnInit{
       this.keyboard.onKeyboardHide().subscribe(() => {
         document.body.classList.remove('keyboard-is-open');
       });
-  });
+    });
   }
 
   ngOnInit(){

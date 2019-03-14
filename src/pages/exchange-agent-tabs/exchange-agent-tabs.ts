@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NavController, NavParams, ModalController, Tabs } from 'ionic-angular';
+import { NavController, NavParams, ModalController, Tabs, Platform } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { ExchangeAgentMyOfferingsPage } from '../exchange-agent-my-offerings/exchange-agent-my-offerings';
 import { CommonMyNotificationsPage } from '../common-my-notifications/common-my-notifications';
@@ -10,6 +10,7 @@ import { NotificationsService } from '../../providers/notifications.service';
 import { CommonTransactionInProgressPage } from '../common-transaction-in-progress/common-transaction-in-progress';
 import { UsersService } from '../../providers/users.service';
 import { ModalUtil, AvailableModals } from '../../providers/utils/modal.util';
+import { Keyboard } from "@ionic-native/keyboard";
 
 /**
  * Generated class for the ExchangeAgentTabsPage page.
@@ -33,7 +34,7 @@ export class ExchangeAgentTabsPage implements OnInit{
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public notifications: NotificationsService,
     private modalCtrl: ModalController, private transactions: TransactionsService, private users: UsersService,
-    private modals: ModalUtil) {
+    private modals: ModalUtil, public platform: Platform, public keyboard: Keyboard) {
       // this.notifications.onTabChangeRequested.subscribe( request => {
       //   this.tabParams = request.data;
       //   this.tabRef.select(request.tabIndex)
@@ -55,6 +56,16 @@ export class ExchangeAgentTabsPage implements OnInit{
         // }
       }
       this.transactions.checkForOfficeHours(this.modalCtrl);
+
+      this.platform.ready().then(() => {
+        this.keyboard.onKeyboardShow().subscribe(() => {
+          document.body.classList.add('keyboard-is-open');
+        });
+    
+        this.keyboard.onKeyboardHide().subscribe(() => {
+          document.body.classList.remove('keyboard-is-open');
+        });
+      });
   }
 
   ionViewDidLoad() {
