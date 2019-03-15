@@ -12,7 +12,7 @@ export class AppStateService{
       selectedUserType: 0
     },
     register: {
-      savedUserBankAccount: null
+      savedUserBankAccount: []
     },
     price: {
       currency: "",
@@ -31,9 +31,8 @@ export class AppStateService{
     return this.onStateChangeSubject.value;
   }
 
-  setState(partialState){
+  setState(partialState: any){
     let newState = Object.assign(this.onStateChangeSubject.value,partialState);
-    console.log(newState);
     this.onStateChangeSubject.next(newState);
   }
 

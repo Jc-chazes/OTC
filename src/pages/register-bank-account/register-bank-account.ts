@@ -73,20 +73,25 @@ export class RegisterBankAccountPage {
   submit(){
     if( !this.userBankAccountFG.valid ){
       this.alerts.show('Faltan completar campos','Registro');
+    } else {
+      const { bank, accountNumber } = this.userBankAccountFG.value;
+      // if( accountNumber.length != (bank as Bank).accountNumberLength ){
+      //   this.alerts.show(`El número de cuenta bancaria ingresado no cumple con los requisitos del banco: ${(bank as Bank).accountNumberLength} dígitos`,
+      //   'Cuentas bancarias');
+      //   return;
+      // }
+
+      let currenRegisterState = this.appState.currentState.register;
+
+      this.appState.currentState.register.savedUserBankAccount.push(this.userBankAccountFG.value);
+
+      this.appState.setState({
+        register: {
+          ...currenRegisterState,
+          savedUserBankAccount: this.appState.currentState.register.savedUserBankAccount
+        }
+      });
     }
-    const { bank, accountNumber } = this.userBankAccountFG.value;
-    // if( accountNumber.length != (bank as Bank).accountNumberLength ){
-    //   this.alerts.show(`El número de cuenta bancaria ingresado no cumple con los requisitos del banco: ${(bank as Bank).accountNumberLength} dígitos`,
-    //   'Cuentas bancarias');
-    //   return;
-    // }
-    let currenRegisterState = this.appState.currentState.register;
-    this.appState.setState({
-      register: {
-        ...currenRegisterState,
-        savedUserBankAccount: this.userBankAccountFG.value
-      }
-    })
     this.navCtrl.pop();
   }
 

@@ -94,6 +94,8 @@ export class CommonRegisterAccountPage {
     })
   }
 
+  ionViewWillEnter(){}
+
   ionViewDidLoad() {}
 
   validatePassword(){
@@ -137,10 +139,12 @@ export class CommonRegisterAccountPage {
           return ;
         }
         let savedUserBankAccount = this.appState.currentState.register.savedUserBankAccount;
-        if( savedUserBankAccount ){
-          this.UsersBankAccounts.add( savedUserBankAccount as UserBankAccount )
-          .subscribe( results => {
-          });
+        if( savedUserBankAccount.length > 0 ){
+          for(let bankAccount of savedUserBankAccount){
+            console.log('bank account to create => ', bankAccount);
+            this.UsersBankAccounts.add( bankAccount as UserBankAccount )
+              .subscribe( results => {});
+          }
         }
         this.alerts.show('Registro exitoso','Registro');
         this.app.getRootNav().setRoot(tabs);
@@ -155,11 +159,11 @@ export class CommonRegisterAccountPage {
           return ;
         }
         let savedUserBankAccount = this.appState.currentState.register.savedUserBankAccount;
-        if( savedUserBankAccount ){
-          this.UsersBankAccounts.add( savedUserBankAccount as UserBankAccount )
-          .subscribe( results => {
-            this.loading.hide();  
-          });
+        if( savedUserBankAccount.length > 0 ){
+          for(let bankAccount of savedUserBankAccount){
+            this.UsersBankAccounts.add( bankAccount as UserBankAccount )
+              .subscribe( results => {});
+          }
         }
         this.alerts.show('Registro exitoso','Registro');
         this.app.getRootNav().setRoot(tabs);

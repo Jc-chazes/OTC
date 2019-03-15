@@ -114,6 +114,12 @@
           </ng-container>
         </div>
         <div class="p-5">
+          <div *ngIf="appState.currentState.register.savedUserBankAccount.length > 0">
+            <p>Tienes {{appState.currentState.register.savedUserBankAccount.length}}
+              <span *ngIf="appState.currentState.register.savedUserBankAccount.length == 1">cuenta agregada</span>
+              <span *ngIf="appState.currentState.register.savedUserBankAccount.length > 1">cuentas agregadas</span>
+            </p>
+          </div>
           <a href="" class="text-white" (tap)="$event.stopPropagation;onAddBankAccount()">Agregar cuenta bancaria</a>
         </div>
         <div>
