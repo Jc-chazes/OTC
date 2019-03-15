@@ -146,7 +146,8 @@ export class CommonRegisterAccountPage {
               .subscribe( results => {});
           }
         }
-        this.alerts.show('Registro exitoso','Registro');
+        this.modals.openModal(this.modalCtrl,AvailableModals.SuccessfulSignUpModal)
+          .then( () => {});
         this.app.getRootNav().setRoot(tabs);
       });
     }
@@ -165,7 +166,8 @@ export class CommonRegisterAccountPage {
               .subscribe( results => {});
           }
         }
-        this.alerts.show('Registro exitoso','Registro');
+        this.modals.openModal(this.modalCtrl,AvailableModals.SuccessfulSignUpModal)
+          .then( () => {});
         this.app.getRootNav().setRoot(tabs);
       });
     }

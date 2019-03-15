@@ -33,6 +33,7 @@ import { ContinueTransactionOrBackModalComponent } from './continue-transaction-
 import { RequestAcceptedComponent } from './request-accepted/request-accepted';
 import { ScoreComponent } from './score/score';
 import { OfficeHoursReminderComponent } from './office-hours-reminder/office-hours-reminder';
+import { SuccessfulSignUpModalComponent } from './successful-sign-up-modal/successful-sign-up-modal';
 
 @NgModule({
 	declarations: [UpdateExchangeReminderComponent,
@@ -65,7 +66,9 @@ import { OfficeHoursReminderComponent } from './office-hours-reminder/office-hou
     ContinueTransactionOrBackModalComponent,
     RequestAcceptedComponent,
     ScoreComponent,
-    OfficeHoursReminderComponent],
+    OfficeHoursReminderComponent,
+    SuccessfulSignUpModalComponent
+    ],
 	imports: [ CommonModule, IonicModule, DirectivesModule, PdfViewerModule ],
 	exports: [UpdateExchangeReminderComponent,
     StepperComponent,
@@ -97,7 +100,9 @@ import { OfficeHoursReminderComponent } from './office-hours-reminder/office-hou
     ContinueTransactionOrBackModalComponent,
     RequestAcceptedComponent,
     ScoreComponent,
-    OfficeHoursReminderComponent],
+    OfficeHoursReminderComponent,
+    SuccessfulSignUpModalComponent
+    ],
     entryComponents: [
         RejectWarningComponent,
         RejectReasonSelectComponent,
@@ -119,7 +124,8 @@ import { OfficeHoursReminderComponent } from './office-hours-reminder/office-hou
         QuoteAgainModalComponent,
         FastSearchModalComponent,
         ContinueTransactionOrBackModalComponent,
-        OfficeHoursReminderComponent
+        OfficeHoursReminderComponent,
+        SuccessfulSignUpModalComponent
     ]
 })
 export class ComponentsModule {}

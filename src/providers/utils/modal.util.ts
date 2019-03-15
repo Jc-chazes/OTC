@@ -14,6 +14,7 @@ import { QuoteAgainModalComponent } from "../../components/quote-again-modal/quo
 import { FastSearchModalComponent } from "../../components/fast-search-modal/fast-search-modal";
 import { ContinueTransactionOrBackModalComponent } from "../../components/continue-transaction-or-back-modal/continue-transaction-or-back-modal";
 import { OfficeHoursReminderComponent } from "../../components/office-hours-reminder/office-hours-reminder";
+import { SuccessfulSignUpModalComponent } from '../../components/successful-sign-up-modal/successful-sign-up-modal';
 
 export enum  AvailableModals{
     TermsAndConditions,
@@ -29,7 +30,8 @@ export enum  AvailableModals{
     QuoteAgainModal,
     FastSearchModal,
     ContinueTransactionOrBackModal,
-    OfficeHoursReminderModal
+    OfficeHoursReminderModal,
+    SuccessfulSignUpModal
 };
 
 @Injectable()
@@ -100,6 +102,10 @@ export class ModalUtil{
             case AvailableModals.OfficeHoursReminderModal:
                 modalInstance = modalCtrl.create(OfficeHoursReminderComponent,data,
                 Object.assign({},options,{ cssClass: 'alertModal officeHoursReminderModalComponent' }));
+                break;
+            case AvailableModals.SuccessfulSignUpModal:
+                modalInstance = modalCtrl.create(SuccessfulSignUpModalComponent,data,
+                Object.assign({},options,{ cssClass: 'alertModal successfulSignUpModalComponent' }));
                 break;
         }
 
