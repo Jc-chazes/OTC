@@ -70,7 +70,7 @@
                 <div class="box_icon box_pencil" (tap)="editPhone = true"></div>
               </div>
               <div *ngIf="editPhone">
-                <input class="box_input" 
+                <input class="box_input phone" 
                       [(ngModel)]="phone">
                 <div class="box_icon box_save" (tap)="updatePhone()"></div>
               </div>
@@ -135,7 +135,16 @@
               Celular:
             </ion-col>
             <ion-col col-6>
-              {{ phone }}
+              <!-- {{ phone }} -->
+              <div *ngIf="!editPhone">
+                <div class="box_label">{{phone}}</div>
+                <div class="box_icon box_pencil" (tap)="editPhone = true"></div>
+              </div>
+              <div *ngIf="editPhone">
+                <input class="box_input phone" 
+                      [(ngModel)]="phone">
+                <div class="box_icon box_save" (tap)="updatePhone()"></div>
+              </div>
             </ion-col>
           </ion-row>
         </div>

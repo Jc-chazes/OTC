@@ -42,4 +42,23 @@ export class UsersService extends BaseService{
             return Observable.of(false);
         });
     }
+
+    updatePhone(phone: string): Observable<boolean> {
+        let url = '';
+        let modifier = null;
+        if( this.currentUser.isPerson() ){
+            url = `/people/${this.currentUser.person.id}`;
+            modifier = { cellphone: phone };
+        }else{
+            url = `/exchangeagents/${this.currentUser.exchangeAgent.id}`;
+            modifier = { phone: phone };
+        }
+        return this.api.put(url,modifier)
+        .map( resp => {
+            return true;            
+        }).catch( err => {
+            console.error(err);
+            return Observable.of(false);
+        });
+    }
 }

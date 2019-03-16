@@ -11,11 +11,13 @@ import moment from 'moment';
 import { padStart } from 'lodash'
 import { Image } from "../../models/shared/image.model";
 import { getImageUrl } from "../../helpers/images.helper";
+import { ExchangeAgentMapper } from "./exchange-agent.mapper";
 
 export class TransactionMapper extends BaseMapper<Transaction>{
 
     type: new (partial?: Partial<Transaction>) => Transaction = Transaction;
     personMapper = new PersonMapper();
+    exchangeAgentMapper = new ExchangeAgentMapper();
     
     constructor(private currencies: CurrenciesService, private users?: UsersService){
         super();
@@ -26,7 +28,7 @@ export class TransactionMapper extends BaseMapper<Transaction>{
         let target = new Transaction({
             ...be,
             created_at: new Date(be.created_at),
-            exchangeAgent: new ExchangeAgent({ ...(be.exchangeagent || be.exchangeAgent) }),
+            exchangeAgent: this.exchangeAgentMapper.mapFromBe( be.exchangeagent || be.exchangeAgent ), //new ExchangeAgent({ ...(be.exchangeagent || be.exchangeAgent) }),
             person: this.personMapper.mapFromBe( be.person ),
             exchangeAgentOffering: new ExchangeAgentOffering({ ...(be.exchangeagentoffering || be.exchangeAgentOffering) }),
             personBankAccount: be.personbankaccount ? new UserBankAccount({

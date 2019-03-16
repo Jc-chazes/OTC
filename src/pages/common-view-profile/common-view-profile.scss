@@ -34,6 +34,11 @@ page-common-view-profile {
         padding-left: 0;
         padding-top: 0;
         width: 80%;
+        &.phone{
+            text-align: center;
+            border-bottom: 1px solid;
+            border-radius: 0px !important;
+        }
     }
 
     .box_icon{

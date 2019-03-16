@@ -13,6 +13,7 @@ import { b64toBlob } from '../../helpers/images.helper';
 import { UsersService } from '../../providers/users.service';
 import { CommonTransactionInProgressPage } from '../common-transaction-in-progress/common-transaction-in-progress';
 import { popToIndex } from '../../helpers/nav-controller.helper';
+import { ModalUtil, AvailableModals } from '../../providers/utils/modal.util';
 
 /**
  * Generated class for the CommonSendVoucherPage page.
@@ -40,7 +41,7 @@ export class CommonSendVoucherPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private alerts: AlertUtil,
     public sanitizer: DomSanitizer, private modalCtrl: ModalController, private loading: LoadingUtil,
     private transactions: TransactionsService, private camera: Camera, public users: UsersService,
-    private viewCtrl: ViewController) {
+    private viewCtrl: ViewController, private modals: ModalUtil) {
     this.transaction = this.navParams.get('transaction');
     this.voucherFileReader.onload = () => {
       this.voucher.fileUrl = this.voucherFileReader.result as string;
@@ -99,9 +100,13 @@ export class CommonSendVoucherPage {
             //   this.navCtrl.popTo( this.navCtrl.getByIndex(0) );
             // }
             if( this.users.currentUser.isPerson() ){
-              this.transactions.setTransactionTabRoot( 'TRANSACTION_IN_PROGRESS' );
-              this.navCtrl.setRoot(CommonTransactionInProgressPage);
-              this.navCtrl.popToRoot();
+              this.modals.openModal(this.modalCtrl,AvailableModals.ScoreYourExperienceModal,{
+                transaction: this.transaction
+              }).then(()=>{
+                this.transactions.setTransactionTabRoot( 'TRANSACTION_IN_PROGRESS' );
+                this.navCtrl.setRoot(CommonTransactionInProgressPage);
+                this.navCtrl.popToRoot();
+              });
             }else{
               this.transactions.clearCurrentTransaction();
               popToIndex(this.navCtrl,this.viewCtrl,1);

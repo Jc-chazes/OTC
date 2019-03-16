@@ -135,7 +135,7 @@ export class DetailExchangeAgentPage {
   }
 
   get transactionAmount(){
-    return this.numberPipe.transform(this.transaction.amount.toFixed(2));
+    return this.numberPipe.transform(Number(this.transaction.amount).toFixed(2));
   }
 
   get transactionAmountToDeposit(){

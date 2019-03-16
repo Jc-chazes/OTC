@@ -10,7 +10,7 @@ export class UserMapper extends BaseMapper<User>{
     mapFromBe(be): User{
         let target = new User({...be});
         if(be.photo){
-            target.photo = new Image({ fileUrl: getImageUrl(be.photo.url) });
+            target.photo = new Image({ fileUrl: be.photo.fileUrl || getImageUrl(be.photo.url) });
         }
         return target
     }

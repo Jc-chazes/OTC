@@ -45,7 +45,10 @@ export class CommonMyTransactionsPage {
   }
 
   getAvatarUrl(transaction: Transaction){
-    if( transaction.person.user.photo ){
+    if( this.userService.currentUser.isPerson() && transaction.exchangeAgent.user.photo ){
+      return this.sanitizer.bypassSecurityTrustStyle(`url('${transaction.exchangeAgent.user.photo.fileUrl}')`);
+    }
+    if( this.userService.currentUser.isExchangeAgent() && transaction.person.user.photo ){
       return this.sanitizer.bypassSecurityTrustStyle(`url('${transaction.person.user.photo.fileUrl}')`);
     }
     return this.sanitizer.bypassSecurityTrustStyle(`url('/assets/imgs/avatar_placeholder.png')`);

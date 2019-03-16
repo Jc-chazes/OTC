@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, Alert } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth.service';
 import { UsersService } from '../../providers/users.service';
 import { Image } from '../../models/shared/image.model';
@@ -57,7 +57,23 @@ export class CommonViewProfilePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CommonViewProfilePage');
-  }  
+  }
+  
+  getPhone(){
+    if( this.currentUser.isPerson() ){
+      return this.currentUser.person.cellphone;
+    }else{
+      return this.currentUser.exchangeAgent.phone;
+    }
+  }
+
+  setPhone(phone){
+    if( this.currentUser.isPerson() ){
+      this.currentUser.person.cellphone = phone;
+    }else{
+      return this.currentUser.exchangeAgent.phone = phone ;
+    }
+  }
 
   
   get avatarUrl(): any{
@@ -89,7 +105,18 @@ export class CommonViewProfilePage {
 
   updatePhone(){
     // connect with back end
-    this.editPhone = false;
+    this.loading.show();
+    this.users.updatePhone(this.phone)
+    .subscribe( couldUpdate => {
+      this.editPhone = false;
+      this.loading.hide();
+      if( couldUpdate ){
+        this.alerts.show('Teléfono actualizado','Mi perfil');
+      }else{
+        this.alerts.show('No se pudo actualizar su teléfono','Mi perfil');
+        this.setPhone(this.getPhone());
+      }
+    })
   }
 
   goToMyBankAccounts(){
