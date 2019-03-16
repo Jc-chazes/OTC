@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { NavController, NavParams, ModalController, Tabs, Platform } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { CommonMyNotificationsPage } from '../common-my-notifications/common-my-notifications';
@@ -18,6 +18,7 @@ import { Transaction } from '../../models/transaction.model';
 import { Person } from '../../models/person.model';
 import { ExchangeAgent } from '../../models/exchange-agent.model';
 import { Keyboard } from "@ionic-native/keyboard";
+import { componentDestroyed } from '../../helpers/observable.helper';
 
 /**
  * Generated class for the PersonTabsPage page.
@@ -30,7 +31,7 @@ import { Keyboard } from "@ionic-native/keyboard";
   selector: 'page-person-tabs',
   templateUrl: 'person-tabs.html',
 })
-export class PersonTabsPage implements OnInit{
+export class PersonTabsPage implements OnInit, OnDestroy{
 
   tabHome: any = QuotePage;
   tabNotifications: any = CommonMyNotificationsPage;
@@ -76,11 +77,15 @@ export class PersonTabsPage implements OnInit{
     this.transactions.checkForOfficeHours(this.modalCtrl);
 
     this.platform.ready().then(() => {
-      this.keyboard.onKeyboardShow().subscribe(() => {
+      this.keyboard.onKeyboardShow()
+      .takeUntil( componentDestroyed(this) )
+      .subscribe(() => {
         document.body.classList.add('keyboard-is-open');
       });
   
-      this.keyboard.onKeyboardHide().subscribe(() => {
+      this.keyboard.onKeyboardHide()
+      .takeUntil( componentDestroyed(this) )
+      .subscribe(() => {
         document.body.classList.remove('keyboard-is-open');
       });
     });
@@ -88,6 +93,10 @@ export class PersonTabsPage implements OnInit{
 
   ngOnInit(){
     this.notifications.listenToContests( this.modalCtrl, this.tabRef );
+  }
+
+  ngOnDestroy(){
+    
   }
 
   ionViewDidLoad() {
