@@ -116,6 +116,10 @@ export class NotificationsService extends BaseService implements CrudService<Not
                 // ){
                 //     return ;
                 // }
+
+                if( this.platform.is('ios') ){
+                    alert('Notificacion en ios!!!');
+                }
         
                 let messageText: string;
                 let messageTitle: string;
