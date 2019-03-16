@@ -17,18 +17,19 @@
         <div>
           <div class='text-center text-muted'>Cotiza</div>
           <div class="spacer-20"></div>
-          <div class="sections_container">
-            <div class="box_option right_line box_option--top">
+          <div class="sections_container flex-row-layout">
+            <div class="box_option right_line box_option- flex-50 text-center flex-row-layout jc-center ai-center">
               <span>{{ operation == 'V' ? 'Tengo' : 'Quiero' }}</span>
             </div>
-            <div class="button_exchange button_exchange--top" (click)="onChangeQuieroTengo()"></div>
-            <div class="box_option box_option--top">
+            <div class="button_exchange button_exchange--top text-center flex-row-layout ai-center" 
+            (click)="onChangeQuieroTengo()"></div>
+            <div class="box_option box_option--top flex-50 text-center flex-row-layout jc-center ai-center">
               <span>{{ operation == 'V' ? 'Quiero' : 'Tengo' }}</span>
             </div>
           </div>
           <div class="spacer-20"></div>
-          <div class="sections_container">
-            <div class="box_option right_line">
+          <div class="sections_container flex-row-layout">
+            <div class="box_option right_line flex-col-layout ai-center flex-50">
               <ion-row justify-content-center align-items-center>
                 <ion-col col-auto>
                   <ion-select [(ngModel)]="selectedCurrencyLeft" class="input fill-width" [selectOptions]="{ title: 'Monedas disponibles' }">
@@ -50,7 +51,7 @@
                 </ion-col>
               </ion-row>
             </div>
-            <div class="box_option">
+            <div class="box_option flex-col-layout ai-center flex-50">
               <ion-row justify-content-center align-items-center>
                 <ion-col col-auto>
                   <!-- <div class="box_symbol">

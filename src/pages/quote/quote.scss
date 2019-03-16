@@ -15,13 +15,13 @@ page-quote {
         background-color: white;
         border-radius: 10px;
         color: black;
-        width: fit-content;
+        width: 230px;
         margin: auto;
         position: relative;
-
+        min-height: 30px;
         .box_option{
-            padding: 10px 20px;
-            display: inline-block;
+            // padding: 10px 10px;
+            // display: inline-block;
 
             .box_symbol{
                 width: 44px;
@@ -30,7 +30,7 @@ page-quote {
                 padding-top: 7px;
             }
             &--top{
-                width: 80px;
+                // width: 80px;
             }
         }
 
@@ -83,6 +83,8 @@ page-quote {
         padding: 10px 15px;
         background-color: $accent-color;
         color: white;
+        font-weight: bold;
+        letter-spacing: 1.1px;
     }
 
     ion-select{
@@ -90,5 +92,9 @@ page-quote {
         width: 100px;
         padding: 8px !important;
         max-width: unset;
+    }
+    .select-currency, ion-select{
+        height: 38px;
+        font-size: 20px;
     }
 }

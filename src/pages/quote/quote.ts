@@ -26,7 +26,7 @@ export class QuotePage implements OnInit {
   checkButton:number;
   selectedCurrencyLeft: Currency;
   selectedCurrencyRight: Currency;
-  cant : number;
+  cant : number = 100;
   text_buy : string;
   text_money:string
   currencyList: Currency[];
