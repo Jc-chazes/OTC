@@ -17,6 +17,7 @@ import { LocalNotifications } from "@ionic-native/local-notifications";
 import { TransactionsService } from "./transaction.service";
 import { EventsUtil } from "./utils/events.util";
 import { StorageUtil, StorageKeys } from "./utils/storage.util";
+import { AngularFirestore } from "angularfire2/firestore";
 
 @Injectable()
 export class NotificationsService extends BaseService implements CrudService<Notification>{
@@ -27,8 +28,8 @@ export class NotificationsService extends BaseService implements CrudService<Not
 
     constructor(api: ApiUtil, private users: UsersService, private firebaseNative: Firebase,
     private platform: Platform, private modals: ModalUtil, private localNotifications: LocalNotifications,
-    private transactions: TransactionsService, private toast: ToastController, private events: EventsUtil,
-    private storage: StorageUtil){
+    private transactions: TransactionsService, private toast: ToastController, private events: EventsUtil, 
+    private storage: StorageUtil, private af: AngularFirestore){
         super(api);
         this.pendingTransactionsCounter = new BehaviorSubject<number>( Number(storage.load(StorageKeys.PENDING_TRANSACTIONS_COUNTER)) );
     }
@@ -97,7 +98,140 @@ export class NotificationsService extends BaseService implements CrudService<Not
         return toReturn;
     }
 
-    listenToContests(modalCtrl: ModalController, currentTabs?: Tabs){
+    listenToNotifications(modalCtrl: ModalController, currentTabs: Tabs): Observable<any>{
+        if( !this.users.currentUser ){
+            return;
+        }
+        return this.af.collection(`users/${this.users.currentUser.id}/notifications`, 
+            ref => ref.where( 'read', '==', false ).orderBy( 'created', 'asc' ).limit(1)
+        )
+        .valueChanges()
+        .do( ( [notification] : Notification[]) => {
+            console.log(notification);
+            if( !!notification ){
+                alert('Llegó una notificación de: '+notification.type);
+                notification.transaction = new Transaction({ id: Number(notification.transaction) });
+                this.processNotification(modalCtrl,notification,currentTabs); 
+            }
+        });
+    }
+
+    markAsRead(notificationId: number): Observable<boolean>{
+        return this.api.put(`/notifications/${notificationId}/markAsRead`)
+        .map( resp => {
+            return true;
+        })
+        .catch( err => {
+            console.error( err );
+            return Observable.of(false);
+        });
+    }
+
+    processNotification(modalCtrl: ModalController, notification: Notification, currentTabs: Tabs){
+        switch(notification.type){
+            case 'NEW_CONTEST':
+                this.modals.openModal(modalCtrl,AvailableModals.OpportunityToParticipate,{
+                    ...notification
+                }).then( couldParticipate => {
+                    this.markAsRead( notification.id ).subscribe();
+                    if( couldParticipate ){
+                        this.modals.openModal(modalCtrl,AvailableModals.CouldParticipateModal);
+                    }else{
+                        this.modals.openModal(modalCtrl,AvailableModals.CouldNotParticipateModal);
+                    }
+                });
+                break;
+            case 'REJECTED_CONTEST':
+                this.modals.openModal(modalCtrl,AvailableModals.YouHasNotBeenSelectedModal)
+                .then( () => {
+                    this.markAsRead( notification.id ).subscribe();
+                });
+                break;
+            case 'SUCCESSFUL_CONTEST':
+                this.modals.openModal(modalCtrl,AvailableModals.YouHasBeenSelectedModal)
+                .then( () => {
+                    this.markAsRead( notification.id ).subscribe();
+                    let transactionId = Number(notification.transaction.id);
+                    this.transactions.findOne( new ByIdSpecification(transactionId) )
+                    .subscribe( transaction => {
+                        this.users.currentUser.currentTransaction = transaction;
+                        currentTabs.select(0);
+                    })    
+                });                        
+                break;
+            case 'ACCEPTED_BY_EXCHANGE_AGENT':
+                if( this.users.currentUser.isPerson() ){
+                    this.modals.openModal(modalCtrl,AvailableModals.RequestWasAcceptedModal)
+                    .then(()=>{
+                        this.markAsRead( notification.id ).subscribe();
+                        currentTabs.select(1);
+                    });                     
+                }
+                break;
+            case 'NEW_PENDING_TRANSACTION':
+                this.events.reloadPendingTransactions.emit();
+                this.incrementPendingTransactionsCounter();
+                currentTabs.select(1);
+                this.markAsRead( notification.id ).subscribe();
+                break;
+            case 'REJECTED_BY_EXCHANGE_AGENT':
+                // console.log(notification.cancelledBy);
+
+                var showQuoteAgainModal = () => {
+
+                    this.modals.openModal(modalCtrl,AvailableModals.QuoteAgainModal)
+                    .then( (quoteAgain) => {
+                        // alert(quoteAgain);
+                        // alert(currenTabs? 'Existe currentTabs' : 'No existe currentTabs');
+                        if( quoteAgain ){
+                            currentTabs.select(0);
+                        }else{
+                            currentTabs.select(1);
+                        }
+                    });
+
+                }
+
+                if( this.users.currentUser.isPerson() ){
+                    this.modals.openModal(modalCtrl,AvailableModals.RequestWasRejectedModal,{
+                        rejectionReason: notification.rejectionReason,
+                        cancelledBy: 'EXCHANGE_AGENT'
+                    }).then( scoreExchangeAgent => {
+                        this.markAsRead( notification.id ).subscribe();
+                        if( scoreExchangeAgent ){
+                            let transactionId = Number(notification.transaction.id);
+                            this.transactions.findOne( new ByIdSpecification(transactionId) )
+                            .subscribe( transaction => {
+                                this.modals.openModal(modalCtrl,AvailableModals.ScoreYourExperienceModal,{
+                                    transaction
+                                }).then(()=>{
+                                    showQuoteAgainModal();
+                                });
+                            })                                    
+                        }else{
+                            showQuoteAgainModal();
+                        }
+                    })
+                }
+                break;
+            case 'REJECTED_BY_PERSON':
+                // console.log(notification.cancelledBy);
+                if( this.users.currentUser.isExchangeAgent() ){
+                    this.modals.openModal(modalCtrl,AvailableModals.RequestWasRejectedModal,{
+                        rejectionReason: notification.rejectionReason,
+                        cancelledBy: 'PERSON'
+                    })
+                    .then(()=>{
+                        this.markAsRead( notification.id ).subscribe();
+                        currentTabs.select(1);
+                    });
+                }
+                break;
+        }
+    }
+
+    initListenNotifications(modalCtrl: ModalController, currentTabs?: Tabs): Observable<any>{
+        return this.listenToNotifications(modalCtrl,currentTabs);
         /*(window as any).FirebasePlugin.onNotificationOpen(function(notification) {
             alert(JSON.stringify(notification));
         }, function(error) {
@@ -109,7 +243,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
         }, e => {
             alert(JSON.stringify(e));
         });*/
-        try{
+        /*try{
             this.firebaseNative.onNotificationOpen().subscribe( (notification) => {
                 // if(notification.tap 
                 //     // && !this.platform.is('ios') 
@@ -256,7 +390,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
             });
         }catch(err){
             console.error(err);
-        }
+        }*/
     }
 
 

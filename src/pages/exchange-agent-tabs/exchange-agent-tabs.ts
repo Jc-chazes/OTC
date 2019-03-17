@@ -85,7 +85,9 @@ export class ExchangeAgentTabsPage implements OnInit, OnDestroy{
   }
 
   ngOnInit(){
-    this.notifications.listenToContests( this.modalCtrl, this.tabRef );
+    this.notifications.initListenNotifications( this.modalCtrl, this.tabRef )
+    .takeUntil( componentDestroyed(this) )
+    .subscribe();
     // alert( JSON.stringify(this.modalCtrl) );
     // this.notifications.listenToContests(this.modalCtrl);
   }

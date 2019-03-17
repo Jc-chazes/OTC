@@ -7,9 +7,10 @@ export class Notification extends BaseModel<Notification>{
     title: string;
     content: string;
     groupType: 'TRANSACTION';
-    type: "ACCEPTED_BY_EXCHANGE_AGENT" | "OTC_DEPOSIT_RECEIVED" | "CHECK_YOUR_BANK_ACCOUNT" | "RECEIPT_SENT";
+    type: string;
     user: User;
     transaction: Transaction;
+    rejectionReason: string;
 
     timeLabel: { date: string, time: string };
 
