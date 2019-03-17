@@ -105,11 +105,24 @@ export class NotificationsService extends BaseService implements CrudService<Not
         return this.af.collection(`users/${this.users.currentUser.id}/notifications`, 
             ref => ref.where( 'read', '==', false ).orderBy( 'created', 'asc' ).limit(1)
         )
-        .valueChanges()
+        /*.valueChanges()*/
+        .snapshotChanges()
+        .map( ([ doc ]) => {
+            if( !doc ){
+                return undefined;
+            }
+            let docData = {
+                id: doc.payload.doc.id,
+                ...doc.payload.doc.data()
+            };
+            console.log(docData);
+            return [ docData ] as any[];
+        })
+        .filter( notifications => !!notifications )
         .do( ( [notification] : Notification[]) => {
             console.log(notification);
             if( !!notification ){
-                alert('Llegó una notificación de: '+notification.type);
+                // alert('Llegó una notificación de: '+notification.type);
                 notification.transaction = new Transaction({ id: Number(notification.transaction) });
                 this.processNotification(modalCtrl,notification,currentTabs); 
             }
@@ -127,7 +140,22 @@ export class NotificationsService extends BaseService implements CrudService<Not
         });
     }
 
+    showLocalNotification(notification: Notification){        
+        if( this.platform.is('ios') ){
+            this.localNotifications.schedule({
+                title: 'OTC Perú',
+                text: notification.content,
+                color: '#23c7b1',
+                smallIcon: 'res://notification_icon.png',
+                icon:'file://assets/images/icon.png',
+                foreground: true
+            });
+            
+        }
+    }
+
     processNotification(modalCtrl: ModalController, notification: Notification, currentTabs: Tabs){
+        this.showLocalNotification( notification );
         switch(notification.type){
             case 'NEW_CONTEST':
                 this.modals.openModal(modalCtrl,AvailableModals.OpportunityToParticipate,{
@@ -136,9 +164,9 @@ export class NotificationsService extends BaseService implements CrudService<Not
                     this.markAsRead( notification.id ).subscribe();
                     if( couldParticipate ){
                         this.modals.openModal(modalCtrl,AvailableModals.CouldParticipateModal);
-                    }else{
+                    }/*else{
                         this.modals.openModal(modalCtrl,AvailableModals.CouldNotParticipateModal);
-                    }
+                    }*/
                 });
                 break;
             case 'REJECTED_CONTEST':
@@ -166,6 +194,8 @@ export class NotificationsService extends BaseService implements CrudService<Not
                         this.markAsRead( notification.id ).subscribe();
                         currentTabs.select(1);
                     });                     
+                }else{
+                    this.markAsRead( notification.id ).subscribe();
                 }
                 break;
             case 'NEW_PENDING_TRANSACTION':
@@ -183,6 +213,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
                     .then( (quoteAgain) => {
                         // alert(quoteAgain);
                         // alert(currenTabs? 'Existe currentTabs' : 'No existe currentTabs');
+                        this.markAsRead( notification.id ).subscribe();
                         if( quoteAgain ){
                             currentTabs.select(0);
                         }else{
@@ -197,7 +228,6 @@ export class NotificationsService extends BaseService implements CrudService<Not
                         rejectionReason: notification.rejectionReason,
                         cancelledBy: 'EXCHANGE_AGENT'
                     }).then( scoreExchangeAgent => {
-                        this.markAsRead( notification.id ).subscribe();
                         if( scoreExchangeAgent ){
                             let transactionId = Number(notification.transaction.id);
                             this.transactions.findOne( new ByIdSpecification(transactionId) )
@@ -212,6 +242,8 @@ export class NotificationsService extends BaseService implements CrudService<Not
                             showQuoteAgainModal();
                         }
                     })
+                }else{
+                    this.markAsRead( notification.id ).subscribe();
                 }
                 break;
             case 'REJECTED_BY_PERSON':
@@ -225,7 +257,12 @@ export class NotificationsService extends BaseService implements CrudService<Not
                         this.markAsRead( notification.id ).subscribe();
                         currentTabs.select(1);
                     });
+                }else{
+                    this.markAsRead( notification.id ).subscribe();
                 }
+                break;
+            default:
+                this.markAsRead( notification.id ).subscribe();
                 break;
         }
     }

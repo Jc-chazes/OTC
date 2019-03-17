@@ -24,6 +24,7 @@
     <preference name="orientation" value="portrait" />
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="loadUrlTimeoutValue" value="700000" />
+    <preference name="DisableDeploy" value="true" />
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
@@ -132,6 +133,7 @@
     <plugin name="cordova-android-firebase-gradle-release" spec="^1.0.3">
         <variable name="FIREBASE_VERSION" value="12.0.0" />
     </plugin>
+    <plugin name="cordova-plugin-background-mode" spec="^0.7.2" />
     <engine name="browser" spec="5.0.4" />
     <engine name="ios" spec="4.5.5" />
     <engine name="android" spec="7.1.1" />

@@ -97,4 +97,8 @@ export class CommonTransactionInProgressPage implements OnDestroy {
 
   }
 
+  get hideCancelTrigger(){
+    return this.transaction.status == '3';
+  }
+
 }
