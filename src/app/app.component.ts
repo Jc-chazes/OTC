@@ -81,6 +81,7 @@ export class MyApp {
       this.listenToDeepLinks();
       // statusBar.styleDefault();
       // splashScreen.hide();
+      alert('Version 1.0');
       this.loading.hide();
     });
   }
