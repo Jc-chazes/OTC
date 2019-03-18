@@ -80,6 +80,10 @@ export class CommonSendVoucherPage {
       this.alerts.show('Aún no has agregado la imagen','Enviar constancia');
       return;
     }
+    if( !this.validateBillingInfo() ){
+      this.alerts.show('Faltan ingresar datos','Enviar constancia');
+      return;
+    }
     this.loading.show();
     
     this.transactions.uploadVoucher( this.transaction, this.voucher )
@@ -100,13 +104,16 @@ export class CommonSendVoucherPage {
             //   this.navCtrl.popTo( this.navCtrl.getByIndex(0) );
             // }
             if( this.users.currentUser.isPerson() ){
-              this.modals.openModal(this.modalCtrl,AvailableModals.ScoreYourExperienceModal,{
-                transaction: this.transaction
-              }).then(()=>{
-                this.transactions.setTransactionTabRoot( 'TRANSACTION_IN_PROGRESS' );
-                this.navCtrl.setRoot(CommonTransactionInProgressPage);
-                this.navCtrl.popToRoot();
-              });
+              // this.modals.openModal(this.modalCtrl,AvailableModals.ScoreYourExperienceModal,{
+              //   transaction: this.transaction
+              // }).then(()=>{
+              //   this.transactions.setTransactionTabRoot( 'TRANSACTION_IN_PROGRESS' );
+              //   this.navCtrl.setRoot(CommonTransactionInProgressPage);
+              //   this.navCtrl.popToRoot();
+              // });
+              this.transactions.setTransactionTabRoot( 'TRANSACTION_IN_PROGRESS' );
+              this.navCtrl.setRoot(CommonTransactionInProgressPage);
+              this.navCtrl.popToRoot();
             }else{
               this.transactions.clearCurrentTransaction();
               popToIndex(this.navCtrl,this.viewCtrl,1);
@@ -116,6 +123,18 @@ export class CommonSendVoucherPage {
         }
       },300);
     })
+  }
+
+  validateBillingInfo(): boolean{
+    if( this.users.currentUser.isPerson() ){
+      return !!this.transaction.personaQuiereVoucherDelTipo 
+        && !!this.transaction.personaDocumento
+        && !!this.transaction.personaNombre;
+    }else{
+      return !!this.transaction.agenteDeCambioQuiereVoucherDelTipo
+        && !!this.transaction.agenteDeCambioDocumento
+        && !!this.transaction.agenteDeCambioNombre;
+    }
   }
 
 }

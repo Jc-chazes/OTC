@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { TransactionsService } from '../../providers/transaction.service';
 import { Transaction } from '../../models/transaction.model';
 import { UsersService } from '../../providers/users.service';
@@ -7,6 +7,7 @@ import { componentDestroyed } from '../../helpers/observable.helper';
 import { QuotePage } from '../quote/quote';
 import { ExchangeAgentMyOfferingsPage } from '../exchange-agent-my-offerings/exchange-agent-my-offerings';
 import { ByIdSpecification } from '../../providers/specifications/base.specification';
+import { ModalUtil, AvailableModals } from '../../providers/utils/modal.util';
 
 /**
  * Generated class for the CommonTransactionInProgressPage page.
@@ -24,7 +25,7 @@ export class CommonTransactionInProgressPage implements OnDestroy {
   transaction: Transaction
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private transactions: TransactionsService,
-    private users: UsersService) {
+    private users: UsersService, private modals: ModalUtil, private modalCtrl: ModalController) {
     this.transaction = this.users.currentUser.currentTransaction;
     this.transactions.transactionChange(this.transaction)
     .takeUntil( componentDestroyed(this) )

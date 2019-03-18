@@ -10,6 +10,7 @@ import { Notification } from "./notification.model";
 
 export class Transaction extends BaseModel<Transaction>{
 
+    id: number | any;
     status: '0' | '1' | '2' | '3';
     amount: number;
     userTransactionImage: Image;

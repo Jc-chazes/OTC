@@ -95,7 +95,7 @@ export class CommonSelectBankAccountPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    this.loading.show();
+    // this.loading.show();
     this.userBankAccounts.find( new MyBankAccountsSpecification() )
     .subscribe( results => {
       if( this.users.currentUser.userType == '0' ){
@@ -110,7 +110,7 @@ export class CommonSelectBankAccountPage implements OnInit {
         this.selectedUserBankAccount = this.userBankAccountList[0];
       }
       
-      this.loading.hide();
+      // this.loading.hide();
       
       if( ( this.users.currentUser.isPerson() && !!this.transaction.personBankAccount )
       || ( this.users.currentUser.isExchangeAgent() && !!this.transaction.exchangeAgentBankAccount ) ){

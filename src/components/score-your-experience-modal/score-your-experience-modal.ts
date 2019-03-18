@@ -3,6 +3,7 @@ import { ViewController, NavParams } from 'ionic-angular';
 import { range } from 'lodash';
 import { Transaction } from '../../models/transaction.model';
 import { ExchangueAgentService } from '../../providers/exchange-agent.service';
+import { AlertUtil } from '../../providers/utils/alert.util';
 
 /**
  * Generated class for the ScoreYourExperienceModalComponent component.
@@ -20,11 +21,16 @@ export class ScoreYourExperienceModalComponent {
   stars = range(5);
   transaction: Transaction;
 
-  constructor(public viewCtrl: ViewController, private navParams: NavParams, private exchangeAgents: ExchangueAgentService) {
+  constructor(public viewCtrl: ViewController, private navParams: NavParams, private exchangeAgents: ExchangueAgentService,
+    private alerts: AlertUtil) {
     this.transaction = navParams.get('transaction');    
   }
 
   send(){
+    if( !this.score ){
+      this.alerts.show('No es un calificación válida','Califica');
+      return;
+    }
     this.exchangeAgents.addAscore({
       person: this.transaction.person,
       exchangeAgent: this.transaction.exchangeAgent,

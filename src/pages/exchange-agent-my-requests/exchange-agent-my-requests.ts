@@ -58,19 +58,19 @@ export class ExchangeAgentMyRequestsPage implements OnDestroy {
   }
 
   doRefresh(refresher) {
-    this.refresh();
+    this.refresh(false);
     setTimeout(() => {
       refresher.complete();
     }, 1000);
   }
 
-  refresh(){
-    this.loading.show();
+  refresh( showLoading: boolean = true){
+    showLoading && this.loading.show();
 
     setTimeout(() => {
       this.transactions.find( new MyPendingTransactions() )
       .subscribe( results => {
-        this.loading.hide();
+        showLoading && this.loading.hide();
         this.pendingTransactionList = results;
         this.pendingTransactionList = this.pendingTransactionList.filter( t => !t.exchangeAgentTransactionImage );
         let pendingFastTransaction = this.transactions.findActiveFastTypeTransaction( results );

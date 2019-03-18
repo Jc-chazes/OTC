@@ -120,7 +120,7 @@ export class AuthProvider {
   }
 
   login(user: User): Observable<boolean>{
-    return this.api.post('/auth/local',{
+    return this.api.post(`/auth/local?userType=${user.userType}`,{
       identifier: user.email,
       password: user.password
     },{},false)

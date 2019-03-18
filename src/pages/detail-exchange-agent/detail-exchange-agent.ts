@@ -111,6 +111,7 @@ export class DetailExchangeAgentPage {
                 });
               })
             }else{
+              this.transactions.setTransactionTabRoot( 'TRANSACTION_IN_PROGRESS' );
               this.navCtrl.setRoot( CommonTransactionInProgressPage );
               this.navCtrl.popToRoot();
             }

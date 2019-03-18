@@ -74,6 +74,9 @@ export class NotificationsService extends BaseService implements CrudService<Not
 
     buildNotificationsGroups(notificationList: Notification[]): Transaction[]{
         let groups: { [id: string] : { notifications: Notification[] } } = notificationList.reduce( (prev,curr) => {
+            if( !curr.transaction ){
+                curr.transaction = new Transaction({ id: `${curr.type}_${curr.id}` });
+            }
             if( !prev[curr.transaction.id] ){
                 prev[curr.transaction.id] = { notifications: [] };
             }
@@ -85,11 +88,13 @@ export class NotificationsService extends BaseService implements CrudService<Not
         });
         let toReturn = Object.keys(groups).reduce( (prev,curr) => {
             let transaction = groups[curr].notifications[0].transaction;
+            let title = groups[curr].notifications[0].title;
+            let notificationCreatedAt = groups[curr].notifications[0].created_at;
             return prev.concat([
                 new Transaction({ 
                     id: transaction.id,
-                    code: transaction.id ? transaction.code : 'Feliz cumpleaños',
-                    created_at: transaction.created_at,
+                    code: transaction.id && !isNaN(transaction.id) ? `Transaccion #${transaction.code}` : title || 'Feliz cumpleaños',
+                    created_at: transaction.created_at || notificationCreatedAt,
                     notifications: groups[curr].notifications
                 })
             ]);
@@ -115,7 +120,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
                 id: doc.payload.doc.id,
                 ...doc.payload.doc.data()
             };
-            console.log(docData);
+            // console.log(docData);
             return [ docData ] as any[];
         })
         .filter( notifications => !!notifications )
@@ -192,7 +197,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
                     this.modals.openModal(modalCtrl,AvailableModals.RequestWasAcceptedModal)
                     .then(()=>{
                         this.markAsRead( notification.id ).subscribe();
-                        currentTabs.select(1);
+                        // currentTabs.select(1);
                     });                     
                 }else{
                     this.markAsRead( notification.id ).subscribe();
@@ -201,7 +206,9 @@ export class NotificationsService extends BaseService implements CrudService<Not
             case 'NEW_PENDING_TRANSACTION':
                 this.events.reloadPendingTransactions.emit();
                 this.incrementPendingTransactionsCounter();
-                currentTabs.select(1);
+                if( this.users.currentUser.isExchangeAgent() ){
+                    currentTabs.select(1);
+                }
                 this.markAsRead( notification.id ).subscribe();
                 break;
             case 'REJECTED_BY_EXCHANGE_AGENT':
@@ -237,7 +244,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
                                 }).then(()=>{
                                     showQuoteAgainModal();
                                 });
-                            })                                    
+                            });                          
                         }else{
                             showQuoteAgainModal();
                         }
@@ -255,11 +262,26 @@ export class NotificationsService extends BaseService implements CrudService<Not
                     })
                     .then(()=>{
                         this.markAsRead( notification.id ).subscribe();
-                        currentTabs.select(1);
+                        // currentTabs.select(1);
                     });
                 }else{
                     this.markAsRead( notification.id ).subscribe();
                 }
+                break;
+            case 'RECEIPT_SENT':
+                if( this.users.currentUser.isPerson() ){
+                    let transactionId = Number(notification.transaction.id);
+                    this.transactions.findOne( new ByIdSpecification(transactionId) )
+                    .subscribe( transaction => {
+                        this.modals.openModal(modalCtrl,AvailableModals.ScoreYourExperienceModal,{
+                            transaction
+                        }).then( () => {
+                            this.markAsRead( notification.id ).subscribe();
+                        });
+                    });
+                }else{
+                    this.markAsRead( notification.id ).subscribe();
+                }                             
                 break;
             default:
                 this.markAsRead( notification.id ).subscribe();

@@ -21,10 +21,10 @@
   <div class="myNotifications">
     <div class="myNotifications__notificationGroup" *ngFor="let tx of transactionList">
       <div class="myNotifications__notificationGroup__header">
-        <span *ngIf="!!tx.id">
+        <!-- <span *ngIf="!!tx.id">
           Transacción #{{ tx.code }}
-        </span>
-        <span *ngIf="!tx.id">
+        </span> -->
+        <span>
           {{ tx.code }}
         </span>
       </div>

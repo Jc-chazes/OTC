@@ -32,7 +32,9 @@
             <div class="box_option right_line flex-col-layout ai-center flex-50">
               <ion-row justify-content-center align-items-center>
                 <ion-col col-auto>
-                  <ion-select [(ngModel)]="selectedCurrencyLeft" class="input fill-width" [selectOptions]="{ title: 'Monedas disponibles' }">
+                  <ion-select [(ngModel)]="selectedCurrencyLeft" class="input fill-width" 
+                  [selectOptions]="{ title: 'Monedas disponibles' }"
+                  (ngModelChange)="onCurrencyChange(selectedCurrencyLeft,'selectedCurrencyRight')">
                     <ion-option [value]="currency" *ngFor="let currency of currencyList">
                       {{ currency.symbol }}
                     </ion-option>
@@ -57,7 +59,9 @@
                   <!-- <div class="box_symbol">
                     <span>{{ selectedCurrencyLeft.symbol }}</span>
                   </div> -->
-                  <ion-select [(ngModel)]="selectedCurrencyRight" class="input fill-width" [selectOptions]="{ title: 'Monedas disponibles' }">
+                  <ion-select [(ngModel)]="selectedCurrencyRight" class="input fill-width" 
+                  [selectOptions]="{ title: 'Monedas disponibles' }"
+                  (ngModelChange)="onCurrencyChange(selectedCurrencyRight,'selectedCurrencyLeft')">
                     <ion-option [value]="currency" *ngFor="let currency of currencyList">
                       {{ currency.symbol }}
                     </ion-option>

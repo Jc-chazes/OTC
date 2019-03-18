@@ -231,4 +231,14 @@ export class QuotePage implements OnInit {
     this.cantInput = cantWithSpaces;
     this.cant = Number(this.numberPipe.parse(cantWithSpaces));
   }
+
+  onCurrencyChange(currencySelected: Currency, currencyPropertyNameToChange: string){
+    let currencyCode = currencySelected.code;
+    let otherCurrency = '';
+    if( currencyCode == 'PEN' ) otherCurrency = 'USD';
+    if( currencyCode == 'USD' ) otherCurrency = 'PEN';
+    let currencyToChange = this.currencyList.find( c => c.code == otherCurrency );
+    this[currencyPropertyNameToChange] = currencyToChange;
+  }
+
 }
