@@ -37,14 +37,14 @@
     "@ngrx/store": "^6.1.2",
     "angularfire2": "^5.0.0-rc.4",
     "cordova-android": "7.1.1",
-    "cordova-android-firebase-gradle-release": "^1.0.3",
+    "cordova-android-firebase-gradle-release": "1.0.3",
     "cordova-android-play-services-gradle-release": "^1.4.4",
     "cordova-browser": "5.0.4",
     "cordova-custom-config": "^5.0.3",
     "cordova-device-accounts": "^1.0.0",
     "cordova-ios": "4.5.5",
     "cordova-plugin-advanced-http": "^2.0.4",
-    "cordova-plugin-background-mode": "^0.7.2",
+    "cordova-plugin-background-mode": "git+https://github.com/katzer/cordova-plugin-background-mode.git",
     "cordova-plugin-badge": "^0.8.8",
     "cordova-plugin-camera": "^4.0.3",
     "cordova-plugin-device": "^2.0.2",
@@ -141,8 +141,8 @@
     },
     "platforms": [
       "browser",
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   },
   "config": {

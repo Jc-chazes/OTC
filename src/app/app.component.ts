@@ -84,7 +84,7 @@ export class MyApp {
       // splashScreen.hide();
       alert('Version 1.2');
       this.loading.hide();
-      
+      this.configureBackgroundMode();
     });
   }
 
