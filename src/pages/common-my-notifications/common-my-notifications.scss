@@ -16,4 +16,7 @@ page-common-my-notifications {
             }
         }
     }
+    /deep/ .scroll-content{
+        background-color: transparent !important;
+    }
 }

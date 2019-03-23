@@ -19,7 +19,7 @@
         <back-button [navCtrl]="navCtrl"></back-button>
         <stepper [currentStep]="2"></stepper>
         <div class="detailExchangeAgent__header page-content-container">
-          <div class="text-center text-muted">Detalles de la casa de cambio</div>
+          <div class="text-center text-muted">Detalles {{ transaction.exchangeAgent.type == '0' ? 'de la casa de cambio' : 'del cambista'}}</div>
           <ion-row class="text-muted" align-items-center>
             <ion-col col-6 >
               <div class="flex-row-layout jc-flex-end">

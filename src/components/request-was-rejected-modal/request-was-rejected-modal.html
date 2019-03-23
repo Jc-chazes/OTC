@@ -2,7 +2,14 @@
   <ng-container *ngIf="cancelledBy == 'EXCHANGE_AGENT'">
     <div class="modal-content">
       <p class="text-center">
-        <b>Tu solicitud ha sido <br> rechazada por la casa <br> de cambio. </b>
+        <b>Tu solicitud ha sido <br> rechazada por 
+          <ng-container *ngIf="exchangeAgentType == '0'">
+            la casa <br> de cambio.
+          </ng-container>
+          <ng-container *ngIf="exchangeAgentType == '1'">
+            el cambista.
+          </ng-container>
+        </b>
       </p>
       <!-- <div class="spacer-15"></div> -->
       <p class="text-center">

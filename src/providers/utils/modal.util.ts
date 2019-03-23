@@ -15,6 +15,7 @@ import { FastSearchModalComponent } from "../../components/fast-search-modal/fas
 import { ContinueTransactionOrBackModalComponent } from "../../components/continue-transaction-or-back-modal/continue-transaction-or-back-modal";
 import { OfficeHoursReminderComponent } from "../../components/office-hours-reminder/office-hours-reminder";
 import { SuccessfulSignUpModalComponent } from '../../components/successful-sign-up-modal/successful-sign-up-modal';
+import { ScoreResultModalComponent } from "../../components/score-result-modal/score-result-modal";
 
 export enum  AvailableModals{
     TermsAndConditions,
@@ -31,7 +32,8 @@ export enum  AvailableModals{
     FastSearchModal,
     ContinueTransactionOrBackModal,
     OfficeHoursReminderModal,
-    SuccessfulSignUpModal
+    SuccessfulSignUpModal,
+    ScoreResultModal
 };
 
 @Injectable()
@@ -106,6 +108,9 @@ export class ModalUtil{
             case AvailableModals.SuccessfulSignUpModal:
                 modalInstance = modalCtrl.create(SuccessfulSignUpModalComponent,data,
                 Object.assign({},options,{ cssClass: 'alertModal successfulSignUpModalComponent' }));
+            case AvailableModals.ScoreResultModal:
+                modalInstance = modalCtrl.create(ScoreResultModalComponent,data,
+                Object.assign({},options,{ cssClass: 'alertModal scoreYourExperienceModalComponent' }));
                 break;
         }
 

@@ -34,6 +34,7 @@ import { RequestAcceptedComponent } from './request-accepted/request-accepted';
 import { ScoreComponent } from './score/score';
 import { OfficeHoursReminderComponent } from './office-hours-reminder/office-hours-reminder';
 import { SuccessfulSignUpModalComponent } from './successful-sign-up-modal/successful-sign-up-modal';
+import { ScoreResultModalComponent } from './score-result-modal/score-result-modal';
 
 @NgModule({
 	declarations: [UpdateExchangeReminderComponent,
@@ -67,7 +68,8 @@ import { SuccessfulSignUpModalComponent } from './successful-sign-up-modal/succe
     RequestAcceptedComponent,
     ScoreComponent,
     OfficeHoursReminderComponent,
-    SuccessfulSignUpModalComponent
+    SuccessfulSignUpModalComponent,
+    ScoreResultModalComponent
     ],
 	imports: [ CommonModule, IonicModule, DirectivesModule, PdfViewerModule ],
 	exports: [UpdateExchangeReminderComponent,
@@ -101,7 +103,8 @@ import { SuccessfulSignUpModalComponent } from './successful-sign-up-modal/succe
     RequestAcceptedComponent,
     ScoreComponent,
     OfficeHoursReminderComponent,
-    SuccessfulSignUpModalComponent
+    SuccessfulSignUpModalComponent,
+    ScoreResultModalComponent
     ],
     entryComponents: [
         RejectWarningComponent,
@@ -125,7 +128,8 @@ import { SuccessfulSignUpModalComponent } from './successful-sign-up-modal/succe
         FastSearchModalComponent,
         ContinueTransactionOrBackModalComponent,
         OfficeHoursReminderComponent,
-        SuccessfulSignUpModalComponent
+        SuccessfulSignUpModalComponent,
+        ScoreResultModalComponent
     ]
 })
 export class ComponentsModule {}

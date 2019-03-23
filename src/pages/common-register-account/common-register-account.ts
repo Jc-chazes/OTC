@@ -106,7 +106,7 @@ export class CommonRegisterAccountPage {
     if ( !!this.provider || isValid)
       this.createAccount();
     else 
-      this.alerts.show('Tiene que tener entre 6 y 12 caractares, una letra mayúscula y un numero.', 'Contraseña inválida');
+      this.alerts.show('Tiene que tener entre 6 y 12 carácteres, una letra mayúscula y un número.', 'Contraseña inválida');
   }
 
   createAccount(){

@@ -5,5 +5,7 @@ import { BehaviorSubject } from "rxjs";
 export class EventsUtil{
     
     reloadPendingTransactions = new EventEmitter<any>();
+
+    exchangeAgentRequestsIsShowing = new BehaviorSubject<boolean>(false);
     
 }
