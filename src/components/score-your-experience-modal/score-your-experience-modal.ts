@@ -34,6 +34,7 @@ export class ScoreYourExperienceModalComponent {
     this.exchangeAgents.addAscore({
       person: this.transaction.person,
       exchangeAgent: this.transaction.exchangeAgent,
+      transaction: this.transaction,
       score: this.score
     }).subscribe( resp => {
       this.viewCtrl.dismiss();

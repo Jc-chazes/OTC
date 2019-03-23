@@ -18,6 +18,9 @@
 
 
 <ion-content class="page">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <div class="myNotifications">
     <div class="myNotifications__notificationGroup" *ngFor="let tx of transactionList">
       <div class="myNotifications__notificationGroup__header">

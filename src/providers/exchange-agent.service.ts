@@ -9,6 +9,7 @@ import { SearchExchangeAgentSpecification } from "./specifications/exchange-agen
 import { HttpParams } from "@angular/common/http";
 import { ExchangeAgentMapper } from "./mappers/exchange-agent.mapper";
 import { Person } from "../models/person.model";
+import { Transaction } from "../models/transaction.model";
 
 @Injectable()
 export class ExchangueAgentService extends BaseService implements CrudService<ExchangeAgent>{
@@ -61,7 +62,7 @@ export class ExchangueAgentService extends BaseService implements CrudService<Ex
         })
     }
 
-    addAscore(score: { person: Person, exchangeAgent: ExchangeAgent, score: number} ): Observable<boolean>{
+    addAscore(score: { person: Person, exchangeAgent: ExchangeAgent, transaction: Transaction, score: number} ): Observable<boolean>{
         // alert(JSON.stringify({
         //     person: score.person.id,
         //     exchangeagent: score.exchangeAgent.id,
@@ -70,7 +71,8 @@ export class ExchangueAgentService extends BaseService implements CrudService<Ex
         return this.api.post('/exchangeagentscores',{
             person: score.person.id,
             exchangeagent: score.exchangeAgent.id,
-            score: score.score
+            score: score.score,
+            transaction: score.transaction.id
         }).map( resp => {
             return true;
         }).catch( err => {

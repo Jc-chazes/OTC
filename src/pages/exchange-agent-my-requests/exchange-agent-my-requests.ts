@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavController, NavParams, PopoverController, ModalController } from 'ionic-angular';
 import { ExchangeAgentOfferingsService } from '../../providers/exchange-agent-offerings.service';
 import { ExchangeAgentOffering } from '../../models/exchange-agent-offering.model';
@@ -31,7 +31,7 @@ import { EventsUtil } from '../../providers/utils/events.util';
   selector: 'page-exchange-agent-my-requests',
   templateUrl: 'exchange-agent-my-requests.html',
 })
-export class ExchangeAgentMyRequestsPage implements OnDestroy {
+export class ExchangeAgentMyRequestsPage implements OnDestroy, OnInit {
   
   youHaveAPendingTransaction = 'Cuentas con una solicitud de búsqueda rápida pendiente, te dirigimos a ella para que puedas completarla lo más pronto posible';
   groupedExchangeList: ExchangeAgentOfferingGroup[];
@@ -53,8 +53,12 @@ export class ExchangeAgentMyRequestsPage implements OnDestroy {
     });
   }
 
+  ngOnInit(){
+    this.events.exchangeAgentRequestsIsShowing.next(true);
+  }
+  
   ngOnDestroy(){
-
+    this.events.exchangeAgentRequestsIsShowing.next(false);
   }
 
   doRefresh(refresher) {

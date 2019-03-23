@@ -82,7 +82,7 @@ export class MyApp {
       this.listenToDeepLinks();
       // statusBar.styleDefault();
       // splashScreen.hide();
-      alert('Version 1.2');
+      // alert('Version 1.2');
       this.loading.hide();
       this.configureBackgroundMode();
     });

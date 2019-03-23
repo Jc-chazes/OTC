@@ -18,6 +18,7 @@ import { TransactionsService } from "./transaction.service";
 import { EventsUtil } from "./utils/events.util";
 import { StorageUtil, StorageKeys } from "./utils/storage.util";
 import { AngularFirestore } from "angularfire2/firestore";
+import { ContestsService } from "./contests.service";
 
 @Injectable()
 export class NotificationsService extends BaseService implements CrudService<Notification>{
@@ -29,7 +30,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
     constructor(api: ApiUtil, private users: UsersService, private firebaseNative: Firebase,
     private platform: Platform, private modals: ModalUtil, private localNotifications: LocalNotifications,
     private transactions: TransactionsService, private toast: ToastController, private events: EventsUtil, 
-    private storage: StorageUtil, private af: AngularFirestore){
+    private storage: StorageUtil, private af: AngularFirestore, private contests: ContestsService){
         super(api);
         this.pendingTransactionsCounter = new BehaviorSubject<number>( Number(storage.load(StorageKeys.PENDING_TRANSACTIONS_COUNTER)) );
     }
@@ -163,16 +164,24 @@ export class NotificationsService extends BaseService implements CrudService<Not
         this.showLocalNotification( notification );
         switch(notification.type){
             case 'NEW_CONTEST':
-                this.modals.openModal(modalCtrl,AvailableModals.OpportunityToParticipate,{
-                    ...notification
-                }).then( couldParticipate => {
-                    this.markAsRead( notification.id ).subscribe();
-                    if( couldParticipate ){
-                        this.modals.openModal(modalCtrl,AvailableModals.CouldParticipateModal);
-                    }/*else{
-                        this.modals.openModal(modalCtrl,AvailableModals.CouldNotParticipateModal);
-                    }*/
-                });
+                let contestId = Number(notification['contestId']);
+                this.contests.findOne( new ByIdSpecification(contestId) )
+                .subscribe( (contest) => {
+                    if( contest.active ){
+                        this.modals.openModal(modalCtrl,AvailableModals.OpportunityToParticipate,{
+                            ...notification
+                        }).then( couldParticipate => {
+                            this.markAsRead( notification.id ).subscribe();
+                            if( couldParticipate ){
+                                this.modals.openModal(modalCtrl,AvailableModals.CouldParticipateModal);
+                            }/*else{
+                                this.modals.openModal(modalCtrl,AvailableModals.CouldNotParticipateModal);
+                            }*/
+                        });
+                    }else{
+                        this.markAsRead( notification.id ).subscribe();
+                    }
+                })
                 break;
             case 'REJECTED_CONTEST':
                 this.modals.openModal(modalCtrl,AvailableModals.YouHasNotBeenSelectedModal)
@@ -206,7 +215,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
             case 'NEW_PENDING_TRANSACTION':
                 this.events.reloadPendingTransactions.emit();
                 this.incrementPendingTransactionsCounter();
-                if( this.users.currentUser.isExchangeAgent() ){
+                if( this.users.currentUser.isExchangeAgent() && !this.events.exchangeAgentRequestsIsShowing.value ){
                     currentTabs.select(1);
                 }
                 this.markAsRead( notification.id ).subscribe();
@@ -233,6 +242,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
                 if( this.users.currentUser.isPerson() ){
                     this.modals.openModal(modalCtrl,AvailableModals.RequestWasRejectedModal,{
                         rejectionReason: notification.rejectionReason,
+                        exchangeAgentType: notification['exchangeAgentType'],
                         cancelledBy: 'EXCHANGE_AGENT'
                     }).then( scoreExchangeAgent => {
                         if( scoreExchangeAgent ){
@@ -256,6 +266,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
             case 'REJECTED_BY_PERSON':
                 // console.log(notification.cancelledBy);
                 if( this.users.currentUser.isExchangeAgent() ){
+                    this.events.reloadPendingTransactions.emit();
                     this.modals.openModal(modalCtrl,AvailableModals.RequestWasRejectedModal,{
                         rejectionReason: notification.rejectionReason,
                         cancelledBy: 'PERSON'
@@ -282,6 +293,14 @@ export class NotificationsService extends BaseService implements CrudService<Not
                 }else{
                     this.markAsRead( notification.id ).subscribe();
                 }                             
+                break;
+            case 'TRANSACTION_SCORE':
+                this.modals.openModal(modalCtrl,AvailableModals.ScoreResultModal,{
+                    personName: notification['personName'],
+                    score: notification['score']
+                }).then(()=>{
+                    this.markAsRead( notification.id ).subscribe();
+                });
                 break;
             default:
                 this.markAsRead( notification.id ).subscribe();

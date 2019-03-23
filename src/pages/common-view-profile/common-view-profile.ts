@@ -48,7 +48,7 @@ export class CommonViewProfilePage {
         this.address = currentUser.exchangeAgent.address;
         this.phone = currentUser.exchangeAgent.phone;
         this.sbs = currentUser.exchangeAgent.sbsRegisterNumber;
-        this.profileType = currentUser.person.type == '0' ? 'Cambista' : 'Casa de cambio'
+        this.profileType = currentUser.person.type == '0' ? 'Casa de cambio' : 'Cambista'
       }
       this.photo = currentUser.photo;
       this.email = currentUser.email;

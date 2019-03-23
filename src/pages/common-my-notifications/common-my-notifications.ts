@@ -26,18 +26,27 @@ export class CommonMyNotificationsPage {
     private loading: LoadingUtil) {
   }
 
+  doRefresh(refresher: any) {
+    this.refresh(refresher);
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad CommonMyNotificationsPage');
   }
 
   ionViewWillEnter(){
     this.notifications.clearPendingTransactionsCounter();
+    this.refresh();
+  }
+
+  refresh(refresher?: any){
     this.loading.show();
     this.notifications.find( new MyNotificationsSpecification() )
     .subscribe( results => {
       this.notificationList = results;
       this.transactionList = this.notifications.buildNotificationsGroups(this.notificationList);
       this.loading.hide();
+      !!refresher && refresher.complete();
     })
   }
 
