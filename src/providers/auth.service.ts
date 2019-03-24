@@ -87,7 +87,8 @@ export class AuthProvider {
       ...pick(person.user,[,'email','password','userType']),
       username: person.user.email.substring( 0, person.user.email.indexOf('@') ),
       profile: {
-        ...omit(person,['user','score','fullName'])
+        ...omit(person,['user','score','fullName']),
+        birthdate: person.birthdate ? `${person.birthdate}T12:00:00Z`: null
       },
       provider
     }).flatMap( resp => {
@@ -106,7 +107,8 @@ export class AuthProvider {
       ...pick(exchangeAgent.user,[,'email','password','userType']),
       username: exchangeAgent.user.email.substring( 0, exchangeAgent.user.email.indexOf('@') ),
       profile: {
-        ...omit(exchangeAgent,['user','score'])
+        ...omit(exchangeAgent,['user','score']),
+        birthdate: exchangeAgent.birthdate ? `${exchangeAgent.birthdate}T12:00:00Z` : null
       }
     }).flatMap( resp => {
       this.jwt.setToken(resp.jwt);
