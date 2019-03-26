@@ -145,7 +145,7 @@ export class AuthProvider {
   }
 
   loginWithGoogle(): Observable<{ email?: string, couldLogin?: boolean, lastName?: string, firstName?: string, canceled?: boolean }>{
-    return Observable.fromPromise( this.googlePlus.login({}) )
+    return Observable.fromPromise( /*Promise.resolve({ accessToken: '' })*/this.googlePlus.login({}) )
     .flatMap( resp => {
       return this.api.post('/auth/local',{
         provider: 'GOOGLE',
@@ -165,7 +165,12 @@ export class AuthProvider {
         }          
       }).catch( err => {
         // this.alerts.show('No se pudo realizar el login con Google, por favor inténtelo más tarde ','Error login');
-        alert(JSON.stringify(err));
+        let errorMessage = err.error ? err.error.message : '' ;
+        if( !!errorMessage ){
+          this.alerts.show(errorMessage,'Login');
+        }else{
+          alert(JSON.stringify(err));
+        }
         Raven.captureException(err);
         return Observable.of({ couldLogin: false });
       });
@@ -197,7 +202,12 @@ export class AuthProvider {
         }          
       }).catch( err => {
         // this.alerts.show('No se pudo realizar el login con Facebook, por favor inténtelo más tarde ','Error login');
-        alert(JSON.stringify(err));     
+        let errorMessage = err.error ? err.error.message : '' ;
+        if( !!errorMessage ){
+          this.alerts.show(errorMessage,'Login');
+        }else{
+          alert(JSON.stringify(err));
+        }
         Raven.captureException(err);
         this.facebook.logout();
         return Observable.of({ couldLogin: false });

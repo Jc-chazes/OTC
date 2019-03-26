@@ -1,0 +1,54 @@
+{
+    "ios": {
+        "debug": {
+            "codeSignIdentity": "iPhone Distribution",
+            "provisioningProfile": "xxxxxxx-xxxxx-xxx-xxxx-xxxxx",
+            "developmentTeam": "xxxxxx",
+            "packageType": "ad-hoc",
+            "iCloudContainerEnvironment": "Development",
+            "buildFlag": [
+                "LD_RUNPATH_SEARCH_PATHS = \"@executable_path/Frameworks\""
+            ]
+        },
+        "release": {
+            "codeSignIdentity": "iPhone Distribution",
+            "provisioningProfile": "xxxxxxx-xxxxx-xxx-xxxx-xxxxx",
+            "developmentTeam": "xxxxxxx",
+            "packageType": "app-store",
+            "iCloudContainerEnvironment": "Production",
+            "buildFlag": [
+                "LD_RUNPATH_SEARCH_PATHS = \"@executable_path/Frameworks\""
+            ]
+        }
+    },
+    "android": {
+        "debug": {
+            "keystore": "../build-config/android/xxxx.keystore",
+            "storePassword": "********",
+            "alias": "xxxxxx",
+            "password": "********",
+            "keystoreType": ""
+        },
+        "release": {
+            "keystore": "./OTC.keystore",
+            "storePassword": "CEREZACONSULTING",
+            "alias": "OTC",
+            "password": "CEREZACONSULTING",
+            "keystoreType": ""
+        },
+        "device": {
+            "keystore": "../build-config/android/xxxxx.keystore",
+            "storePassword": "*******",
+            "alias": "xxxxxx",
+            "password": "*******",
+            "keystoreType": ""
+        },
+        "emulator": {
+            "keystore": "../build-config/android/xxxx.keystore",
+            "storePassword": "*******",
+            "alias": "xxxxxx",
+            "password": "*******",
+            "keystoreType": ""
+        }
+    }
+}

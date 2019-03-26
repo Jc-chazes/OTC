@@ -32,6 +32,8 @@ export class QuotePage implements OnInit {
   currencyList: Currency[];
   availableCurrencyCodesToRequest: string[] = [];
   availableCurrencyCodesToReceive: string[] = [];
+  availableCurrencyCodesLeft: string[] = [];
+  availableCurrencyCodesRight: string[] = [];
   sellAvailableTransformations: string[] = [];
   buyAvailableTransformacions: string[] = [];
   operation = 'C';
@@ -55,6 +57,14 @@ export class QuotePage implements OnInit {
     this.constants.findOneByCode('COTIZAR_TENGO_MONEDAS_DISPONIBLES')
     .subscribe( result => {
       this.availableCurrencyCodesToReceive = result.content.split(',');
+    });
+    this.constants.findOneByCode('COTIZAR_IZQUIERDA_MONEDAS_DISPONIBLES')
+    .subscribe( result => {
+      this.availableCurrencyCodesLeft = result.content.split(',');
+    });
+    this.constants.findOneByCode('COTIZAR_DERECHA_MONEDAS_DISPONIBLES')
+    .subscribe( result => {
+      this.availableCurrencyCodesRight = result.content.split(',');
     });
     this.constants.findOneByCode('COTIZAR_VENTA_TRANSFORMACION')
     .subscribe( result => {
@@ -239,6 +249,28 @@ export class QuotePage implements OnInit {
     if( currencyCode == 'USD' ) otherCurrency = 'PEN';
     let currencyToChange = this.currencyList.find( c => c.code == otherCurrency );
     this[currencyPropertyNameToChange] = currencyToChange;
+  }
+
+  showCurrency(currency: Currency, side: 'left' | 'right'): boolean{
+    /*let currentOperation = this.operation;
+    if( currentOperation == 'C' ){ //Compra
+      if( side == 'left' ){
+        return this.availableCurrencyCodesToRequest.indexOf(currency.code) >= 0;
+      }else{
+        return this.availableCurrencyCodesToReceive.indexOf(currency.code) >= 0;
+      }
+    }else{ //Venta
+      if( side == 'left' ){
+        return this.availableCurrencyCodesToReceive.indexOf(currency.code) >= 0;
+      }else{
+        return this.availableCurrencyCodesToRequest.indexOf(currency.code) >= 0;
+      }
+    }*/
+    if( side == 'left' ){
+      return this.availableCurrencyCodesLeft.indexOf(currency.code) >= 0;
+    }else{
+      return this.availableCurrencyCodesRight.indexOf(currency.code) >= 0;
+    }
   }
 
 }

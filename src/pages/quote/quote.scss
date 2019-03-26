@@ -97,4 +97,7 @@ page-quote {
         height: 38px;
         font-size: 20px;
     }
+    ion-select.currencyBig /deep/ .select-text{
+        font-size: 1.1em;
+    }
 }

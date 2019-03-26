@@ -33,11 +33,14 @@
               <ion-row justify-content-center align-items-center>
                 <ion-col col-auto>
                   <ion-select [(ngModel)]="selectedCurrencyLeft" class="input fill-width" 
+                  [class.currencyBig]="selectedCurrencyLeft.code == 'USD'"
                   [selectOptions]="{ title: 'Monedas disponibles' }"
                   (ngModelChange)="onCurrencyChange(selectedCurrencyLeft,'selectedCurrencyRight')">
-                    <ion-option [value]="currency" *ngFor="let currency of currencyList">
-                      {{ currency.symbol }}
-                    </ion-option>
+                    <ng-container *ngFor="let currency of currencyList">
+                      <ion-option [value]="currency" *ngIf="showCurrency(currency,'left')">
+                        <span>{{ currency.symbol }}</span>
+                      </ion-option>
+                    </ng-container>
                   </ion-select>
                 </ion-col>
                 <ion-col col-auto>
@@ -60,11 +63,14 @@
                     <span>{{ selectedCurrencyLeft.symbol }}</span>
                   </div> -->
                   <ion-select [(ngModel)]="selectedCurrencyRight" class="input fill-width" 
+                  [class.currencyBig]="selectedCurrencyRight.code == 'USD'"
                   [selectOptions]="{ title: 'Monedas disponibles' }"
                   (ngModelChange)="onCurrencyChange(selectedCurrencyRight,'selectedCurrencyLeft')">
-                    <ion-option [value]="currency" *ngFor="let currency of currencyList">
-                      {{ currency.symbol }}
-                    </ion-option>
+                    <ng-container *ngFor="let currency of currencyList">
+                      <ion-option [value]="currency" *ngIf="showCurrency(currency,'right')">
+                        <span>{{ currency.symbol }}</span>
+                      </ion-option>
+                    </ng-container>
                   </ion-select>
                 </ion-col>
                 <ion-col col-auto>
@@ -82,7 +88,7 @@
                 </ion-col>
               </ion-row>
             </div>
-            <div class="button_exchange" (click)="onChangeCurrencies()"></div>
+            <!-- <div class="button_exchange" (click)="onChangeCurrencies()"></div> -->
           </div>
         </div>      
       </div>

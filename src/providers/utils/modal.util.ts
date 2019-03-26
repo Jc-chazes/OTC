@@ -108,6 +108,7 @@ export class ModalUtil{
             case AvailableModals.SuccessfulSignUpModal:
                 modalInstance = modalCtrl.create(SuccessfulSignUpModalComponent,data,
                 Object.assign({},options,{ cssClass: 'alertModal successfulSignUpModalComponent' }));
+                break;
             case AvailableModals.ScoreResultModal:
                 modalInstance = modalCtrl.create(ScoreResultModalComponent,data,
                 Object.assign({},options,{ cssClass: 'alertModal scoreYourExperienceModalComponent' }));
