@@ -172,6 +172,7 @@ export class AuthProvider {
           alert(JSON.stringify(err));
         }
         Raven.captureException(err);
+        this.googlePlus.logout();
         return Observable.of({ couldLogin: false });
       });
     })
@@ -179,7 +180,7 @@ export class AuthProvider {
       // this.alerts.show('No se pudo realizar el login con Google, por favor inténtelo más tarde ','Error login');
       alert(JSON.stringify(err));
       Raven.captureException(err);
-      return Observable.of({ couldLogin: false });
+      return Observable.of({ couldLogin: false });  
     });
   }
 
