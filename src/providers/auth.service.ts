@@ -24,6 +24,7 @@ import { AlertUtil } from './utils/alert.util';
 import { Configuration } from '../settings/configuration.settings';
 import { BackendMessages, Messages } from '../settings/messages.settings';
 import * as Raven from 'raven-js';
+import { LoadingUtil } from './utils/loading.util';
 
 @Injectable()
 export class AuthProvider {
@@ -144,9 +145,10 @@ export class AuthProvider {
     });
   }
 
-  loginWithGoogle(): Observable<{ email?: string, couldLogin?: boolean, lastName?: string, firstName?: string, canceled?: boolean }>{
+  loginWithGoogle(loadingUtil?: LoadingUtil): Observable<{ email?: string, couldLogin?: boolean, lastName?: string, firstName?: string, canceled?: boolean }>{
     return Observable.fromPromise( /*Promise.resolve({ accessToken: '' })*/this.googlePlus.login({}) )
     .flatMap( resp => {
+      loadingUtil.show();
       return this.api.post('/auth/local',{
         provider: 'GOOGLE',
         accessToken: resp.accessToken
@@ -184,9 +186,10 @@ export class AuthProvider {
     });
   }
 
-  loginWithFacebook(): Observable<{ email?: string, couldLogin?: boolean, lastName?: string, firstName?: string, canceled?: boolean }>{
+  loginWithFacebook(loadingUtil?: LoadingUtil): Observable<{ email?: string, couldLogin?: boolean, lastName?: string, firstName?: string, canceled?: boolean }>{
     return Observable.fromPromise( this.facebook.login(['public_profile', /*'user_friends',*/ 'email']) )
     .flatMap( (res: FacebookLoginResponse) => {
+      loadingUtil.show();
       return this.api.post('/auth/local',{
         provider: 'FACEBOOK',
         accessToken: res.authResponse.accessToken

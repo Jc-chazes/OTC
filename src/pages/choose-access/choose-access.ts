@@ -10,6 +10,7 @@ import { ExchangeAgentTabsPage } from '../exchange-agent-tabs/exchange-agent-tab
 import { User } from '../../models/user.model';
 import { AlertUtil } from '../../providers/utils/alert.util';
 import { RequestResetPasswordPage } from '../request-reset-password/request-reset-password';
+import { LoadingUtil } from '../../providers/utils/loading.util';
 
 @Component({
   selector: 'page-choose-access',
@@ -25,6 +26,7 @@ export class ChooseAccessPage {
               private auth: AuthProvider,
               private users: UsersService,
               private loadingCtrl: LoadingController,
+              private loading: LoadingUtil,
               private alerts : AlertUtil,
               private app: App) 
               {
@@ -36,10 +38,14 @@ export class ChooseAccessPage {
   /* login(){
     this.nvCtrl.push(Login)
   } */
+  ionViewWillEnter(){
+    this.auth.logout();
+  }
 
   loginWithGoogle(){
-    this.auth.loginWithGoogle()
+    this.auth.loginWithGoogle(this.loading)
     .subscribe( result => {
+      this.loading.hide();
       if( result.canceled ){
         return ;
       }
@@ -63,8 +69,9 @@ export class ChooseAccessPage {
   }
 
   loginWithFacebook(){
-    this.auth.loginWithFacebook()
+    this.auth.loginWithFacebook(this.loading)
     .subscribe( result => {
+      this.loading.hide();
       if( result.canceled ){
         return ;
       }
@@ -77,10 +84,12 @@ export class ChooseAccessPage {
         }
         this.app.getRootNav().setRoot(tabs);
       }else{
-        this.nvCtrl.push( CommonRegisterAccountPage, {
-          ...result,
-          provider: 'FACEBOOK'
-        } );
+        if( !!result.email ){
+          this.nvCtrl.push( CommonRegisterAccountPage, {
+            ...result,
+            provider: 'FACEBOOK'
+          } );
+        }
       }
     });
   }
