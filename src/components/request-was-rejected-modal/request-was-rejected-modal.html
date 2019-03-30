@@ -2,7 +2,7 @@
   <ng-container *ngIf="cancelledBy == 'EXCHANGE_AGENT'">
     <div class="modal-content">
       <p class="text-center">
-        <b>Tu solicitud ha sido <br> rechazada por 
+        <b>Tu solicitud ha sido <br> {{ rechazadaCancelada == 'RECHAZADA' ? 'rechazada' : 'cancelada' }} por 
           <ng-container *ngIf="exchangeAgentType == '0'">
             la casa <br> de cambio.
           </ng-container>
@@ -32,7 +32,7 @@
   <ng-container *ngIf="cancelledBy == 'PERSON'">
     <div class="modal-content">
       <p class="text-center">
-        <b>Tu solicitud ha sido <br> rechazada por el <br> usuario. </b>
+        <b>Tu solicitud ha sido <br> cancelada por el <br> usuario. </b>
       </p>
     </div>
     <div class="flex-col-layout ai-center">

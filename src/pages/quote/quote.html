@@ -28,8 +28,8 @@
             </div>
           </div>
           <div class="spacer-20"></div>
-          <div class="sections_container flex-row-layout">
-            <div class="box_option right_line flex-col-layout ai-center flex-50">
+          <div class="sections_container sections_container--currencies flex-row-layout">
+            <div class="box_option right_line flex-col-layout ai-center jc-center flex-50">
               <ion-row justify-content-center align-items-center>
                 <ion-col col-auto>
                   <ion-select [(ngModel)]="selectedCurrencyLeft" class="input fill-width" 
@@ -43,7 +43,7 @@
                     </ng-container>
                   </ion-select>
                 </ion-col>
-                <ion-col col-auto>
+                <ion-col col-auto class="no-padding">
                   <!-- <div [ngClass]="{'box_flag': true,
                                   'flag_peru': selectedCurrencyLeft.symbol == 'S/.',
                                   'flag_usa': selectedCurrencyLeft.symbol == '$'}"></div> -->
@@ -56,7 +56,7 @@
                 </ion-col>
               </ion-row>
             </div>
-            <div class="box_option flex-col-layout ai-center flex-50">
+            <div class="box_option flex-col-layout ai-center jc-center flex-50">
               <ion-row justify-content-center align-items-center>
                 <ion-col col-auto>
                   <!-- <div class="box_symbol">
@@ -73,7 +73,7 @@
                     </ng-container>
                   </ion-select>
                 </ion-col>
-                <ion-col col-auto>
+                <ion-col col-auto class="no-padding">
                   <!-- <div [ngClass]="{'box_flag': true,
                                   'flag_peru': selectedCurrencyLeft.symbol != 'S/.',
                                   'flag_usa': selectedCurrencyLeft.symbol != '$'}"></div> -->

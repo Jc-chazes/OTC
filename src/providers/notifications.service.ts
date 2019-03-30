@@ -243,7 +243,8 @@ export class NotificationsService extends BaseService implements CrudService<Not
                     this.modals.openModal(modalCtrl,AvailableModals.RequestWasRejectedModal,{
                         rejectionReason: notification.rejectionReason,
                         exchangeAgentType: notification['exchangeAgentType'],
-                        cancelledBy: 'EXCHANGE_AGENT'
+                        cancelledBy: 'EXCHANGE_AGENT',
+                        rechazadaCancelada: notification['rechazadaCancelada']
                     }).then( scoreExchangeAgent => {
                         if( scoreExchangeAgent ){
                             let transactionId = Number(notification.transaction.id);

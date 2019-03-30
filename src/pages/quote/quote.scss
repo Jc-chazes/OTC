@@ -15,10 +15,13 @@ page-quote {
         background-color: white;
         border-radius: 10px;
         color: black;
-        width: 230px;
+        width: 265px;
         margin: auto;
         position: relative;
-        min-height: 30px;
+        min-height: 35px;
+        &--currencies{
+            height: 110px;;
+        }
         .box_option{
             // padding: 10px 10px;
             // display: inline-block;
@@ -51,8 +54,8 @@ page-quote {
             &--top{
                 left: 49%;
                 top: 50%;
-                height: 25px;
-                width: 25px;
+                height: 35px;
+                width: 35px;
                 transform: translate(-50%,-50%);
             }
         }

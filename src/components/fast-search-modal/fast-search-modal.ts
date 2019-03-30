@@ -39,7 +39,7 @@ export class FastSearchModalComponent implements OnDestroy {
         .subscribe( contest => {
           this.contest.participantsCounter = contest.participantsCounter;
           if( this.contest.participantsCounter >= 5 ){
-            this.viewCtrl.dismiss(this.contest);
+            this.viewCtrl.dismiss({contest:this.contest, success: true});
           }
         });
       Observable.of(null)

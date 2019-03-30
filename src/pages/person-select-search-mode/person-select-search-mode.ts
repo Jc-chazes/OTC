@@ -64,6 +64,7 @@ export class PersonSelectSearchModePage {
                   ...this.navParams.data,
                   contest: contestById
                 });
+                this.contests.cancelContest( result.contest.id ).subscribe(); //Se cancela para prevenir que otros usuarios sigan participando
               }else{
                 this.alerts.show('Lo sentimos, al parecer no hubo ningún agente de cambio disponible.','OTC Búsqueda rápida');
                 this.contests.cancelContest( result.contest.id ).subscribe();

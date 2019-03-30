@@ -114,4 +114,11 @@ export class ContestsService extends BaseService implements CrudService<Contest>
         })
     }
 
+    checkActive(contestId: number): Observable<boolean> {
+        return this.findOne( new ByIdSpecification(contestId) )
+        .map( contest => {
+            return !!contest && contest.active;
+        });
+    }
+
 }
