@@ -185,7 +185,7 @@ export class AuthProvider {
   }
 
   loginWithFacebook(): Observable<{ email?: string, couldLogin?: boolean, lastName?: string, firstName?: string, canceled?: boolean }>{
-    return Observable.fromPromise( this.facebook.login(['public_profile', 'user_friends', 'email']) )
+    return Observable.fromPromise( this.facebook.login(['public_profile', /*'user_friends',*/ 'email']) )
     .flatMap( (res: FacebookLoginResponse) => {
       return this.api.post('/auth/local',{
         provider: 'FACEBOOK',
