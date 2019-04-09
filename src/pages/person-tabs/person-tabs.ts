@@ -19,6 +19,7 @@ import { Person } from '../../models/person.model';
 import { ExchangeAgent } from '../../models/exchange-agent.model';
 import { Keyboard } from "@ionic-native/keyboard";
 import { componentDestroyed } from '../../helpers/observable.helper';
+import { EventsUtil } from '../../providers/utils/events.util';
 
 /**
  * Generated class for the PersonTabsPage page.
@@ -43,7 +44,8 @@ export class PersonTabsPage implements OnInit, OnDestroy{
   constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl: ModalController,
     private modals: ModalUtil, private notifications: NotificationsService, private users: UsersService, 
     private transactions: TransactionsService, private alerts: AlertUtil, private loading: LoadingUtil, 
-    private contests: ContestsService, public platform: Platform, public keyboard: Keyboard) {    
+    private contests: ContestsService, public platform: Platform, public keyboard: Keyboard,
+    public events: EventsUtil) {    
     // this.modals.openModal(this.modalCtrl,AvailableModals.ScoreYourExperienceModal,{
     //   transaction: new Transaction({
     //     person: new Person({id:this.users.currentUser.person.id}),

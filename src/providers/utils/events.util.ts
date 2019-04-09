@@ -8,4 +8,5 @@ export class EventsUtil{
 
     exchangeAgentRequestsIsShowing = new BehaviorSubject<boolean>(false);
     
+    tabHomeIsEnabled = new BehaviorSubject<boolean>(true);
 }

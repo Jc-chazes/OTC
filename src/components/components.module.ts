@@ -35,6 +35,7 @@ import { ScoreComponent } from './score/score';
 import { OfficeHoursReminderComponent } from './office-hours-reminder/office-hours-reminder';
 import { SuccessfulSignUpModalComponent } from './successful-sign-up-modal/successful-sign-up-modal';
 import { ScoreResultModalComponent } from './score-result-modal/score-result-modal';
+import { TabHomeBlockerComponent } from './tab-home-blocker/tab-home-blocker';
 
 @NgModule({
 	declarations: [UpdateExchangeReminderComponent,
@@ -69,7 +70,8 @@ import { ScoreResultModalComponent } from './score-result-modal/score-result-mod
     ScoreComponent,
     OfficeHoursReminderComponent,
     SuccessfulSignUpModalComponent,
-    ScoreResultModalComponent
+    ScoreResultModalComponent,
+    TabHomeBlockerComponent
     ],
 	imports: [ CommonModule, IonicModule, DirectivesModule, PdfViewerModule ],
 	exports: [UpdateExchangeReminderComponent,
@@ -104,7 +106,8 @@ import { ScoreResultModalComponent } from './score-result-modal/score-result-mod
     ScoreComponent,
     OfficeHoursReminderComponent,
     SuccessfulSignUpModalComponent,
-    ScoreResultModalComponent
+    ScoreResultModalComponent,
+    TabHomeBlockerComponent
     ],
     entryComponents: [
         RejectWarningComponent,

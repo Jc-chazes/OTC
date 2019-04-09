@@ -16,6 +16,7 @@
   <div class="fill-height flex-col-layout">
     <div class="flex scrollable no-padding" #contentToScroll>
       <current-notification-watcher [navCtrl]="navCtrl" [transaction]="transaction"></current-notification-watcher>
+      <tab-home-blocker></tab-home-blocker>
       <back-button [navCtrl]="navCtrl"></back-button>
       <div padding>
         <div class="spacer-30"></div>

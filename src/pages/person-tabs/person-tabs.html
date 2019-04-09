@@ -1,5 +1,5 @@
 <ion-tabs #personTabs>
-  <ion-tab [root]="tabHome" [rootParams]="tabParams" tabIcon="home"></ion-tab>
+  <ion-tab [root]="tabHome" [rootParams]="tabParams" tabIcon="home" [enabled]="events.tabHomeIsEnabled | async"></ion-tab>
   <ion-tab [root]="tabNotifications" [rootParams]="tabParams" tabIcon="notifications"></ion-tab>
   <ion-tab [root]="tabHistorial" [rootParams]="tabParams" tabIcon="timer"></ion-tab>
   <ion-tab [root]="tabProfile" [rootParams]="tabParams" tabIcon="person"></ion-tab>
