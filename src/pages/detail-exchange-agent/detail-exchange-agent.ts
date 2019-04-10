@@ -74,13 +74,16 @@ export class DetailExchangeAgentPage {
     }
     Observable.forkJoin(
       this.transactions.add( this.transaction ),
-      ( this.contest ? this.contests.selectWinner(this.contest,this.transaction.exchangeAgent) : Observable.of(null) )
+      Observable.of(null)//( this.contest ? this.contests.selectWinner(this.contest,this.transaction.exchangeAgent) : Observable.of(null) )
     ).subscribe( ([ createdTransaction, _noop ]) => {
       if( this.users.currentUser.isPerson() ){
         this.users.currentUser.person.currentContest = undefined;
       }
       this.loading.hide();
       if( createdTransaction ){
+        if( !!this.contest ){
+          this.contests.selectWinner(this.contest,this.transaction.exchangeAgent,createdTransaction.id).subscribe();
+        }
         this.modals.openModal(this.modalCtrl,AvailableModals.WaitYourRequestModal,{ isFastRequest: this.transaction.type == 'FAST' })
         .then( () => {
           // if( this.transaction.type == 'FAST' ){

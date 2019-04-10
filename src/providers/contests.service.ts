@@ -78,10 +78,11 @@ export class ContestsService extends BaseService implements CrudService<Contest>
         })
     }
     
-    selectWinner(contest: Contest, exchangeAgent: ExchangeAgent){
+    selectWinner(contest: Contest, exchangeAgent: ExchangeAgent, transactionId: number){
         return this.api.put(`/contests/${contest.id}`,{
             selectedExchangeagent: exchangeAgent.id,
-            active: false
+            active: false,
+            transaction: transactionId
         })
         .map( resp => {
             return true;

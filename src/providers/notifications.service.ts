@@ -129,7 +129,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
             console.log(notification);
             if( !!notification ){
                 // alert('Llegó una notificación de: '+notification.type);
-                notification.transaction = new Transaction({ id: Number(notification.transaction) });
+                notification.transaction = new Transaction({ id: Number( notification.transaction ?  notification.transaction.id || notification.transaction : null) });
                 this.processNotification(modalCtrl,notification,currentTabs); 
             }
         });
@@ -197,12 +197,14 @@ export class NotificationsService extends BaseService implements CrudService<Not
                     this.transactions.findOne( new ByIdSpecification(transactionId) )
                     .subscribe( transaction => {
                         this.users.currentUser.currentTransaction = transaction;
-                        currentTabs.select(0);
+                        if( this.users.currentUser.isExchangeAgent() && !this.events.exchangeAgentRequestsIsShowing.value ){
+                            currentTabs.select(0);
+                        }
                     })    
                 });                        
                 break;
             case 'ACCEPTED_BY_EXCHANGE_AGENT':
-                if( this.users.currentUser.isPerson() ){
+                if( this.users.currentUser.isPerson() && notification['notificationType'] !== 'FAST' ){
                     this.modals.openModal(modalCtrl,AvailableModals.RequestWasAcceptedModal)
                     .then(()=>{
                         this.markAsRead( notification.id ).subscribe();
