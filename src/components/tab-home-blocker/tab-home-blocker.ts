@@ -28,7 +28,7 @@ export class TabHomeBlockerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     if( this.blockEnabled ){
-      this.events.tabHomeIsEnabled.next(false);
+      this.events.tabHomeIsEnabled.next(true);
     }
   }
 
