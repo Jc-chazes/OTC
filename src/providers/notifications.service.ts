@@ -175,7 +175,9 @@ export class NotificationsService extends BaseService implements CrudService<Not
                             if( couldParticipate ){
                                 this.modals.openModal(modalCtrl,AvailableModals.CouldParticipateModal);
                             }else{
-                                this.modals.openModal(modalCtrl,AvailableModals.CouldNotParticipateModal);
+                                if( couldParticipate === false ){
+                                    this.modals.openModal(modalCtrl,AvailableModals.CouldNotParticipateModal);
+                                }
                             }
                         });
                     }else{

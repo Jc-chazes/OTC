@@ -76,7 +76,8 @@ export class ExchangeAgentRequestDetailsPage {
       }
     })
     .subscribe( coudlBeAccepted => {
-      this.modals.openModal(this.modalCtrl,AvailableModals.RequestWasAcceptedModal)
+      //this.modals.openModal(this.modalCtrl,AvailableModals.RequestWasAcceptedModal)
+      Promise.resolve()
       .then( () => {
         this.loading.hide();
         if( this.transaction.type == 'FAST' ){

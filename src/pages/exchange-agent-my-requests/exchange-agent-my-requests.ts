@@ -19,6 +19,7 @@ import { CommonSelectBankAccountPage } from '../common-select-bank-account/commo
 import { AlertUtil } from '../../providers/utils/alert.util';
 import { componentDestroyed } from '../../helpers/observable.helper';
 import { EventsUtil } from '../../providers/utils/events.util';
+import { Subscription } from 'rxjs';
 
 /**
  * Generated class for the ExchangeAgentMyRequestsPage page.
@@ -36,6 +37,7 @@ export class ExchangeAgentMyRequestsPage implements OnDestroy, OnInit {
   youHaveAPendingTransaction = 'Cuentas con una solicitud de búsqueda rápida pendiente, te dirigimos a ella para que puedas completarla lo más pronto posible';
   groupedExchangeList: ExchangeAgentOfferingGroup[];
   pendingTransactionList: Transaction[];
+  listenToReloadSubscription: Subscription;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public sanitizer: DomSanitizer,
     private exchangeAgentOfferings: ExchangeAgentOfferingsService, private transactions: TransactionsService,
@@ -44,12 +46,6 @@ export class ExchangeAgentMyRequestsPage implements OnDestroy, OnInit {
     this.exchangeAgentOfferings.getGroupedExchangeAgentOfferings()
     .subscribe( results => {
       this.groupedExchangeList = results;
-    });
-
-    this.events.reloadPendingTransactions
-    .takeUntil( componentDestroyed(this) )
-    .subscribe( () => {
-      this.refresh();
     });
   }
 
@@ -128,7 +124,20 @@ export class ExchangeAgentMyRequestsPage implements OnDestroy, OnInit {
       //   });
       // }
     }
+
     this.refresh();
+
+    this.listenToReloadSubscription = this.events.reloadPendingTransactions
+    .subscribe( () => {
+      this.refresh();
+    });
+    console.info('Se está escuchando al evento de reload');
+
+  }
+
+  ionViewWillLeave(){
+    this.listenToReloadSubscription.unsubscribe();
+    console.info('Ya no se está escuchando al evento de reload');
   }
 
   getAvatarUrl(transaction: Transaction){

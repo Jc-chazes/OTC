@@ -1,8 +1,18 @@
 <div class="requestWasRejectedModal flex-col-layout jc-center fill-height">
   <ng-container *ngIf="cancelledBy == 'EXCHANGE_AGENT'">
     <div class="modal-content">
-      <p class="text-center">
+      <p class="text-center" *ngIf="rechazadaCancelada !== 'NO_REVISADA'">
         <b>Tu solicitud ha sido <br> {{ rechazadaCancelada == 'RECHAZADA' ? 'rechazada' : 'cancelada' }} por 
+          <ng-container *ngIf="exchangeAgentType == '0'">
+            la casa <br> de cambio.
+          </ng-container>
+          <ng-container *ngIf="exchangeAgentType == '1'">
+            el cambista.
+          </ng-container>
+        </b>
+      </p>
+      <p class="text-center" *ngIf="rechazadaCancelada === 'NO_REVISADA'">
+        <b>Tu solicitud no ha sido <br> revisada por 
           <ng-container *ngIf="exchangeAgentType == '0'">
             la casa <br> de cambio.
           </ng-container>
@@ -16,11 +26,11 @@
         Motivo: <br> {{ rejectionReasonText }}
       </p>
       <!-- <div class="spacer-15"></div> -->
-      <p class="text-center">
+      <p class="text-center" *ngIf="rechazadaCancelada !== 'NO_REVISADA'">
         <b>¿Desea calificar a la <br> casa de cambio? </b>
       </p>
     </div>
-    <div class="flex-col-layout ai-center">
+    <div class="flex-col-layout ai-center" *ngIf="rechazadaCancelada !== 'NO_REVISADA'">
       <button fluid ion-button color="dark" (tap)="viewCtrl.dismiss(true)">
         Sí
       </button>
