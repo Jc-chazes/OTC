@@ -43,8 +43,8 @@
                     <span class="text-muted">Precio de <br> {{ exchange.type == 'V' ? 'venta' : 'compra' }}</span>
                   </ion-col>
                   <ion-col col-6>
-                    <input *ngIf="exchange.type == 'V'" type="number" class="fill-width" [(ngModel)]="exchange.requestedCurrencyAmount">
-                    <input *ngIf="exchange.type == 'C'" type="number" class="fill-width" [(ngModel)]="exchange.receivedCurrencyAmount">
+                    <input *ngIf="exchange.type == 'V'" type="text" only-numeric class="fill-width" [(ngModel)]="exchange.requestedCurrencyAmount">
+                    <input *ngIf="exchange.type == 'C'" type="text" only-numeric class="fill-width" [(ngModel)]="exchange.receivedCurrencyAmount">
                   </ion-col>
                 </ion-row>
               </ion-col>
