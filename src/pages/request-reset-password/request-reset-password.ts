@@ -36,7 +36,7 @@ export class RequestResetPasswordPage {
       .subscribe( couldResetPassword => {
         this.loading.hide();
         if( !couldResetPassword ){
-          this.alerts.show('El correo de recuperación no ha posido ser enviado, intente de nuevo más tarde','Cambio de contraseña');
+          this.alerts.show('El correo de recuperación no ha podido ser enviado, intente de nuevo más tarde','Cambio de contraseña');
         }else{
           this.alerts.show('El correo de recuperación ha sido enviado','Recuperar contraseña');
           this.navCtrl.pop();
