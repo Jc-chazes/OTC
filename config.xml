@@ -138,6 +138,6 @@
         <variable name="WEB_APPLICATION_CLIENT_ID" value="740710948871-ilm0aeau71i2bsv0bihdfqojgacvrpo4.apps.googleusercontent.com" />
         <variable name="PLAY_SERVICES_VERSION" value="12.0.0" />
     </plugin>
-    <plugin name="cordova-plugin-firebase" spec="^2.0.5" />
+    <plugin name="cordova-plugin-firebase" spec="https://github.com/wizpanda/cordova-plugin-firebase" />
     <engine name="android" spec="~7.1.1" />
 </widget>
