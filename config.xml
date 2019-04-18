@@ -126,11 +126,6 @@
     <plugin name="cordova-plugin-device" spec="^2.0.2" />
     <plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.2" />
     <plugin name="cordova-plugin-camera" spec="^4.0.3" />
-    <plugin name="cordova-plugin-googleplus" spec="^5.3.2">
-        <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.740710948871-nvt4ps8huflgd92lbpqsf7hghqoedv8i" />
-        <variable name="PLAY_SERVICES_VERSION" value="12.0.0" />
-        <variable name="WEB_APPLICATION_CLIENT_ID" value="740710948871-ilm0aeau71i2bsv0bihdfqojgacvrpo4.apps.googleusercontent.com" />
-    </plugin>
     <plugin name="cordova-plugin-facebook4" spec="^4.2.1">
         <variable name="APP_ID" value="2234071453534008" />
         <variable name="APP_NAME" value="otc-casa-cambio" />
@@ -140,4 +135,9 @@
     <engine name="browser" spec="5.0.4" />
     <engine name="ios" spec="4.5.5" />
     <engine name="android" spec="7.1.1" />
+    <plugin name="cordova-plugin-googleplus" spec="^7.0.1">
+        <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.740710948871-nvt4ps8huflgd92lbpqsf7hghqoedv8i" />
+        <variable name="WEB_APPLICATION_CLIENT_ID" value="740710948871-ilm0aeau71i2bsv0bihdfqojgacvrpo4.apps.googleusercontent.com" />
+        <variable name="PLAY_SERVICES_VERSION" value="12.0.0" />
+    </plugin>
 </widget>
