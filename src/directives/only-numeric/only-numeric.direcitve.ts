@@ -23,7 +23,7 @@ export class OnlyNumericDirective implements OnInit {
     // if ( !/^[0-9\.]*$/.test(value) ) {
     //   e.target.value = value.replace(/[^0-9\.]/g, '');
     // }
-    if( isNaN(ev.key as any) && ev.key !== '.' && ev.key !== 'Tab' ){
+    if( isNaN(ev.key as any) && ev.key !== '.' && ev.key !== 'Tab' && ev.key !== 'Backspace' ){
       ev.preventDefault();
       ev.stopPropagation();
     }
