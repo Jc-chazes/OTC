@@ -21,6 +21,7 @@ stepper {
             font-weight: bold;
             margin: 5px -5px;
             overflow-wrap: normal;
+            word-break: keep-all;
             @include opacity(0);
         }
         &:not(:last-child){

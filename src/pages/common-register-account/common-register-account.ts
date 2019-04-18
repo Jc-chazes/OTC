@@ -28,7 +28,7 @@ export class CommonRegisterAccountPage {
   provider: 'GOOGLE' | 'FACEBOOK';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private app: App,
-  private fb: FormBuilder, private auth: AuthProvider, private appState: AppStateService,
+  private fb: FormBuilder, private auth: AuthProvider, public appState: AppStateService,
   private UsersBankAccounts: UsersBankAccountsService, private modals: ModalUtil,
   private modalCtrl: ModalController, private alerts: AlertUtil, private loading: LoadingUtil) {
     this.userType = this.appState.currentState.global.userType;
@@ -67,7 +67,7 @@ export class CommonRegisterAccountPage {
         formatBirthdate: [''],//COMMON
         address: [undefined,Validators.required],//EXCHANGE AGENT
         phone: [undefined,Validators.required],//EXCHANGE AGENT
-        sbsRegisterNumber: [undefined,Validators.required],//EXCHANGE AGENT
+        sbsRegisterNumber: [undefined, this.byType('1',Validators.required)],//EXCHANGE AGENT
         type: ['0',Validators.required],//COMMON
         acceptTermsAndConditions: [false,[]],//COMMON
         user: this.fb.group({//COMMON
@@ -87,11 +87,11 @@ export class CommonRegisterAccountPage {
     });
     this.profileFG.get('type').valueChanges.subscribe( () => {
       Object.keys( this.profileFG.controls )
-      .filter( control => [ 'firstName','lastName','birthdate','documentNumber','businessName','ruc' ].indexOf(control) >= 0 )
+      .filter( control => [ 'firstName','lastName','birthdate','documentNumber','businessName','ruc','sbsRegisterNumber' ].indexOf(control) >= 0 )
       .forEach( control => {
         this.profileFG.controls[control].updateValueAndValidity();
       })
-    })
+    });
   }
 
   ionViewWillEnter(){}
@@ -192,7 +192,7 @@ export class CommonRegisterAccountPage {
   get isPerson() { return this.userType == '0' }
   get isExchangeAgent() { return this.userType == '1' }
 
-  byType( isType: string, validator: Validator | ValidationErrors, name?: string ){
+  byType( isType: string, validator: Validator | ValidationErrors, name?: string, subtype?: number ){
     return (c:AbstractControl) => {
       let result = null;
       if( !!c.parent && c.parent.get('type').value == isType ){
