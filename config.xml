@@ -138,6 +138,5 @@
         <variable name="PLAY_SERVICES_VERSION" value="12.0.0" />
     </plugin>
     <plugin name="cordova-plugin-firebase" spec="https://github.com/wizpanda/cordova-plugin-firebase" />
-    <plugin name="cordova-plugin-background-mode" spec="https://github.com/katzer/cordova-plugin-background-mode.git" />
     <engine name="android" spec="~7.1.1" />
 </widget>
