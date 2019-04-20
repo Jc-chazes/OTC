@@ -130,14 +130,14 @@
       "cordova-android-firebase-gradle-release": {
         "FIREBASE_VERSION": "12.0.0"
       },
-      "cordova-plugin-background-mode": {},
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-googleplus": {
         "REVERSED_CLIENT_ID": "com.googleusercontent.apps.740710948871-nvt4ps8huflgd92lbpqsf7hghqoedv8i",
         "WEB_APPLICATION_CLIENT_ID": "740710948871-ilm0aeau71i2bsv0bihdfqojgacvrpo4.apps.googleusercontent.com",
         "PLAY_SERVICES_VERSION": "12.0.0"
       },
-      "cordova-plugin-firebase": {}
+      "cordova-plugin-firebase": {},
+      "cordova-plugin-background-mode": {}
     },
     "platforms": [
       "browser",
