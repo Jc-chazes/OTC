@@ -132,10 +132,10 @@
     </plugin>
     <engine name="browser" spec="5.0.4" />
     <engine name="ios" spec="4.5.5" />
+    <plugin name="cordova-plugin-firebase" spec="^2.0.0" />
     <plugin name="cordova-plugin-googleplus" spec="^7.0.1">
         <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.740710948871-nvt4ps8huflgd92lbpqsf7hghqoedv8i" />
         <variable name="WEB_APPLICATION_CLIENT_ID" value="740710948871-ilm0aeau71i2bsv0bihdfqojgacvrpo4.apps.googleusercontent.com" />
         <variable name="PLAY_SERVICES_VERSION" value="12.0.0" />
     </plugin>
-    <plugin name="cordova-plugin-firebase" spec="^2.0.0" />
 </widget>
