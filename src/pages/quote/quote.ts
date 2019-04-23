@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { AppStateService } from '../../providers/app-state.service';
 import { ExchangeAgentsPage } from '../exchange-agents/exchange-agents';
@@ -26,7 +26,7 @@ export class QuotePage implements OnInit {
   checkButton:number;
   selectedCurrencyLeft: Currency;
   selectedCurrencyRight: Currency;
-  cant : number = 100;
+  _cant : any = '100.00';
   text_buy : string;
   text_money:string
   currencyList: Currency[];
@@ -38,6 +38,20 @@ export class QuotePage implements OnInit {
   buyAvailableTransformacions: string[] = [];
   operation = 'C';
   cantInput : any;
+  @ViewChild('quantityInput') quantityInputElm: ElementRef;
+  
+  get cant(): number{
+    return this._cant;
+  }
+
+  set cant(val: number){
+    let valAsString = String(val);
+    let decimalPart = valAsString.split('.')[1];
+    if( !!decimalPart && decimalPart.length > 2 ){
+      val = Number(val.toFixed(2));
+    }
+    this._cant = val;
+  }
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alerts: AlertUtil
     , private currencies: CurrenciesService, public appState : AppStateService
@@ -88,6 +102,12 @@ export class QuotePage implements OnInit {
 
   ngOnInit(){
     this.interceptVerifyCurrenTransaction();
+    // this.quantityInputElm.nativeElement.addEventListener('keypress', function () {
+    //   this.setAttribute('type', 'text');
+    // });
+    // this.quantityInputElm.nativeElement.addEventListener('click', function () {
+    //   this.setAttribute('type', 'number');
+    // });
   }
 
   interceptVerifyCurrenTransaction(){
@@ -146,7 +166,7 @@ export class QuotePage implements OnInit {
     // console.log(this.cant);
     if( !this.cant || this.cant > 10000 ){
       window.navigator.vibrate(200);
-      this.alerts.show('Monto inválido','Cotiza');
+      this.alerts.show('El monto que ingresa es inválido, supera los $ 10 000.','Cotiza');
       return;
     }
 
