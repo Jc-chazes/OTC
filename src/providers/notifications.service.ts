@@ -94,7 +94,7 @@ export class NotificationsService extends BaseService implements CrudService<Not
             return prev.concat([
                 new Transaction({ 
                     id: transaction.id,
-                    code: transaction.id && !isNaN(transaction.id) ? `Transaccion #${transaction.code}` : title || 'Feliz cumpleaños',
+                    code: transaction.id && !isNaN(transaction.id) ? `Transacción #${transaction.code}` : title || 'Feliz cumpleaños',
                     created_at: transaction.created_at || notificationCreatedAt,
                     notifications: groups[curr].notifications
                 })

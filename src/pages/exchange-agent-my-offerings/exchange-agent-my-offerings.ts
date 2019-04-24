@@ -44,6 +44,7 @@ export class ExchangeAgentMyOfferingsPage {
     .map( group => group.exchanges )
     .reduce( (prev,curr) => [...prev,...curr],[])
     .filter( exchange => exchange.hasChanged(['requestedCurrency','requestedCurrencyAmount','receivedCurrency','receivedCurrencyAmount']) )
+    .filter( exchange => !!exchange.requestedCurrencyAmount && !!exchange.receivedCurrencyAmount )
     .map( exchange => this.exchangeAgentOfferings.add(exchange) );
     if( createExchangesOperations.length == 0 ){
       this.goToMyRequest();

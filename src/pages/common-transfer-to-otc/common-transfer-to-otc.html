@@ -16,14 +16,13 @@
   <div class="fill-height flex-col-layout">
     <div class="flex scrollable no-padding" #contentToScroll>
       <current-notification-watcher [navCtrl]="navCtrl" [transaction]="transaction"></current-notification-watcher>
-      <tab-home-blocker></tab-home-blocker>
+      <tab-home-blocker [containerPage]="_this"></tab-home-blocker>
       <back-button [navCtrl]="navCtrl"></back-button>
       <div padding>
         <div class="spacer-30"></div>
         <stepper mode="exchange-agent" [currentStep]="4"></stepper>
         <p class="text-center">
-          Por favor realice la transferencia o depósito del monto <br>
-          correspondiente a cualquiera de las siguientes cuentas
+          Realice la transferencia o depósito del monto correspondiente a cualquiera de las siguientes cuentas:
         </p>
         <ion-row justify-content-center align-items-center>
           <ion-col col-auto>

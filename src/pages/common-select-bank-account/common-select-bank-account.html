@@ -16,14 +16,14 @@
   <div class="fill-height flex-col-layout">
     <div class="flex scrollable no-padding">
       <current-notification-watcher [navCtrl]="navCtrl" [transaction]="transaction"></current-notification-watcher>
-      <tab-home-blocker></tab-home-blocker>
+      <tab-home-blocker [containerPage]="_this"></tab-home-blocker>
       <back-button [navCtrl]="navCtrl" [viewCtrl]="viewCtrl" [popToIndex]=" users.currentUser.isPerson() ? 0 : 1 "></back-button>
       <div class="spacer-20"></div>
       <stepper mode="exchange-agent" [currentStep]="3"></stepper>
       <div class="spacer-20"></div>
       <div>
         <p class="text-center">
-          Registre los datos de su cuenta bancaria para recibir el depósito correspondiente
+          Registra los datos de la cuenta bancaria para recibir el depósito
         </p>
       </div>
       <div class="spacer-20"></div>
@@ -94,7 +94,7 @@
             </ion-col>
           </ion-row>
           <ion-row align-items-center>
-            <ion-col col-5 class="text-muted">Tipo de cuenta</ion-col>
+            <ion-col col-5 class="text-muted">Tipo de moneda</ion-col>
             <ion-col col-7>
               <input type="text" class="fill-width" readonly [value]="selectedUserBankAccount.currency.name">
             </ion-col>

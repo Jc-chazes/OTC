@@ -15,7 +15,7 @@
   <div class="fill-height flex-col-layout">
     <div class="flex scrollable no-padding">
       <current-notification-watcher [navCtrl]="navCtrl" [transaction]="transaction"></current-notification-watcher>
-      <tab-home-blocker></tab-home-blocker>
+      <tab-home-blocker [containerPage]="_this"></tab-home-blocker>
       <div class="sendVoucher">
         <div class="spacer-30"></div>
         <stepper mode="exchange-agent" [currentStep]="5"></stepper>

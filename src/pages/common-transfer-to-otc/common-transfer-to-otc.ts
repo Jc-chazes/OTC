@@ -36,6 +36,7 @@ export class CommonTransferToOtcPage {
   @ViewChild('contentToScroll') contentToScroll: ElementRef;
   @ViewChild(Slides) slides: Slides;
   showAdditionalInfo = false;
+  _this = this;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private users: UsersService,
     private constants: ConstantsService, private userBankAccounts : UsersBankAccountsService,

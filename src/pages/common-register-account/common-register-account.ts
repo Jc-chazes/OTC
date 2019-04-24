@@ -67,7 +67,7 @@ export class CommonRegisterAccountPage {
         formatBirthdate: [''],//COMMON
         address: [undefined,Validators.required],//EXCHANGE AGENT
         phone: [undefined,Validators.required],//EXCHANGE AGENT
-        sbsRegisterNumber: [undefined, this.byType('1',Validators.required)],//EXCHANGE AGENT
+        sbsRegisterNumber: [undefined, this.byType('0',Validators.required)],//EXCHANGE AGENT
         type: ['0',Validators.required],//COMMON
         acceptTermsAndConditions: [false,[]],//COMMON
         user: this.fb.group({//COMMON

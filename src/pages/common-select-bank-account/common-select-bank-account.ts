@@ -38,6 +38,7 @@ export class CommonSelectBankAccountPage implements OnInit {
   acceptTermsAndConditions = false;
   canContinue = false;
   continue = new Subject();
+  _this = this;
 
   constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, private alerts: AlertUtil,
     private userBankAccounts: UsersBankAccountsService, private loading: LoadingUtil, public users: UsersService,

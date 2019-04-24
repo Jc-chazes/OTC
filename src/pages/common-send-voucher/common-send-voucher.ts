@@ -37,15 +37,31 @@ export class CommonSendVoucherPage {
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE
   }
+  _this = this;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alerts: AlertUtil,
     public sanitizer: DomSanitizer, private modalCtrl: ModalController, private loading: LoadingUtil,
     private transactions: TransactionsService, private camera: Camera, public users: UsersService,
     private viewCtrl: ViewController, private modals: ModalUtil) {
     this.transaction = this.navParams.get('transaction');
+    if( this.users.currentUser.isPerson() ){
+      this.transaction.personaQuiereVoucherDelTipo = 'FACTURA';
+    }else{
+      this.transaction.agenteDeCambioQuiereVoucherDelTipo = 'FACTURA';
+    }
     this.voucherFileReader.onload = () => {
       this.voucher.fileUrl = this.voucherFileReader.result as string;
     }
+  }
+
+  ionViewWillEnter(){
+    console.log('ionViewWillEnter CommonSendVoucherPage');
+    console.log(this);
+  }
+
+  ionViewWillLeave(){
+    console.log('ionViewWillLeave CommonSendVoucherPage');
+    console.log(this);
   }
 
   ionViewDidLoad() {
