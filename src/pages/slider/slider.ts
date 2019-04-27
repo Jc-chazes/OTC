@@ -19,13 +19,13 @@ export class SliderPage {
   sliders = [
     {
       text: 'El medio más <br> seguro',
-      icon: '/assets/imgs/intro/shield.png',
-      background: '/assets/imgs/intro/slider-1-bk.png'
+      icon: 'http://157.230.229.87:85/static/imgs/intro/shield.png',
+      background: 'http://157.230.229.87:85/static/imgs/intro/slider-1-bk.png'
     },
     {
       text: 'de Comprar y <br> Vender dinero',
-      icon: '/assets/imgs/intro/money-bag.png',
-      background: '/assets/imgs/intro/slider-2-bk.png'
+      icon: 'http://157.230.229.87:85/static/imgs/intro/money-bag.png',
+      background: 'http://157.230.229.87:85/static/imgs/intro/slider-2-bk.png'
     }
   ];
 

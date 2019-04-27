@@ -77,7 +77,7 @@ export class CommonViewProfilePage {
 
   
   get avatarUrl(): any{
-    let url = '/assets/imgs/icons/profile_user.png';
+    let url = 'http://157.230.229.87:85/static/imgs/icons/profile_user.png';
     if( this.photo.fileUrl ){
       url = this.photo.fileUrl;
     }

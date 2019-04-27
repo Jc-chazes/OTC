@@ -144,7 +144,7 @@ export class ExchangeAgentMyRequestsPage implements OnDestroy, OnInit {
     if( transaction.person.user.photo ){
       return this.sanitizer.bypassSecurityTrustStyle(`url('${transaction.person.user.photo.fileUrl}')`);
     }
-    return this.sanitizer.bypassSecurityTrustStyle(`url('/assets/imgs/avatar_placeholder.png')`);
+    return this.sanitizer.bypassSecurityTrustStyle(`url('http://157.230.229.87:85/static/imgs/avatar_placeholder.png')`);
   }
 
   goToRequestDetails(transaction: Transaction){

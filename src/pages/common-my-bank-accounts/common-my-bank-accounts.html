@@ -43,10 +43,10 @@
           </ion-col>
           <ion-col col-1>
             <div class="fill-height flex-col-layout jc-center">
-              <img [src]="'/assets/imgs/icons/' + ( bankAccount.selected ? 'active.png' : 'inactive.png' ) " alt=""
+              <img [src]="'http://157.230.229.87:85/static/imgs/icons/' + ( bankAccount.selected ? 'active.png' : 'inactive.png' ) " alt=""
               (tap)="activeBankAccount(bankAccount)">
               <div class="spacer-20"></div>
-              <img src="/assets/imgs/icons/delete.png" alt="" (tap)="deleteBankAccount(bankAccount)">            
+              <img src="http://157.230.229.87:85/static/imgs/icons/delete.png" alt="" (tap)="deleteBankAccount(bankAccount)">            
             </div>
           </ion-col>
         </ion-row>

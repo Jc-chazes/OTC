@@ -23,12 +23,12 @@ import { StorageUtil, StorageKeys } from '../../providers/utils/storage.util';
 export class CommonMyProfilePage {
 
   options = [
-    { name: 'Mi perfil', icon: '/assets/imgs/icons/profile_user.png', page: CommonViewProfilePage },
-    { name: 'Nosotros', icon: '/assets/imgs/icons/profile_us.png', page: UsPage },
-    { name: 'Condiciones legales', icon: '/assets/imgs/icons/profile_legal.png', page: LegalConditionsPage },
-    { name: 'Contáctenos', icon: '/assets/imgs/icons/profile_contact.png', page: ContactUsPage },
-    { name: 'www.otc.com', icon: '/assets/imgs/icons/profile_web.png', page: null, href: 'https://www.otc.com' },
-    { name: '@otc.perú', icon: '/assets/imgs/icons/profile_fb.png', page: null, href: 'https://www.facebook.com/OTC-PERU-948228435371020' }
+    { name: 'Mi perfil', icon: 'http://157.230.229.87:85/static/imgs/icons/profile_user.png', page: CommonViewProfilePage },
+    { name: 'Nosotros', icon: 'http://157.230.229.87:85/static/imgs/icons/profile_us.png', page: UsPage },
+    { name: 'Condiciones legales', icon: 'http://157.230.229.87:85/static/imgs/icons/profile_legal.png', page: LegalConditionsPage },
+    { name: 'Contáctenos', icon: 'http://157.230.229.87:85/static/imgs/icons/profile_contact.png', page: ContactUsPage },
+    { name: 'www.otc.com', icon: 'http://157.230.229.87:85/static/imgs/icons/profile_web.png', page: null, href: 'https://www.otc.com' },
+    { name: '@otc.perú', icon: 'http://157.230.229.87:85/static/imgs/icons/profile_fb.png', page: null, href: 'https://www.facebook.com/OTC-PERU-948228435371020' }
   ]
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthProvider,

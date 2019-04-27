@@ -15,6 +15,6 @@ export class Notification extends BaseModel<Notification>{
     timeLabel: { date: string, time: string };
 
     get icon(): string{
-        return `/assets/imgs/icons/notification_${this.type.toLowerCase()}.png`;
+        return `http://157.230.229.87:85/static/imgs/icons/notification_${this.type.toLowerCase()}.png`;
     }
 }

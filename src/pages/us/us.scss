@@ -10,13 +10,13 @@ page-us {
             }
             &:nth-child(2n+1){
                 background-color: #f2f3f2;                
-                background-image: url('/assets/imgs/backgrounds/modal_bottom_bk--opaque.png');
+                background-image: url('http://157.230.229.87:85/static/imgs/backgrounds/modal_bottom_bk--opaque.png');
                 background-repeat: no-repeat;
                 background-size: 100px;
                 background-position: left -20px bottom 20px;
             }
             &:nth-child(2n){
-                background-image: url('/assets/imgs/backgrounds/modal_top_bk--opaque.png');
+                background-image: url('http://157.230.229.87:85/static/imgs/backgrounds/modal_top_bk--opaque.png');
                 background-repeat: no-repeat;
                 background-size: 100px;
                 background-position: right -20px top 20px;

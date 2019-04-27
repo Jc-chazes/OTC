@@ -64,7 +64,7 @@ export class DetailExchangeAgentPage {
     if( exchangeAgent.user && exchangeAgent.user.photo ){
       return this.sanitizer.bypassSecurityTrustStyle(`url('${exchangeAgent.user.photo.fileUrl}')`);
     }
-    return this.sanitizer.bypassSecurityTrustStyle(`url('/assets/imgs/avatar_placeholder.png')`);
+    return this.sanitizer.bypassSecurityTrustStyle(`url('http://157.230.229.87:85/static/imgs/avatar_placeholder.png')`);
   }
   
   continue(){

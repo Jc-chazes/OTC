@@ -7,7 +7,7 @@
     <div class="flex-row-layout jc-center flex-gap">
       <img *ngFor="let star of stars" alt="" height="20" width="20"
       (tap)="score = star + 1"
-      [src]=" '/assets/imgs/icons/' + ( star + 1 <= score ? 'star_filled--orange.svg' : 'star_unfilled--orange.svg' )  " >
+      [src]=" 'http://157.230.229.87:85/static/imgs/icons/' + ( star + 1 <= score ? 'star_filled--orange.svg' : 'star_unfilled--orange.svg' )  " >
     </div>
     <div class="spacer-25"></div>
   </div>
