@@ -18,7 +18,6 @@ import { Deeplinks, DeeplinkMatch } from '@ionic-native/deeplinks';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 import { AlertUtil } from '../providers/utils/alert.util';
 import { LoadingUtil } from '../providers/utils/loading.util';
-import { BackgroundMode } from '@ionic-native/background-mode';
 
 @Component({
   templateUrl: 'app.html'
@@ -26,7 +25,7 @@ import { BackgroundMode } from '@ionic-native/background-mode';
 export class MyApp {
   rootPage:any = ChooseProfilePage;
 
-  constructor(private platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private background: BackgroundMode,
+  constructor(private platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
     private auth: AuthProvider, private users: UsersService, private currencies: CurrenciesService,
     private storage: StorageUtil, private deeplinks: Deeplinks, private app: App, private loading: LoadingUtil) {
     let sliderLoaded = localStorage.getItem(StorageKeys.SLIDER_HAS_BEEN_SHOWED);
@@ -85,7 +84,6 @@ export class MyApp {
       // alert('Version 1.2');
       this.loading.hide();
       statusBar.overlaysWebView(false);
-      this.configureBackgroundMode();
     });
   }
 
@@ -105,11 +103,5 @@ export class MyApp {
     });
   }
 
-  configureBackgroundMode(){
-    //Habilitar background en ios para recibir las notificaciones
-    if( this.platform.is('ios') ){
-      this.background.enable();
-    }
-  }
 }
 

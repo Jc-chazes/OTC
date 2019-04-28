@@ -91,7 +91,6 @@ import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 import { RequestResetPasswordPage } from '../pages/request-reset-password/request-reset-password';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { EventsUtil } from '../providers/utils/events.util';
-import { BackgroundMode } from '@ionic-native/background-mode';
 
 /*Con cordova falla la instalación en iOS*/
 // import * as Sentry from 'sentry-cordova';
@@ -263,8 +262,7 @@ export class RavenErrorHandler extends IonicErrorHandler implements ErrorHandler
     Facebook,
     Deeplinks,
     EventsUtil,
-    Keyboard,
-    BackgroundMode
+    Keyboard
   ]
 })
 export class AppModule {}
