@@ -139,4 +139,5 @@
     <plugin name="cordova-plugin-firebase" spec="2.0.5">
         <variable name="IOS_HIDE_FOREGROUND_NOTIFICACION" value="false" />
     </plugin>
+    <engine name="ios" spec="~4.5.5" />
 </widget>
