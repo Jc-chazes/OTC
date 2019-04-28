@@ -72,6 +72,7 @@ export class DetailExchangeAgentPage {
     if( this.contest ){
       this.transaction.type = 'FAST';
     }
+    this.transaction.personaCorreoReciboTransaccionDatos = `|||${JSON.stringify( this.getPersonaCorreoReciboTransaccionDatos() )}|||`;
     Observable.forkJoin(
       this.transactions.add( this.transaction ),
       Observable.of(null)//( this.contest ? this.contests.selectWinner(this.contest,this.transaction.exchangeAgent) : Observable.of(null) )
@@ -152,5 +153,26 @@ export class DetailExchangeAgentPage {
 
   get transactionAmountToReceive(){
     return this.numberPipe.transform(this.transaction.amountToReceive.toFixed(2));
+  }
+
+  get valorTipoCambio() {
+    return this.transaction.exchangeAgentOffering.type == 'V' ? 
+      this.transaction.exchangeAgentOffering.requestedCurrencyAmount : 
+      this.transaction.exchangeAgentOffering.receivedCurrencyAmount
+  }
+
+  getPersonaCorreoReciboTransaccionDatos(){
+    return {
+      enviaste: {
+        bruto: this.transactionAmountToDeposit,
+        comision: this.otcComission.content
+      },
+      recibiras: this.transactionAmountToReceive,
+      tipoDeCambio: this.valorTipoCambio,
+      monedaSimbolo: {
+        enviaste: this.transaction.currencyToDeposit.symbol,
+        recibiras: this.transaction.currencyToReceive.symbol
+      }
+    }
   }
 }

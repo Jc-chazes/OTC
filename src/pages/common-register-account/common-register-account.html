@@ -64,24 +64,29 @@
         </ion-grid>
         <div>
           <div class="p-5" *ngIf="isExchangeAgent">
-            <div class="form-input required">
+            <div class="form-input required" [class.invalid]="isInvalid('name')">
               <input type="text" class="fill-width" placeholder="Nombre / Razón social" formControlName="name">
             </div>          
           </div>
           <div class="p-5" *ngIf="isPerson && profileFG.value.type == '0'">
-            <div class="form-input required"><input type="text" class="fill-width" placeholder="Nombres" formControlName="firstName"></div>
+            <div class="form-input required" [class.invalid]="isInvalid('firstName')">
+              <input type="text" class="fill-width" placeholder="Nombres" formControlName="firstName"></div>
           </div>
           <div class="p-5" *ngIf="isPerson && profileFG.value.type == '0'">
-            <div class="form-input required"><input type="text" class="fill-width" placeholder="Apellidos" formControlName="lastName"></div></div>
+            <div class="form-input required" [class.invalid]="isInvalid('lastName')">
+              <input type="text" class="fill-width" placeholder="Apellidos" formControlName="lastName"></div></div>
           <div class="p-5" *ngIf="isPerson && profileFG.value.type == '1'">
-            <div class="form-input required"><input type="text" class="fill-width" placeholder="Razón social" formControlName="businessName"></div></div>
+            <div class="form-input required" [class.invalid]="isInvalid('businessName')">
+              <input type="text" class="fill-width" placeholder="Razón social" formControlName="businessName"></div></div>
           <div class="p-5" *ngIf="isPerson && profileFG.value.type == '1'">
-            <div class="form-input required"><input type="number" class="fill-width" placeholder="Ruc" formControlName="ruc"></div></div>
+            <div class="form-input required" [class.invalid]="isInvalid('ruc')">
+              <input type="number" class="fill-width" placeholder="Ruc" formControlName="ruc"></div></div>
           <div class="p-5" *ngIf="isExchangeAgent">
-            <div class="form-input required"><input type="number" class="fill-width" placeholder="Dni / Ruc" formControlName="documentNumber"></div></div>
+            <div class="form-input required" [class.invalid]="isInvalid('documentNumber')">
+              <input type="number" class="fill-width" placeholder="Dni / Ruc" formControlName="documentNumber"></div></div>
           <ng-container *ngIf=" (isExchangeAgent && profileFG.value.type == '1') || (isPerson && profileFG.value.type == '0') ">
             <div class="p-5 pos-relative">
-              <div class="form-input required">
+              <div class="form-input required" [class.invalid]="isInvalid('formatBirthdate')">
                 <input type="text" class="fill-width" placeholder="Fecha de nacimiento" formControlName="formatBirthdate" readonly>
               </div>
               <ion-datetime class="opacity-0" displayFormat="DD/MM/YYYY" formControlName="birthdate"
@@ -89,25 +94,31 @@
             </div>
           </ng-container>
           <div class="p-5" *ngIf="isPerson && profileFG.value.type == '0'">
-            <div class="form-input required"><input type="number" class="fill-width" placeholder="Dni / Carné de extranjería" formControlName="documentNumber"></div></div>
+            <div class="form-input required" [class.invalid]="isInvalid('documentNumber')">
+              <input type="number" class="fill-width" placeholder="Dni / Carné de extranjería" formControlName="documentNumber"></div></div>
           <div class="p-5" *ngIf="isExchangeAgent">
-            <div class="form-input required"><input type="text" class="fill-width" placeholder="Dirección" formControlName="address"></div></div>
+            <div class="form-input required" [class.invalid]="isInvalid('address')">
+              <input type="text" class="fill-width" placeholder="Dirección" formControlName="address"></div></div>
           <div class="p-5" *ngIf="isExchangeAgent">
-            <div class="form-input required"><input type="number" class="fill-width" placeholder="Teléfono / celular" formControlName="phone"></div></div>
+            <div class="form-input required" [class.invalid]="isInvalid('phone')">
+              <input type="number" class="fill-width" placeholder="Teléfono / celular" formControlName="phone"></div></div>
           <div class="p-5" *ngIf="isPerson">
-            <div class="form-input required"><input type="number" class="fill-width" placeholder="Celular" formControlName="cellphone"></div></div>
+            <div class="form-input required" [class.invalid]="isInvalid('cellphone')">
+              <input type="number" class="fill-width" placeholder="Celular" formControlName="cellphone"></div></div>
           <div class="p-5" *ngIf="isExchangeAgent">
-            <div class="form-input" [class.required]="profileFG.value.type == '0'">
+            <div class="form-input" [class.required]="profileFG.value.type == '0'" [class.invalid]="isInvalid('sbsRegisterNumber')">
               <input type="text" class="fill-width" placeholder="Número de registro de la SBS" formControlName="sbsRegisterNumber">
             </div>            
           </div>
           <ng-container formGroupName="user">
               <div class="p-5">
-                <div class="form-input required"><input type="text" class="fill-width" placeholder="Correo electrónico" 
-                formControlName="email" [readonly]="!!this.navParams.get('email')"></div></div>
+                <div class="form-input required" [class.invalid]="isInvalid( profileFG.get('user').get('email') )">
+                  <input type="text" class="fill-width" placeholder="Correo electrónico" 
+                formControlName="email" [readonly]="!!this.navParams.get('email')" autocomplete="disabled"></div></div>
               <div class="p-5 login__password" *ngIf="!this.navParams.get('email')">
-                <div class="form-input pos-relative required">
-                  <input [type]=" showPassword ?  'text' : 'password'" class="fill-width" placeholder="Contraseña" formControlName="password">
+                <div class="form-input pos-relative required" [class.invalid]="isInvalid( profileFG.get('user').get('password') )">
+                  <input [type]=" showPassword ?  'text' : 'password'" class="fill-width" placeholder="Contraseña" formControlName="password"
+                  autocomplete="disabled">
                   <div class="login__password__toggler" (tap)="showPassword = !showPassword">
                       <ion-icon [name]="showPassword ? 'eye' : 'eye-off' " color="dark"></ion-icon>
                   </div>

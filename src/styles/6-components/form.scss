@@ -19,4 +19,15 @@
             padding-right: 20px;
         }
     }
+    &.invalid{        
+        input{
+            @include placeholder(){
+                color: #f44336 !important;
+                font-weight: bold;
+            }
+        }
+        &::after{
+            background-image: url('http://157.230.229.87:85/static/imgs/icons/asterisk--invalid.png');
+        }
+    }
 }

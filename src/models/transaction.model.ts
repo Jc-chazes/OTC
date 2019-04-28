@@ -44,6 +44,8 @@ export class Transaction extends BaseModel<Transaction>{
     agenteDeCambioNombre: string;
     personaDocumento: string;
     personaNombre: string;
+    personaCorreoReciboTransaccionDatos: string;
+    agenteCambioCorreoReciboTransaccionDatos: string;
 
     amountToDepositToOTC(OTCComission: number){
         return (Number(OTCComission) + Number(this.amountToDeposit.toFixed(2))).toFixed(2);

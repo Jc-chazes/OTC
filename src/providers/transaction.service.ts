@@ -100,7 +100,9 @@ export class TransactionsService extends BaseService implements CrudService<Tran
         	exchangeagent: entity.exchangeAgent.id,
         	exchangeagentoffering: entity.exchangeAgentOffering.id,
             amount: entity.amount,
-            type: entity.type || 'SAFE'
+            type: entity.type || 'SAFE',
+            personaCorreoReciboTransaccionDatos: entity.personaCorreoReciboTransaccionDatos,
+            agenteCambioCorreoReciboTransaccionDatos: ''
         }).map( resp => {
             return this.mapper.mapFromBe(resp);
         }).catch(err => {
@@ -310,4 +312,15 @@ export class TransactionsService extends BaseService implements CrudService<Tran
         })
     }
 
+    updateExact(transactionId: number, data: any): Observable<boolean>{
+        return this.api.put(`/transactions/${transactionId}`,{
+            ...data
+        })
+        .map( resp => {
+            return true; 
+        }).catch( err => {
+            console.error(err);
+            return Observable.of(false);
+        });
+    }
 }

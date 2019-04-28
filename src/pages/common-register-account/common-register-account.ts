@@ -46,7 +46,7 @@ export class CommonRegisterAccountPage {
         acceptTermsAndConditions: [false,[]],//COMMON        
         user: this.fb.group({//COMMON
           email: ['',[Validators.email]],
-          password: ['', this.navParams.get('email') ? [] : [Validators.required ]],
+          password: ['', this.navParams.get('email') ? [] : [ Validators.required, Validators.pattern(/^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{6,12}$/) ]],
           userType: ['0']
         })
       });
@@ -99,6 +99,11 @@ export class CommonRegisterAccountPage {
   ionViewDidLoad() {}
 
   validatePassword(){
+    
+    Object.keys( this.profileFG.controls ).forEach( controlName => {
+      this.profileFG.controls[controlName].markAsTouched();
+    });
+
     var regex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{6,12}$/;
     var password = this.profileFG.value.user.password;
     var isValid = (regex.test(password));
@@ -109,7 +114,8 @@ export class CommonRegisterAccountPage {
       this.alerts.show('Tiene que tener entre 6 y 12 carácteres, una letra mayúscula y un número.', 'Contraseña inválida');
   }
 
-  createAccount(){
+  createAccount(){    
+
     let tabs = null;
     if( this.userType == '0' ){
       tabs = PersonTabsPage;
@@ -214,6 +220,11 @@ export class CommonRegisterAccountPage {
       }
     }
     return null;
+  }
+
+  isInvalid(control: string | AbstractControl){
+    let insControl = control instanceof AbstractControl ? control : this.profileFG.controls[control] ;
+    return insControl.invalid && insControl.touched;
   }
 
 }

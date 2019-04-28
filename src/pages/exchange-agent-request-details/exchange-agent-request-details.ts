@@ -65,7 +65,12 @@ export class ExchangeAgentRequestDetailsPage {
 
   continue(){
     this.loading.show();
-    this.transactions.acceptTransaction( this.transaction )
+    Observable.forkJoin(
+      this.transactions.acceptTransaction( this.transaction ),
+      this.transactions.updateExact( this.transaction.id, {
+        agenteCambioCorreoReciboTransaccionDatos: `|||${JSON.stringify( this.getAgenteCambioCorreoReciboTransaccionDatos() )}|||`
+      })
+    )
     .flatMap( () => {
       if( this.transaction.type == 'FAST' ){
         return this.exchangeAgents.updateCurrentTransaction(
@@ -151,5 +156,26 @@ export class ExchangeAgentRequestDetailsPage {
         this.navCtrl.pop();
       },300)
     });
+  }
+
+  get valorTipoCambio(){
+    return this.transaction.exchangeAgentOffering.type == 'V' ? 
+      this.transaction.exchangeAgentOffering.requestedCurrencyAmount : 
+      this.transaction.exchangeAgentOffering.receivedCurrencyAmount
+  }
+
+  getAgenteCambioCorreoReciboTransaccionDatos(){
+    return {
+      enviaste: {
+        bruto: this.transaction.amountToDeposit.toFixed(2),
+        comision: this.otcComission.content
+      },
+      recibiras: (this.transaction.amountToReceive||0).toFixed(2),
+      tipoDeCambio: this.valorTipoCambio,
+      monedaSimbolo: {
+        enviaste: this.transaction.currencyToDeposit.symbol,
+        recibiras: this.transaction.currencyToReceive.symbol
+      }
+    }
   }
 }
