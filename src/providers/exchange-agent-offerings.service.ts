@@ -68,7 +68,7 @@ export class ExchangeAgentOfferingsService extends BaseService implements CrudSe
               //Compra
               let buyExchange = exchangeAgentOfferingList.find( e => e.requestedCurrency == currency.code ) || new ExchangeAgentOffering({
                 receivedCurrency: 'PEN',
-                receivedCurrencyAmount: 0,
+                receivedCurrencyAmount: '0.0' as any,
                 requestedCurrency: currency.code,
                 requestedCurrencyAmount: 1,
                 type: 'C',
@@ -78,7 +78,7 @@ export class ExchangeAgentOfferingsService extends BaseService implements CrudSe
               //Venta
               let sellExchange = exchangeAgentOfferingList.find( e => e.receivedCurrency == currency.code ) || new ExchangeAgentOffering({
                 requestedCurrency: 'PEN',
-                requestedCurrencyAmount: 0,
+                requestedCurrencyAmount: '0.0' as any,
                 receivedCurrency: currency.code,
                 receivedCurrencyAmount: 1,
                 type: 'V',

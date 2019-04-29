@@ -171,7 +171,7 @@ export class AuthProvider {
         if( !!errorMessage ){
           this.alerts.show(errorMessage,'Login');
         }else{
-          alert(JSON.stringify(err));
+          //alert(JSON.stringify(err));
         }
         Raven.captureException(err);
         this.googlePlus.logout();
@@ -180,7 +180,7 @@ export class AuthProvider {
     })
     .catch( err => {
       // this.alerts.show('No se pudo realizar el login con Google, por favor inténtelo más tarde ','Error login');
-      alert(JSON.stringify(err));
+      //alert(JSON.stringify(err));
       Raven.captureException(err);
       return Observable.of({ couldLogin: false });  
     });
@@ -210,7 +210,7 @@ export class AuthProvider {
         if( !!errorMessage ){
           this.alerts.show(errorMessage,'Login');
         }else{
-          alert(JSON.stringify(err));
+          //alert(JSON.stringify(err));
         }
         Raven.captureException(err);
         this.facebook.logout();
@@ -222,7 +222,7 @@ export class AuthProvider {
       if( err.errorCode ){
         return Observable.of({ couldLogin: false, canceled: true });
       }
-      alert(JSON.stringify(err)); 
+      //alert(JSON.stringify(err)); 
       Raven.captureException(err); 
       this.facebook.logout();
       return Observable.of({ couldLogin: false });
