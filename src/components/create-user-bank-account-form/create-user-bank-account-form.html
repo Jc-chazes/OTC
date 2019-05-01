@@ -41,7 +41,7 @@
       <input type="number" pattern="[0-9]*" class="fill-width" formControlName="accountNumber">
     </ion-col>
   </ion-row>
-  <ion-row align-items-center>
+  <!-- <ion-row align-items-center>
     <ion-col col-5>
       <div class="text-muted">
         Tipo de cuenta
@@ -55,6 +55,17 @@
           <span>{{ currency.name }}</span>
         </ion-col>
       </ion-row>
+    </ion-col>
+  </ion-row> -->  
+  <ion-row align-items-center>
+    <ion-col col-5 class="text-muted">Tipo de moneda</ion-col>
+    <ion-col col-7>
+      <ion-select formControlName="currency" class="input fill-width"
+      [selectOptions]="{ title: 'Tipos de moneda' }">
+        <ion-option [value]="currency" *ngFor="let currency of currencyList">
+          {{ currency.name }}
+        </ion-option>
+      </ion-select>
     </ion-col>
   </ion-row>
   <ion-row align-items-center>

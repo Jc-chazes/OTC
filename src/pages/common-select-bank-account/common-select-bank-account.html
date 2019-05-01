@@ -100,7 +100,8 @@
             </ion-col>
           </ion-row>
         </div>
-        <div *ngIf=" mode == 'NEW'">
+        <!-- <div *ngIf=" mode == 'NEW'"> -->
+        <div [hidden]="mode != 'NEW'">
           <create-user-bank-account-form [userBankAccountFG]="userBankAccountFG"></create-user-bank-account-form>
         </div>
         <div class="spacer-20"></div>

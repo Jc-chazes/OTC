@@ -14,14 +14,23 @@
 
 <ion-content padding class="page text-14">
   <div class="fill-height flex-col-layout jc-center">
-    <p class="text-center no-margin page-title">
-      <b>Transacción en proceso</b>
+    <p class="text-center no-margin page-title" *ngIf="transaction.status == '2' && transaction.type == 'SAFE'">
+      <b>Pendiente <br> de aprobación</b>
     </p>
+    <p class="text-center no-margin page-title"
+    *ngIf="transaction.status == '3' || (transaction.status == '2' && transaction.type == 'FAST')">
+      <b>Verificando <br> transacción</b>
+    </p>
+    <div *ngIf="transaction.status == '3' || (transaction.status == '2' && transaction.type == 'FAST')"
+    class="text-center">
+      <div class="spacer-10"></div>
+      <img src="http://157.230.229.87:85/static/imgs/icons/searching.png" alt="" width="30">
+    </div>
     <div class="spacer-20"></div>
     <ion-row align-items-center>
-      <ion-col col-6 class="text-right"> <span><b>Tu número de <br> transacción es: </b></span> </ion-col>
-      <ion-col col-6>
-        <ion-badge color="secondary" class="successfulTransactionModal__transationCode pt-10 pb-10">
+      <ion-col col-12 class="text-center"> <span><b>Tu número de <br> transacción es: </b></span> </ion-col>
+      <ion-col col-12 class="text-center">
+        <ion-badge color="secondary" class="successfulTransactionModal__transationCode pt-5 pb-5 pl-30 pr-30">
           {{ transaction.code }}
         </ion-badge>
       </ion-col>
@@ -41,7 +50,7 @@
       </p>      
     </ng-container>
     <div class="text-center">
-      <ion-badge color="secondary" class="pt-10 pb-10 pl-25 pr-25">
+      <ion-badge color="secondary" class="pt-5 pb-5 pl-25 pr-25">
         {{ transaction.currencyToReceive.symbol }} {{ transaction.amountToReceive.toFixed(2) }}
       </ion-badge>
     </div>

@@ -22,21 +22,24 @@
         <div class="spacer-30"></div>
         <stepper mode="exchange-agent" [currentStep]="4"></stepper>
         <p class="text-center">
-          Realice la transferencia o depósito del monto correspondiente a cualquiera de las siguientes cuentas:
+          <!-- Realice la transferencia o depósito del monto correspondiente a cualquiera de las siguientes cuentas: -->
+          Realiza la transferencia o depósito de:
         </p>
         <ion-row justify-content-center align-items-center>
-          <ion-col col-auto>
+          <!-- <ion-col col-auto>
             <p class="text-muted">Monto a <br> depositar</p>
-          </ion-col>
-          <ion-col col-5>
+          </ion-col> -->
+          <ion-col col-5 class="text-center">
             <input class="text-center fill-width" type="text" readonly 
             [value]=" transaction.currencyToDeposit.symbol + ' ' + ( otcComission.content + transaction.amountToDeposit ) ">
+            <div class="spacer-5"></div>
+            <span class="text-muted">Solicitud + comisión</span>
           </ion-col>
-          <ion-col col-auto class="text-muted">
+          <!-- <ion-col col-auto class="text-muted">
             <p>Solicitud + <br> comisión</p>
-          </ion-col>
+          </ion-col> -->
         </ion-row>
-        <div class="commonTransferToOTC__container">
+        <!-- <div class="commonTransferToOTC__container">
           <ion-row align-items-center>
             <ion-col col-6>
               <p class="text-right"><b>Nombre de la cuenta:&nbsp;&nbsp;&nbsp;</b></p>
@@ -53,9 +56,9 @@
               <input type="text" class="fill-width" readonly [value]="otcRuc.content">
             </ion-col>
           </ion-row>
-        </div>    
+        </div> -->
       </div>
-      <p padding class="pb-0 pt-0">Nuestras cuentas:</p>
+      <p padding class="pb-0 pt-0 text-center">A una de nuestras entidades bancarias</p>
       <div class="commonTransferToOTC__banks">
         <div class="pos-relative">
           <!-- <div class="commonTransferToOTC__banks__item flex text-center" *ngFor="let bankAccount of otcBankAccountList"
@@ -79,8 +82,26 @@
       </div>
       <div class="commonTransferToOTC__container" *ngIf="!!selectedOtcBankAccount">
         <div class="spacer-15"></div>
-        <ion-row align-items-center>
-          <ion-col col-6>
+        <div class="commonTransferToOTC__container">
+          <ion-row align-items-center>
+            <ion-col col-6>
+              <p class="text-right"><b>Nombre de la cuenta:&nbsp;&nbsp;&nbsp;</b></p>
+            </ion-col>
+            <ion-col col-6>
+              <input type="text" class="fill-width" readonly [value]="otcBusinessName.content">
+            </ion-col>
+          </ion-row>
+          <ion-row align-items-center>
+            <ion-col col-6>
+              <p class="text-right"><b>RUC:&nbsp;&nbsp;&nbsp;</b></p>
+            </ion-col>
+            <ion-col col-6>
+              <input type="text" class="fill-width" readonly [value]="otcRuc.content">
+            </ion-col>
+          </ion-row>
+        </div>
+        <ion-row align-items-center justify-content-center>
+          <!-- <ion-col col-6>
             <ion-row align-items-center>
               <ion-col col-11>
                 <div class="p-10 bk-white">
@@ -88,20 +109,20 @@
                 </div>
               </ion-col>
             </ion-row>
-          </ion-col>
+          </ion-col> -->
           <ion-col col-6>
             <div>
-              <span class="text-muted">Número de cuenta</span><br>
+              <span class="">Número de cuenta</span><br>
               <input type="number" class="fill-width" readonly [value]="selectedOtcBankAccount.accountNumber">
             </div>
             <div class="spacer-5"></div>
             <div>
-              <span class="text-muted">Tipo de cuenta</span><br>
+              <span class="">Tipo de cuenta</span><br>
               <input type="text" class="fill-width" readonly [value]="selectedOtcBankAccount.formattedAccountType()">
             </div>
             <div class="spacer-5"></div>
             <div>
-              <span class="text-muted">Moneda</span><br>
+              <span class="">Moneda</span><br>
               <input type="text" class="fill-width" readonly [value]="selectedOtcBankAccount.currency.name">
             </div>
           </ion-col>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavController, NavParams, ModalController, ViewController } from 'ionic-angular';
 import { UserBankAccount } from '../../models/user-bank-account.model';
 import { Bank } from '../../models/bank.model';
@@ -14,6 +14,8 @@ import { AlertUtil } from '../../providers/utils/alert.util';
 import { UsersService } from '../../providers/users.service';
 import { ModalUtil, AvailableModals } from '../../providers/utils/modal.util';
 import { Subject } from 'rxjs';
+import { Currency } from '../../models/currency.model';
+import { CreateUserBankAccountFormComponent } from '../../components/create-user-bank-account-form/create-user-bank-account-form';
 
 /**
  * Generated class for the CommonSelectBankAccountPage page.
@@ -39,6 +41,7 @@ export class CommonSelectBankAccountPage implements OnInit {
   canContinue = false;
   continue = new Subject();
   _this = this;
+  @ViewChild(CreateUserBankAccountFormComponent) createUserBankAccountFormCmp: CreateUserBankAccountFormComponent;
 
   constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, private alerts: AlertUtil,
     private userBankAccounts: UsersBankAccountsService, private loading: LoadingUtil, public users: UsersService,
@@ -116,9 +119,10 @@ export class CommonSelectBankAccountPage implements OnInit {
       if( ( this.users.currentUser.isPerson() && !!this.transaction.personBankAccount )
       || ( this.users.currentUser.isExchangeAgent() && !!this.transaction.exchangeAgentBankAccount ) ){
         let assignedBankAccount = this.users.currentUser.isPerson() ? this.transaction.personBankAccount : this.transaction.exchangeAgentBankAccount;
-        this.userBankAccountFG.patchValue({
-          ...assignedBankAccount
-        });
+        // this.userBankAccountFG.patchValue({
+        //   ...assignedBankAccount
+        // });
+        this.createUserBankAccountFormCmp.setCurrency( this.validCurrency() );
         this.acceptTermsAndConditions = true;
         this.mode = 'SELECT';
         this.selectedUserBankAccount = this.userBankAccountList.find( ba => ba.apellative == assignedBankAccount.apellative );
@@ -128,7 +132,6 @@ export class CommonSelectBankAccountPage implements OnInit {
   }
 
   ngOnInit(){
-    
   }
 
   onPreviousBank(){
@@ -167,8 +170,10 @@ export class CommonSelectBankAccountPage implements OnInit {
         //   return;
         // }
         let toCreateBankAccount = this.userBankAccountFG.value as UserBankAccount;
-        if( ( this.users.currentUser.userType == '0' && toCreateBankAccount.currency.code != this.transaction.exchangeAgentOffering.requestedCurrency )
-         || ( this.users.currentUser.userType == '1' && toCreateBankAccount.currency.code != this.transaction.exchangeAgentOffering.receivedCurrency ) ){
+        let validCurrencyCode = this.validCurrency();
+        // if( ( this.users.currentUser.userType == '0' && toCreateBankAccount.currency.code != this.transaction.exchangeAgentOffering.requestedCurrency )
+        //  || ( this.users.currentUser.userType == '1' && toCreateBankAccount.currency.code != this.transaction.exchangeAgentOffering.receivedCurrency ) ){
+        if( validCurrencyCode !== toCreateBankAccount.currency.code ) {
           this.alerts.show('Moneda no válida para la transacción en curso','Cuentas bancarias');
           return;
         }
@@ -183,6 +188,15 @@ export class CommonSelectBankAccountPage implements OnInit {
       }
     }else{
       this.goToOTCBankAccounts( this.selectedUserBankAccount );
+    }
+  }
+
+  validCurrency(): string{
+    if( this.users.currentUser.userType == '0' ){
+      return this.transaction.exchangeAgentOffering.requestedCurrency;
+    }
+    if( this.users.currentUser.userType == '1' ){
+      return this.transaction.exchangeAgentOffering.receivedCurrency;
     }
   }
 
