@@ -35,6 +35,7 @@
     "@ionic/storage": "2.2.0",
     "@ngrx/store": "^6.1.2",
     "angularfire2": "^5.0.0-rc.4",
+    "cordova-android": "7.1.1",
     "cordova-android-firebase-gradle-release": "1.0.3",
     "cordova-android-play-services-gradle-release": "^1.4.4",
     "cordova-browser": "5.0.4",
@@ -140,7 +141,8 @@
     },
     "platforms": [
       "browser",
-      "ios"
+      "ios",
+      "android"
     ]
   },
   "config": {

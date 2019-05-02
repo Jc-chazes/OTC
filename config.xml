@@ -136,7 +136,6 @@
         <variable name="FACEBOOK_ANDROID_SDK_VERSION" value="4.38.1" />
         <variable name="FACEBOOK_HYBRID_APP_EVENTS" value="false" />
     </plugin>
-    <engine name="browser" spec="5.0.4" />
     <plugin name="cordova-plugin-googleplus" spec="^7.0.1">
         <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.740710948871-nvt4ps8huflgd92lbpqsf7hghqoedv8i" />
         <variable name="WEB_APPLICATION_CLIENT_ID" value="740710948871-ilm0aeau71i2bsv0bihdfqojgacvrpo4.apps.googleusercontent.com" />
@@ -145,5 +144,7 @@
     <plugin name="cordova-plugin-firebase" spec="2.0.5">
         <variable name="IOS_HIDE_FOREGROUND_NOTIFICACION" value="false" />
     </plugin>
-    <engine name="ios" spec="~4.5.5" />
+    <engine name="browser" spec="5.0.4" />
+    <engine name="ios" spec="4.5.5" />
+    <engine name="android" spec="7.1.1" />
 </widget>
