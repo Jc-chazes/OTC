@@ -2,7 +2,12 @@
 @import './header.scss';
 @import './tab.scss';
 @import './button.scss';
+@import './datetime.scss';
 
 .picker-ios .picker-opt{
     color: #000 !important;
+}
+
+.select-text{
+    font-size: 1.1em;
 }
