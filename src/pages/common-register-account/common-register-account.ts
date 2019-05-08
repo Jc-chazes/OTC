@@ -64,7 +64,7 @@ export class CommonRegisterAccountPage {
         name: [undefined,Validators.required],//EXCHANGE AGENT
         documentNumber: [undefined,Validators.required],//COMMON
         birthdate: [null,[]],//COMMON
-        formatBirthdate: [''],//COMMON
+        formatBirthdate: ['',[this.byType('1',Validators.required)]],//COMMON
         address: [undefined,Validators.required],//EXCHANGE AGENT
         phone: [undefined,Validators.required],//EXCHANGE AGENT
         sbsRegisterNumber: [undefined, this.byType('0',Validators.required)],//EXCHANGE AGENT
@@ -225,6 +225,10 @@ export class CommonRegisterAccountPage {
   isInvalid(control: string | AbstractControl){
     let insControl = control instanceof AbstractControl ? control : this.profileFG.controls[control] ;
     return insControl.invalid && insControl.touched;
+  }
+
+  onBirthdateDatepickerCancel(){
+    this.profileFG.get('formatBirthdate').markAsTouched();
   }
 
 }
