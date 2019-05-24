@@ -26,7 +26,7 @@ export class RequestWasRejectedModalComponent {
     this.rechazadaCancelada = params.get('rechazadaCancelada');
     switch(this.rejectionReason){
       case 'NO_FONDO':
-        this.rejectionReasonText = 'No cuenta son saldo suficiente'; break;
+        this.rejectionReasonText = 'No cuenta con saldo suficiente'; break;
       case 'NO_DISPONIBLE':
         this.rejectionReasonText = 'No se encuentra disponible'; break;
       case 'NO_SE':
