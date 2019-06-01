@@ -166,7 +166,11 @@ export class QuotePage implements OnInit {
     // console.log(this.cant);
     if( !this.cant || this.cant > 10000 ){
       window.navigator.vibrate(200);
-      this.alerts.show('El monto que ingresa es inválido, supera los $ 10 000.','Cotiza');
+      if( (this.cant || 0 ) <=  0 ){
+        this.alerts.show('El monto que ingresa tiene que ser mayor a 0','Cotiza');
+      }else{
+        this.alerts.show('El monto que ingresa es inválido, supera los $ 10 000.','Cotiza');
+      }
       return;
     }
 
