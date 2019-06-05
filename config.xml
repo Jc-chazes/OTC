@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.otc.app" version="0.0.11" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.otc.app" version="0.0.12" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>OTC Perú</name>
     <description>OTC Tipo de cambio</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Dinjo Joestar</author>
@@ -25,10 +25,10 @@
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="loadUrlTimeoutValue" value="700000" />
     <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
-        <string>Permitir el uso de la cámara</string>
+        <string>Permitir a OTC acceder a la cámara de tu dispositivo para tomar fotos del voucher de transacción y foto de perfil.</string>
     </edit-config>
     <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryUsageDescription">
-        <string>Permitir el uso de la biblioteca de fotos</string>
+        <string>Permitir a OTC acceder a las fotos de tu dispositivo para agregar fotos del voucher de transacción y editar la foto de perfil.</string>
     </edit-config>
     <platform name="android">
         <allow-intent href="market:*" />
@@ -146,5 +146,5 @@
     </plugin>
     <engine name="browser" spec="5.0.4" />
     <engine name="android" spec="7.1.1" />
-    <engine name="ios" spec="4.5.5" />
+    <engine name="ios" spec="~4.5.5" />
 </widget>
