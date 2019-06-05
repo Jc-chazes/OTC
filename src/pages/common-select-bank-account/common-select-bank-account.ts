@@ -37,7 +37,7 @@ export class CommonSelectBankAccountPage implements OnInit {
   currentBankIndex = 0;
   userBankAccountFG: FormGroup;
   transaction: Transaction;
-  acceptTermsAndConditions = false;
+  acceptTermsAndConditions = true;
   canContinue = false;
   continue = new Subject();
   _this = this;
@@ -157,10 +157,10 @@ export class CommonSelectBankAccountPage implements OnInit {
   }
 
   save(){
-    if( !this.acceptTermsAndConditions ){
-      this.alerts.show('Debe aceptar los términos y condiciones','Cuentas bancarias');
-      return;
-    }
+    // if( !this.acceptTermsAndConditions ){
+    //   this.alerts.show('Debe aceptar los términos y condiciones','Cuentas bancarias');
+    //   return;
+    // }
     if( this.mode == 'NEW' ){
       if( this.userBankAccountFG.valid ){
         const { bank, accountNumber } = this.userBankAccountFG.value;

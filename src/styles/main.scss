@@ -7,3 +7,7 @@
 @import '7-themes/index';
 @import '8-vendors/index';
 @import "9-trumps/index";
+
+ion-app.platform-ios12 ion-content{
+    pointer-events: auto;
+}

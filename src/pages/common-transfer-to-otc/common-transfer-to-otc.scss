@@ -1,6 +1,10 @@
 @import "../../styles/1-settings/index";
 
 page-common-transfer-to-otc {
+    .backButton{
+        position: static;
+        margin-bottom: -35px;
+    }    
     .commonTransferToOTC{
         &__container{
             max-width: 300px;
