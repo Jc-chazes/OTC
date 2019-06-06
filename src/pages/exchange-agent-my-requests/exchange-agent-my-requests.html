@@ -66,7 +66,7 @@
           </ion-col>
           <ion-col col-4 (tap)="goToRequestDetails(transaction)">
             <p>
-              {{ transaction.person.fullName }}
+              {{ transaction.person.businessName || transaction.person.fullName }}
             </p>
             <p>
               <span class="text-thin">Servicio:&nbsp;</span>
