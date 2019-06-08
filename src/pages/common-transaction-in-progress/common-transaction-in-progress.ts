@@ -99,7 +99,7 @@ export class CommonTransactionInProgressPage implements OnDestroy {
   }
 
   get hideCancelTrigger(){
-    return this.transaction.status == '3';
+    return this.transaction.status === '3' || (this.transaction.status === '2' && this.transaction.type === 'FAST');
   }
 
 }
