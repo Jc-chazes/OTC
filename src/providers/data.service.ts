@@ -18,7 +18,7 @@ export class DataService {
         const headers = new HttpHeaders({
             'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwidXNlclR5cGUiOiIwIiwiaWF0IjoxNTQ1NTgwNDUyLCJleHAiOjE1NDgxNzI0NTJ9.6SrCkHv1Wm0BLv2yTiQGY3SVMtNVZix_FNpQwSkpe_s'
         })
-        return this.http.get('http://104.236.19.32:60/exchangeagents?_sort=precio&requestedCurrency=PEN&operation=C',{headers})
+        return this.http.get('https://backend.otcperu.com.pe/exchangeagents?_sort=precio&requestedCurrency=PEN&operation=C',{headers})
        
     }
  

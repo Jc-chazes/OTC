@@ -74,7 +74,7 @@ export class AuthProvider {
   }
 
   registrerUser(data) {
-    const url = 'http://104.236.19.32:60/auth/local/register'
+    const url = 'https://backend.otcperu.com.pe/auth/local/register'
     let headers = {
       'Content-Type': 'application/json'
     }
