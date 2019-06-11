@@ -163,6 +163,9 @@ export class CommonRegisterAccountPage {
       }) ).subscribe( couldRegister => {
         this.loading.hide();  
         if( !couldRegister ){
+          if( couldRegister === undefined ){
+            // this.profileFG.reset();
+          }
           return ;
         }
         let savedUserBankAccount = this.appState.currentState.register.savedUserBankAccount;

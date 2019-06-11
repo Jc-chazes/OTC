@@ -25,6 +25,7 @@ import { Configuration } from '../settings/configuration.settings';
 import { BackendMessages, Messages } from '../settings/messages.settings';
 import * as Raven from 'raven-js';
 import { LoadingUtil } from './utils/loading.util';
+import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class AuthProvider {
@@ -112,8 +113,10 @@ export class AuthProvider {
         birthdate: exchangeAgent.birthdate ? `${exchangeAgent.birthdate}T12:00:00Z` : null
       }
     }).flatMap( resp => {
-      this.jwt.setToken(resp.jwt);
-      return this.populate();
+      // this.jwt.setToken(resp.jwt);
+      // return this.populate();
+        this.alerts.show('Su cuenta ha sido creada. Estamos en proceso de validación de sus datos.','Registro exitoso');
+        return of(undefined);
     }).catch( err => {
       if( err.error && err.error.message == BackendMessages["auth.error.emailAlreadyExists"] ){
         this.alerts.show( Messages["auth.error.emailAlreadyExists"], 'Registro' );

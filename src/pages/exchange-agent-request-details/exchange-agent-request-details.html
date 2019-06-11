@@ -24,7 +24,7 @@
           <div class="square w-background-image-top" [style.backgroundImage]="avatarUrl"></div>
         </ion-col>
         <ion-col col-6>
-          <p>{{ transaction.person.fullName }}</p>
+          <p>{{ transaction.person.businessName || transaction.person.fullName }}</p>
           <p>{{ transaction.person.user.email }}</p>
           <p>{{ transaction.person.birthdate | age }} años</p>
         </ion-col>
