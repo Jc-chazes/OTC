@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, App } from 'ionic-angular';
-import { FormGroup, FormBuilder, Validators, AbstractControl, Validator, ValidationErrors } from '@angular/forms';
+import { NavController, NavParams, ModalController, App, Platform } from 'ionic-angular';
+import { FormGroup, FormBuilder, Validators, AbstractControl, Validator, ValidationErrors, FormControl } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth.service';
 import { AppStateService } from '../../providers/app-state.service';
 import { UsersBankAccountsService } from '../../providers/users-bank-accounts.service';
@@ -26,11 +26,42 @@ export class CommonRegisterAccountPage {
   profileFG: FormGroup;
   showPassword = false;
   provider: 'GOOGLE' | 'FACEBOOK';
+  optionalFieldsForIos = ['cellphone','phone','documentNumber','ruc'];
+
+  get isIos(){
+    return this.platform.is('ios');
+  }
+
+  requiredByPlatform(fieldName: string){
+    return ( c: FormControl ) => {
+      if( !c.parent ){
+        return null;
+      }
+      if( !this.isIos ){
+        return Validators.required(c);
+      }else{
+        if( this.optionalFieldsForIos.indexOf(fieldName) >= 0 ){
+          return null;
+        }else{
+          return Validators.required(c);
+        }
+      }
+    }
+  }
+
+  isRequiredInPlatform( fieldName ): boolean{
+    if( this.isIos ){
+      return this.optionalFieldsForIos.indexOf(fieldName) < 0;
+    }else{
+      return true;
+    }
+  }
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private app: App,
   private fb: FormBuilder, private auth: AuthProvider, public appState: AppStateService,
   private UsersBankAccounts: UsersBankAccountsService, private modals: ModalUtil,
-  private modalCtrl: ModalController, private alerts: AlertUtil, private loading: LoadingUtil) {
+  private modalCtrl: ModalController, private alerts: AlertUtil, private loading: LoadingUtil,
+  private platform: Platform) {
     this.userType = this.appState.currentState.global.userType;
     if( this.isPerson ){
       this.profileFG = this.fb.group({
@@ -38,10 +69,10 @@ export class CommonRegisterAccountPage {
         lastName: [undefined,[ this.byType('0',Validators.required,'lastName') ]],//PERSON
         birthdate: [null,[ this.byType('0',Validators.required,'birthdate'), this.ageValidator ]],//COMMON
         formatBirthdate: [''],//COMMON
-        documentNumber: [undefined,[ this.byType('0',Validators.required) ]],//COMMON
+        documentNumber: [undefined,[ this.byType('0',this.requiredByPlatform('documentNumber')) ]],//COMMON
         businessName: [undefined,[ this.byType('1',Validators.required) ]],//PERSON
-        ruc: [undefined,[ this.byType('1',Validators.required) ]],//PERSON
-        cellphone: [undefined,[Validators.required]],//PERSON    
+        ruc: [undefined,[ this.byType('1',this.requiredByPlatform('ruc')) ]],//PERSON
+        cellphone: [undefined,[ this.requiredByPlatform('cellphone') ]],//PERSON    
         type: ['0',Validators.required],//COMMON
         acceptTermsAndConditions: [false,[]],//COMMON        
         user: this.fb.group({//COMMON
@@ -62,11 +93,11 @@ export class CommonRegisterAccountPage {
     if( this.isExchangeAgent ){
       this.profileFG = this.fb.group({
         name: [undefined,Validators.required],//EXCHANGE AGENT
-        documentNumber: [undefined,Validators.required],//COMMON
+        documentNumber: [undefined,this.requiredByPlatform('documentNumber')],//COMMON
         birthdate: [null,[]],//COMMON
         formatBirthdate: ['',[this.byType('1',Validators.required)]],//COMMON
         address: [undefined,Validators.required],//EXCHANGE AGENT
-        phone: [undefined,Validators.required],//EXCHANGE AGENT
+        phone: [undefined,this.requiredByPlatform('phone')],//EXCHANGE AGENT
         sbsRegisterNumber: [undefined, this.byType('0',Validators.required)],//EXCHANGE AGENT
         type: ['0',Validators.required],//COMMON
         acceptTermsAndConditions: [false,[]],//COMMON

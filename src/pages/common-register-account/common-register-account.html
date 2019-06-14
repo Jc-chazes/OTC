@@ -79,10 +79,12 @@
             <div class="form-input required" [class.invalid]="isInvalid('businessName')">
               <input type="text" class="fill-width" placeholder="Razón social" formControlName="businessName"></div></div>
           <div class="p-5" *ngIf="isPerson && profileFG.value.type == '1'">
-            <div class="form-input required" [class.invalid]="isInvalid('ruc')">
+            <div class="form-input required" [class.required]="isRequiredInPlatform('ruc')" 
+            [class.invalid]="isInvalid('ruc')">
               <input type="number" class="fill-width" placeholder="Ruc" formControlName="ruc"></div></div>
           <div class="p-5" *ngIf="isExchangeAgent">
-            <div class="form-input required" [class.invalid]="isInvalid('documentNumber')">
+            <div class="form-input" [class.required]="isRequiredInPlatform('documentNumber')" 
+            [class.invalid]="isInvalid('documentNumber')">
               <input type="number" class="fill-width" placeholder="Dni / Ruc" formControlName="documentNumber"></div></div>
           <ng-container *ngIf=" (isExchangeAgent && profileFG.value.type == '1') || (isPerson && profileFG.value.type == '0') ">
             <div class="p-5 pos-relative">
@@ -94,16 +96,19 @@
             </div>
           </ng-container>
           <div class="p-5" *ngIf="isPerson && profileFG.value.type == '0'">
-            <div class="form-input required" [class.invalid]="isInvalid('documentNumber')">
+            <div class="form-input required" [class.required]="isRequiredInPlatform('documentNumber')"
+            [class.invalid]="isInvalid('documentNumber')">
               <input type="number" class="fill-width" placeholder="Dni / Carné de extranjería" formControlName="documentNumber"></div></div>
           <div class="p-5" *ngIf="isExchangeAgent">
             <div class="form-input required" [class.invalid]="isInvalid('address')">
               <input type="text" class="fill-width" placeholder="Dirección" formControlName="address"></div></div>
           <div class="p-5" *ngIf="isExchangeAgent">
-            <div class="form-input required" [class.invalid]="isInvalid('phone')">
+            <div class="form-input required" [class.required]="isRequiredInPlatform('phone')"
+            [class.invalid]="isInvalid('phone')">
               <input type="number" class="fill-width" placeholder="Teléfono / celular" formControlName="phone"></div></div>
           <div class="p-5" *ngIf="isPerson">
-            <div class="form-input required" [class.invalid]="isInvalid('cellphone')">
+            <div class="form-input required" [class.required]="isRequiredInPlatform('cellphone')"
+            [class.invalid]="isInvalid('cellphone')">
               <input type="number" class="fill-width" placeholder="Celular" formControlName="cellphone"></div></div>
           <div class="p-5" *ngIf="isExchangeAgent">
             <div class="form-input" [class.required]="profileFG.value.type == '0'" [class.invalid]="isInvalid('sbsRegisterNumber')">
