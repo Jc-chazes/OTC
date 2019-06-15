@@ -38,7 +38,7 @@
               <ion-row>
                 <ion-col col-6 class="text-thin">
                   <span *ngIf="!isPerson">
-                    <span>Cliente:</span>&nbsp;<b>{{ tx.person.fullName }}</b>
+                    <span>Cliente:</span>&nbsp;<b>{{ tx.person.businessName || tx.person.fullName }}</b>
                   </span>
                   <span *ngIf="isPerson">
                     <span>Casa de cambio:</span>&nbsp;<b>{{ tx.exchangeAgent.name }}</b>

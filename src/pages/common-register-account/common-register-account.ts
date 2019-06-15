@@ -30,6 +30,7 @@ export class CommonRegisterAccountPage {
 
   get isIos(){
     return this.platform.is('ios');
+    // return true;
   }
 
   requiredByPlatform(fieldName: string){
