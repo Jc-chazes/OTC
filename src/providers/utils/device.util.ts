@@ -31,4 +31,9 @@ export class DeviceUtil{
         })
     }
 
+    private isIos(){
+        //return true;
+        return this.platform.is('ios');
+    }
+
 }

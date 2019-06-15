@@ -6,7 +6,7 @@
       </div>
     </ion-col>
     <ion-col>
-      <div class="input pos-relative">
+      <div class="input pos-relative"  style="height: 15px;">
         <ng-container *ngFor="let bank of bankList; let i = index;">
           <div class="bank" *ngIf="i == currentBankIndex">
             <img [src]="bank.image.fileUrl" alt="" class="bank__image">

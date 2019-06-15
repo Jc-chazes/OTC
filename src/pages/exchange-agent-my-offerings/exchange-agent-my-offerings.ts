@@ -12,6 +12,7 @@ import { ExchangeAgentMyRequestsPage } from '../exchange-agent-my-requests/excha
 import { ExchangeAgentOfferingGroup } from '../../models/exchang-agent-offering-group.model';
 import { ModalUtil, AvailableModals } from '../../providers/utils/modal.util';
 import { DomSanitizer } from '@angular/platform-browser';
+import { DeviceUtil } from '../../providers/utils/device.util';
 
 /**
  * Generated class for the ExchangeAgentMyOfferingsPage page.
@@ -32,7 +33,7 @@ export class ExchangeAgentMyOfferingsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController,
   private loading: LoadingUtil, private alert: AlertUtil, private modalCtrl: ModalController, private modals: ModalUtil,
   private currencies: CurrenciesService, private exchangeAgentOfferings: ExchangeAgentOfferingsService,
-  private sanitizer: DomSanitizer) {
+  private sanitizer: DomSanitizer, public device: DeviceUtil) {
     this.exchangeAgentOfferings.getGroupedExchangeAgentOfferings()
     .subscribe( results => {
       this.groupedExchangeAgentOfferingList = results;

@@ -22,6 +22,7 @@ stepper {
             margin: 5px -5px;
             overflow-wrap: normal;
             word-break: keep-all;
+            -ms-word-break: keep-all;
             -webkit-hyphens: none;
             @include opacity(0);
         }

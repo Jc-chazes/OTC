@@ -12,8 +12,10 @@
   
 
   
-<ion-content padding class="page">
-  <div class="fill-height flex-col-layout">
+<ion-content class="page">
+  <div class="fill-height flex-col-layout" 
+  [class.p-15]="!device.isIos"
+  [class.p-5]="device.isIos">
     <div>
       <update-exchange-reminder></update-exchange-reminder>
     </div>

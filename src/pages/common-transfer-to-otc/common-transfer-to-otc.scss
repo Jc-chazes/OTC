@@ -2,7 +2,8 @@
 
 page-common-transfer-to-otc {
     .backButton{
-        position: static;
+        position: relative;
+        left: 0;
         margin-bottom: -35px;
     }    
     .commonTransferToOTC{

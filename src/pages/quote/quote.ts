@@ -36,7 +36,7 @@ export class QuotePage implements OnInit {
   availableCurrencyCodesRight: string[] = [];
   sellAvailableTransformations: string[] = [];
   buyAvailableTransformacions: string[] = [];
-  operation = 'C';
+  operation = 'V';
   cantInput : any;
   @ViewChild('quantityInput') quantityInputElm: ElementRef;
   
