@@ -98,11 +98,13 @@ export class UsersService extends BaseService{
 
     updateMissingFields( missingFields: { [missingFieldName: string]: any } ): Observable<boolean>{
         let url = '';
+        
         if( this.currentUser.isPerson() ){
             url = `/people/${this.currentUser.person.id}`;
         }else{
             url = `/exchangeagents/${this.currentUser.exchangeAgent.id}`;
         }
+
         return this.api.patch(url,missingFields)
         .map( resp => {
             return true;            
