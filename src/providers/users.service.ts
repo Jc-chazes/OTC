@@ -103,7 +103,7 @@ export class UsersService extends BaseService{
         }else{
             url = `/exchangeagents/${this.currentUser.exchangeAgent.id}`;
         }
-        return this.api.put(url,missingFields)
+        return this.api.patch(url,missingFields)
         .map( resp => {
             return true;            
         }).catch( err => {
