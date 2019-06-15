@@ -129,7 +129,7 @@ export class ExchangeAgentMyRequestsPage implements OnDestroy, OnInit {
 
     this.listenToReloadSubscription = this.events.reloadPendingTransactions
     .subscribe( () => {
-      this.refresh();
+      this.refresh(false);
     });
     console.info('Se está escuchando al evento de reload');
 

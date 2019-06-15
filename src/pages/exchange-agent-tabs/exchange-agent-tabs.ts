@@ -12,6 +12,7 @@ import { UsersService } from '../../providers/users.service';
 import { ModalUtil, AvailableModals } from '../../providers/utils/modal.util';
 import { Keyboard } from "@ionic-native/keyboard";
 import { componentDestroyed } from '../../helpers/observable.helper';
+import { CommonCompleteProfilePage } from '../common-complete-profile/common-complete-profile';
 
 /**
  * Generated class for the ExchangeAgentTabsPage page.
@@ -88,6 +89,13 @@ export class ExchangeAgentTabsPage implements OnInit, OnDestroy{
     this.notifications.initListenNotifications( this.modalCtrl, this.tabRef )
     .takeUntil( componentDestroyed(this) )
     .subscribe();
+    // this.notifications.initListenNotifications( this.modalCtrl, this.tabRef )
+    // .takeUntil( componentDestroyed(this) )
+    // .subscribe();
+    let missingUserFields = this.users.missingCurrenUserInfoFields();
+    if( !!missingUserFields && missingUserFields.length > 0 ){
+      this.tabHome = CommonCompleteProfilePage;
+    }
     // alert( JSON.stringify(this.modalCtrl) );
     // this.notifications.listenToContests(this.modalCtrl);
   }

@@ -20,6 +20,7 @@ import { ExchangeAgent } from '../../models/exchange-agent.model';
 import { Keyboard } from "@ionic-native/keyboard";
 import { componentDestroyed } from '../../helpers/observable.helper';
 import { EventsUtil } from '../../providers/utils/events.util';
+import { CommonCompleteProfilePage } from '../common-complete-profile/common-complete-profile';
 
 /**
  * Generated class for the PersonTabsPage page.
@@ -97,6 +98,10 @@ export class PersonTabsPage implements OnInit, OnDestroy{
     this.notifications.initListenNotifications( this.modalCtrl, this.tabRef )
     .takeUntil( componentDestroyed(this) )
     .subscribe();
+    let missingUserFields = this.users.missingCurrenUserInfoFields();
+    if( !!missingUserFields && missingUserFields.length > 0 ){
+      this.tabHome = CommonCompleteProfilePage;
+    }
   }
 
   ngOnDestroy(){

@@ -22,6 +22,40 @@ export class UsersService extends BaseService{
         this._currentUser.next(user);
     }
 
+    missingCurrenUserInfoFields(): string[]{
+        const missingFields: string[] = [];
+        if( !this.currentUser ){
+            return [];
+        }
+        if( this.currentUser.isPerson() ){
+            if( this.currentUser.person.type === '0' ){
+                if( !this.currentUser.person.documentNumber ){
+                    missingFields.push('documentNumber');
+                }
+            }else{
+                if( !this.currentUser.person.ruc ){
+                    missingFields.push('ruc');
+                }
+            }
+            if( !this.currentUser.person.cellphone ){
+                missingFields.push('cellphone');
+            }
+        }else{
+            if( this.currentUser.exchangeAgent.type === '0' ){
+
+            }else{
+                
+            }
+            if( !this.currentUser.exchangeAgent.documentNumber ){
+                missingFields.push('documentNumber');
+            }
+            if( !this.currentUser.exchangeAgent.phone ){
+                missingFields.push('phone');
+            }
+        }
+        return missingFields;
+    }
+
     currentUserChanges(): Observable<User>{
         return this._currentUser.asObservable();
     }
@@ -54,6 +88,22 @@ export class UsersService extends BaseService{
             modifier = { phone: phone };
         }
         return this.api.put(url,modifier)
+        .map( resp => {
+            return true;            
+        }).catch( err => {
+            console.error(err);
+            return Observable.of(false);
+        });
+    }
+
+    updateMissingFields( missingFields: { [missingFieldName: string]: any } ): Observable<boolean>{
+        let url = '';
+        if( this.currentUser.isPerson() ){
+            url = `/people/${this.currentUser.person.id}`;
+        }else{
+            url = `/exchangeagents/${this.currentUser.exchangeAgent.id}`;
+        }
+        return this.api.put(url,missingFields)
         .map( resp => {
             return true;            
         }).catch( err => {

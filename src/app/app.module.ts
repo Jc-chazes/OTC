@@ -108,6 +108,7 @@ import { EventsUtil } from '../providers/utils/events.util';
 
 /*Con Angular*/
 import * as Raven from 'raven-js';
+import { CommonCompleteProfilePage } from '../pages/common-complete-profile/common-complete-profile';
 
 Raven
   .config('https://e215c711d63840b48d4c2b91894dda8d@sentry.io/1395719')
@@ -160,7 +161,8 @@ export class RavenErrorHandler extends IonicErrorHandler implements ErrorHandler
     LegalConditionsPage,
     SliderPage,
     ResetPasswordPage,
-    RequestResetPasswordPage
+    RequestResetPasswordPage,
+    CommonCompleteProfilePage
   ],
   imports: [
     BrowserModule,
@@ -224,7 +226,8 @@ export class RavenErrorHandler extends IonicErrorHandler implements ErrorHandler
     LegalConditionsPage,
     SliderPage,
     ResetPasswordPage,
-    RequestResetPasswordPage
+    RequestResetPasswordPage,
+    CommonCompleteProfilePage
   ],
   providers: [
     StatusBar,

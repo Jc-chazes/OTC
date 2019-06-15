@@ -29,7 +29,8 @@ export class CommonRegisterAccountPage {
   optionalFieldsForIos = ['cellphone','phone','documentNumber','ruc'];
 
   get isIos(){
-    return this.platform.is('ios');
+    //return this.platform.is('ios');
+    return true;
   }
 
   requiredByPlatform(fieldName: string){
