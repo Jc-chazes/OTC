@@ -119,7 +119,9 @@ export class CommonRegisterAccountPage {
     });
     this.profileFG.get('type').valueChanges.subscribe( () => {
       Object.keys( this.profileFG.controls )
-      .filter( control => [ 'firstName','lastName','birthdate','documentNumber','businessName','ruc','sbsRegisterNumber' ].indexOf(control) >= 0 )
+      .filter( control => [ 
+        'firstName','lastName','birthdate','formatBirthdate','documentNumber'
+        ,'businessName','ruc','sbsRegisterNumber' ].indexOf(control) >= 0 )
       .forEach( control => {
         this.profileFG.controls[control].updateValueAndValidity();
       })
