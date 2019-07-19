@@ -27,7 +27,7 @@ export class CommonMyProfilePage {
     { name: 'Nosotros', icon: 'http://157.230.229.87:85/static/imgs/icons/profile_us.png', page: UsPage },
     { name: 'Condiciones legales', icon: 'http://157.230.229.87:85/static/imgs/icons/profile_legal.png', page: LegalConditionsPage },
     { name: 'Contáctenos', icon: 'http://157.230.229.87:85/static/imgs/icons/profile_contact.png', page: ContactUsPage },
-    { name: 'www.otc.com', icon: 'http://157.230.229.87:85/static/imgs/icons/profile_web.png', page: null, href: 'https://www.otc.com' },
+    { name: 'www.otcperu.com.pe', icon: 'http://157.230.229.87:85/static/imgs/icons/profile_web.png', page: null, href: 'http://otcperu.com.pe' },
     { name: '@otc.perú', icon: 'http://157.230.229.87:85/static/imgs/icons/profile_fb.png', page: null, href: 'https://www.facebook.com/OTC-PERU-948228435371020' }
   ]
 
