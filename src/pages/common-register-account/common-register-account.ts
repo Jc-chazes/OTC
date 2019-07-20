@@ -195,23 +195,27 @@ export class CommonRegisterAccountPage {
       this.auth.registerExchangeAgent( new ExchangeAgent({
         ...omit(this.profileFG.value,['acceptTermsAndConditions','formatBirthdate'])
       }) ).subscribe( couldRegister => {
-        this.loading.hide();  
-        if( !couldRegister ){
-          if( couldRegister === undefined ){
-            // this.profileFG.reset();
+        this.loading.hide()
+        .then(()=>{
+          if( !couldRegister ){
+            if( couldRegister === undefined ){
+              // this.profileFG.reset();
+            }
+            this.navCtrl.pop();
+            return ;
           }
-          return ;
-        }
-        let savedUserBankAccount = this.appState.currentState.register.savedUserBankAccount;
-        if( savedUserBankAccount.length > 0 ){
-          for(let bankAccount of savedUserBankAccount){
-            this.UsersBankAccounts.add( bankAccount as UserBankAccount )
-              .subscribe( results => {});
+          let savedUserBankAccount = this.appState.currentState.register.savedUserBankAccount;
+          if( savedUserBankAccount.length > 0 ){
+            for(let bankAccount of savedUserBankAccount){
+              this.UsersBankAccounts.add( bankAccount as UserBankAccount )
+                .subscribe( results => {});
+            }
           }
-        }
-        this.modals.openModal(this.modalCtrl,AvailableModals.SuccessfulSignUpModal)
-          .then( () => {});
-        this.app.getRootNav().setRoot(tabs);
+          this.modals.openModal(this.modalCtrl,AvailableModals.SuccessfulSignUpModal)
+            .then( () => {});
+          this.app.getRootNav().setRoot(tabs);
+
+        });
       });
     }
   }

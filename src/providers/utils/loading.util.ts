@@ -15,7 +15,7 @@ export class LoadingUtil{
     }
 
     hide(){
-        this.loading.dismiss();
+        return this.loading.dismiss();
     }
 
 }
