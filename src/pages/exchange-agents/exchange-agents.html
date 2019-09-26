@@ -1,16 +1,14 @@
 <ion-header profile-background-color>
-
   <ion-navbar hideBackButton>
-      <div class="flex-row-layout ai-center">
-        <ion-title>Inicio</ion-title>
-        <span class="flex"></span>
-        <ion-title class="brand">OTC</ion-title>
-      </div>
+    <div class="flex-row-layout ai-center">
+      <ion-title>Inicio</ion-title>
+      <span class="flex"></span>
+      <ion-title class="brand">OTC</ion-title>
+    </div>
   </ion-navbar>
-  
 </ion-header>
 
-<ion-content class='page background-color-inherit'>
+<ion-content class="page background-color-inherit">
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
@@ -20,53 +18,90 @@
   <stepper [currentStep]="2"></stepper>
   <div class="spacer-40" *ngIf="!!contest"></div>
   <ion-grid padding *ngIf="!contest">
-    <ion-grid class='wapper-text-data'>
+    <ion-grid class="wapper-text-data">
       <ion-row>
-        <ion-col col6><div class="exchange-agents__text text-muted">
-          <span *ngIf="data_price.text_buy == 'Compra'">Quiero: </span>
-          <span *ngIf="data_price.text_buy == 'Venta'">Tengo: </span>
-        </div></ion-col>
+        <ion-col col6
+          ><div class="exchange-agents__text text-muted">
+            <span *ngIf="data_price.text_buy == 'Compra'">Tengo: </span>
+            <span *ngIf="data_price.text_buy == 'Venta'">Quiero: </span>
+          </div></ion-col
+        >
         <!-- <ion-col col6><div class='exchange-agents__data'>{{data_price.text_money}}{{data_price.cant}}</div></ion-col> -->
-        <ion-col col6><div class='exchange-agents__data'>
-          <span *ngIf="data_price.text_buy == 'Compra'">{{requestedCurrency.symbol}}</span>
-          <span *ngIf="data_price.text_buy == 'Venta'">{{receivedCurrency.symbol}}</span>
-          <span>{{data_price.cant}}</span>
-        </div></ion-col>
+        <ion-col col6
+          ><div class="exchange-agents__data">
+            <span *ngIf="data_price.text_buy == 'Compra'">{{
+              receivedCurrency.symbol
+            }}</span>
+            <span *ngIf="data_price.text_buy == 'Venta'">{{
+              requestedCurrency.symbol
+            }}</span>
+            <span>{{ data_price.cant }}</span>
+          </div></ion-col
+        >
       </ion-row>
       <ion-row>
-        <ion-col col6><div class='exchange-agents__text text-muted'>
-          <span *ngIf="data_price.text_buy != 'Compra'">Quiero: </span>
-          <span *ngIf="data_price.text_buy != 'Venta'">Tengo: </span>
-        </div></ion-col>
-        <ion-col col6><div class='exchange-agents__data'>
-          <span *ngIf="data_price.text_buy == 'Compra'">{{receivedCurrency.symbol}}</span>
-          <span *ngIf="data_price.text_buy == 'Venta'">{{requestedCurrency.symbol}}</span>
-        </div></ion-col>
+        <ion-col col6
+          ><div class="exchange-agents__text text-muted">
+            <span *ngIf="data_price.text_buy != 'Compra'">Tengo: </span>
+            <span *ngIf="data_price.text_buy != 'Venta'">Quiero: </span>
+          </div></ion-col
+        >
+        <ion-col col6
+          ><div class="exchange-agents__data">
+            <span *ngIf="data_price.text_buy == 'Compra'">{{
+              receivedCurrency.symbol
+            }}</span>
+            <span *ngIf="data_price.text_buy == 'Venta'">{{
+              requestedCurrency.symbol
+            }}</span>
+          </div></ion-col
+        >
       </ion-row>
     </ion-grid>
     <div class="flex-row-layout ai-center">
       <div class="search-agents flex no-padding">
         <ion-icon ios="ios-search" md="md-search"></ion-icon>
-        <input placeholder="Busca la casa de cambio de tu preferencia" class="search-agents__input no-padding" [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="onSearchInput()">
+        <input
+          placeholder="Busca la casa de cambio de tu preferencia"
+          class="search-agents__input no-padding"
+          [(ngModel)]="searchTerm"
+          [formControl]="searchControl"
+          (ionInput)="onSearchInput()"
+        />
         <!-- <select class="search-agents__select">
           <option class="search-agents__select___option">Por calificacion</option>
           <option class="search-agents__select___option">Por mejor precio</option>
         </select> -->
         <!-- <ion-icon name="arrow-down" md="ios-arrow-down" (tap)="openSearchExchangeAgentMode()"></ion-icon> -->
-        <img src="http://157.230.229.87:85/static/imgs/icons/filter--orange.png" alt="" width="20" (tap)="openSearchExchangeAgentMode()">
+        <img
+          src="http://157.230.229.87:85/static/imgs/icons/filter--orange.png"
+          alt=""
+          width="20"
+          (tap)="openSearchExchangeAgentMode()"
+        />
       </div>
       <div class="spacer-h-15"></div>
       <ion-icon name="refresh" (tap)="refresh()"></ion-icon>
     </div>
   </ion-grid>
-  <ion-row class="exchange-agents__item" align-items-center *ngFor='let item of exchangeAgentList'
-  (tap)='detailExchangeAgent(item)'>
+  <ion-row
+    class="exchange-agents__item"
+    align-items-center
+    *ngFor="let item of exchangeAgentList"
+    (tap)="detailExchangeAgent(item)"
+  >
     <ion-col col-2 class="exchangue-agents__style">
-      <div class="square w-background-image" [style.backgroundImage]="getAvatarUrl(item)"></div>
+      <div
+        class="square w-background-image"
+        [style.backgroundImage]="getAvatarUrl(item)"
+      ></div>
     </ion-col>
-    <ion-col col-6 >
+    <ion-col col-6>
       <div>
-        <span class="text-muted">{{item.type == '0' ? 'Casa de cambio' : 'Cambista'}}:&nbsp;</span>  {{item.name}}
+        <span class="text-muted"
+          >{{ item.type == "0" ? "Casa de cambio" : "Cambista" }}:&nbsp;</span
+        >
+        {{ item.name }}
       </div>
       <score [score]="item.score"></score>
       <!-- <div class="exchangue-agents__style__stars flex-row-layout ai-center">
@@ -78,14 +113,16 @@
         </div>
       </div> -->
     </ion-col>
-    <ion-col col-3 >
-        <div class="exchangue-agents__style text-muted"><small>Valor</small></div>
-        <div class="exchangue-agents__style text-14">S/. {{item.exchangeAgentOfferings[0][currencyAmountField]}}</div>
-    </ion-col> 
-    <ion-col col-1 >
+    <ion-col col-3>
+      <div class="exchangue-agents__style text-muted"><small>Valor</small></div>
+      <div class="exchangue-agents__style text-14">
+        S/. {{ item.exchangeAgentOfferings[0][currencyAmountField] }}
+      </div>
+    </ion-col>
+    <ion-col col-1>
       <div>
         <ion-icon ios="ios-more" md="ios-more"></ion-icon>
       </div>
-    </ion-col>      
+    </ion-col>
   </ion-row>
 </ion-content>

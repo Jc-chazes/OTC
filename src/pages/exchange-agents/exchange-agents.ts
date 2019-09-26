@@ -32,8 +32,8 @@ export class ExchangeAgentsPage {
   searchControl: FormControl;
   exchangeAgentList: ExchangeAgent[];
   searching: any = false;
-  data_price :any;
-  exchange_agent:any
+  data_price: any;
+  exchange_agent: any
 
   currency: Currency;
   receivedCurrency: Currency;
@@ -46,11 +46,11 @@ export class ExchangeAgentsPage {
   canContinue = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public dataService: DataService,
-  public appService : AppStateService, private popoverCtrl: PopoverController, private exchangeAgents: ExchangueAgentService,
-  private sanitizer: DomSanitizer, private loading: LoadingUtil, private currencies: CurrenciesService,
-  private users: UsersService, private notifications: NotificationsService, private alerts: AlertUtil,
-  private contests: ContestsService) {
-    this.transactionMapper = new TransactionMapper(currencies,users);
+    public appService: AppStateService, private popoverCtrl: PopoverController, private exchangeAgents: ExchangueAgentService,
+    private sanitizer: DomSanitizer, private loading: LoadingUtil, private currencies: CurrenciesService,
+    private users: UsersService, private notifications: NotificationsService, private alerts: AlertUtil,
+    private contests: ContestsService) {
+    this.transactionMapper = new TransactionMapper(currencies, users);
     this.currency = this.navParams.get('currency');
     this.receivedCurrency = this.navParams.get('receivedCurrency');
     this.requestedCurrency = this.navParams.get('requestedCurrency');
@@ -60,52 +60,52 @@ export class ExchangeAgentsPage {
 
     this.searchControl = new FormControl();
 
-    this.appService.onStateChange.subscribe(res=>{
+    this.appService.onStateChange.subscribe(res => {
       this.data_price = res.price
-      })
-     
-      console.log('DATAs',this.dataService.exchange_agents)
+    })
+
+    console.log('DATAs', this.dataService.exchange_agents)
   }
   public counter(i: number) {
     return new Array(i);
   }
-  
+
   ionViewWillEnter() {
     // this.setFilteredItems();
-    this.searchControl.valueChanges.debounceTime(700).subscribe(search  => {
+    this.searchControl.valueChanges.debounceTime(700).subscribe(search => {
       this.searching = false;
       this.refresh();
     });
     this.refresh();
-    this.notifications.onTabChangeRequested.subscribe( request => {
-      if(request.type == 'ACCEPTED_BY_EXCHANGE_AGENT'){
-        this.navCtrl.push(CommonSelectBankAccountPage,{
+    this.notifications.onTabChangeRequested.subscribe(request => {
+      if (request.type == 'ACCEPTED_BY_EXCHANGE_AGENT') {
+        this.navCtrl.push(CommonSelectBankAccountPage, {
           transaction: request.data.transaction
         })
       }
     })
   }
 
-  async ionViewCanLeave(){
-    if( this.canContinue ) return true;
+  async ionViewCanLeave() {
+    if (this.canContinue) return true;
     let contest = this.users.currentUser.person.currentContest;
-    if( contest ){
-      let continueSelected = await this.alerts.confirm('Tienes una búsqueda rápida en la cola, ¿Deseas continuar?','OTC Búsqueda rápida')
-      if( continueSelected ){
+    if (contest) {
+      let continueSelected = await this.alerts.confirm('Tienes una búsqueda rápida en la cola, ¿Deseas continuar?', 'OTC Búsqueda rápida')
+      if (continueSelected) {
         return false;
-      }else{
-        this.contests.cancelContest( contest.id ).subscribe()          
+      } else {
+        this.contests.cancelContest(contest.id).subscribe()
         return true;
       }
     }
     return true;
   }
 
-  ionViewWillLoad(){
-    this.exchange_agent=this.dataService.exchange_agents
+  ionViewWillLoad() {
+    this.exchange_agent = this.dataService.exchange_agents
   }
-  
-  onSearchInput(){
+
+  onSearchInput() {
     this.searching = true;
   }
 
@@ -113,16 +113,16 @@ export class ExchangeAgentsPage {
     this.exchangeAgentList = this.filterItems(this.searchTerm);
   }
 
-  filterItems(searchTerm){
+  filterItems(searchTerm) {
     return this.exchange_agent.filter((item) => {
-        return item.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 ;
-    });    
+      return item.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
+    });
   }
 
-  public detailExchangeAgent(exchangeAgent :ExchangeAgent){
-    this.appService.setState({detail_exchangue:exchangeAgent})
+  public detailExchangeAgent(exchangeAgent: ExchangeAgent) {
+    this.appService.setState({ detail_exchangue: exchangeAgent })
     this.canContinue = true;
-    this.navCtrl.push(DetailExchangeAgentPage,{
+    this.navCtrl.push(DetailExchangeAgentPage, {
       transaction: this.transactionMapper.mapFromBe({
         status: '2',
         amount: this.amount,
@@ -137,16 +137,16 @@ export class ExchangeAgentsPage {
     });
   }
 
-  refresh(){
+  refresh() {
     this.loading.show();
     this.exchangeAgents.search(
-      new SearchExchangeAgentSpecification(this.searchControl.value,'SAFE',this.operation,this.requestedCurrency,this.receivedCurrency,this.sortBy)
-    ).subscribe( (results: ExchangeAgent[]) => {
-      this.loading.hide();      
-      this.exchangeAgentList = results.filter( ea => ea.exchangeAgentOfferings.length > 0 );
-      if( this.contest && this.contest.exchangeAgents ){
-        let contestParticipantsIds = this.contest.exchangeAgents.map( ea => ea.id );
-        this.exchangeAgentList = this.exchangeAgentList.filter( ea => contestParticipantsIds.indexOf(ea.id) >= 0 );
+      new SearchExchangeAgentSpecification(this.searchControl.value, 'SAFE', this.operation, this.requestedCurrency, this.receivedCurrency, this.sortBy)
+    ).subscribe((results: ExchangeAgent[]) => {
+      this.loading.hide();
+      this.exchangeAgentList = results.filter(ea => ea.exchangeAgentOfferings.length > 0);
+      if (this.contest && this.contest.exchangeAgents) {
+        let contestParticipantsIds = this.contest.exchangeAgents.map(ea => ea.id);
+        this.exchangeAgentList = this.exchangeAgentList.filter(ea => contestParticipantsIds.indexOf(ea.id) >= 0);
       }
     })
   }
@@ -158,25 +158,25 @@ export class ExchangeAgentsPage {
     }, 1000);
   }
 
-  openSearchExchangeAgentMode(){
+  openSearchExchangeAgentMode() {
     let selectExchangeAgentPopover = this.popoverCtrl.create(SelectExchangeAgentSearchPopoverComponent);
     selectExchangeAgentPopover.present({
       ev: event
     });
-    selectExchangeAgentPopover.onDidDismiss( sortBy => {
-      if( sortBy ){
+    selectExchangeAgentPopover.onDidDismiss(sortBy => {
+      if (sortBy) {
         this.sortBy = sortBy;
         this.refresh();
       }
     })
   }
 
-  get currencyAmountField(): string{
-    return this.operation == 'V' ? 'requestedCurrencyAmount' : 'receivedCurrencyAmount'
+  get currencyAmountField(): string {
+    return this.operation == 'V' ? 'receivedCurrencyAmount' : 'requestedCurrencyAmount'
   }
 
-  getAvatarUrl(exchangeAgent: ExchangeAgent){
-    if( exchangeAgent.user && exchangeAgent.user.photo ){
+  getAvatarUrl(exchangeAgent: ExchangeAgent) {
+    if (exchangeAgent.user && exchangeAgent.user.photo) {
       return this.sanitizer.bypassSecurityTrustStyle(`url('${exchangeAgent.user.photo.fileUrl}')`);
     }
     return this.sanitizer.bypassSecurityTrustStyle(`url('http://157.230.229.87:85/static/imgs/avatar_placeholder.png')`);

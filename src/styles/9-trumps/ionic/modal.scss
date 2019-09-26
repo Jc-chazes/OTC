@@ -1,101 +1,102 @@
-.modal-wrapper{
+.modal-wrapper {
 }
 
-ion-modal:not(.termsAndConditionsModal) ion-backdrop{
-    visibility: visible !important;
+ion-modal:not(.termsAndConditionsModal) ion-backdrop {
+  visibility: visible !important;
 }
 
-%modal{
-    font-size: 16px;
-    background-color: #FFF;
-    // background-image: url('http://157.230.229.87:85/static/imgs/backgrounds/modals_bk.png');
-    background-image: url('http://157.230.229.87:85/static/imgs/backgrounds/modal_bottom_bk.png'), url('http://157.230.229.87:85/static/imgs/backgrounds/modal_top_bk.png');
-    background-repeat: no-repeat, no-repeat;
-    background-size: 90px, 90px;
-    background-position: left bottom 5px, right 5px;
-    // background-size: 100% 100%;
-    // background-position: center;
-    height: 290px !important;
-    width: 230px !important;
-    position: absolute;
-    // left: 50% !important;
-    // top: 50% !important;
-    left: calc( 50% - 115px ) !important;
-    top: calc( 50% - 145px ) !important;
-    // @include transform(translate(-50%,-50%));
-    @include borderRadius(12px);
-    .modal-content{
-        font-size: 18px;
-        color: $primary-color;
-    }
+%modal {
+  font-size: 16px;
+  background-color: #fff;
+  // background-image: url('http://157.230.229.87:85/static/imgs/backgrounds/modals_bk.png');
+  background-image: url("http://157.230.229.87:85/static/imgs/backgrounds/modal_bottom_bk.png"),
+    url("http://157.230.229.87:85/static/imgs/backgrounds/modal_top_bk.png");
+  background-repeat: no-repeat, no-repeat;
+  background-size: 90px, 90px;
+  background-position: left bottom 5px, right 5px;
+  // background-size: 100% 100%;
+  // background-position: center;
+  height: 290px !important;
+  width: 230px !important;
+  position: absolute;
+  // left: 50% !important;
+  // top: 50% !important;
+  left: calc(50% - 115px) !important;
+  top: calc(50% - 145px) !important;
+  // @include transform(translate(-50%,-50%));
+  @include borderRadius(12px);
+  .modal-content {
+    font-size: 18px;
+    color: $primary-color;
+  }
 }
 
-.rejectWarningModal{
-    .modal-wrapper{
-        @extend %modal;
-    }
+.rejectWarningModal {
+  .modal-wrapper {
+    @extend %modal;
+  }
 }
 
-.rejectReasonSelectModal{
-    .modal-wrapper{
-        @extend %modal;
-    }
+.rejectReasonSelectModal {
+  .modal-wrapper {
+    @extend %modal;
+  }
 }
 
-.continueTransactionOrBackModalComponent{
-    .modal-wrapper{
-        @extend %modal;
-    }
+.continueTransactionOrBackModalComponent {
+  .modal-wrapper {
+    @extend %modal;
+  }
 }
 
-.alertModal{
-    .modal-wrapper{
-        @extend %modal;
-    }
+.alertModal {
+  .modal-wrapper {
+    @extend %modal;
+  }
 }
 
-.successfulTransactionModal{
-    .modal-wrapper{
-        height: 380px !important;
-        width: 270px !important;
-        top: calc( 50% - 190px ) !important;
-        left: calc( 50% - 135px ) !important;
-    }
+.successfulTransactionModal {
+  .modal-wrapper {
+    height: 380px !important;
+    width: 270px !important;
+    top: calc(50% - 190px) !important;
+    left: calc(50% - 135px) !important;
+  }
 }
 
-.requestWasAcceptedModalComponent{
-    .modal-wrapper{
-        height: 380px !important;
-        top: calc( 50% - 190px ) !important;
-    }
+.requestWasAcceptedModalComponent {
+  .modal-wrapper {
+    height: 380px !important;
+    top: calc(50% - 190px) !important;
+  }
 }
 
-.opportunityToParticipateModal{
-    .modal-wrapper{
-        height: 340px !important;
-        top: calc( 50% - 170px ) !important;
-    }
+.opportunityToParticipateModal {
+  .modal-wrapper {
+    height: 360px !important;
+    top: calc(50% - 170px) !important;
+  }
 }
-.requestWasRejectedModalComponent{
-    .modal-wrapper{
-        height: 400px !important;
-        top: calc( 50% - 200px ) !important;
-        background-position: left bottom 1px, right 1px;
-    }
-}
-
-.quoteAgainModalComponent{
-    .modal-wrapper{
-        height: 300px !important;
-        top: calc( 50% - 150px ) !important;
-    }
+.requestWasRejectedModalComponent {
+  .modal-wrapper {
+    height: 400px !important;
+    top: calc(50% - 200px) !important;
+    background-position: left bottom 1px, right 1px;
+  }
 }
 
-.officeHoursReminderModalComponent{
-    .modal-wrapper{
-        height: 500px !important;
-        width: 270px !important;
-        top: calc( 50% - 250px ) !important;
-        left: calc( 50% - 135px ) !important;
-    }
+.quoteAgainModalComponent {
+  .modal-wrapper {
+    height: 300px !important;
+    top: calc(50% - 150px) !important;
+  }
+}
+
+.officeHoursReminderModalComponent {
+  .modal-wrapper {
+    height: 500px !important;
+    width: 270px !important;
+    top: calc(50% - 250px) !important;
+    left: calc(50% - 135px) !important;
+  }
 }

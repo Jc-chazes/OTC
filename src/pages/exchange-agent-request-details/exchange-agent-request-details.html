@@ -1,18 +1,18 @@
 <ion-header profile-background-color>
-
   <ion-navbar hideBackButton>
-      <div class="flex-row-layout ai-center">
-        <ion-title>Inicio</ion-title>
-        <span class="flex"></span>
-        <ion-title class="brand">OTC</ion-title>
-      </div>
+    <div class="flex-row-layout ai-center">
+      <ion-title>Inicio</ion-title>
+      <span class="flex"></span>
+      <ion-title class="brand">OTC</ion-title>
+    </div>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding class="page">
-  <current-notification-watcher [navCtrl]="navCtrl" [transaction]="transaction"></current-notification-watcher>
+  <current-notification-watcher
+    [navCtrl]="navCtrl"
+    [transaction]="transaction"
+  ></current-notification-watcher>
   <div class="fill-height flex-col-layout">
     <div class="flex scrollable no-padding">
       <back-button [navCtrl]="navCtrl"></back-button>
@@ -21,10 +21,15 @@
       <ion-row align-items-center>
         <ion-col col-2></ion-col>
         <ion-col col-4>
-          <div class="square w-background-image-top" [style.backgroundImage]="avatarUrl"></div>
+          <div
+            class="square w-background-image-top"
+            [style.backgroundImage]="avatarUrl"
+          ></div>
         </ion-col>
         <ion-col col-6>
-          <p>{{ transaction.person.businessName || transaction.person.fullName }}</p>
+          <p>
+            {{ transaction.person.businessName || transaction.person.fullName }}
+          </p>
           <p>{{ transaction.person.user.email }}</p>
           <p>{{ transaction.person.birthdate | age }} años</p>
         </ion-col>
@@ -32,10 +37,12 @@
       <div class="spacer-15"></div>
       <div class="details__wrapper">
         <div class="pb-10">
-          <div class="input flex-row-layout text-bold">        
+          <div class="input flex-row-layout text-bold">
             <span>Solicitud del servicio:</span>
             <span class="flex"></span>
-            <span>{{ transaction.exchangeAgentOffering.type == 'V' ? 'Venta' : 'Compra' }}</span>
+            <span>{{
+              transaction.exchangeAgentOffering.type == "V" ? "Venta" : "Compra"
+            }}</span>
           </div>
         </div>
         <div class="pb-10">
@@ -49,10 +56,12 @@
           <div class="input flex-row-layout text-bold">
             <span>Valor de tipo de cambio:</span>
             <span class="flex"></span>
-            <span>{{ transaction.fromCurrency.symbol }}</span>&nbsp;
-            <span>{{ transaction.exchangeAgentOffering.type == 'V' ? 
-              transaction.exchangeAgentOffering.requestedCurrencyAmount : 
-              transaction.exchangeAgentOffering.receivedCurrencyAmount
+            <span>{{ transaction.fromCurrency.symbol }}</span
+            >&nbsp;
+            <span>{{
+              transaction.exchangeAgentOffering.type == "V"
+                ? transaction.exchangeAgentOffering.receivedCurrencyAmount
+                : transaction.exchangeAgentOffering.requestedCurrencyAmount
             }}</span>
           </div>
         </div>
@@ -68,7 +77,8 @@
           <div class="input flex-row-layout text-bold">
             <span>Monto parcial a depositar a OTC:</span>
             <span class="flex"></span>
-            <span>{{ transaction.currencyToDeposit.symbol }}</span>&nbsp;
+            <span>{{ transaction.currencyToDeposit.symbol }}</span
+            >&nbsp;
             <!-- <span>{{ otcComission.content + transaction.amountToDeposit }}</span> -->
             <span>{{ transaction.amountToDeposit.toFixed(2) }}</span>
           </div>
@@ -77,7 +87,8 @@
           <div class="input flex-row-layout text-bold">
             <span>Cobro por transacción:</span>
             <span class="flex"></span>
-            <span>{{ transaction.currencyToDeposit.symbol }}</span>&nbsp;
+            <span>{{ transaction.currencyToDeposit.symbol }}</span
+            >&nbsp;
             <span>{{ otcComission.content }}</span>
           </div>
           <span><small>Incluye comisión OTC más IGV</small></span>
@@ -86,17 +97,21 @@
           <div class="input flex-row-layout text-bold">
             <span>Monto a depositar a OTC:</span>
             <span class="flex"></span>
-            <span>{{ transaction.currencyToDeposit.symbol }}</span>&nbsp;
+            <span>{{ transaction.currencyToDeposit.symbol }}</span
+            >&nbsp;
             <!-- <span>{{ otcComission.content + transaction.amountToDeposit }}</span> -->
-            <span>{{ transaction.amountToDepositToOTC(otcComission.content) }}</span>
+            <span>{{
+              transaction.amountToDepositToOTC(otcComission.content)
+            }}</span>
           </div>
         </div>
         <div class="pb-10">
           <div class="input flex-row-layout text-bold">
             <span>Monto a recibir de OTC:</span>
             <span class="flex"></span>
-            <span>{{ transaction.currencyToReceive.symbol }}</span>&nbsp;
-            <span>{{ (transaction.amountToReceive||0).toFixed(2) }}</span>
+            <span>{{ transaction.currencyToReceive.symbol }}</span
+            >&nbsp;
+            <span>{{ (transaction.amountToReceive || 0).toFixed(2) }}</span>
           </div>
         </div>
       </div>
@@ -115,7 +130,10 @@
         </ng-container>
         <ng-container *ngIf="isSafe">
           <div class="input flex-row-layout jc-center countdown">
-            <countdown [date]="transaction.limitDate" (final)="timeHasEnded()"></countdown>
+            <countdown
+              [date]="transaction.limitDate"
+              (final)="timeHasEnded()"
+            ></countdown>
           </div>
           <div class="spacer-10"></div>
           <button fluid ion-button color="secondary" (tap)="continue()">

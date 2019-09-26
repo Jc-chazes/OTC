@@ -1,75 +1,89 @@
 <ion-header profile-background-color>
-
   <ion-navbar hideBackButton>
-      <div class="flex-row-layout ai-center">
-        <ion-title>Ver más</ion-title>
-        <span class="flex"></span>
-        <ion-title class="brand">OTC</ion-title>
-      </div>
+    <div class="flex-row-layout ai-center">
+      <ion-title>Ver más</ion-title>
+      <span class="flex"></span>
+      <ion-title class="brand">OTC</ion-title>
+    </div>
   </ion-navbar>
-    
 </ion-header>
-  
-
 
 <ion-content class="page" padding>
   <div class="fill-height flex-col-layout">
     <div class="flex scrollable no-padding">
-        <div class="spacer-30"></div>
-        <back-button [navCtrl]="navCtrl"></back-button>
-        <stepper [currentStep]="2"></stepper>
-        <div class="detailExchangeAgent__header page-content-container">
-          <div class="text-center text-muted">Detalles {{ transaction.exchangeAgent.type == '0' ? 'de la casa de cambio' : 'del cambista'}}</div>
-          <ion-row class="text-muted" align-items-center>
-            <ion-col col-4 >
-              <div class="flex-row-layout jc-flex-end">
-                <div class="detailExchangeAgent__icon-user w-background-image" [style.backgroundImage]="getAvatarUrl(transaction.exchangeAgent)">          
-                </div>
-              </div>
-            </ion-col>
-            <ion-col col-8>
-              <div>{{detail_exchangue.name}}</div>
-              <div>{{detail_exchangue.address}}</div>
-              <div>RUC : {{detail_exchangue.documentNumber}}</div>
-              <score [score]="transaction.exchangeAgent.score"></score>
-            </ion-col>
-          </ion-row>
-          <div class="spacer-10"></div>
-          <div class="details__wrapper">
-            <div class="pb-10">
-              <div class="input flex-row-layout text-bold">        
-                <span>Servicio:</span>
-                <span class="flex"></span>
-                <span>{{ transaction.exchangeAgentOffering.type == 'V' ? 'Venta' : 'Compra' }}</span>
-              </div>
+      <div class="spacer-30"></div>
+      <back-button [navCtrl]="navCtrl"></back-button>
+      <stepper [currentStep]="2"></stepper>
+      <div class="detailExchangeAgent__header page-content-container">
+        <div class="text-center text-muted">
+          Detalles
+          {{
+            transaction.exchangeAgent.type == "0"
+              ? "de la casa de cambio"
+              : "del cambista"
+          }}
+        </div>
+        <ion-row class="text-muted" align-items-center>
+          <ion-col col-4>
+            <div class="flex-row-layout jc-flex-end">
+              <div
+                class="detailExchangeAgent__icon-user w-background-image"
+                [style.backgroundImage]="
+                  getAvatarUrl(transaction.exchangeAgent)
+                "
+              ></div>
             </div>
-            <div class="pb-10">
-              <div class="input flex-row-layout text-bold">
-                <span>Tipo de moneda:</span>
-                <span class="flex"></span>
-                <span>{{ transaction.targetCurrency.name }}</span>
-              </div>
+          </ion-col>
+          <ion-col col-8>
+            <div>{{ detail_exchangue.name }}</div>
+            <div>{{ detail_exchangue.address }}</div>
+            <div>RUC : {{ detail_exchangue.documentNumber }}</div>
+            <score [score]="transaction.exchangeAgent.score"></score>
+          </ion-col>
+        </ion-row>
+        <div class="spacer-10"></div>
+        <div class="details__wrapper">
+          <div class="pb-10">
+            <div class="input flex-row-layout text-bold">
+              <span>Servicio:</span>
+              <span class="flex"></span>
+              <span>{{
+                transaction.exchangeAgentOffering.type == "V"
+                  ? "Venta"
+                  : "Compra"
+              }}</span>
             </div>
-            <div class="pb-10">
-              <div class="input flex-row-layout text-bold">
-                <span>Monto solicitado:</span>
-                <span class="flex"></span>
-                <span>{{ transaction.targetCurrency.symbol }}</span>&nbsp;
-                <span>{{ transactionAmount }}</span>
-              </div>
+          </div>
+          <div class="pb-10">
+            <div class="input flex-row-layout text-bold">
+              <span>Tipo de moneda:</span>
+              <span class="flex"></span>
+              <span>{{ transaction.targetCurrency.name }}</span>
             </div>
-            <div class="pb-10">
-              <div class="input flex-row-layout text-bold">
-                <span>Valor de tipo de cambio:</span>
-                <span class="flex"></span>
-                <span>{{ transaction.fromCurrency.symbol }}</span>&nbsp;
-                <span>{{ transaction.exchangeAgentOffering.type == 'V' ? 
-                  transaction.exchangeAgentOffering.requestedCurrencyAmount : 
-                  transaction.exchangeAgentOffering.receivedCurrencyAmount
-                }}</span>
-              </div>
+          </div>
+          <div class="pb-10">
+            <div class="input flex-row-layout text-bold">
+              <span>Monto solicitado:</span>
+              <span class="flex"></span>
+              <span>{{ transaction.targetCurrency.symbol }}</span
+              >&nbsp;
+              <span>{{ transactionAmount }}</span>
             </div>
-            <!-- <div class="pb-10">
+          </div>
+          <div class="pb-10">
+            <div class="input flex-row-layout text-bold">
+              <span>Valor de tipo de cambio:</span>
+              <span class="flex"></span>
+              <span>{{ transaction.fromCurrency.symbol }}</span
+              >&nbsp;
+              <span>{{
+                transaction.exchangeAgentOffering.type == "V"
+                  ? transaction.exchangeAgentOffering.receivedCurrencyAmount
+                  : transaction.exchangeAgentOffering.requestedCurrencyAmount
+              }}</span>
+            </div>
+          </div>
+          <!-- <div class="pb-10">
               <div class="input flex-row-layout text-bold">
                 <span>Monto parcial a depositar a OTC:</span>
                 <span class="flex"></span>
@@ -77,42 +91,45 @@
                 <span>{{ transactionAmountToDeposit }}</span>
               </div>
             </div> -->
-            <div class="pb-10">
-              <div class="input flex-row-layout text-bold">
-                <span>Cobro por transacción:</span>
-                <span class="flex"></span>
-                <span>{{ transaction.currencyToDeposit.symbol }}</span>&nbsp;
-                <span>{{ otcComission.content }}</span>
-              </div>
-              <span><small>Incluye comisión OTC más IGV</small></span>
+          <div class="pb-10">
+            <div class="input flex-row-layout text-bold">
+              <span>Cobro por transacción:</span>
+              <span class="flex"></span>
+              <span>{{ transaction.currencyToDeposit.symbol }}</span
+              >&nbsp;
+              <span>{{ otcComission.content }}</span>
             </div>
-            <div class="pb-10">
-              <div class="input flex-row-layout text-bold">
-                <span>Monto total a depositar a OTC:</span>
-                <span class="flex"></span>
-                <span>{{ transaction.currencyToDeposit.symbol }}</span>&nbsp;
-                <!-- <span>{{ otcComission.content + transaction.amountToDeposit }}</span> -->
-                <span>{{ transactionAmountToDepositToOTC }}</span>
-              </div>
+            <span><small>Incluye comisión OTC más IGV</small></span>
+          </div>
+          <div class="pb-10">
+            <div class="input flex-row-layout text-bold">
+              <span>Monto total a depositar a OTC:</span>
+              <span class="flex"></span>
+              <span>{{ transaction.currencyToDeposit.symbol }}</span
+              >&nbsp;
+              <!-- <span>{{ otcComission.content + transaction.amountToDeposit }}</span> -->
+              <span>{{ transactionAmountToDepositToOTC }}</span>
             </div>
-            <div class="pb-10">
-              <div class="input flex-row-layout text-bold">
-                <span>Monto total a recibir de OTC:</span>
-                <span class="flex"></span>
-                <span>{{ transaction.currencyToReceive.symbol }}</span>&nbsp;
-                <span>{{ transactionAmountToReceive }}</span>
-              </div>
+          </div>
+          <div class="pb-10">
+            <div class="input flex-row-layout text-bold">
+              <span>Monto total a recibir de OTC:</span>
+              <span class="flex"></span>
+              <span>{{ transaction.currencyToReceive.symbol }}</span
+              >&nbsp;
+              <span>{{ transactionAmountToReceive }}</span>
             </div>
           </div>
         </div>
+      </div>
     </div>
     <div class="flex-auto no-padding">
-        <div class="spacer-20"></div>
-        <div class="flex-col-layout ai-center">
-          <button fluid ion-button color="secondary" (tap)="continue()">
-            Seleccionar
-          </button>
-        </div>
+      <div class="spacer-20"></div>
+      <div class="flex-col-layout ai-center">
+        <button fluid ion-button color="secondary" (tap)="continue()">
+          Seleccionar
+        </button>
+      </div>
     </div>
   </div>
 </ion-content>

@@ -1,15 +1,12 @@
 <ion-header profile-background-color>
-
   <ion-navbar hideBackButton>
-      <div class="flex-row-layout ai-center">
-        <ion-title>Inicio</ion-title>
-        <span class="flex"></span>
-        <ion-title class="brand">OTC</ion-title>
-      </div>
+    <div class="flex-row-layout ai-center">
+      <ion-title>Inicio</ion-title>
+      <span class="flex"></span>
+      <ion-title class="brand">OTC</ion-title>
+    </div>
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content class="page background-color-inherit">
   <ion-refresher (ionRefresh)="doRefresh($event)">
@@ -26,8 +23,14 @@
       <table class="fill-width myRequests__exchanges">
         <thead>
           <td></td>
-          <td class="text-center pb-5">Precio de <br> compra</td>
-          <td class="text-center pb-5">Precio de <br> venta</td>
+          <td class="text-center pb-5">
+            Precio de <br />
+            compra
+          </td>
+          <td class="text-center pb-5">
+            Precio de <br />
+            venta
+          </td>
         </thead>
         <tbody>
           <tr *ngFor="let group of groupedExchangeList">
@@ -35,16 +38,32 @@
               <b>{{ group.currency.name }}</b>
             </td>
             <td align="center">
-              <input type="text" class="fill-width text-center" readonly 
-              [value]="group.fromCurrency.symbol + ' ' + group.buyExchange.receivedCurrencyAmount">
+              <input
+                type="text"
+                class="fill-width text-center"
+                readonly
+                [value]="
+                  group.fromCurrency.symbol +
+                  ' ' +
+                  group.buyExchange.requestedCurrencyAmount
+                "
+              />
             </td>
             <td align="center">
-              <input type="text" class="fill-width text-center" readonly 
-              [value]="group.fromCurrency.symbol + ' ' + group.sellExchange.requestedCurrencyAmount">
+              <input
+                type="text"
+                class="fill-width text-center"
+                readonly
+                [value]="
+                  group.fromCurrency.symbol +
+                  ' ' +
+                  group.sellExchange.receivedCurrencyAmount
+                "
+              />
             </td>
           </tr>
         </tbody>
-      </table>  
+      </table>
     </div>
   </div>
   <div class="myRequests__requests">
@@ -56,37 +75,79 @@
       <ion-icon name="refresh" (tap)="refresh()"></ion-icon>
     </div>
     <div>
-      <div class="myRequests__requests__item" *ngFor="let transaction of pendingTransactionList">
+      <div
+        class="myRequests__requests__item"
+        *ngFor="let transaction of pendingTransactionList"
+      >
         <div class="spacer-15"></div>
         <ion-row class="pt-0 pb-0">
-          <ion-col col-2 class="myRequests__requests__item__avatar" (tap)="goToRequestDetails(transaction)">
+          <ion-col
+            col-2
+            class="myRequests__requests__item__avatar"
+            (tap)="goToRequestDetails(transaction)"
+          >
             <div class="fill-height flex-col-layout jc-center">
-              <div class="square" [style.backgroundImage]="getAvatarUrl(transaction)"></div>
+              <div
+                class="square"
+                [style.backgroundImage]="getAvatarUrl(transaction)"
+              ></div>
             </div>
           </ion-col>
           <ion-col col-4 (tap)="goToRequestDetails(transaction)">
             <p>
-              {{ transaction.person.businessName || transaction.person.fullName }}
+              {{
+                transaction.person.businessName || transaction.person.fullName
+              }}
             </p>
             <p>
               <span class="text-thin">Servicio:&nbsp;</span>
-              <span>{{ transaction.exchangeAgentOffering.type == 'V' ? 'Venta' : 'Compra' }}</span>
+              <span>{{
+                transaction.exchangeAgentOffering.type == "V"
+                  ? "Venta"
+                  : "Compra"
+              }}</span>
             </p>
           </ion-col>
           <ion-col col-4 (tap)="goToRequestDetails(transaction)">
             <p class="text-thin">Monto solicitado</p>
             <p class="text-thin myRequests__requests__item__amount">
-              {{ transaction.targetCurrency.symbol }} {{ transaction.amount.toFixed(2) }}
+              {{ transaction.targetCurrency.symbol }}
+              {{ transaction.amount.toFixed(2) }}
             </p>
           </ion-col>
-          <ion-col col-2 class="no-padding pt-5 flex-col-layout jc-center" (tap)="openRequestOperations(transaction,$event)">
-            <p class="text-thin no-margin" *ngIf="!showCountdown(transaction); else countdown">Continuar</p>
+          <ion-col
+            col-2
+            class="no-padding pt-5 flex-col-layout jc-center"
+            (tap)="openRequestOperations(transaction, $event)"
+          >
+            <p
+              class="text-thin no-margin"
+              *ngIf="!showCountdown(transaction); else countdown"
+            >
+              Continuar
+            </p>
             <ng-template #countdown>
-              <p class="text-accent"> <b><countdown [date]="transaction.limitDate" (final)="refresh()"></countdown></b> </p>
+              <p class="text-accent">
+                <b
+                  ><countdown
+                    [date]="transaction.limitDate"
+                    (final)="refresh()"
+                  ></countdown
+                ></b>
+              </p>
             </ng-template>
             <div class="spacer-5"></div>
-            <ion-icon ios="ios-more" md="ios-more" *ngIf="showMoreOptions(transaction)"></ion-icon>
-            <img src="http://157.230.229.87:85/static/imgs/icons/fast_search_tag.png" alt="" width="50" *ngIf="showFastFlag(transaction)">
+            <ion-icon
+              ios="ios-more"
+              md="ios-more"
+              *ngIf="showMoreOptions(transaction)"
+            ></ion-icon>
+            <img
+              src="http://157.230.229.87:85/static/imgs/icons/fast_search_tag.png"
+              alt=""
+              width="50"
+              *ngIf="showFastFlag(transaction)"
+            />
           </ion-col>
         </ion-row>
       </div>

@@ -15,34 +15,34 @@ import { ExchangeAgentOfferingGroup } from "../models/exchang-agent-offering-gro
 @Injectable()
 export class ExchangeAgentOfferingsService extends BaseService implements CrudService<ExchangeAgentOffering>{
 
-    constructor(api: ApiUtil, private users: UsersService, private currencies: CurrenciesService){
+    constructor(api: ApiUtil, private users: UsersService, private currencies: CurrenciesService) {
         super(api);
     }
 
     find(specification?: BaseSpecification): Observable<ExchangeAgentOffering[]> {
-        if( specification instanceof MyExchangeAgentOfferings ){
+        if (specification instanceof MyExchangeAgentOfferings) {
             return this.api.get(`/exchangeagentofferings?exchangeAgent=${this.users.currentUser.exchangeAgent.id}&active=true`)
-            .map( resp => {
-                return resp.map( be => new ExchangeAgentOffering({ ...be }))
-            })
-            .catch( err => {
-                console.warn('Error obteniendo sus tipos cambios')
-                return Observable.of([]);
-            });
+                .map(resp => {
+                    return resp.map(be => new ExchangeAgentOffering({ ...be }))
+                })
+                .catch(err => {
+                    console.warn('Error obteniendo sus tipos cambios')
+                    return Observable.of([]);
+                });
         }
         return Observable.of([]);
-    }    
+    }
     findOne(specification?: BaseSpecification): Observable<ExchangeAgentOffering> {
         throw new Error("Method not implemented.");
     }
     add(entity: ExchangeAgentOffering): Observable<ExchangeAgentOffering> {
-        return this.api.post('/exchangeagentofferings',{
-            ...pick(entity,['requestedCurrencyAmount','receivedCurrencyAmount','requestedCurrency','receivedCurrency','type']),
+        return this.api.post('/exchangeagentofferings', {
+            ...pick(entity, ['requestedCurrencyAmount', 'receivedCurrencyAmount', 'requestedCurrency', 'receivedCurrency', 'type']),
             active: true,
             exchangeAgent: this.users.currentUser.exchangeAgent.id
-        }).map( resp => {
+        }).map(resp => {
             return entity;
-        }).catch( err => {
+        }).catch(err => {
             console.warn('No se pudo crear el cambio: ', entity);
             return Observable.of(null);
         });
@@ -54,42 +54,42 @@ export class ExchangeAgentOfferingsService extends BaseService implements CrudSe
         throw new Error("Method not implemented.");
     }
 
-    getGroupedExchangeAgentOfferings(): Observable<ExchangeAgentOfferingGroup[]>{
+    getGroupedExchangeAgentOfferings(): Observable<ExchangeAgentOfferingGroup[]> {
         return Observable.forkJoin(
             this.currencies.find(),
-            this.find( new MyExchangeAgentOfferings() )
-        ).map( results => {
+            this.find(new MyExchangeAgentOfferings())
+        ).map(results => {
             let groupedExchangeAgentOfferingList: ExchangeAgentOfferingGroup[] = [];
             let currencyList = results[0];
             let exchangeAgentOfferingList = results[1];
             currencyList
-            .filter( c => c.code != 'PEN' )
-            .forEach( currency => {
-              //Compra
-              let buyExchange = exchangeAgentOfferingList.find( e => e.requestedCurrency == currency.code ) || new ExchangeAgentOffering({
-                receivedCurrency: 'PEN',
-                receivedCurrencyAmount: '0.0' as any,
-                requestedCurrency: currency.code,
-                requestedCurrencyAmount: 1,
-                type: 'C',
-                active: true
-              });
-              buyExchange.createBackup();
-              //Venta
-              let sellExchange = exchangeAgentOfferingList.find( e => e.receivedCurrency == currency.code ) || new ExchangeAgentOffering({
-                requestedCurrency: 'PEN',
-                requestedCurrencyAmount: '0.0' as any,
-                receivedCurrency: currency.code,
-                receivedCurrencyAmount: 1,
-                type: 'V',
-                active: true
-              });
-              sellExchange.createBackup();
-              groupedExchangeAgentOfferingList.push( new ExchangeAgentOfferingGroup({ currency, exchanges: [buyExchange, sellExchange] }) );
-            });
+                .filter(c => c.code != 'PEN')
+                .forEach(currency => {
+                    //Compra
+                    let buyExchange = exchangeAgentOfferingList.find(e => e.receivedCurrency == currency.code) || new ExchangeAgentOffering({
+                        receivedCurrency: currency.code,
+                        receivedCurrencyAmount: 1,
+                        requestedCurrency: "PEN",
+                        requestedCurrencyAmount: "0.0" as any,
+                        type: "C",
+                        active: true
+                    });
+                    buyExchange.createBackup();
+                    //Venta
+                    let sellExchange = exchangeAgentOfferingList.find(e => e.requestedCurrency == currency.code) || new ExchangeAgentOffering({
+                        requestedCurrency: currency.code,
+                        requestedCurrencyAmount: 1,
+                        receivedCurrency: "PEN",
+                        receivedCurrencyAmount: "0.0" as any,
+                        type: "V",
+                        active: true
+                    });
+                    sellExchange.createBackup();
+                    groupedExchangeAgentOfferingList.push(new ExchangeAgentOfferingGroup({ currency, exchanges: [buyExchange, sellExchange] }));
+                });
             return groupedExchangeAgentOfferingList;
         });
     }
 
-    
+
 }

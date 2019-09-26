@@ -26,101 +26,101 @@ import { NumberPipe } from '../../pipes/numeric/number.pipe';
   templateUrl: 'detail-exchange-agent.html',
 })
 export class DetailExchangeAgentPage {
-  detail_exchangue : any;
-  data_price :any;
+  detail_exchangue: any;
+  data_price: any;
 
   transaction: Transaction;
   otcComission: Constant = new Constant({ content: 0 });
   contest: Contest;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public appService : AppStateService,
-  private sanitizer: DomSanitizer, private constants: ConstantsService, private transactions: TransactionsService,
-  private modals: ModalUtil, private modalCtrl: ModalController, private loading: LoadingUtil,
-  private contests: ContestsService, private users: UsersService, private numberPipe: NumberPipe) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public appService: AppStateService,
+    private sanitizer: DomSanitizer, private constants: ConstantsService, private transactions: TransactionsService,
+    private modals: ModalUtil, private modalCtrl: ModalController, private loading: LoadingUtil,
+    private contests: ContestsService, private users: UsersService, private numberPipe: NumberPipe) {
     this.transaction = this.navParams.get('transaction');
     this.contest = this.navParams.get('contest');
-    this.appService.onStateChange.subscribe(res=>{
+    this.appService.onStateChange.subscribe(res => {
       this.detail_exchangue = res.detail_exchangue,
-      this.data_price = res.price
+        this.data_price = res.price
     });
-    this.constants.findOne( new ConstantByCodeSpecification(`OTC_COMISSION_${this.transaction.exchangeAgentOffering.receivedCurrency}`) )
-    .subscribe( result => {
-      this.otcComission = result;
-      this.otcComission.content = Number(this.otcComission.content);
-    })
+    this.constants.findOne(new ConstantByCodeSpecification(`OTC_COMISSION_${this.transaction.exchangeAgentOffering.receivedCurrency}`))
+      .subscribe(result => {
+        this.otcComission = result;
+        this.otcComission.content = Number(this.otcComission.content);
+      })
   }
   public counter(i: number) {
     return new Array(i);
   }
   ionViewDidLoad() {
-    console.log('ionViewDidLoad DetailExchangeAgentPage', this.detail_exchangue );
+    console.log('ionViewDidLoad DetailExchangeAgentPage', this.detail_exchangue);
   }
 
-  nextPage(){
+  nextPage() {
     this.navCtrl.push(ModifyAccountBankPage)
   }
 
-  getAvatarUrl(exchangeAgent: ExchangeAgent){
-    if( exchangeAgent.user && exchangeAgent.user.photo ){
+  getAvatarUrl(exchangeAgent: ExchangeAgent) {
+    if (exchangeAgent.user && exchangeAgent.user.photo) {
       return this.sanitizer.bypassSecurityTrustStyle(`url('${exchangeAgent.user.photo.fileUrl}')`);
     }
     return this.sanitizer.bypassSecurityTrustStyle(`url('http://157.230.229.87:85/static/imgs/avatar_placeholder.png')`);
   }
-  
-  continue(){
+
+  continue() {
     this.loading.show();
-    if( this.contest ){
+    if (this.contest) {
       this.transaction.type = 'FAST';
     }
-    this.transaction.personaCorreoReciboTransaccionDatos = `|||${JSON.stringify( this.getPersonaCorreoReciboTransaccionDatos() )}|||`;
+    this.transaction.personaCorreoReciboTransaccionDatos = `|||${JSON.stringify(this.getPersonaCorreoReciboTransaccionDatos())}|||`;
     Observable.forkJoin(
-      this.transactions.add( this.transaction ),
+      this.transactions.add(this.transaction),
       Observable.of(null)//( this.contest ? this.contests.selectWinner(this.contest,this.transaction.exchangeAgent) : Observable.of(null) )
-    ).subscribe( ([ createdTransaction, _noop ]) => {
-      if( this.users.currentUser.isPerson() ){
+    ).subscribe(([createdTransaction, _noop]) => {
+      if (this.users.currentUser.isPerson()) {
         this.users.currentUser.person.currentContest = undefined;
       }
       this.loading.hide();
-      if( createdTransaction ){
-        if( !!this.contest ){
-          this.contests.selectWinner(this.contest,this.transaction.exchangeAgent,createdTransaction.id).subscribe();
+      if (createdTransaction) {
+        if (!!this.contest) {
+          this.contests.selectWinner(this.contest, this.transaction.exchangeAgent, createdTransaction.id).subscribe();
         }
-        this.modals.openModal(this.modalCtrl,AvailableModals.WaitYourRequestModal,{ isFastRequest: this.transaction.type == 'FAST' })
-        .then( () => {
-          // if( this.transaction.type == 'FAST' ){
-          //   this.loading.show();
-          //   this.transactions.findOne( new ByIdSpecification(this.transaction.id) )
-          //   .subscribe( transaction => {
-          //     this.loading.hide();
-          //     this.navCtrl.push(CommonSelectBankAccountPage,{
-          //       transaction
-          //     });
-          //   })
-          // }else{
-          //   this.transactions.setCurrentTransaction(createdTransaction)
-          //   .subscribe( () => {
-          //     this.navCtrl.setRoot( CommonTransactionInProgressPage );
-          //     this.navCtrl.popToRoot();
-          //   });
-          // }
-          this.transactions.setCurrentTransaction(createdTransaction)
-          .subscribe( () => {
-            if( this.transaction.type == 'FAST' ){
-              this.loading.show();
-              this.transactions.findOne( new ByIdSpecification( createdTransaction.id) )
-              .subscribe( transaction => {
-                this.loading.hide();
-                this.navCtrl.push(CommonSelectBankAccountPage,{
-                  transaction
-                });
-              })
-            }else{
-              this.transactions.setTransactionTabRoot( 'TRANSACTION_IN_PROGRESS' );
-              this.navCtrl.setRoot( CommonTransactionInProgressPage );
-              this.navCtrl.popToRoot();
-            }
-          });
-        })
+        this.modals.openModal(this.modalCtrl, AvailableModals.WaitYourRequestModal, { isFastRequest: this.transaction.type == 'FAST' })
+          .then(() => {
+            // if( this.transaction.type == 'FAST' ){
+            //   this.loading.show();
+            //   this.transactions.findOne( new ByIdSpecification(this.transaction.id) )
+            //   .subscribe( transaction => {
+            //     this.loading.hide();
+            //     this.navCtrl.push(CommonSelectBankAccountPage,{
+            //       transaction
+            //     });
+            //   })
+            // }else{
+            //   this.transactions.setCurrentTransaction(createdTransaction)
+            //   .subscribe( () => {
+            //     this.navCtrl.setRoot( CommonTransactionInProgressPage );
+            //     this.navCtrl.popToRoot();
+            //   });
+            // }
+            this.transactions.setCurrentTransaction(createdTransaction)
+              .subscribe(() => {
+                if (this.transaction.type == 'FAST') {
+                  this.loading.show();
+                  this.transactions.findOne(new ByIdSpecification(createdTransaction.id))
+                    .subscribe(transaction => {
+                      this.loading.hide();
+                      this.navCtrl.push(CommonSelectBankAccountPage, {
+                        transaction
+                      });
+                    })
+                } else {
+                  this.transactions.setTransactionTabRoot('TRANSACTION_IN_PROGRESS');
+                  this.navCtrl.setRoot(CommonTransactionInProgressPage);
+                  this.navCtrl.popToRoot();
+                }
+              });
+          })
       }
     });
     // this.transactions.add( this.transaction )
@@ -139,29 +139,29 @@ export class DetailExchangeAgentPage {
     // })
   }
 
-  get transactionAmount(){
+  get transactionAmount() {
     return this.numberPipe.transform(Number(this.transaction.amount).toFixed(2));
   }
 
-  get transactionAmountToDeposit(){
+  get transactionAmountToDeposit() {
     return this.numberPipe.transform(this.transaction.amountToDeposit.toFixed(2));
   }
 
-  get transactionAmountToDepositToOTC(){
+  get transactionAmountToDepositToOTC() {
     return this.numberPipe.transform(this.transaction.amountToDepositToOTC(this.otcComission.content));
   }
 
-  get transactionAmountToReceive(){
+  get transactionAmountToReceive() {
     return this.numberPipe.transform(this.transaction.amountToReceive.toFixed(2));
   }
 
   get valorTipoCambio() {
-    return this.transaction.exchangeAgentOffering.type == 'V' ? 
-      this.transaction.exchangeAgentOffering.requestedCurrencyAmount : 
-      this.transaction.exchangeAgentOffering.receivedCurrencyAmount
+    return this.transaction.exchangeAgentOffering.type == 'V' ?
+      this.transaction.exchangeAgentOffering.receivedCurrencyAmount :
+      this.transaction.exchangeAgentOffering.requestedCurrencyAmount
   }
 
-  getPersonaCorreoReciboTransaccionDatos(){
+  getPersonaCorreoReciboTransaccionDatos() {
     return {
       enviaste: {
         bruto: this.transactionAmountToDeposit,
