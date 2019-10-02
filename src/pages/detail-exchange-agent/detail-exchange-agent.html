@@ -126,7 +126,13 @@
     <div class="flex-auto no-padding">
       <div class="spacer-20"></div>
       <div class="flex-col-layout ai-center">
-        <button fluid ion-button color="secondary" (tap)="continue()">
+        <button
+          fluid
+          ion-button
+          color="secondary"
+          (tap)="continue()"
+          [disabled]="!otcComission?.content"
+        >
           Seleccionar
         </button>
       </div>

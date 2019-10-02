@@ -14,6 +14,7 @@ import { CommonSelectBankAccountPage } from '../common-select-bank-account/commo
 import { ModalUtil, AvailableModals } from '../../providers/utils/modal.util';
 import { ExchangueAgentService } from '../../providers/exchange-agent.service';
 import { Observable } from 'rxjs';
+import { ComisionesService } from '../../providers/comision.service';
 
 /**
  * Generated class for the ExchangeAgentRequestDetailsPage page.
@@ -35,13 +36,19 @@ export class ExchangeAgentRequestDetailsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private sanitizer: DomSanitizer,
     private constants: ConstantsService, private alerts: AlertUtil, private modalCtrl: ModalController,
     private loading: LoadingUtil, private transactions: TransactionsService, private modals: ModalUtil,
-    private exchangeAgents: ExchangueAgentService) {
+    private exchangeAgents: ExchangueAgentService, private comisionsSvc: ComisionesService) {
     this.transaction = this.navParams.get('transaction');
-    this.constants.findOne(new ConstantByCodeSpecification(`OTC_COMISSION_${this.transaction.exchangeAgentOffering.requestedCurrency}`))
-      .subscribe(result => {
-        this.otcComission = result;
-        this.otcComission.content = Number(this.otcComission.content);
-      })
+    // this.constants.findOne(new ConstantByCodeSpecification(`OTC_COMISSION_${this.transaction.exchangeAgentOffering.requestedCurrency}`))
+    //   .subscribe(result => {
+    //     this.otcComission = result;
+    //     this.otcComission.content = Number(this.otcComission.content);
+    //   })
+    const comision = this.comisionsSvc.getComisionFor(this.transaction.amountToDeposit, this.transaction.exchangeAgentOffering.requestedCurrency);
+    if (!comision) {
+      this.alerts.show('Lo sentimos, no hay comisión configurada para su monto', '');
+    } else {
+      this.otcComission = new Constant({ content: comision.valor });
+    }
   }
 
   ionViewDidLoad() {

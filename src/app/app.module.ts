@@ -14,7 +14,7 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http'
 import { HTTP } from '@ionic-native/http';
 import { AddBankPage } from '../pages/registrer-account/add-bank/add-bank';
-import {FormsModule,ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppStateService } from '../providers/app-state.service';
 import { QuotePage } from '../pages/quote/quote';
 import { RegisterExchangeAgentPage } from '../pages/register-exchange-agent/register-exchange-agent';
@@ -109,13 +109,14 @@ import { EventsUtil } from '../providers/utils/events.util';
 /*Con Angular*/
 import * as Raven from 'raven-js';
 import { CommonCompleteProfilePage } from '../pages/common-complete-profile/common-complete-profile';
+import { ComisionesService } from '../providers/comision.service';
 
 Raven
   .config('https://e215c711d63840b48d4c2b91894dda8d@sentry.io/1395719')
   .install();
 
 export class RavenErrorHandler extends IonicErrorHandler implements ErrorHandler {
-  handleError(err:any) : void {
+  handleError(err: any): void {
     Raven.captureException(err);
     super.handleError(err);
   }
@@ -234,7 +235,7 @@ export class RavenErrorHandler extends IonicErrorHandler implements ErrorHandler
     SplashScreen,
     // {provide: ErrorHandler, useClass: IonicErrorHandler},
     // {provide: ErrorHandler, useClass: SentryIonicErrorHandler}, //Cordova
-    {provide: ErrorHandler, useClass: RavenErrorHandler}, //Angular
+    { provide: ErrorHandler, useClass: RavenErrorHandler }, //Angular
     AppStateService,
     StorageUtil,
     JwtUtil,
@@ -246,7 +247,7 @@ export class RavenErrorHandler extends IonicErrorHandler implements ErrorHandler
     CurrenciesService,
     UsersBankAccountsService,
     ExchangueAgentService,
-    DataService,  
+    DataService,
     ExchangeAgentOfferingsService,
     UsersService,
     TransactionsService,
@@ -265,7 +266,8 @@ export class RavenErrorHandler extends IonicErrorHandler implements ErrorHandler
     Facebook,
     Deeplinks,
     EventsUtil,
-    Keyboard
+    Keyboard,
+    ComisionesService
   ]
 })
-export class AppModule {}
+export class AppModule { }

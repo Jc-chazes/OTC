@@ -19,6 +19,8 @@ import { ContestsService } from '../../providers/contests.service';
 import { UsersService } from '../../providers/users.service';
 import { ByIdSpecification } from '../../providers/specifications/base.specification';
 import { NumberPipe } from '../../pipes/numeric/number.pipe';
+import { ComisionesService } from '../../providers/comision.service';
+import { AlertUtil } from '../../providers/utils/alert.util';
 
 
 @Component({
@@ -36,18 +38,25 @@ export class DetailExchangeAgentPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public appService: AppStateService,
     private sanitizer: DomSanitizer, private constants: ConstantsService, private transactions: TransactionsService,
     private modals: ModalUtil, private modalCtrl: ModalController, private loading: LoadingUtil,
-    private contests: ContestsService, private users: UsersService, private numberPipe: NumberPipe) {
+    private contests: ContestsService, private users: UsersService, private numberPipe: NumberPipe,
+    private comisionsSvc: ComisionesService, private alert: AlertUtil) {
     this.transaction = this.navParams.get('transaction');
     this.contest = this.navParams.get('contest');
     this.appService.onStateChange.subscribe(res => {
       this.detail_exchangue = res.detail_exchangue,
         this.data_price = res.price
     });
-    this.constants.findOne(new ConstantByCodeSpecification(`OTC_COMISSION_${this.transaction.exchangeAgentOffering.receivedCurrency}`))
-      .subscribe(result => {
-        this.otcComission = result;
-        this.otcComission.content = Number(this.otcComission.content);
-      })
+    // this.constants.findOne(new ConstantByCodeSpecification(`OTC_COMISSION_${this.transaction.exchangeAgentOffering.receivedCurrency}`))
+    //   .subscribe(result => {
+    //     this.otcComission = result;
+    //     this.otcComission.content = Number(this.otcComission.content);
+    //   })
+    const comision = this.comisionsSvc.getComisionFor(this.transaction.amountToDeposit, this.transaction.exchangeAgentOffering.receivedCurrency);
+    if (!comision) {
+      this.alert.show('Lo sentimos, no hay comisión configurada para su monto', '');
+    } else {
+      this.otcComission = new Constant({ content: comision.valor });
+    }
   }
   public counter(i: number) {
     return new Array(i);

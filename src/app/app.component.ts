@@ -18,89 +18,92 @@ import { Deeplinks, DeeplinkMatch } from '@ionic-native/deeplinks';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 import { AlertUtil } from '../providers/utils/alert.util';
 import { LoadingUtil } from '../providers/utils/loading.util';
+import { ComisionesService } from '../providers/comision.service';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = ChooseProfilePage;
+  rootPage: any = ChooseProfilePage;
 
   constructor(private platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
     private auth: AuthProvider, private users: UsersService, private currencies: CurrenciesService,
-    private storage: StorageUtil, private deeplinks: Deeplinks, private app: App, private loading: LoadingUtil) {
+    private storage: StorageUtil, private deeplinks: Deeplinks, private app: App, private loading: LoadingUtil,
+    private comisionesSvc: ComisionesService) {
     let sliderLoaded = localStorage.getItem(StorageKeys.SLIDER_HAS_BEEN_SHOWED);
     this.loading.show();
-    Observable.fromPromise( 
+    Observable.fromPromise(
       platform.ready()
-      .then( () => {
-        //__alert('Plataforma lista');
-        return Promise.resolve();
-      }).catch( (err)=>{
-        //__alert(JSON.stringify(err));
-        return Promise.reject(err);
-      })
+        .then(() => {
+          //__alert('Plataforma lista');
+          return Promise.resolve();
+        }).catch((err) => {
+          //__alert(JSON.stringify(err));
+          return Promise.reject(err);
+        })
     )
-    .do( () => {
-      statusBar.styleDefault();
-      splashScreen.hide();
-    })
-    .flatMap( () => {
-      //__alert('currencies will be loaded');
-      return this.currencies.find()
-      .flatMap( (_noop) => {
-        //__alert('populate will be loaded');
-        return this.auth.populate()
-        .map( couldPopulate => {
-          //__alert('rootPage will be setted');
-          if( !sliderLoaded ){
-            localStorage.setItem(StorageKeys.SLIDER_HAS_BEEN_SHOWED,'{ loaded: true }'); 
-            this.rootPage = SliderPage
-          }else{
-            if( couldPopulate ){
-              let rootPage = null;
-              if( this.users.currentUser.userType == '0' ){
-                rootPage = PersonTabsPage;
-              }else {
-                rootPage = ExchangeAgentTabsPage;
-              }
-              this.rootPage = rootPage;
-            }
-          }
-        });
+      .do(() => {
+        statusBar.styleDefault();
+        splashScreen.hide();
       })
-      .catch( err => {
+      .flatMap(() => {
+        //__alert('currencies will be loaded');
+        return forkJoin(this.currencies.find(), this.comisionesSvc.loadComisiones())
+          .flatMap((_noop) => {
+            //__alert('populate will be loaded');
+            return this.auth.populate()
+              .map(couldPopulate => {
+                //__alert('rootPage will be setted');
+                if (!sliderLoaded) {
+                  localStorage.setItem(StorageKeys.SLIDER_HAS_BEEN_SHOWED, '{ loaded: true }');
+                  this.rootPage = SliderPage
+                } else {
+                  if (couldPopulate) {
+                    let rootPage = null;
+                    if (this.users.currentUser.userType == '0') {
+                      rootPage = PersonTabsPage;
+                    } else {
+                      rootPage = ExchangeAgentTabsPage;
+                    }
+                    this.rootPage = rootPage;
+                  }
+                }
+              });
+          })
+          .catch(err => {
+            //__alert('Error cargando aplicación:'+JSON.stringify(err));
+            return null;
+          })
+      })
+      .catch(err => {
         //__alert('Error cargando aplicación:'+JSON.stringify(err));
         return null;
       })
-    })
-    .catch( err => {
-      //__alert('Error cargando aplicación:'+JSON.stringify(err));
-      return null;
-    })
-    .subscribe( () => {
-      this.listenToDeepLinks();
-      // statusBar.styleDefault();
-      // splashScreen.hide();
-      // alert('Version 1.2');
-      this.loading.hide();
-      statusBar.overlaysWebView(false);
-    });
+      .subscribe(() => {
+        this.listenToDeepLinks();
+        // statusBar.styleDefault();
+        // splashScreen.hide();
+        // alert('Version 1.2');
+        this.loading.hide();
+        statusBar.overlaysWebView(false);
+      });
   }
 
-  listenToDeepLinks(){
+  listenToDeepLinks() {
     this.deeplinks.route({ '/reset-password': ResetPasswordPage })
-    .catch( nomatch => {
-      // alert('Error cargando deeplinks:'+JSON.stringify(nomatch));
-      return Observable.of(null);
-    }).subscribe( (match: DeeplinkMatch) => {
-      if( match ){
-        if(match.$link.host == '/reset-password'){
-          this.app.getRootNav().push(ResetPasswordPage,{
-            token: match.$args.token
-          });
+      .catch(nomatch => {
+        // alert('Error cargando deeplinks:'+JSON.stringify(nomatch));
+        return Observable.of(null);
+      }).subscribe((match: DeeplinkMatch) => {
+        if (match) {
+          if (match.$link.host == '/reset-password') {
+            this.app.getRootNav().push(ResetPasswordPage, {
+              token: match.$args.token
+            });
+          }
         }
-      }
-    });
+      });
   }
 
 }

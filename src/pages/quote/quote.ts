@@ -38,6 +38,7 @@ export class QuotePage implements OnInit {
   buyAvailableTransformacions: string[] = [];
   operation = 'V';
   cantInput: any;
+  MAX_AMOUNT = 0;
   @ViewChild('quantityInput') quantityInputElm: ElementRef;
 
   get cant(): number {
@@ -88,6 +89,10 @@ export class QuotePage implements OnInit {
       .subscribe(result => {
         this.buyAvailableTransformacions = result.content.split(',');
       });
+    this.constants.findOneByCode('OTC_MONTO_MAXIMO')
+      .subscribe(result => {
+        this.MAX_AMOUNT = Number(result.content);
+      })
   }
 
   ionViewDidLoad() {
@@ -164,12 +169,12 @@ export class QuotePage implements OnInit {
     this.checkButton = 1;
 
     // console.log(this.cant);
-    if (!this.cant || this.cant > 10000) {
+    if (!this.cant || this.cant > this.MAX_AMOUNT) {
       window.navigator.vibrate(200);
       if ((this.cant || 0) <= 0) {
         this.alerts.show('El monto que ingresa tiene que ser mayor a 0', 'Cotiza');
       } else {
-        this.alerts.show('El monto que ingresa es inválido, supera los $ 10 000.', 'Cotiza');
+        this.alerts.show(`El monto que ingresa es inválido, supera los $ ${new NumberPipe().transform(this.MAX_AMOUNT)}`, 'Cotiza');
       }
       return;
     }

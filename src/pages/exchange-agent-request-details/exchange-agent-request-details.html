@@ -136,7 +136,13 @@
             ></countdown>
           </div>
           <div class="spacer-10"></div>
-          <button fluid ion-button color="secondary" (tap)="continue()">
+          <button
+            fluid
+            ion-button
+            color="secondary"
+            (tap)="continue()"
+            [disabled]="!otcComission?.content"
+          >
             Aceptar solicitud
           </button>
           <div class="spacer-10"></div>

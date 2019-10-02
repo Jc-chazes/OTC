@@ -12,6 +12,8 @@ import { OtcBankAccountsSpecification } from '../../providers/specifications/use
 import { CommonSendVoucherPage } from '../common-send-voucher/common-send-voucher';
 import { TransferIsRealizedModalComponent } from '../../components/transfer-is-realized-modal/transfer-is-realized-modal';
 import { AlertUtil } from '../../providers/utils/alert.util';
+import { ComisionesService } from '../../providers/comision.service';
+import { of } from 'rxjs/observable/of';
 
 /**
  * Generated class for the CommonTransferToOtcPage page.
@@ -25,7 +27,7 @@ import { AlertUtil } from '../../providers/utils/alert.util';
   templateUrl: 'common-transfer-to-otc.html',
 })
 export class CommonTransferToOtcPage {
-  
+
   transaction: Transaction;
   otcComission: Constant = new Constant({ content: 0 });
   otcRuc: Constant = new Constant();
@@ -39,36 +41,39 @@ export class CommonTransferToOtcPage {
   _this = this;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private users: UsersService,
-    private constants: ConstantsService, private userBankAccounts : UsersBankAccountsService,
-    private modalCtrl: ModalController, private alerts: AlertUtil ) {
+    private constants: ConstantsService, private userBankAccounts: UsersBankAccountsService,
+    private modalCtrl: ModalController, private alerts: AlertUtil, private comisionesSvc: ComisionesService) {
     this.transaction = this.navParams.get('transaction');
     Observable.forkJoin(
-      this.constants.findOne( new ConstantByCodeSpecification(
-        `OTC_COMISSION_${this.transaction.exchangeAgentOffering[ this.users.currentUser.userType == '0' ? 'receivedCurrency' : 'requestedCurrency' ]}`)
+      // this.constants.findOne( new ConstantByCodeSpecification(
+      //   `OTC_COMISSION_${this.transaction.exchangeAgentOffering[ this.users.currentUser.userType == '0' ? 'receivedCurrency' : 'requestedCurrency' ]}`)
+      // ),
+      of(
+        this.comisionesSvc.getComisionFor(this.transaction.amountToDeposit, this.transaction.exchangeAgentOffering[this.users.currentUser.userType == '0' ? 'receivedCurrency' : 'requestedCurrency'])
       ),
-      this.constants.findOne( new ConstantByCodeSpecification(`IOWA_BUSINESS_SAC_RUC`)),
-      this.constants.findOne( new ConstantByCodeSpecification(`OTC_NAME`)),
-      this.userBankAccounts.find( new OtcBankAccountsSpecification() )
-    )    
-    .subscribe( results => {
-      this.otcComission = results[0];
-      this.otcComission.content = Number(this.otcComission.content);
-      this.otcRuc = results[1];
-      this.otcBusinessName = results[2];
-      if( this.users.currentUser.isPerson() ){
-        this.otcBankAccountList = results[3].filter( ba => ba.currency.code == this.transaction.exchangeAgentOffering.receivedCurrency );;
-      }else{
-        this.otcBankAccountList = results[3].filter( ba => ba.currency.code == this.transaction.exchangeAgentOffering.requestedCurrency );;
-      }
-      this.selectedOtcBankAccount = this.otcBankAccountList[0] as OtcBankAccount;
-    })
+      this.constants.findOne(new ConstantByCodeSpecification(`IOWA_BUSINESS_SAC_RUC`)),
+      this.constants.findOne(new ConstantByCodeSpecification(`OTC_NAME`)),
+      this.userBankAccounts.find(new OtcBankAccountsSpecification())
+    )
+      .subscribe(results => {
+        // this.otcComission = results[0];
+        this.otcComission.content = results[0] ? results[0].valor : null;
+        this.otcRuc = results[1];
+        this.otcBusinessName = results[2];
+        if (this.users.currentUser.isPerson()) {
+          this.otcBankAccountList = results[3].filter(ba => ba.currency.code == this.transaction.exchangeAgentOffering.receivedCurrency);;
+        } else {
+          this.otcBankAccountList = results[3].filter(ba => ba.currency.code == this.transaction.exchangeAgentOffering.requestedCurrency);;
+        }
+        this.selectedOtcBankAccount = this.otcBankAccountList[0] as OtcBankAccount;
+      })
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CommonTransferToOtcPage');
   }
 
-  ionViewCanLeave(){
+  ionViewCanLeave() {
     return true;
     // if( this.canContinue ){
     //   return true;
@@ -97,42 +102,42 @@ export class CommonTransferToOtcPage {
     // return canLeave;
   }
 
-  continue(){
-    let transferIsRealizedModal = this.modalCtrl.create(TransferIsRealizedModalComponent,{},{
+  continue() {
+    let transferIsRealizedModal = this.modalCtrl.create(TransferIsRealizedModalComponent, {}, {
       cssClass: 'alertModal'
     });
     transferIsRealizedModal.present();
-    transferIsRealizedModal.onDidDismiss( isRealized => {
-      if( isRealized ){
+    transferIsRealizedModal.onDidDismiss(isRealized => {
+      if (isRealized) {
         this.canContinue = true;
-        this.navCtrl.push( CommonSendVoucherPage, {
+        this.navCtrl.push(CommonSendVoucherPage, {
           transaction: this.transaction
         });
       }
     })
   }
 
-  onCancel(){
+  onCancel() {
     this.navCtrl.popToRoot();
   }
 
-  scrollToBottom(){
+  scrollToBottom() {
     let element = this.contentToScroll.nativeElement;
     element.scrollTop = element.scrollHeight - element.clientHeight;
   }
 
-  otcBankAccountChanged(){
+  otcBankAccountChanged() {
     let currentIndex = this.slides.getActiveIndex();
-    if( currentIndex >= this.otcBankAccountList.length ) currentIndex = this.otcBankAccountList.length -1 ;
-    if( currentIndex < 0 ) currentIndex = 0;
+    if (currentIndex >= this.otcBankAccountList.length) currentIndex = this.otcBankAccountList.length - 1;
+    if (currentIndex < 0) currentIndex = 0;
     this.selectedOtcBankAccount = this.otcBankAccountList[currentIndex] as OtcBankAccount;
   }
 
-  toggleAditionalInfo(){
+  toggleAditionalInfo() {
     this.showAdditionalInfo = !this.showAdditionalInfo;
-    if( this.showAdditionalInfo ){
+    if (this.showAdditionalInfo) {
       setTimeout(() => {
-        this.scrollToBottom(); 
+        this.scrollToBottom();
       });
     }
   }
