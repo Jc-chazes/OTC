@@ -49,10 +49,10 @@
         <ion-col col6
           ><div class="exchange-agents__data">
             <span *ngIf="data_price.text_buy == 'Compra'">{{
-              receivedCurrency.symbol
+              requestedCurrency.symbol
             }}</span>
             <span *ngIf="data_price.text_buy == 'Venta'">{{
-              requestedCurrency.symbol
+              receivedCurrency.symbol
             }}</span>
           </div></ion-col
         >
